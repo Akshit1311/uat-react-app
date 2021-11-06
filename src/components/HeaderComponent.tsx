@@ -1,25 +1,33 @@
+import { Navbar, NavbarToggler, Collapse } from 'reactstrap';
+import { useState } from 'react';
 import '../scss/headerComponent.scss';
 
-const HeaderComponent = () => {
+function HeaderComponent() {
+    const [isNavOpen, setNavOpen] = useState(false);
+    function toggleNav() {
+        setNavOpen(!isNavOpen);
+    }
+
     return (
         <>
-            <div className="mb-1 pt-3 pb-1 text-dark border-bottom" style={{ height: "58px", background: "#FFFFFF", boxShadow: "0px 4px 10px rgba(193, 193, 193, 0.25)", fontFamily: '"Montserrat", sans-serif' }}>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12 col-md">
+            <Navbar light expand="md">
+                <div className="container d-md-flex">
+                    <div className="d-flex">
+                        <NavbarToggler onClick={toggleNav} className="border-dark" style={{ padding: "1px 0px", margin: "3px" }} />
+                        <div className="navbar-brand ms-md-1">
                             <img src="/assets/images/main-logo-white.png" alt="main-logo" width="143px" height="30.62px" />
                         </div>
-                        <div className="col-12 col-md-5">
-                            <ul className="list-unstyled d-flex">
-                                <li className="mx-2 ms-auto nav-list-item">About</li>
-                                <li className="mx-2">Resources</li>
-                                <li className="mx-2">Schemes & Policies</li>
-                                <li className="mx-2">Programs</li>
-                            </ul>
-                        </div>
                     </div>
+                    <Collapse navbar isOpen={isNavOpen}>
+                        <ul className="navbar-nav ms-auto pb-0">
+                            <li className="mx-2 my-2 nav-item">About</li>
+                            <li className="mx-2 my-2 nav-item">Resources</li>
+                            <li className="mx-2 my-2 nav-item">Schemes & Policies</li>
+                            <li className="mx-2 my-2 nav-item">Programs</li>
+                        </ul>
+                    </Collapse>
                 </div>
-            </div>
+            </Navbar>
         </>
     )
 }
