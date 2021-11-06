@@ -37,21 +37,15 @@ const HomePage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row text-center bg-white py-3 mx-0 my-2 strip" >
-                    <h6><b>Please Note :</b> The information is based on self declaration by community members. Startup India dosen't moderate the information collected.</h6>
+                <div className="row text-center bg-white mx-0 my-2 strip align-items-center d-flex" >
+                    <h6 className="m-0"><b>Please Note :</b> The information is based on self declaration by community members. Startup India dosen't moderate the information collected.</h6>
                 </div>
-                <div className="row my-3 text-center d-flex justify-content-center">
-                    <div className="btn-group text-center col-md-3 border p-1">
-                        {/* <button className={startupListActive === true ? 'btn-primary btn px-3 text-white' : 'btn px-3'}
-                            onClick={renderStartUpView}> Startups List</button>
-                        <button className={startupListActive === false ? 'btn-primary btn px-3 text-white' : 'btn px-3'}
-                            onClick={renderDataTableView}> Data Table</button> */}
-                        <div className="btn-group text-center col-md-3 border" style={{ padding: "3px" }}>
-                            <button className={`btn px-3 ${startupListActive && 'btn-primary text-white'}`}
-                                onClick={toggleStartUp}> Startups List</button>
-                            <button className={`btn px-3 ${!startupListActive && 'btn-primary text-white'}`}
-                                onClick={toggleStartUp}> Data Table</button>
-                        </div>
+                <div className="row my-3 d-flex justify-content-center">
+                    <div className="btn-group text-center col-md-3 border button-togglers">
+                        <button className={`btn px-3 ${startupListActive && 'btn-primary text-white'}`}
+                            onClick={toggleStartUp}> Startups List</button>
+                        <button className={`btn px-3 ${!startupListActive && 'btn-primary text-white'}`}
+                            onClick={toggleStartUp}> Data Table</button>
                     </div>
                     <div className="row">
                         {startupListActive && (<StartupsListComponent data={startupsListData} />)}

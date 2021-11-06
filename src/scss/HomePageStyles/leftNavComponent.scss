@@ -12,9 +12,9 @@ div {
 }
 .sub-heading {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12.5px;
 }
-.btn-primary {
+.view-insight-btn {
     font-size: 14px !important;
 }
 input {
@@ -22,11 +22,6 @@ input {
     font-size: 14px;
     font-weight: 400px;
 }
-.input-group {
-    background: #ffffff;
-    box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25);
-}
-
 .border-bottom-filter {
     border-bottom: 0.5px solid lightgray !important;
 }
@@ -37,4 +32,8 @@ input {
 
 .left-nav-bottom-card {
     box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25) !important;
+}
+.search-bar {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(193, 193, 193, 0.25);
 }

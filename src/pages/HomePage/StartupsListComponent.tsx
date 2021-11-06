@@ -57,7 +57,9 @@ function StartupsListComponent(props: any) {
           <div className="card m-2 p-3">
             <div className="px-2">
               <h5>STARTUPS</h5>
-              <SearchBarComponent />
+              <div>
+                <SearchBarComponent />
+              </div>
             </div>
             <div className="row px-3 mt-4">{startupList}</div>
           </div>

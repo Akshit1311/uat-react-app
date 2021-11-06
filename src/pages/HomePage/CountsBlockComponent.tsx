@@ -11,6 +11,7 @@ const CountsBlockComponent = () => {
                     border: `2px solid ${d1.borderColor}`,
                     color: `${d1.color}`,
                     borderRadius: "4px",
+                    boxShadow: "0px 0px 6px rgba(193, 193, 193, 0.25)",
                     height: "98px",
                     width: "170px"
                 }}>
