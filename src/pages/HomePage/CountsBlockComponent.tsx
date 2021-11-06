@@ -22,7 +22,7 @@ const CountsBlockComponent = () => {
         )
     })
     return (
-        <div className="container-fluid">
+        <div className="container-fluid count-block-styles">
             <div className="row">
                 <h5>India</h5>
             </div>

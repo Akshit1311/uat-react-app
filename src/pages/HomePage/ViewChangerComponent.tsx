@@ -6,7 +6,7 @@ import '../../scss/HomePageStyles/viewChangerComponent.scss';
 
 function ViewChangerComponent() {
     return (
-        <div className="container-fluid">
+        <div className="container-fluid view-changer-component-styles">
             <div className="row d-flex align-items-center flex-row mt-2">
                 <div className="col-12 col-md d-flex flex-row">
                     <span className="data-range-text">Data Range</span>

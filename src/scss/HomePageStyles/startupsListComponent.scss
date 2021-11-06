@@ -1,3 +1,16 @@
-.startup-list-container {
+.startup-list-styles {
     font-family: "Montserrat", sans-serif;
+    .startup-heading {
+        font-weight: 600;
+    }
+    .start-up-card {
+        background-color: #f1f1f1;
+    }
+    .company-title {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .start-up-location {
+        font-size: small;
+    }
 }
