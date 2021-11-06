@@ -5,20 +5,26 @@ import ProtectedRoute from "./ProtectedRoutes"
 import { publicRoutes } from "./publicRoutes"
 import { privateRoutes } from "./privateRoutes"
 import { RouteType } from "./types"
+import HeaderComponent from '../components/HeaderComponent';
+// import ComponentA from '../demo/AComponent';
 
-export default function AppNavigator(){
+export default function AppNavigator() {
     return (
-        <Switch>
-            {
-                map(publicRoutes, (publicRoute:RouteType)=> (
-                    <Route exact {...publicRoute} />
-                ))
-            }
-            {
-                map(privateRoutes, (privateRoute:RouteType)=> (
-                    <ProtectedRoute exact {...privateRoute} />
-                ))
-            }
-        </Switch>
+        <>
+            {/* <ComponentA /> */}
+            <HeaderComponent></HeaderComponent>
+            <Switch>
+                {
+                    map(publicRoutes, (publicRoute: RouteType) => (
+                        <Route exact {...publicRoute} />
+                    ))
+                }
+                {
+                    map(privateRoutes, (privateRoute: RouteType) => (
+                        <ProtectedRoute exact {...privateRoute} />
+                    ))
+                }
+            </Switch>
+        </>
     )
 }

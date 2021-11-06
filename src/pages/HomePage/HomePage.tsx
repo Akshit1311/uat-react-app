@@ -1,19 +1,60 @@
-import React from "react";
-import { Button } from "../../styles-components/Button";
-import { FaHome } from 'react-icons/fa';
-import HomeComponent from "../../components/HomeComponent";
+import { useState } from 'react';
+import CountsBlockComponent from './CountsBlockComponent'
+import DataTableComponent from './DataTableComponent'
+import LeftNavComponent from './LeftNavComponent'
+import MapComponent from './MapComponent'
+import StartupsListComponent from './StartupsListComponent'
+import ViewChangerComponent from './ViewChangerComponent'
+import '../../scss/HomePageStyles/homeComponent.scss';
+import { STARTUPLIST } from '../../shared-data/startuplist'
+import { DATATABLEDATA } from '../../shared-data/dataTable'
 
-export default function HomePage() {
+const HomePage = () => {
+
+    const [startupListActive, setStartupListActive] = useState(true);
+    const [startupsListData] = useState(STARTUPLIST);
+    const [dataTableData] = useState(DATATABLEDATA);
+
+    const toggleStartUp = () => setStartupListActive(prevState => !prevState)
     return (
-        <div className="container p-5">
-            <div className="row d-flex flex-row">
-                <div className="col-2">
-                    <Button >Click Me <FaHome style={{ marginBottom: "4px" }} /></Button>
+        <>
+            <div className="container-fluid bg-light border-bottom">
+                <div className="row">
+                    <div className="col-12 col-md-2 px-0 p-0">
+                        <LeftNavComponent></LeftNavComponent>
+                    </div>
+                    <div className="col-12 col-md">
+                        <div className="row p-1 m-2">
+                            <CountsBlockComponent />
+                        </div>
+                        <div className="row">
+                            <div className="col-12 col-md-7 p-5">
+                                <MapComponent />
+                            </div>
+                            <div className="col-12 col-md-5">
+                                <ViewChangerComponent />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-9">
-                    <HomeComponent />
+                <div className="row text-center bg-white mx-0 my-2 strip align-items-center d-flex" >
+                    <h6 className="m-0"><b>Please Note :</b> The information is based on self declaration by community members. Startup India dosen't moderate the information collected.</h6>
+                </div>
+                <div className="row my-3 d-flex justify-content-center">
+                    <div className="btn-group text-center col-md-3 border button-togglers">
+                        <button className={`btn px-3 ${startupListActive && 'btn-primary text-white'}`}
+                            onClick={toggleStartUp}> Startups List</button>
+                        <button className={`btn px-3 ${!startupListActive && 'btn-primary text-white'}`}
+                            onClick={toggleStartUp}> Data Table</button>
+                    </div>
+                    <div className="row">
+                        {startupListActive && (<StartupsListComponent data={startupsListData} />)}
+                        {!startupListActive && (<DataTableComponent data={dataTableData} />)}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
+
+export default HomePage
