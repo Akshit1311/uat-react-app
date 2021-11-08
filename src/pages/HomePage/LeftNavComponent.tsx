@@ -1,27 +1,27 @@
 import '../../scss/HomePageStyles/leftNavComponent.scss';
-import { GoSearch } from 'react-icons/go';
-import { RiArrowDropDownLine } from 'react-icons/ri';
+import { BiSearchAlt2 } from 'react-icons/bi';
+import { FiChevronDown } from 'react-icons/fi';
 
 const LeftNavComponent = () => {
     return (
         <>
             <div className="left-side-nav-styles">
                 <div className="container-fluid px-2" >
-                    <div className="row mt-2">
+                    <div className="row search-bar-row">
                         <div className="rounded h-100 d-flex mx-0 px-0 search-bar">
-                            <span className="input-group-text border-0 m-0 " id="search-addon">
-                                <GoSearch />
+                            <span className="input-group-text border-0 bg-white m-0 search-icon " id="search-addon">
+                                <BiSearchAlt2 size={17.06} />
                             </span>
-                            <input type="search" className="form-control rounded" placeholder="Search" aria-label="Search"
+                            <input type="search" className="form-control" placeholder="Search" aria-label="Search"
                                 aria-describedby="search-addon" />
                         </div>
                     </div>
-                    <div className="row my-3 px-2 py-0 bg-white dropdown-card">
-                        <div className="border-bottom-filter">
-                            <button className="btn d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
+                    <div className="row mb-3 px-2 py-0 bg-white dropdown-card">
+                        <div className="border-bottom-filter pt-2">
+                            <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                <RiArrowDropDownLine className="me-2" size={32} />States
-                                <span className="ms-auto">27</span>
+                                <FiChevronDown className="me-2" size={15} />States
+                                <span className="ms-auto count-text">27</span>
                             </button>
                             <div className="collapse mt-2" id="collapse1">
                                 <div className="card card-body">
@@ -30,11 +30,11 @@ const LeftNavComponent = () => {
                             </div>
                         </div>
                         <div className="border-bottom-filter ">
-                            <button className="btn d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
+                            <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                <RiArrowDropDownLine className="me-2" size={32} />
+                                <FiChevronDown className="me-2" size={15} />
                                 Sector
-                                <span className="ms-auto">50</span>
+                                <span className="ms-auto count-text">50</span>
                             </button>
                             <div className="collapse mt-2" id="collapse2">
                                 <div className="card card-body">
@@ -43,11 +43,11 @@ const LeftNavComponent = () => {
                             </div>
                         </div>
                         <div className="border-bottom-filter">
-                            <button className="btn d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
+                            <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                <RiArrowDropDownLine className="me-2" size={32} />
+                                <FiChevronDown className="me-2" size={15} />
                                 Industry
-                                <span className="ms-auto">200</span>
+                                <span className="ms-auto count-text">200</span>
                             </button>
                             <div className="collapse mt-2" id="collapse3">
                                 <div className="card card-body">
@@ -56,11 +56,11 @@ const LeftNavComponent = () => {
                             </div>
                         </div>
                         <div className="border-bottom-filter">
-                            <button className="btn d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
+                            <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                <RiArrowDropDownLine className="me-2" size={32} />
+                                <FiChevronDown className="me-2" size={15} />
                                 Stage
-                                <span className="ms-auto">150</span>
+                                <span className="ms-auto count-text">150</span>
                             </button>
                             <div className="collapse mt-2" id="collapse4">
                                 <div className="card card-body">
@@ -68,12 +68,12 @@ const LeftNavComponent = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-bottom-filter">
-                            <button className="btn d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
+                        <div className="pb-2">
+                            <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                <RiArrowDropDownLine className="me-2" size={32} />
+                                <FiChevronDown className="me-2" size={15} />
                                 Winner Badges
-                                <span className="ms-auto">2</span>
+                                <span className="ms-auto count-text">2</span>
                             </button>
                             <div className="collapse mt-2" id="collapse5">
                                 <div className="card card-body">
@@ -83,10 +83,10 @@ const LeftNavComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="left-nav-bottom-card row bg-white mt-4 pt-3 mx-0 pb-3 px-3">
+                <div className="left-nav-bottom-card row bg-white pt-3 mx-0 border">
                     <h6 className="px-1 card-heading-left-bottom"> VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA</h6>
                     <span className="text-center sub-heading px-0 mt-2">You can View Insights of India</span>
-                    <button className="btn btn-primary mt-2">View Insights</button>
+                    <button className="btn shadow-none btn-primary mt-2 btn-view-project">View Insights</button>
                 </div>
             </div>
         </>
