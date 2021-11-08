@@ -24,7 +24,7 @@ const HomePage = () => {
                         <LeftNavComponent></LeftNavComponent>
                     </div>
                     <div className="col-12 col-md">
-                        <div className="row p-1 m-2">
+                        <div className="row">
                             <CountsBlockComponent />
                         </div>
                         <div className="row">

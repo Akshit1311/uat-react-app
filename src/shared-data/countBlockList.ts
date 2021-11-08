@@ -21,7 +21,7 @@ export const COUNTBLOCK = [
         count: 2044,
         color: "black",
         backgroundColor: "white",
-        borderColor: "#0177FA"
+        borderColor: "#7838e0"
     },
     {
         _id: "4",
