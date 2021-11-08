@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CountsBlockComponent from './CountsBlockComponent'
 import DataTableComponent from './DataTableComponent'
 import LeftNavComponent from './LeftNavComponent'
-import MapComponent from './MapComponent'
+import MapComponent from './Map/MapComponent'
 import StartupsListComponent from './StartupsListComponent'
 import ViewChangerComponent from './ViewChangerComponent'
 import '../../scss/HomePageStyles/homeComponent.scss';
