@@ -9,10 +9,10 @@ const LeftNavComponent = () => {
                 <div className="container-fluid px-2" >
                     <div className="row search-bar-row">
                         <div className="rounded h-100 d-flex mx-0 px-0 search-bar">
-                            <span className="input-group-text border-0 bg-white m-0 ms-2 search-icon " id="search-addon">
+                            <span className="btn shadow-none border-0 m-0 pe-1 ps-4 " id="search-addon">
                                 <BiSearchAlt2 size={17.06} />
                             </span>
-                            <input type="search" className="form-control" placeholder="Search" aria-label="Search"
+                            <input type="search" className="form-control ps-2" placeholder="Search" aria-label="Search"
                                 aria-describedby="search-addon" />
                         </div>
                     </div>
@@ -29,7 +29,7 @@ const LeftNavComponent = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-bottom-filter ">
+                        <div className="border-bottom-filter pt-1">
                             <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                                 <FiChevronDown className="me-2" size={15} />
@@ -42,7 +42,7 @@ const LeftNavComponent = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-bottom-filter">
+                        <div className="border-bottom-filter pt-1">
                             <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
                                 <FiChevronDown className="me-2" size={15} />
@@ -55,7 +55,7 @@ const LeftNavComponent = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-bottom-filter">
+                        <div className="border-bottom-filter pt-1">
                             <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
                                 <FiChevronDown className="me-2" size={15} />

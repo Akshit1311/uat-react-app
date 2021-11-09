@@ -16,14 +16,14 @@ function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
     <>
       <div
         key={_id}
-        className="col-12 col-md py-2 m-2 d-flex flex-row start-up-card"
+        className="col-12 col-md d-flex flex-row start-up-card"
       >
         <div>
           <img src={img_url} className="rounded-circle border" alt="main-logo" width="60px" height="60px" />
         </div>
         <div className="p-2 ms-1 row d-flex justify-content-left">
           <h6 className="ms-1 company-title">{company}</h6>
-          <div className="my-2">
+          <div className="stage-sector-div">
             <Badge className="m-1">Stage: {stage}</Badge>
             <Badge>Sector: {sector}</Badge>
           </div>
@@ -53,16 +53,12 @@ function StartupsListComponent(props: any) {
     <div className="container mb-5 startup-list-styles">
       <div className="row">
         <div className="col-12 offset-md-2 col-md-7">
-          <div className="card m-2 p-3">
-            <div className="px-2">
-              <div className="ms-1">
-                <h6 className="startup-heading">STARTUPS</h6>
-              </div>
-              <div>
-                <SearchBarComponent />
-              </div>
+          <div className="card startup-list-card-container">
+            <h6 className="startup-heading">STARTUPS</h6>
+            <div className="search-bar-component">
+              <SearchBarComponent />
             </div>
-            <div className="row px-3 mt-4">{startupList}</div>
+            <div className="row px-3">{startupList}</div>
           </div>
         </div>
       </div>
