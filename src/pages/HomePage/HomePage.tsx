@@ -5,7 +5,7 @@ import LeftNavComponent from './LeftNavComponent'
 import MapComponent from './Map/MapComponent'
 import StartupsListComponent from './StartupsListComponent'
 import ViewChangerComponent from './ViewChangerComponent'
-import '../../scss/HomePageStyles/homeComponent.scss';
+import '../../scss/HomePageStyles/homePage.scss';
 import { STARTUPLIST } from '../../shared-data/startuplist'
 import { DATATABLEDATA } from '../../shared-data/dataTable'
 
@@ -19,15 +19,15 @@ const HomePage = () => {
     return (
         <>
             <div className="container-fluid bg-light border-bottom home-component-styles mx-0 px-0">
-                <div className="row">
+                <div className="row px-0 mx-0">
                     <div className="col-12 col-md-2 px-0 p-0">
                         <LeftNavComponent></LeftNavComponent>
                     </div>
-                    <div className="col-12 col-md">
-                        <div className="row">
+                    <div className="col-12 col-md px-0 mx-0">
+                        <div className="row px-0 mx-0">
                             <CountsBlockComponent />
                         </div>
-                        <div className="row">
+                        <div className="row px-0 mx-0">
                             <div className="col-12 col-md-7 p-5">
                                 <MapComponent />
                             </div>
@@ -40,7 +40,7 @@ const HomePage = () => {
                 <div className="row text-center mx-0 strip align-items-center d-flex" >
                     <span className="m-0 strip-text"><b className="me-3">Please Note :</b> The information is based on self declaration by community members. Startup India dosen't moderate the information collected.</span>
                 </div>
-                <div className="row d-flex justify-content-center">
+                <div className="row d-flex justify-content-center px-0 mx-0">
                     <div className="btn-group text-center col-md-3 border button-togglers">
                         <button className={`shadow-none btn px-3 ${startupListActive && 'btn-primary text-white'}`}
                             onClick={toggleStartUp}> Startups List</button>

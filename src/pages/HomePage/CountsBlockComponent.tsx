@@ -6,7 +6,7 @@ const CountsBlockComponent = () => {
     const boxList = data.map((d1) => {
         return (
             <>
-                <div key={d1._id} className="col-5 col-md count-single-card d-flex  flex-column justify-content-center" style={{
+                <div key={d1._id} className="col-5 col-md count-single-card d-flex flex-column justify-content-center" style={{
                     backgroundColor: `${d1.backgroundColor}`,
                     border: `2px solid ${d1.borderColor}`,
                     color: `${d1.color}`,
@@ -22,8 +22,8 @@ const CountsBlockComponent = () => {
         )
     })
     return (
-        <div className="container-fluid count-block-styles">
-            <div className="row">
+        <div className="container-fluid count-block-styles px-0 mx-0">
+            <div className="row mx-0 px-0">
                 <h5>India</h5>
             </div>
             <div className="row count-div">
