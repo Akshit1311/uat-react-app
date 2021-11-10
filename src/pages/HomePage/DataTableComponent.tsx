@@ -9,10 +9,10 @@ function DataTableComponent(props: any) {
             <>
                 <div className="m-0 px-0">
                     <div className="row m-0 p-0">
-                        <div className="col-12 col-md-7">
+                        <div className="col-12 col-md-7 px-0 mx-0">
                             <table>
                                 <thead>
-                                    <tr className="card d-flex flex-row border-dark my-3 p-1">
+                                    <tr className="card d-flex flex-row border-dark mt-3 p-2" style={{ height: "85px" }}>
                                         <th>States</th>
                                         <th>Total Startups</th>
                                         <th>FFS</th>
@@ -23,7 +23,7 @@ function DataTableComponent(props: any) {
                                         <th>Women Owned</th>
                                     </tr>
                                 </thead>
-                                <div className="row mb-2">
+                                <div className="row" style={{ marginTop: "16px", marginBottom: "16px" }}>
                                     <div className="col-12 col-md-5">
                                         <SearchBarComponent />
                                     </div>
@@ -69,10 +69,20 @@ function DataTableComponent(props: any) {
                                         <td>12000</td>
                                         <td>12000</td>
                                     </tr>
+                                    <tr className="p-2 card d-flex flex-row my-2">
+                                        <td>Total</td>
+                                        <td>12000</td>
+                                        <td>12000</td>
+                                        <td>12000</td>
+                                        <td>12000</td>
+                                        <td>12000</td>
+                                        <td>12000</td>
+                                        <td>12000</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div className="col-12 col-md">
+                        <div className="col-12 col-md px-0 mx-0">
                             <DataTable2Component />
                         </div>
                     </div>

@@ -83,7 +83,7 @@ const LeftNavComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="left-nav-bottom-card row bg-white pt-3 mx-0 border">
+                <div className="left-nav-bottom-card row bg-white pt-3 mx-0">
                     <h6 className="px-1 card-heading-left-bottom"> VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA</h6>
                     <span className="text-center sub-heading px-0 mt-2">You can View Insights of India</span>
                     <button className="btn shadow-none btn-primary mt-2 btn-view-project">View Insights</button>
