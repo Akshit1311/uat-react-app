@@ -9,7 +9,7 @@ function HeaderComponent() {
     return (
         <>
             <Navbar light expand="md" className="header-component-styles">
-                <div className="container d-md-flex">
+                <div className="container d-md-flex navbar" >
                     <div className="d-flex my-1 my-md-0chrome">
                         <NavbarToggler onClick={toggleNav} className="toggler" />
                         <div className="navbar-brand ms-md-1">
