@@ -2,9 +2,15 @@ import { Input } from 'reactstrap';
 import { IoMapSharp } from 'react-icons/io5';
 import { RiDropFill } from 'react-icons/ri';
 import { MdOutlineLocationCity } from 'react-icons/md';
+import { GiPeru } from 'react-icons/gi';
 import '../../scss/HomePageStyles/viewChangerComponent.scss';
+import Tooltip from 'rc-tooltip';
+import 'rc-tooltip/assets/bootstrap_white.css';
 
 function ViewChangerComponent() {
+    const stateText = <div className="border-primary"><span>State</span></div>
+    const districtText = <div className="border-primary"><span>District</span></div>
+    const cityText = <div className="border-primary"><span>City</span></div>
     return (
         <div className="container-fluid view-changer-component-styles">
             <div className="row d-flex align-items-center flex-row">
@@ -19,11 +25,22 @@ function ViewChangerComponent() {
                     </Input>
                 </div>
             </div>
+            <div>
+            </div>
             <div className="row icon-row">
                 <div className="col-md-10 col-10">
-                    <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white"><IoMapSharp size={18} /></button>
-                    <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary"><MdOutlineLocationCity size={18} /></button>
-                    <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary"><IoMapSharp size={18} /></button>
+                    <Tooltip placement="top" overlay={stateText}>
+                        <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white">
+                            <IoMapSharp size={18} /></button>
+                    </Tooltip>
+                    <Tooltip placement="top" overlay={cityText}>
+                        <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+                            <MdOutlineLocationCity size={18} /></button>
+                    </Tooltip>
+                    <Tooltip placement="top" overlay={districtText}>
+                        <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+                            <GiPeru size={19} /></button>
+                    </Tooltip>
                 </div>
                 <div className="col-md-2 col-2">
                     <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary"><RiDropFill size={18} /></button>
