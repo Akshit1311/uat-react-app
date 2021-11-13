@@ -6,12 +6,10 @@ import { publicRoutes } from "./publicRoutes"
 import { privateRoutes } from "./privateRoutes"
 import { RouteType } from "./types"
 import HeaderComponent from '../components/HeaderComponent';
-// import ComponentA from '../demo/AComponent';
 
 export default function AppNavigator() {
     return (
         <>
-            {/* <ComponentA /> */}
             <HeaderComponent></HeaderComponent>
             <Switch>
                 {
