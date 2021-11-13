@@ -68,14 +68,14 @@ const LeftNavComponent = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="pb-2">
+                        <div className="border-bottom-filter-last-element pt-1">
                             <button className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
                                 <FiChevronDown className="me-2" size={15} />
                                 Winner Badges
                                 <span className="ms-auto count-text">2</span>
                             </button>
-                            <div className="collapse mt-2" id="collapse5">
+                            <div className="collapse mt-2" id="collapse4">
                                 <div className="card card-body">
                                     Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
                                 </div>
