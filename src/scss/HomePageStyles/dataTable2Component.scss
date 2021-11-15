@@ -1,15 +1,15 @@
 #data-right-table {
+    width: 100%;
     font-family: "Montserrat", sans-serif;
-    width: 520px !important;
     border-left: 0px !important;
     tr {
         background-color: white;
     }
     th {
         border-left: 2px solid black;
-        padding: 5px 3px 5px 3px;
+        padding: 5px 0px 5px 5px;
         font-size: 14px;
-        width: 104px;
+        width: 30%;
         height: 63px;
     }
 }
@@ -20,12 +20,13 @@
 #data-right-table th:first-child {
     border-right: 0px solid black !important;
     border-left: 2px solid black !important;
+    margin-left: -1rem !important;
 }
 
 #data-right-table tbody td {
     font-size: 12px;
     border-left: 1px solid gray;
-    width: 100px;
+    width: 20%;
     height: 63px;
     display: flex !important;
     justify-content: center !important;
@@ -35,8 +36,4 @@
 #data-right-table tbody td:first-child {
     border-left: 2px solid black;
 }
-.border-dark {
-    border-left: 0px !important;
-    border-top-left-radius: 0px !important;
-    border-bottom-left-radius: 0px !important;
-}
+

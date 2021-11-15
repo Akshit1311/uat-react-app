@@ -6,7 +6,7 @@ const DataTable2Component = () => {
             <table id="data-right-table">
                 <thead>
                     <tr className="card d-flex border-dark flex-row mt-3 p-2" style={{ height: "85px" }}>
-                        <th>Mentors</th>
+                        <th style={{ marginLeft: "-0.5rem !important"}}>Mentors</th>
                         <th>Incubators</th>
                         <th>Investors</th>
                         <th>Accelerators</th>
@@ -18,35 +18,35 @@ const DataTable2Component = () => {
                     </div>
                 </div>
                 <tbody>
-                    <tr className="p-2 card d-flex flex-row my-2 bg-white">
+                    <tr className="p-2 card d-flex flex-row my-2 bg-white border-start-0">
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                     </tr>
-                    <tr className="p-2 card d-flex flex-row my-2 bg-white">
+                    <tr className="p-2 card d-flex flex-row my-2 bg-white border-start-0">
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                     </tr>
-                    <tr className="p-2 card d-flex flex-row my-2 bg-white">
+                    <tr className="p-2 card d-flex flex-row my-2 bg-white border-start-0">
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                     </tr>
-                    <tr className="p-2 card d-flex flex-row my-2 bg-white">
+                    <tr className="p-2 card d-flex flex-row my-2 bg-white border-start-0">
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
                     </tr>
-                    <tr className="p-2 card d-flex flex-row my-2 bg-white">
+                    <tr className="p-2 card d-flex flex-row my-2 bg-white border-start-0">
                         <td>12000</td>
                         <td>12000</td>
                         <td>12000</td>
