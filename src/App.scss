@@ -11,3 +11,94 @@ body {
 .bg-primary {
   background-color: #0177fa;
 }
+
+.rc-tooltip {
+  border-radius: 6px !important;
+  opacity: 1 !important;
+}
+
+.border-black-2px {
+  border: 2px solid black;
+}
+
+.border-black-1px {
+  border: 1px solid black;
+}
+
+.radius-10 {
+  border-radius: 10px !important;
+}
+
+tr {
+  border-radius: 0px !important;
+  border: 0px solid #8a8a8a;
+}
+
+thead {
+  tr:first-child {
+    border-radius: 5px !important;
+    border: 1px solid #8a8a8a;
+  }
+}
+
+.bg-wrapper {
+  background-color: none !important;
+  background: #f6f6f6 !important;
+}
+
+.font-600 {
+  font-weight: 600 !important;
+}
+
+.font-500 {
+  font-weight: 500 !important;
+}
+
+.font-400 {
+  font-weight: 400;
+}
+
+.border {
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+.header-cell {
+  width: 7.69%;
+  padding: 10px;
+  padding-left: 0px;
+  padding-right: 0;
+  font-size: 13px;
+  font-family: Montserrat, sans-serif;
+}
+
+.bg-grey {
+  background: #f1f1f1;
+}
+
+tbody {
+  tr {
+    td:first-child {
+      background: white;
+    }
+  }
+}
+
+.font-14px {
+  font-size: 14px !important;
+}
+
+.font-15px {
+  font-size: 15px;
+}
+
+.font-13px {
+  font-size: 13px;
+}
+
+.font-family-Mont {
+  font-family: "Montserrat";
+}
+
+.rc-tooltip-arrow-inner{
+  bottom: 3px !important;
+}
