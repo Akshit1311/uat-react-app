@@ -17,7 +17,7 @@ const LeftNavComponent = () => {
               </span>
               <input
                 type="search"
-                className="form-control ps-2"
+                className="form-control ps-2 font-500"
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="search-addon"
@@ -136,7 +136,7 @@ const LeftNavComponent = () => {
               {" "}
               VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA
             </h6>
-            <span className="sub-heading px-0 my-2 font-600">
+            <span className="sub-heading px-0 my-2">
               You can View Insights of India
             </span>
             <button className="btn shadow-none btn-primary mt-2 btn-view-project">
@@ -150,4 +150,3 @@ const LeftNavComponent = () => {
 };
 
 export default LeftNavComponent;
- 
