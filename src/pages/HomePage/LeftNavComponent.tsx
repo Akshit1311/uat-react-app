@@ -1,6 +1,9 @@
 import "../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { FiChevronDown } from "react-icons/fi";
+import DropDownListComponent from "./DropDownListComponent";
+import { STATES } from "../../shared-data/states";
+import { RoundedBadge } from "../../styles-components/Badge";
 
 const LeftNavComponent = () => {
   return (
@@ -36,14 +39,11 @@ const LeftNavComponent = () => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 States
-                <span className="ms-auto count-text">27</span>
+                <RoundedBadge className="ms-auto me-2">1</RoundedBadge>
+                <span className="count-text">27</span>
               </button>
               <div className="collapse mt-2" id="collapse1">
-                <div className="card card-body">
-                  Some placeholder content for the collapse component. This
-                  panel is hidden by default but revealed when the user
-                  activates the relevant trigger.
-                </div>
+                <DropDownListComponent data={STATES} />
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
