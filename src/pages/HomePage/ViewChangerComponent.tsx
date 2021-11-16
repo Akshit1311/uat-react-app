@@ -6,8 +6,13 @@ import { GiPeru } from "react-icons/gi";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
+import { IDType } from "./Map/variables"
 
-function ViewChangerComponent() {
+interface ViewChangerComponentsTypes {
+  mapMode: IDType
+}
+
+function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
   const stateText = (
     <div className=" px-3"  style={{ paddingTop: '2px' }}>
       <span>State</span>
@@ -26,47 +31,6 @@ function ViewChangerComponent() {
   return (
     <div className="view-changer-component-styles">
       <div className="">
-        {/* <div className="col-12 col-md px-0 mx-0 w-100">
-          <span className="data-range-text">Data Range</span>
-          <Input
-            id="dataRangeSelectBox"
-            name="select"
-            type="select"
-            className="Input-Select-Box shadow-none"
-            style={{ border: "2px solid #0177FA" }}
-          >
-            <option>Select </option>
-            <option> 2 </option>
-            <option> 3 </option>
-            <option> 4 </option>
-            <option> 5 </option>
-          </Input>
-        </div>
-        <div></div>
-        <div className="row icon-row">
-          <div className="col-md-10 col-10">
-            <Tooltip placement="top" overlay={stateText}>
-              <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white">
-                <IoMapSharp size={18} />
-              </button>
-            </Tooltip>
-            <Tooltip placement="top" overlay={cityText}>
-              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
-                <MdOutlineLocationCity size={18} />
-              </button>
-            </Tooltip>
-            <Tooltip placement="top" overlay={districtText}>
-              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
-                <GiPeru size={19} />
-              </button>
-            </Tooltip>
-          </div>
-          <div className="col-md-2 col-2">
-            <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
-              <RiDropFill size={18} />
-            </button>
-          </div>
-        </div> */}
         <div className="mx-1 col-12 d-flex justify-content-between">
           <p className="data-range-text m-0 p-0">Date Range</p>
           <Input
@@ -140,7 +104,7 @@ function ViewChangerComponent() {
         </div>
         <div className="mx-1 col-12 mt-4 pt-0">
           <div className="select-type-card">
-            <h5 className="mb-3">INDIAN STARTUPS</h5>
+            <h5 className="mb-3">{mapMode.name.toUpperCase()} STARTUPS</h5>
             <div>
               <label className="select-type-text">Select Type</label>
               <Input

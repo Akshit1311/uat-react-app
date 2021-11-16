@@ -9,7 +9,8 @@ import "../../scss/HomePageStyles/homePage.scss";
 import { STARTUPLIST } from "../../shared-data/startuplist";
 import { DATATABLEDATA } from "../../shared-data/dataTable";
 import styled from "styled-components";
-import DataTable from './table'
+import DataTable from './table';
+import * as MapVariables from "./Map/variables";
 
 const PageWrapperContainer = styled.div({
   display: "flex",
@@ -22,6 +23,8 @@ const PageWrapper = styled.div({
 });  
 
 const HomePage = () => {
+  const [mapMode, setMapMode] = useState<MapVariables.IDType>(MapVariables.INDIA)
+
   const [startupListActive, setStartupListActive] = useState(true);
   const [startupsListData] = useState(STARTUPLIST);
   const [dataTableData] = useState(DATATABLEDATA);
@@ -41,19 +44,19 @@ const HomePage = () => {
               </div>
               <div className="col-12 col-md px-0 mx-0">
                 <div className="row px-0 mx-0">
-                  <CountsBlockComponent />
+                  <CountsBlockComponent mapMode={mapMode} />
                 </div>
                 <div className="col-12 row px-0 mx-0">
                   <div
                     className="col-12  p-5"
                     style={{ flex: "0 0 auto", width: "61%" }}
                   >
-                    <MapComponent />
+                    <MapComponent setMapMode={setMapMode} mapMode={mapMode} />
                   </div>
                   <div className="col-12 " style={{
                       flex: "0 0 auto", width: "39%"
                   }}>
-                    <ViewChangerComponent />
+                    <ViewChangerComponent mapMode={mapMode} />
                   </div>
                 </div>
               </div>
