@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Badge = styled.span`
+export const Badge = styled.div`
     border-radius: 12px;
     color: black;
     padding: 3px 6px;
@@ -9,4 +9,5 @@ export const Badge = styled.span`
     font-size: 12px;
     line-height: 150%;
     background-color: #E0E0E0;
+    width: fit-content;
   `;

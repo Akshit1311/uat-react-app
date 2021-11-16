@@ -36,10 +36,10 @@ export default function IndiaMap() {
     return WHITE;
   };
 
-  const fillBorder = (stateId: string) => {
-    if (fillHover(stateId)) return THEME_COLOR;
-    if (fillClick(stateId)) return WHITE;
-    return BLACK;
+  const fillStroke = (stateId: string) => {
+    if (fillHover(stateId)) return 1.5;
+    if (fillClick(stateId)) return 1.7;
+    return 1;
   };
 
   const handleMouseEnter = (state: MapType, mouseEvent: any) => {
@@ -55,7 +55,7 @@ export default function IndiaMap() {
       states.splice(isSelected, 1);
       return setActiveStates(states);
     }
-    setActiveStates((prevState: Array<MapType>) => [...prevState, state]);
+    setActiveStates([state]);
   };
 
   useEffect(() => {
@@ -73,14 +73,26 @@ export default function IndiaMap() {
   }, []);
 
   return (
-    <div className="m-2 mt-0">
+    <div className="m-2 mt-0" style={{ position: "relative" }}>
+      <div className="gradient-bar-map d-flex justify-content-between">
+        <p className="min-gradient-bar">0</p>
+        <p className="max-gradient-bar">2000</p>
+      </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={MAP_AREA}
         aria-label="Map of India"
       >
         {indiaMap.map((state: MapType) => (
-          <Tooltip placement="top" arrowContent={<div className="rc-tooltip-arrow-inner"></div>}  overlay={<p className="px-2">{state.accessor.name}</p>}>
+          <Tooltip
+            placement="top"
+            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+            overlay={
+              <p style={{ paddingTop: "1px" }} className="px-2">
+                {state.accessor.name}
+              </p>
+            }
+          >
             <path
               onMouseEnter={(e) => handleMouseEnter(state, e)}
               onMouseLeave={handleStateMouseLeave}
@@ -89,8 +101,8 @@ export default function IndiaMap() {
               d={state.d}
               id={state.id}
               fill={fillStates(state.id)}
-              stroke={fillBorder(state.id)}
-              strokeWidth="1"
+              stroke={BLACK}
+              strokeWidth={fillStroke(state.id)}
             />
           </Tooltip>
         ))}

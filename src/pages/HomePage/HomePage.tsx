@@ -19,7 +19,7 @@ const PageWrapperContainer = styled.div({
 const PageWrapper = styled.div({
   maxWidth: "1366px",
   minWidth: "1080px",
-});
+});  
 
 const HomePage = () => {
   const [startupListActive, setStartupListActive] = useState(true);

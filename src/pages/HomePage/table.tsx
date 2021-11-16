@@ -1,4 +1,5 @@
 import React from "react";
+import SearchBarComponent from "../../components/SearchBarComponent";
 
 interface HeaderType {
   children: React.ReactNode;
@@ -42,7 +43,7 @@ const Header = ({
             borderLeft: borderLeftA,
           }}
         />
-        <p className="my-0 p-0 d-flex align-items-center" style={{ marginLeft: '0.4rem' }}>{children}</p>
+        <p className="my-0 p-0 d-flex align-items-center" style={{marginLeft:'0.4rem'}}>{children}</p>
       </div>
     </th>
   );
@@ -57,28 +58,28 @@ export default function DataTable(props: any) {
             className="card d-flex flex-row justify-content-between"
             style={{ background: "white" }}
           >
-            <Header fontWeight={true} borderLeft={true} borderWidth={"0px"}>
+            <Header fontWeight={true}  borderLeft={true} borderWidth={"0px"}>
               States
             </Header>
-            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
-              Total Startups
+            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
+              {'Total'}<br />Startups
             </Header>
-            <Header fontWeight={true} borderStyle={"dashed"}>FFS</Header>
-            <Header fontWeight={true} borderStyle={"dashed"}>Patient Startups</Header>
-            <Header fontWeight={true} borderStyle={"dashed"}>Seed Fund Startups</Header>
-            <Header fontWeight={true} borderStyle={"dashed"}>Showcased Startups</Header>
-            <Header fontWeight={true} borderStyle={"dashed"}>DDIIT Recognised Startups</Header>
-            <Header fontWeight={true} borderStyle={"dashed"}>Women Owned</Header>
-            <Header fontWeight={true} borderColor={"#8a8a8a"} borderStyle={"solid"}>
+            <Header fontWeight={true}  borderStyle={"dashed"}>FFS</Header>
+            <Header fontWeight={true}  borderStyle={"dashed"}>Patient Startups</Header>
+            <Header fontWeight={true}  borderStyle={"dashed"}>Seed Fund Startups</Header>
+            <Header fontWeight={true}  borderStyle={"dashed"}>Showcased Startups</Header>
+            <Header fontWeight={true}  borderStyle={"dashed"}>DDIIT Recognised Startups</Header>
+            <Header fontWeight={true}  borderStyle={"dashed"}>Women Owned</Header>
+            <Header fontWeight={true}  borderColor={"#8a8a8a"} borderStyle={"solid"}>
               Mentors
             </Header>
-            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
               Incubators
             </Header>
-            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
               Investors
             </Header>
-            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
               Accelerators
             </Header>
             <Header
@@ -91,6 +92,9 @@ export default function DataTable(props: any) {
             </Header>
           </tr>
         </thead>
+        <div className="mt-3 mb-2" style={{ maxWidth: '22rem' }}>
+          <SearchBarComponent background="white" borderRadius="4px" placeholderClass="search-bar-placeholder-data-table" />
+        </div>
         <tbody>
           <tr className="d-flex bg-grey mt-2 flex-row justify-content-between">
             <Header

@@ -35,16 +35,19 @@
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    margin-right: 4rem;
+    width: 100%;
+    margin-left: 12px;
+    margin-right: 12px;
     color: black;
+    height: 36px;
   }
   .data-range-text {
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
-    // line-height: 150%;
     align-self: center;
     color: black;
+    white-space: nowrap;
   }
   .icon-row {
     margin-top: 40px;
@@ -55,8 +58,8 @@
     border: 2px solid #0177fa;
     box-sizing: border-box;
     border-radius: 4px;
-    width: 44px;
-    height: 34px;
+    width: 47px;
+    height: 36px;
     margin-right: 12px;
   }
   .icon-row {
