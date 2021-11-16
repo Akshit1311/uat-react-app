@@ -23,7 +23,7 @@ interface CountCardWrapperTypes {
   borderColor: string;
 }
 
-const CountCardWrapper = styled.div<any>(
+const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   {
     borderRadius: "4px",
     height: "98px",
@@ -53,6 +53,7 @@ const CountCard = ({
   return (
     <>
       <CountCardWrapper
+        onClick={() => setActiveCard(name)}
         active={active}
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
