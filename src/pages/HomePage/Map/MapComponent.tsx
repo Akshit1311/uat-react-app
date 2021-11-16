@@ -1,6 +1,13 @@
 import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
 import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
+import { IDType } from "./variables";
+
+interface IndiaMapTypes {
+  mapMode: IDType;
+  setMapMode: React.Dispatch<React.SetStateAction<IDType>>
+
+}
 
 const MAP_AREA = "0 0 650 696";
 const WHITE = "#ffffff";
@@ -11,7 +18,7 @@ const ID = "id";
 
 const INITIAL_TOOLTIP_STATE = { visible: false, x: 0, y: 0 };
 
-export default function IndiaMap() {
+export default function IndiaMap({mapMode, setMapMode}:IndiaMapTypes) {
   const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -55,6 +62,7 @@ export default function IndiaMap() {
       states.splice(isSelected, 1);
       return setActiveStates(states);
     }
+    setMapMode(state.accessor)
     setActiveStates([state]);
   };
 
