@@ -23,7 +23,7 @@ const PageWrapper = styled.div({
 });  
 
 const HomePage = () => {
-  const [mapMode, setMapMode] = useState<MapVariables.IDType>(MapVariables.AS)
+  const [mapMode, setMapMode] = useState<MapVariables.IDType>(MapVariables.INDIA)
 
   const [startupListActive, setStartupListActive] = useState(true);
   const [startupsListData] = useState(STARTUPLIST);
