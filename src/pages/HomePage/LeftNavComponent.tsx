@@ -4,8 +4,9 @@ import { FiChevronDown } from "react-icons/fi";
 import DropDownListComponent from "./DropDownListComponent";
 import { STATES } from "../../shared-data/states";
 import { RoundedBadge } from "../../styles-components/Badge";
-
+import { useState } from 'react'
 const LeftNavComponent = () => {
+  const [stateCounter, setStateCounter] = useState(false);
   return (
     <>
       <div className="left-side-nav-styles">
@@ -36,11 +37,14 @@ const LeftNavComponent = () => {
                 data-bs-target="#collapse1"
                 aria-expanded="false"
                 aria-controls="collapse1"
+                onClick={() => setStateCounter(!stateCounter)}
               >
                 <FiChevronDown className="me-2" size={15} />
                 States
-                <RoundedBadge className="ms-auto me-2">1</RoundedBadge>
-                <span className="count-text">27</span>
+                {stateCounter && <RoundedBadge className="ms-auto me-3">1</RoundedBadge>}
+                {stateCounter && <span className="count-text">27</span>}
+                {!stateCounter && <span className="count-text ms-auto">27</span>}
+
               </button>
               <div className="collapse mt-2" id="collapse1">
                 <DropDownListComponent data={STATES} />

@@ -5,7 +5,7 @@ const DropDownListComponent = (props: any) => {
     const StateList = data.map((state: any) => {
         return (
             <>
-                <div className="list-card me-1">
+                <div className="list-card me-2">
                     <h5 className="m-0 p-0">{state.state}</h5>
                 </div>
             </>
@@ -16,8 +16,8 @@ const DropDownListComponent = (props: any) => {
         <div className="drop-down-list-component">
             <div className="state-search-bar me-1">
                 <div className="input-grou d-flex">
-                    <span className="btn my-0"><GoSearch /></span>
-                    <input type="text" className="form-control me-3 border-0 shadow-none f-500" placeholder="Search" />
+                    <span className="btn my-0 me-0 pe-0"><GoSearch /></span>
+                    <input type="text" className="ms-0 form-control me-3 border-0 shadow-none f-400" placeholder="Search" />
                 </div>
             </div>
             <div className="state-container">
