@@ -6,28 +6,33 @@ import { GiPeru } from "react-icons/gi";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
+import { IDType } from "./Map/variables"
 
-function ViewChangerComponent() {
+interface ViewChangerComponentsTypes {
+  mapMode: IDType
+}
+
+function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
   const stateText = (
-    <div className=" px-3">
+    <div className=" px-3"  style={{ paddingTop: '2px' }}>
       <span>State</span>
     </div>
   );
   const districtText = (
-    <div className=" px-3">
+    <div className=" px-3" style={{ paddingTop: '2px' }}>
       <span>District</span>
     </div>
   );
   const cityText = (
-    <div className=" px-3">
+    <div className=" px-3"  style={{ paddingTop: '2px' }}>
       <span>City</span>
     </div>
   );
   return (
     <div className="view-changer-component-styles">
       <div className="">
-        <div className="mx-1 col-12 d-flex">
-          <p className="data-range-text w-50 m-0 p-0">Date Range</p>
+        <div className="mx-1 col-12 d-flex justify-content-between">
+          <p className="data-range-text m-0 p-0">Date Range</p>
           <Input
             id="dataRangeSelectBox"
             name="select"
@@ -40,7 +45,12 @@ function ViewChangerComponent() {
             <option> Last 6 Months </option>
             <option> Last 9 Months </option>
           </Input>
-          <div />
+          <button style={{ visibility: 'hidden' }} className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+            <MdOutlineLocationCity
+              style={{ marginTop: "-7px", marginLeft: "-1px" }}
+              size={18}
+            />
+          </button>
         </div>
         <div className="mx-1 col-12 mt-4">
           <div className="d-flex justify-content-between">
@@ -51,7 +61,10 @@ function ViewChangerComponent() {
                 overlay={stateText}
               >
                 <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white">
-                  <IoMapSharp size={18} style={{ marginTop: "-7px", marginLeft: '-1px' }} />
+                  <IoMapSharp
+                    size={18}
+                    style={{ marginTop: "-5px", marginLeft: "-1px" }}
+                  />
                 </button>
               </Tooltip>
               <Tooltip
@@ -61,7 +74,7 @@ function ViewChangerComponent() {
               >
                 <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
                   <MdOutlineLocationCity
-                    style={{ marginTop: "-7px", marginLeft: '-1px' }}
+                    style={{ marginTop: "-5px", marginLeft: "1px" }}
                     size={18}
                   />
                 </button>
@@ -72,20 +85,26 @@ function ViewChangerComponent() {
                 overlay={districtText}
               >
                 <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
-                  <GiPeru style={{ marginTop: "-7px", marginLeft: '-1px' }} size={18} />
+                  <GiPeru
+                    style={{ marginTop: "-6px", marginLeft: "-1px" }}
+                    size={18}
+                  />
                 </button>
               </Tooltip>
             </div>
             <div>
               <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
-                <RiDropFill size={18} style={{ marginTop: "-7px", marginLeft: '-1px' }} />
+                <RiDropFill
+                  size={18}
+                  style={{ marginTop: "-7px", marginLeft: "-1px" }}
+                />
               </button>
             </div>
           </div>
         </div>
         <div className="mx-1 col-12 mt-4 pt-0">
           <div className="select-type-card">
-            <h5 className="mb-3">INDIAN STARTUPS</h5>
+            <h5 className="mb-3">{mapMode.name.toUpperCase()} STARTUPS</h5>
             <div>
               <label className="select-type-text">Select Type</label>
               <Input
@@ -107,6 +126,34 @@ function ViewChangerComponent() {
             </div>
           </div>
         </div>
+        {/* <div
+          className="mx-1 col-12"
+          style={{ background: "red", height: "50px" }}
+        ></div> */}
+        {/* <div className="row select-type-card">
+          <h5>INDIAN STARTUPS</h5>
+          <div>
+            <label className="select-type-text">Select Type</label>
+            <Input
+              id="exampleSelect"
+              name="select"
+              type="select"
+              className="Input-Select-Box2 shadow-none"
+            >
+              <option>All Startups </option>
+              <option> 2 </option>
+              <option> 3 </option>
+              <option> 4 </option>
+              <option> 5 </option>
+            </Input>
+          </div>
+          <div className="">
+            <div className="card d-flex flex-row align-items-center">
+              <h3>10254</h3>
+              <span className="selected-startups">All Startups</span>
+            </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );

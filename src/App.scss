@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
   margin: 0;
@@ -29,6 +30,32 @@ body {
   border-radius: 10px !important;
 }
 
+.gradient-bar-map {
+  background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
+  width: 260px;
+  height: 10px;
+  border-radius: 20px;
+  position: absolute;
+  right: 2.1rem;
+  top: 0px;
+}
+
+.min-gradient-bar {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.max-gradient-bar {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
 tr {
   border-radius: 0px !important;
   border: 0px solid #8a8a8a;
@@ -43,7 +70,9 @@ thead {
 
 .bg-wrapper {
   background-color: none !important;
-  background: #f6f6f6 !important;
+  background: linear-gradient(180deg, #fafbff 0%, #f6f6f6 100%) !important;
+  background-size: cover;
+  background-repeat: no-repeat !important;
 }
 
 .font-600 {
@@ -99,6 +128,61 @@ tbody {
   font-family: "Montserrat";
 }
 
-.rc-tooltip-arrow-inner{
+.rc-tooltip-arrow-inner {
   bottom: 3px !important;
+}
+
+.mt-2-5 {
+  margin-top: 0.7rem !important;
+}
+.me-2-5 {
+  margin-right: 0.7rem !important;
+}
+
+.search-bar-placeholder::-webkit-input-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 500;
+  color: #000000;
+}
+.search-bar-placeholder::-moz-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 500;
+  color: #000000;
+}
+.search-bar-placeholder::-ms-input-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 500;
+  color: #000000;
+}
+
+.search-bar-placeholder-data-table::-webkit-input-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 400;
+  color: #000000;
+}
+.search-bar-placeholder-data-table::-moz-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 400;
+  color: #000000;
+}
+.search-bar-placeholder-data-table::-ms-input-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 400;
+  color: #000000;
+}
+
+.search-bar-left::-webkit-input-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 500;
+  color: #000000;
+}
+.search-bar-left::-moz-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 500;
+  color: #000000;
+}
+.search-bar-left::-ms-input-placeholder {
+  font-family: "Poppins" sans-serif;
+  font-weight: 500;
+  color: #000000;
 }
