@@ -71,7 +71,7 @@ const HomePage = () => {
             <div className="row d-flex justify-content-center px-0 mx-0">
               <div className="btn-group text-center col-md-3 border button-togglers">
                 <button
-                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius px-3 ${startupListActive && "btn-primary text-white"
+                  className={`font-500 font-14px font-family-Mont shadow-none btn btn-radius px-3 ${startupListActive && "btn-primary text-white"
                     }`}
                   onClick={toggleStartUp}
                 >

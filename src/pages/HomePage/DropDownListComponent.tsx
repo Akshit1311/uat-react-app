@@ -1,12 +1,14 @@
 import { GoSearch } from 'react-icons/go';
 import '../../scss/HomePageStyles/dropDownListComponent.scss';
+
+
 const DropDownListComponent = (props: any) => {
-    const { data } = props;
-    const StateList = data.map((state: any) => {
+    const { data, setStateHandler } = props;
+    const StateList = data.map((state: any, index: string) => {
         return (
             <>
                 <div className="list-card me-2">
-                    <h5 className="m-0 p-0">{state.state}</h5>
+                    <h5 className="m-0 p-0" onClick={() => setStateHandler(index + 1)}>{state.state}</h5>
                 </div>
             </>
         )
