@@ -2,6 +2,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import SearchBarComponent from "../../components/SearchBarComponent";
 import { Badge } from "../../styles-components/Badge";
 import "../../scss/HomePageStyles/startupsListComponent.scss";
+import MapComponent from "./Map/MapComponent";
 
 function EmptyStartUp() {
   return (
@@ -60,6 +61,9 @@ function StartupsListComponent(props: any) {
             </div>
             <div className="row px-3">{startupList}</div>
           </div>
+        </div>
+        <div className="col-12 col-md pt-5 mt-5">
+          <MapComponent />
         </div>
       </div>
     </div>

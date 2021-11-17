@@ -7,7 +7,7 @@ const SearchBarComponent = () => {
             <div className="search input-group px-0">
                 <span className="btn search-icon"><GoSearch /></span>
                 <input type="text" className="form-control me-3 search-input shadow-none" placeholder="Search" />
-                <button className="btn btn-primary search-btn">Search</button>
+                <button className="btn btn-primary btn-radius search-btn">Search</button>
             </div>
         </div>
     )

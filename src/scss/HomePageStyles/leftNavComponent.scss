@@ -15,6 +15,8 @@
     button {
         font-weight: 500;
         font-size: 14px;
+        line-height: calc(16px + 0.5rem);
+        margin-top: 2px;
     }
     .card-heading-left-bottom {
         font-weight: 600;
@@ -23,6 +25,11 @@
     }
     .border-bottom-filter {
         border-bottom: 0.5px solid lightgray !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        line-height: 21px;
+    }
+    .border-bottom-filter-last-element {
         padding-left: 16px !important;
         padding-right: 16px !important;
         line-height: 21px;
@@ -45,7 +52,7 @@
     }
     .search-bar {
         background: #ffffff;
-        box-shadow: 0px 0px 4px rgba(193, 193, 193, 0.25);
+        box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25);
         search-icon {
             background-color: #ffffff !important;
         }

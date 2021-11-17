@@ -1,34 +1,184 @@
-export const AP = "ap"; // andra pradesh
-export const AR = "ar"; // arunachal pradesh
-export const AS = "as"; // assam
-export const BR = "br"; // bihar
-export const CH = "ch"; // chandigarh
-export const DN = "dn"; // chhattisgarh
-export const DD = "dd"; // dadra and nagar haveli
-export const DL = "dl"; // daman and diu
-export const GA = "ga"; // delhi
-export const GJ = "gj"; // goa
-export const HR = "hr"; // Gujarat
-export const HP = "hp"; // himachal Pradesh
-export const JK = "jk"; // jammu kashmir
-export const JH = "jh"; // jharkhand
-export const KA = "ka"; // karnatka
-export const KL = "kl"; // kerla
-export const LD = "ld"; // lakshadweep
-export const MP = "mp"; // madhya pradesh
-export const MH = "mh"; // maharastra
-export const MN = "mn"; // manipur
-export const ML = "ml"; // meghalaya
-export const MZ = "mz"; // Mizoram
-export const NL = "nl"; // nagaland
-export const OR = "or"; // odisha
-export const PY = "py"; // punducherry
-export const PB = "pb"; // punjab
-export const RJ = "rj"; // rajasthan
-export const SK = "sk"; // sikkim
-export const TN = "tn"; // tamil nadu
-export const TG = "tg"; // telangana
-export const TR = "tr"; // tripura
-export const UP = "up"; // uttar presdesh
-export const UT = "ut"; // Uttarakhand
-export const WB = "wb"; // west bengal
+export interface IDType {
+    name: string;
+    id: string;
+  }
+  
+  export const INDIA: IDType = {
+    id: "india",
+    name: "India",
+  };
+  
+  export const AP: IDType = {
+    id: "ap",
+    name: "Andra Pradesh",
+  };
+  export const CT: IDType = {
+    id: "ct",
+    name: "Chattisgarh",
+  };
+  
+  export const AR: IDType = {
+    id: "ar",
+    name: "Arunachal Pradesh",
+  };
+  
+  export const AS: IDType = {
+    id: "as",
+    name: "Assam",
+  };
+  
+  export const BR: IDType = {
+    id: "br",
+    name: "Bihar",
+  };
+  
+  export const CH: IDType = {
+    id: "ch",
+    name: "Chandigarh",
+  };
+  
+  export const DN: IDType = {
+    id: "dn",
+    name: "Dadra and Nagar Haveli",
+  };
+  
+  export const DD: IDType = {
+    id: "dd",
+    name: "Daman and Diu",
+  };
+  
+  export const DL: IDType = {
+    id: "dl",
+    name: "Delhi",
+  };
+  
+  export const GA: IDType = {
+    id: "ga",
+    name: "Goa",
+  };
+  
+  export const GJ: IDType = {
+    id: "gj",
+    name: "Gujrat",
+  };
+  
+  export const HR: IDType = {
+    id: "hr",
+    name: "Haryana",
+  };
+  
+  export const HP: IDType = {
+    id: "hp",
+    name: "Himachal Pradesh",
+  };
+  
+  export const JK: IDType = {
+    id: "jk",
+    name: "Jammu Kashmir",
+  };
+  
+  export const JH: IDType = {
+    id: "jh",
+    name: "Jharkhand",
+  };
+  
+  export const KA: IDType = {
+    id: "ka",
+    name: "Karnatka",
+  };
+  
+  export const KL: IDType = {
+    id: "kl",
+    name: "Kerla",
+  };
+  
+  export const LD: IDType = {
+    id: "ld",
+    name: "Lakshadweep",
+  };
+  
+  export const MP: IDType = {
+    id: "mp",
+    name: "Madhya Pradesh",
+  };
+  
+  export const MH: IDType = {
+    id: "mh",
+    name: "Maharastra",
+  };
+  
+  export const MN: IDType = {
+    id: "mn",
+    name: "Manipur",
+  };
+  
+  export const ML: IDType = {
+    id: "ml",
+    name: "Meghalaya",
+  };
+  
+  export const MZ: IDType = {
+    id: "mz",
+    name: "Mizoram",
+  };
+  
+  export const NL: IDType = {
+    id: "nl",
+    name: "Nagaland",
+  };
+  
+  export const OR: IDType = {
+    id: "or",
+    name: "Odisha",
+  };
+  
+  export const PY: IDType = {
+    id: "py",
+    name: "Punducherry",
+  };
+  
+  export const PB: IDType = {
+    id: "pb",
+    name: "Punjab",
+  };
+  
+  export const RJ: IDType = {
+    id: "rj",
+    name: "Rajasthan",
+  };
+  
+  export const SK: IDType = {
+    id: "sk",
+    name: "Sikkim",
+  };
+  
+  export const TN: IDType = {
+    id: "tn",
+    name: "Tamil Nadu",
+  };
+  
+  export const TG: IDType = {
+    id: "tg",
+    name: "Telangana",
+  };
+  
+  export const TR: IDType = {
+    id: "tr",
+    name: "Tripura",
+  };
+  
+  export const UP: IDType = {
+    id: "up",
+    name: "Uttar Predesh",
+  };
+  
+  export const UT: IDType = {
+    id: "ut",
+    name: "Uttarakhand",
+  };
+  
+  export const WB: IDType = {
+    id: "wb",
+    name: "West Bengal",
+  };
+  
