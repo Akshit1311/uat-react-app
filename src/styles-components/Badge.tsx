@@ -11,3 +11,13 @@ export const Badge = styled.div`
     background-color: #E0E0E0;
     width: fit-content;
   `;
+
+export const RoundedBadge = styled.span`
+    padding-top: 3px;
+    color: #feffff;
+    padding-bottom: 3px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: #0177fa;
+    border-radius: 50%;
+  `

@@ -6,7 +6,7 @@ const DataTable2Component = () => {
             <table id="data-right-table">
                 <thead>
                     <tr className="card d-flex border-dark flex-row mt-3 p-2" style={{ height: "85px" }}>
-                        <th style={{ marginLeft: "-0.5rem !important"}}>Mentors</th>
+                        <th style={{ marginLeft: "-0.5rem !important" }}>Mentors</th>
                         <th>Incubators</th>
                         <th>Investors</th>
                         <th>Accelerators</th>

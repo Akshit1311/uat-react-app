@@ -1,4 +1,4 @@
-import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
@@ -18,7 +18,7 @@ const ID = "id";
 
 const INITIAL_TOOLTIP_STATE = { visible: false, x: 0, y: 0 };
 
-export default function IndiaMap({mapMode, setMapMode}:IndiaMapTypes) {
+export default function IndiaMap({ mapMode, setMapMode }: IndiaMapTypes) {
   const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
