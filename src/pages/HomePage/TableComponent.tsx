@@ -49,7 +49,7 @@ const Header = ({
   );
 };
 
-export default function DataTable(props: any) {
+export default function DataTableComponent(props: any) {
   return (
     <div className="w-100 data-table p-0 m-0">
       <table className="w-100">

@@ -1,8 +1,17 @@
 import "../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { FiChevronDown } from "react-icons/fi";
-
+import DropDownListComponent from "./DropDownListComponent";
+import { STATES } from "../../shared-data/states";
+import { RoundedBadge } from "../../styles-components/Badge";
+import { useState } from 'react'
 const LeftNavComponent = () => {
+  const [stateCounter, setStateCounter] = useState(false);
+  const [stateNumber, setStateNumber] = useState(0);
+
+  function setStateHandler(val: number) {
+    setStateNumber(val);
+  }
   return (
     <>
       <div className="left-side-nav-styles">
@@ -33,17 +42,17 @@ const LeftNavComponent = () => {
                 data-bs-target="#collapse1"
                 aria-expanded="false"
                 aria-controls="collapse1"
+                onClick={() => setStateCounter(!stateCounter)}
               >
                 <FiChevronDown className="me-2" size={15} />
                 States
-                <span className="ms-auto count-text">27</span>
+                {stateCounter && <RoundedBadge className="ms-auto me-3">{stateNumber}</RoundedBadge>}
+                {stateCounter && <span className="count-text">27</span>}
+                {!stateCounter && <span className="count-text ms-auto">27</span>}
+
               </button>
               <div className="collapse mt-2" id="collapse1">
-                <div className="card card-body">
-                  Some placeholder content for the collapse component. This
-                  panel is hidden by default but revealed when the user
-                  activates the relevant trigger.
-                </div>
+                <DropDownListComponent data={STATES} setStateHandler={(num: any) => setStateHandler(num)} />
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
@@ -150,4 +159,3 @@ const LeftNavComponent = () => {
 };
 
 export default LeftNavComponent;
- 
