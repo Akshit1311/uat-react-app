@@ -1,5 +1,6 @@
 import { GoSearch } from "react-icons/go";
 import "../scss/searchBarComponent.scss";
+import { Button } from "../styles-components/Button";
 
 interface SearchTypes {
   background?: string;
@@ -38,9 +39,7 @@ const SearchBarComponent = ({
             borderBottomRightRadius: borderRadiusAll,
           }}
         />
-        <button  className="btn btn-primary btn-radius search-btn" style={{ fontFamily: "Montserrat", paddingTop: '7px', fontWeight: 600 }}  >
-          Search
-        </button>
+        <Button width={"111px"} className="font-family-Mont btn-radius">Search</Button>
       </div>
     </div>
   );

@@ -41,14 +41,7 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   }
 );
 
-const CountCard = ({
-  activeCard,
-  name,
-  state,
-  setActiveCard,
-  borderColor,
-  accessor,
-}: CountCard) => {
+const CountCard = ({ activeCard, name, state, setActiveCard, borderColor, accessor }: CountCard) => {
   const active = name === activeCard;
   return (
     <>
@@ -86,27 +79,12 @@ const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
         <h5>{mapMode.name}</h5>
       </div>
       <div className="row count-div">
-        <CountCard
-          {...resources}
-          borderColor="#0177FA"
-          accessor="Startup"
-          name="Startups"
-        />
-        <CountCard
-          {...resources}
-          borderColor="#ED8E00"
-          accessor="Mentor"
-          name="Mentors"
-        />
+        <CountCard {...resources} borderColor="#0177FA" accessor="Startup" name="Startups" />
+        <CountCard {...resources} borderColor="#ED8E00" accessor="Mentor" name="Mentors" />
         <CountCard {...resources} borderColor="#7838e0" name="Incubator" />
         <CountCard {...resources} borderColor="#BDAA00" name="Investor" />
         <CountCard {...resources} borderColor="#CB3535" name="Accelerator" />
-        <CountCard
-          {...resources}
-          borderColor="#00AD11"
-          accessor="GovernmentBody"
-          name="Government"
-        />
+        <CountCard {...resources} borderColor="#00AD11" accessor="GovernmentBody" name="Government" />
       </div>
     </div>
   );

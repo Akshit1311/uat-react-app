@@ -1,5 +1,6 @@
 import { GoSearch } from 'react-icons/go';
 import '../../scss/HomePageStyles/dropDownListComponent.scss';
+import { Button } from '../../styles-components/Button';
 
 
 const DropDownListComponent = (props: any) => {
@@ -19,15 +20,25 @@ const DropDownListComponent = (props: any) => {
             <div className="state-search-bar me-1">
                 <div className="input-grou d-flex">
                     <span className="btn my-0 me-0 pe-0"><GoSearch /></span>
-                    <input type="text" className="ms-0 form-control me-3 border-0 shadow-none f-400" placeholder="Search" />
+                    <input
+                        type="text"
+                        className="ms-0 form-control me-3 border-0 shadow-none f-400"
+                        placeholder="Search" />
                 </div>
             </div>
             <div className="state-container">
                 {StateList}
             </div>
             <div className="my-3 d-flex justify-content-between">
-                <span className="btn btn-white border-dark text-dark me-2" style={{ flex: "48%" }}>Clear</span>
-                <span className="btn btn-primary text-white" style={{ flex: "48%" }}>Apply</span>
+                <Button
+                    border={"2px solid #000"}
+                    backgroundColor={"#fff"}
+                    color={"black"}
+                    boxShadow={"0px 0px 10px rgba(193, 193, 193, 0.25)"}
+                >Clear</Button>
+                <Button
+                    marginLeft={"12px"}
+                >Apply</Button>
             </div>
         </div >
     )

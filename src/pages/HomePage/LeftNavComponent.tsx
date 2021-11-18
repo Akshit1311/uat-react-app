@@ -5,6 +5,8 @@ import DropDownListComponent from "./DropDownListComponent";
 import { STATES } from "../../shared-data/states";
 import { RoundedBadge } from "../../styles-components/Badge";
 import { useState } from 'react'
+import { Button } from "../../styles-components/Button";
+
 const LeftNavComponent = () => {
   const [stateCounter, setStateCounter] = useState(false);
   const [stateNumber, setStateNumber] = useState(0);
@@ -12,6 +14,7 @@ const LeftNavComponent = () => {
   function setStateHandler(val: number) {
     setStateNumber(val);
   }
+
   return (
     <>
       <div className="left-side-nav-styles">
@@ -148,9 +151,25 @@ const LeftNavComponent = () => {
             <span className="sub-heading px-0 mb-2 font-500">
               You can View Insights of India
             </span>
-            <button className="btn shadow-none btn-primary mt-2 btn-view-project">
-              View Insights
-            </button>
+            <div className="btn-view-project d-flex align-items-center ">
+              <Button
+                width={"225px"}
+              >View Insights</Button>
+            </div>
+          </div>
+          <div className="left-nav-bottom-card row bg-white pt-3 ">
+            <h6 className="px-0 card-heading-left-bottom">
+              {" "}
+              DOWNLOAD
+            </h6>
+            <span className="sub-heading px-0 mb-2 font-500">
+              You can download data & the map of current screen
+            </span>
+            <div className="btn-view-project d-flex align-items-center ">
+              <Button
+                width={"225px"}
+              >Download</Button>
+            </div>
           </div>
         </div>
       </div>
