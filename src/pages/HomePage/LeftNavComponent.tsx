@@ -36,7 +36,7 @@ const LeftNavComponent = () => {
               />
             </div>
           </div>
-          <div className="row mb-3 px-2 py-0 bg-white dropdown-card">
+          <div className="row mb-3 ps-2 pe-0 py-0 bg-white dropdown-card">
             <div className="border-bottom-filter pt-2">
               <button
                 className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1"
@@ -157,7 +157,7 @@ const LeftNavComponent = () => {
               >View Insights</Button>
             </div>
           </div>
-          <div className="left-nav-bottom-card row bg-white pt-3 ">
+          {/* <div className="left-nav-bottom-card row bg-white pt-3 ">
             <h6 className="px-0 card-heading-left-bottom">
               {" "}
               DOWNLOAD
@@ -170,7 +170,7 @@ const LeftNavComponent = () => {
                 width={"225px"}
               >Download</Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

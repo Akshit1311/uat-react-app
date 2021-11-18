@@ -16,9 +16,9 @@ const DropDownListComponent = (props: any) => {
     });
 
     return (
-        <div className="drop-down-list-component">
-            <div className="state-search-bar me-1">
-                <div className="input-grou d-flex">
+        <div className="drop-down-list-component pe-0 me-0">
+            <div className="state-search-bar me-3">
+                <div className="d-flex">
                     <span className="btn my-0 me-0 pe-0"><GoSearch /></span>
                     <input
                         type="text"
@@ -29,7 +29,7 @@ const DropDownListComponent = (props: any) => {
             <div className="state-container">
                 {StateList}
             </div>
-            <div className="my-3 d-flex justify-content-between">
+            <div className="my-3 d-flex justify-content-between me-3">
                 <Button
                     border={"2px solid #000"}
                     backgroundColor={"#fff"}
