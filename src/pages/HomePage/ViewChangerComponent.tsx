@@ -6,25 +6,27 @@ import { GiPeru } from "react-icons/gi";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
-import { IDType } from "./Map/variables"
+import { IDType } from "./Map/variables";
 
 interface ViewChangerComponentsTypes {
-  mapMode: IDType
+  selectedArea: IDType;
+  mapMode: IDType;
+  setMapMode: React.Dispatch<React.SetStateAction<IDType>>;
 }
 
-function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
+function ViewChangerComponent({ selectedArea , mapMode}: ViewChangerComponentsTypes) {
   const stateText = (
-    <div className=" px-3"  style={{ paddingTop: '2px' }}>
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>State</span>
     </div>
   );
   const districtText = (
-    <div className=" px-3" style={{ paddingTop: '2px' }}>
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>District</span>
     </div>
   );
   const cityText = (
-    <div className=" px-3"  style={{ paddingTop: '2px' }}>
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>City</span>
     </div>
   );
@@ -45,7 +47,10 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
             <option> Last 6 Months </option>
             <option> Last 9 Months </option>
           </Input>
-          <button style={{ visibility: 'hidden' }} className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+          <button
+            style={{ visibility: "hidden" }}
+            className="bg-white text-dark shadow-none btn btn-icon-handler border-primary"
+          >
             <MdOutlineLocationCity
               style={{ marginTop: "-7px", marginLeft: "-1px" }}
               size={18}
@@ -104,7 +109,7 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
         </div>
         <div className="mx-1 col-12 mt-4 pt-0">
           <div className="select-type-card">
-            <h5 className="mb-3">{mapMode.name.toUpperCase()} STARTUPS</h5>
+            <h5 className="mb-3">{selectedArea.name.toUpperCase()} STARTUPS</h5>
             <div>
               <label className="select-type-text">Select Type</label>
               <Input
@@ -124,6 +129,17 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
             </div>
+            <button
+              className="btn btn-primary btn-radius search-btn w-100 mt-3"
+              style={{
+                fontFamily: "Montserrat",
+                paddingTop: "7px",
+                fontWeight: 600,
+                fontSize: '14px'
+              }}
+            >
+              View Insight 
+            </button>
           </div>
         </div>
         {/* <div

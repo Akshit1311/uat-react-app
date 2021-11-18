@@ -6,7 +6,7 @@ import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
 
 interface CountBlockTypes {
-  mapMode: IDType;
+  selectedArea: IDType;
 }
 
 interface CountCard {
@@ -67,7 +67,7 @@ const CountCard = ({
   );
 };
 
-const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
+const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
   const [fetch, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
 
@@ -83,7 +83,7 @@ const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
-        <h5>{mapMode.name}</h5>
+        <h5>{selectedArea.name}</h5>
       </div>
       <div className="row count-div">
         <CountCard

@@ -4,9 +4,9 @@ import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
 
 interface IndiaMapTypes {
-  mapMode: IDType;
-  setMapMode: React.Dispatch<React.SetStateAction<IDType>>
-
+  selectedArea: IDType;
+  setSelectedArea: React.Dispatch<React.SetStateAction<IDType>>
+  mapMode: IDType
 }
 
 const MAP_AREA = "0 0 650 696";
@@ -18,10 +18,11 @@ const ID = "id";
 
 const INITIAL_TOOLTIP_STATE = { visible: false, x: 0, y: 0 };
 
-export default function IndiaMap({mapMode, setMapMode}:IndiaMapTypes) {
+export default function IndiaMap({selectedArea, setSelectedArea, mapMode}:IndiaMapTypes) {
   const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
+  
   const [toolTipState, setToolTipState] = useState(INITIAL_TOOLTIP_STATE);
 
   const stateValidator = (array: any, accessor: string, value: string) => {
@@ -62,12 +63,13 @@ export default function IndiaMap({mapMode, setMapMode}:IndiaMapTypes) {
       states.splice(isSelected, 1);
       return setActiveStates(states);
     }
-    setMapMode(state.accessor)
+    setSelectedArea(state.accessor)
     setActiveStates([state]);
   };
 
   useEffect(() => {
     setIndiaMap(States);
+
     setActiveStates([
       States[0],
       States[4],
@@ -78,6 +80,7 @@ export default function IndiaMap({mapMode, setMapMode}:IndiaMapTypes) {
       States[20],
       States[23],
     ]);
+
   }, []);
 
   return (
