@@ -66,7 +66,7 @@ const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
 
   useEffect(() => {
     fetch();
-  });
+  }, []);
 
   const resources = {
     activeCard,

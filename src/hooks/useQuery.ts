@@ -8,10 +8,10 @@ export function useQuery(apiUrl: string) {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<any>(ERROR_INITIAL_STATE)
 
-    const fetch = async () => {
+    const fetch = async (url: string) => {
         setLoading(true)
         try {
-            const response = await axios.get(apiUrl)
+            const response = await axios.get(url ? url : apiUrl)
             setState(response.data)
             console.log(response.data)
         } catch (error) {

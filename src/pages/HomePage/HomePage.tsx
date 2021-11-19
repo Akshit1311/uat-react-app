@@ -40,7 +40,7 @@ const HomePage = () => {
                 className="col-12  px-0 p-0"
                 style={{ flex: "0 0 auto", width: "18.666667%" }}
               >
-                <LeftNavComponent></LeftNavComponent>
+                <LeftNavComponent setMapMode={setMapMode} mapMode={mapMode} ></LeftNavComponent>
               </div>
               <div className="col-12 col-md px-0 mx-0">
                 <div className="row px-0 mx-0">

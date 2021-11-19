@@ -3,12 +3,28 @@ import '../../scss/HomePageStyles/dropDownListComponent.scss';
 import { Button } from '../../styles-components/Button';
 
 const DropDownListComponent = (props: any) => {
-    const { data, setStateHandler } = props;
-    const StateList = data.map((state: any, index: string) => {
+    const { setMapMode, data, selectedState, setSelectedState } = props;
+
+    const handleClick = (state: any) => {
+        if (selectedState.length === 1 && selectedState[0].state === state.state) {
+            setMapMode({
+                id: "india",
+                name: "India",
+            })
+            return setSelectedState([])
+        }
+        setSelectedState([state])
+        setMapMode({ id: state._id, name: state.state })
+    }
+
+    const StateList = data.map((state: any) => {
         return (
             <>
-                <div className="list-card me-2">
-                    <h5 className="m-0 p-0" onClick={() => setStateHandler(index + 1)}>{state.state}</h5>
+                <div
+                    onClick={() => handleClick(state)}
+                    className={`list-card me-2 ${selectedState.length === 1 && selectedState[0].state === state.state ? "selected-list-card" : "unselected-list-card"}`}
+                >
+                    <h5 className="m-0 p-0">{state.state}</h5>
                 </div>
             </>
         )

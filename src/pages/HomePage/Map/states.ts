@@ -7,7 +7,7 @@ export interface MapType {
   accessor: mapVaiables.IDType,
   id: string;
 }
- 
+
 export const States: Array<MapType> = [
   {
     accessor: mapVaiables.AP,

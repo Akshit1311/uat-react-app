@@ -2,18 +2,15 @@ import "../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { FiChevronDown } from "react-icons/fi";
 import DropDownListComponent from "./DropDownListComponent";
-import { STATES } from "../../shared-data/states";
+import { STATES, stateType } from "../../shared-data/states";
 import { RoundedBadge } from "../../styles-components/Badge";
 import { useState } from 'react'
 import { Button } from "../../styles-components/Button";
 
-const LeftNavComponent = () => {
-  const [stateCounter, setStateCounter] = useState(false);
-  const [stateNumber, setStateNumber] = useState(0);
+const LeftNavComponent = (props: any) => {
+  const [selectedState, setSelectedState] = useState<stateType[]>([]);
+  const { mapMode, setMapMode } = props;
 
-  function setStateHandler(val: number) {
-    setStateNumber(val);
-  }
   return (
     <>
       <div className="left-side-nav-styles">
@@ -44,17 +41,21 @@ const LeftNavComponent = () => {
                 data-bs-target="#collapse1"
                 aria-expanded="false"
                 aria-controls="collapse1"
-                onClick={() => setStateCounter(!stateCounter)}
               >
                 <FiChevronDown className="me-2" size={15} />
                 States
-                {stateCounter && <RoundedBadge className="ms-auto me-3">{stateNumber}</RoundedBadge>}
-                {stateCounter && <span className="count-text">27</span>}
-                {!stateCounter && <span className="count-text ms-auto">27</span>}
-
+                {selectedState.length === 1 && <RoundedBadge className="ms-auto me-3">1</RoundedBadge>}
+                {selectedState.length === 1 && <span className="count-text">{STATES.length}</span>}
+                {selectedState.length === 0 && <span className="count-text ms-auto">{STATES.length}</span>}
               </button>
               <div className="collapse mt-2" id="collapse1">
-                <DropDownListComponent data={STATES} setStateHandler={(num: any) => setStateHandler(num)} />
+                <DropDownListComponent
+                  data={STATES}
+                  selectedState={selectedState}
+                  setSelectedState={setSelectedState}
+                  setMapMode={setMapMode}
+                  mapMode={mapMode}
+                />
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
