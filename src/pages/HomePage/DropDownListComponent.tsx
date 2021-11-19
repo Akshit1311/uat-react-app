@@ -2,7 +2,6 @@ import { GoSearch } from 'react-icons/go';
 import '../../scss/HomePageStyles/dropDownListComponent.scss';
 import { Button } from '../../styles-components/Button';
 
-
 const DropDownListComponent = (props: any) => {
     const { data, setStateHandler } = props;
     const StateList = data.map((state: any, index: string) => {

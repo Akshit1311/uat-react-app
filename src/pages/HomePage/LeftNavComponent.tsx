@@ -14,7 +14,6 @@ const LeftNavComponent = () => {
   function setStateHandler(val: number) {
     setStateNumber(val);
   }
-
   return (
     <>
       <div className="left-side-nav-styles">
