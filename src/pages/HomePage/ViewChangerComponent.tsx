@@ -15,6 +15,9 @@ interface ViewChangerComponentsTypes {
   setMapMode: React.Dispatch<React.SetStateAction<IDType>>;
 }
 
+const VIEW_MORE = "View more about ";
+const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
+
 function ViewChangerComponent({
   selectedArea,
   mapMode,
@@ -70,7 +73,7 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={stateText}
               >
-                <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white">
+                <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white shadow-small">
                   <IoMapSharp
                     size={18}
                     style={{ marginTop: "-5px", marginLeft: "-1px" }}
@@ -82,7 +85,7 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={cityText}
               >
-                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
                     size={18}
@@ -94,7 +97,7 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={districtText}
               >
-                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
                     size={18}
@@ -103,7 +106,7 @@ function ViewChangerComponent({
               </Tooltip>
             </div>
             <div>
-              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
                 <RiDropFill
                   size={18}
                   style={{ marginTop: "-7px", marginLeft: "-1px" }}
@@ -134,18 +137,36 @@ function ViewChangerComponent({
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
             </div>
-            {/* <button
-              onClick={()=> setMapMode(selectedArea)}
-              className="btn btn-primary btn-radius search-btn w-100 mt-3"
-              style={{
-                fontFamily: "Montserrat",
-                paddingTop: "7px",
-                fontWeight: 600,
-                fontSize: "14px",
-              }}
-            >
-              View Insight
-            </button> */}
+            {selectedArea.id !== "india" && (
+              <>
+                <button
+                  className="btn btn-radius search-btn w-100 mt-4"
+                  style={{
+                    fontFamily: "Montserrat",
+                    paddingTop: "7px",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    border: "2px solid #0177FA",
+                    marginBottom: "20px",
+                    boxShadow: "0px 0px 20px rgba(1, 119, 250, 0.19)",
+                  }}
+                >
+                  {VIEW_STATE_STARTUP_POLICY}
+                </button>
+                <button
+                  onClick={() => setMapMode(selectedArea)}
+                  className="btn btn-primary btn-radius search-btn w-100"
+                  style={{
+                    fontFamily: "Montserrat",
+                    paddingTop: "7px",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                  }}
+                >
+                  {VIEW_MORE + selectedArea.name}
+                </button>
+              </>
+            )}
           </div>
         </div>
         {/* <div
