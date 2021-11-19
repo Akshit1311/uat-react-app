@@ -181,3 +181,8 @@ export const WB: IDType = {
   id: "wb",
   name: "West Bengal",
 };
+
+
+export const MapVariablesArray = [
+  AP, CT, AR, AS, BR, CH, DN,DD, DL, GA,GJ,HR, HP,JK,JH,KA,KL,LD, MP,MH, MN, ML, MZ, NL, OR, PY,PB, RJ,SK,TN,TG, TR,UP,UT, WB,
+]

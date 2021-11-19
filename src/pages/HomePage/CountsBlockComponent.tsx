@@ -6,7 +6,7 @@ import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
 
 interface CountBlockTypes {
-  mapMode: IDType;
+  selectedArea: IDType;
 }
 
 interface CountCard {
@@ -49,7 +49,35 @@ const CountCard = ({
   borderColor,
   accessor,
 }: CountCard) => {
+  const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
+
+  useEffect(() => {
+    const count = state[accessor ? accessor : name];
+    if (count && count > 0) {
+      let interval: any;
+      if (currentCount < count) {
+        interval = setInterval(() => {
+          setCurrentCount((prevState) => {
+            if(prevState === Number(count)|| prevState > Number(count) ){
+              return count
+            }
+            if(count > 1000){
+              return prevState + 500
+            }
+            if(count < 1000 && count > 500){
+              return prevState + 10
+            }
+            return prevState +  1
+          });
+        },1 );
+      } else if (currentCount === count) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }
+    console.log("End Interval");
+  }, [state]);
   return (
     <>
       <CountCardWrapper
@@ -59,7 +87,7 @@ const CountCard = ({
         className="col-5 col-md count-single-card p-0"
       >
         <div className=" d-flex flex-column h-100 p-3 justify-content-between">
-          <h4 className="m-0 p-0">{state[accessor ? accessor : name]}</h4>
+          <h4 className="m-0 p-0">{currentCount}</h4>
           <h6 className="mx-0 mb-0 p-0">{name}</h6>
         </div>
       </CountCardWrapper>
@@ -67,12 +95,13 @@ const CountCard = ({
   );
 };
 
-const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
-  const [fetch, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
+const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
+  const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
+  // const [renderCount, setRenderCount] = useState(false);
   const [activeCard, setActiveCard] = useState<string>("Startups");
 
   useEffect(() => {
-    fetch();
+    getCounts();
   }, []);
 
   const resources = {
@@ -83,7 +112,7 @@ const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
-        <h5>{mapMode.name}</h5>
+        <h5>{selectedArea.name}</h5>
       </div>
       <div className="row count-div">
         <CountCard
