@@ -4,12 +4,42 @@ import { FiChevronDown } from "react-icons/fi";
 import DropDownListComponent from "./DropDownListComponent";
 import { STATES, stateType } from "../../shared-data/states";
 import { RoundedBadge } from "../../styles-components/Badge";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "../../styles-components/Button";
+import { useQuery } from "../../hooks/useQuery";
+import HomePageApi from "../../config/homepageApis.json";
 
 const LeftNavComponent = (props: any) => {
-  const [selectedState, setSelectedState] = useState<stateType[]>([]);
+  const [selectedState, setSelectedState] = useState<any[]>([]);
+  const fetchSectors = useQuery("");
   const { mapMode, setMapMode } = props;
+  const [SECTORS, setSector] = useState([])
+  const handleSector = (sector: any) => {
+    if (selectedState.length === 1 && selectedState[0].sector === sector.sector) {
+      return setSelectedState([])
+    }
+    setSelectedState([sector])
+  }
+  const handleState = (state: any) => {
+    if (selectedState.length === 1 && selectedState[0].state === state.state) {
+      setMapMode({
+        id: "india",
+        name: "India",
+      })
+      return setSelectedState([])
+    }
+    setSelectedState([state])
+    setMapMode({ id: state._id, name: state.state })
+  }
+
+  useEffect(() => {
+    if (selectedState.length) {
+      console.log('selectedState : ', selectedState)
+      fetchSectors[0](HomePageApi.sectorByState + selectedState[0].state)
+      setSector(fetchSectors[1])
+      console.log("fetchSectors[1] : ", fetchSectors[1])
+    }
+  }, [selectedState]);
 
   return (
     <>
@@ -50,11 +80,15 @@ const LeftNavComponent = (props: any) => {
               </button>
               <div className="collapse mt-2" id="collapse1">
                 <DropDownListComponent
+                  accessor={"state"}
                   data={STATES}
                   selectedState={selectedState}
                   setSelectedState={setSelectedState}
                   setMapMode={setMapMode}
-                  mapMode={mapMode}
+                  handleClick={(clickedState: any) => {
+                    console.log("clickedState : ", clickedState)
+                    handleState(clickedState)
+                  }}
                 />
               </div>
             </div>
@@ -69,15 +103,25 @@ const LeftNavComponent = (props: any) => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 Sector
-                <span className="ms-auto count-text">50</span>
+                <span className="ms-auto count-text">{fetchSectors[1]}</span>
               </button>
-              <div className="collapse mt-2" id="collapse2">
+              {SECTORS}
+              {selectedState.length === 1 && !fetchSectors[2] && <DropDownListComponent
+                accessor={"sector"}
+                data={SECTORS}
+                selectedState={selectedState}
+                setSelectedState={setSelectedState}
+                setMapMode={setMapMode}
+                // (clickedSector: any) => handleSector(clickedSector)
+                handleClick={(clickedSector: any) => console.log(clickedSector)}
+              />}
+              {/* <div className="collapse mt-2" id="collapse2">
                 <div className="card card-body">
                   Some placeholder content for the collapse component. This
                   panel is hidden by default but revealed when the user
                   activates the relevant trigger.
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="border-bottom-filter pt-1">
               <button

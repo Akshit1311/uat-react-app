@@ -1,3 +1,4 @@
 {
-    "countBlockEndPoint": "/startup/count/all"
+    "countBlockEndPoint": "/startup/count/all",
+    "sectorByState": "/startup/sectors/"
 }
