@@ -15,15 +15,9 @@ function EmptyStartUp() {
 function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
   return (
     <>
-      <div  className="mb-0 d-flex flex-row start-up-card" style={{ marginTop: "1.3rem" }}>
+      <div key={_id} className="mb-0 d-flex flex-row start-up-card" style={{ marginTop: "1.3rem" }}>
         <div>
-          <img
-            src={img_url}
-            className="rounded-circle border"
-            alt="main-logo"
-            width="60px"
-            height="60px"
-          />
+          <img src={img_url} className="rounded-circle border" alt="main-logo" width="60px" height="60px" />
         </div>
         <div className="p-2 py-0  ms-0 row d-flex justify-content-left">
           <h6 className=" my-0 py-0 company-title">{company}</h6>
@@ -48,25 +42,26 @@ function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
 
 function StartupsListComponent(props: any) {
   const [screenWidth, setScreenWidth] = React.useState<number>(0)
+  const extraSpacing: number = screenWidth - 1150
+  const windowResize = (event: any) => {
+    const windowWidth: number = window.innerWidth
+    setScreenWidth(windowWidth)
+  }
+  React.useEffect(() => {
+    if (screenWidth === 0) setScreenWidth(window.innerWidth)
+    window.addEventListener('resize', windowResize, false)
+  }, [screenWidth])
 
 
   const startupList = props.data.map((startUp: any) => (
     <StartUpCard {...startUp} />
   ));
-  const extraSpacing:number = screenWidth-1150
-  const windowResize =(event:any)=>{
-    const windowWidth:number = window.innerWidth
-    setScreenWidth(windowWidth)
-  }
-  React.useEffect(()=>{
-    if(screenWidth === 0) setScreenWidth(window.innerWidth)
-    window.addEventListener('resize', windowResize, false)
-  },[screenWidth]) 
-    if (!props.data.length) return <EmptyStartUp />;
+
+  if (!props.data.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
-      <div style={{ minWidth:"0", maxWidth:"17%", width:extraSpacing +'px' }} />
-      <div style={{ maxWidth: "55%", minWidth:"764px" }} className="startup-list-card-container p-4">
+      <div style={{ minWidth: "0", maxWidth: "17%", width: extraSpacing + 'px' }} />
+      <div style={{ maxWidth: "55%", minWidth: "764px" }} className="startup-list-card-container p-4">
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
         <div style={{ marginTop: "1rem", marginBottom: '0.2rem' }}>
           <SearchBarComponent />

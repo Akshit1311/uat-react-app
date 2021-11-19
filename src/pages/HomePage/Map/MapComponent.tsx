@@ -1,4 +1,4 @@
-import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
@@ -68,6 +68,7 @@ export default function IndiaMap({
       return setActiveStates(states);
     }
     setSelectedArea(state.accessor);
+    setMapMode(state.accessor)
     setActiveStates([state]);
   };
 

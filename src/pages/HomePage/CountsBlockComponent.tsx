@@ -4,7 +4,6 @@ import { IDType } from "./Map/variables";
 import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
-import CountUp from "react-countup";
 
 interface CountBlockTypes {
   selectedArea: IDType;
@@ -75,7 +74,6 @@ const CountCard = ({
       } else if (currentCount === count) {
         clearInterval(interval);
       }
-
       return () => clearInterval(interval);
     }
     console.log("End Interval");
@@ -98,12 +96,12 @@ const CountCard = ({
 };
 
 const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
-  const [getDate, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
+  const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   // const [renderCount, setRenderCount] = useState(false);
   const [activeCard, setActiveCard] = useState<string>("Startups");
 
   useEffect(() => {
-    getDate();
+    getCounts();
   }, []);
 
   const resources = {

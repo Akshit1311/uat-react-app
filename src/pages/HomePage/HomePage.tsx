@@ -9,7 +9,6 @@ import "../../scss/HomePageStyles/homePage.scss";
 import { STARTUPLIST } from "../../shared-data/startuplist";
 import { DATATABLEDATA } from "../../shared-data/dataTable";
 import styled from "styled-components";
-import DataTable from './table';
 import * as MapVariables from "./Map/variables";
 
 const PageWrapperContainer = styled.div({
@@ -20,7 +19,7 @@ const PageWrapperContainer = styled.div({
 const PageWrapper = styled.div({
   maxWidth: "1366px",
   minWidth: "1080px",
-});  
+});
 
 const HomePage = () => {
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(MapVariables.INDIA)
@@ -55,7 +54,7 @@ const HomePage = () => {
                     <MapComponent setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} />
                   </div>
                   <div className="col-12 " style={{
-                      flex: "0 0 auto", width: "39%"
+                    flex: "0 0 auto", width: "39%"
                   }}>
                     <ViewChangerComponent selectedArea={selectedArea} mapMode={mapMode} setMapMode={setMapMode} />
                   </div>
@@ -73,18 +72,16 @@ const HomePage = () => {
             <div className="row d-flex justify-content-center px-0 mx-0">
               <div className="btn-group text-center col-md-3 border button-togglers">
                 <button
-                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius px-3 ${
-                    startupListActive && "btn-primary text-white"
-                  }`}
+                  className={`font-500 font-14px font-family-Mont shadow-none btn btn-radius px-3 ${startupListActive && "btn-primary text-white"
+                    }`}
                   onClick={toggleStartUp}
                 >
                   {" "}
                   Startups List
                 </button>
                 <button
-                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius-data-table px-3 ${
-                    !startupListActive && "btn-primary text-white"
-                  }`}
+                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius-data-table px-3 ${!startupListActive && "btn-primary text-white"
+                    }`}
                   onClick={toggleStartUp}
                 >
                   {" "}
@@ -96,7 +93,7 @@ const HomePage = () => {
                   <StartupsListComponent data={startupsListData} />
                 )}
                 {!startupListActive && (
-                  <DataTable  data={dataTableData} />
+                  <DataTableComponent data={dataTableData} />
                 )}
               </div>
             </div>
