@@ -12,11 +12,22 @@ export const Badge = styled.div`
     width: fit-content;
   `;
 
-export const RoundedBadge = styled.span`
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width:13.5%;
-    color: #feffff;
-    background-color: #0177fa;
-    border-radius: 50%;
+export const RoundedBadge = styled.div`
+   width: 23px;
+   height: 23px;
+   font-size: 13px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #feffff;
+  background-color: #0177fa;
+   border-radius: 50%;
   `
+// export const RoundedBadge = styled.span`
+//     padding-top: 3px;
+//     padding-bottom: 3px;
+//     width:13.5%;
+//     color: #feffff;
+//     background-color: #0177fa;
+//     border-radius: 50%;
+//   `
