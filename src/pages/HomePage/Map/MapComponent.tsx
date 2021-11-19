@@ -6,7 +6,6 @@ import { IDType } from "./variables";
 interface IndiaMapTypes {
   mapMode: IDType;
   setMapMode: React.Dispatch<React.SetStateAction<IDType>>
-
 }
 
 const MAP_AREA = "0 0 650 696";
@@ -16,13 +15,13 @@ const THEME_COLOR = "rgb(1, 119, 250)";
 const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
-const INITIAL_TOOLTIP_STATE = { visible: false, x: 0, y: 0 };
+// const INITIAL_TOOLTIP_STATE = { visible: false, x: 0, y: 0 };
 
 export default function IndiaMap({ mapMode, setMapMode }: IndiaMapTypes) {
   const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
-  const [toolTipState, setToolTipState] = useState(INITIAL_TOOLTIP_STATE);
+  // const [toolTipState, setToolTipState] = useState(INITIAL_TOOLTIP_STATE);
 
   const stateValidator = (array: any, accessor: string, value: string) => {
     return array.findIndex((obj: any) => obj[accessor] === value);

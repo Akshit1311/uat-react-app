@@ -9,7 +9,7 @@ interface CountBlockTypes {
   mapMode: IDType;
 }
 
-interface CountCard {
+interface CountCardTypes {
   name: string;
   state: any;
   activeCard: string;
@@ -41,7 +41,7 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   }
 );
 
-const CountCard = ({ activeCard, name, state, setActiveCard, borderColor, accessor }: CountCard) => {
+const CountCard = ({ activeCard, name, state, setActiveCard, borderColor, accessor }: CountCardTypes) => {
   const active = name === activeCard;
   return (
     <>
@@ -61,12 +61,12 @@ const CountCard = ({ activeCard, name, state, setActiveCard, borderColor, access
 };
 
 const CountsBlockComponent = ({ mapMode }: CountBlockTypes) => {
-  const [fetch, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
+  const [fetch, state] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
 
   useEffect(() => {
     fetch();
-  }, []);
+  });
 
   const resources = {
     activeCard,
