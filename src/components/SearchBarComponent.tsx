@@ -38,7 +38,14 @@ const SearchBarComponent = ({
             borderBottomRightRadius: borderRadiusAll,
           }}
         />
-        <button  className="btn btn-primary btn-radius search-btn" style={{ fontFamily: "Montserrat", paddingTop: '7px', fontWeight: 600 }}  >
+        <button
+          className="btn btn-primary btn-radius search-btn"
+          style={{
+            fontFamily: "Montserrat",
+            paddingTop: "7px",
+            fontWeight: 600,
+          }}
+        >
           Search
         </button>
       </div>

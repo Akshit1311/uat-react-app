@@ -6,25 +6,35 @@ import { GiPeru } from "react-icons/gi";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
-import { IDType } from "./Map/variables"
+import * as MapVariables from "./Map/variables";
+import { IDType } from "./Map/variables";
 
 interface ViewChangerComponentsTypes {
-  mapMode: IDType
+  selectedArea: IDType;
+  mapMode: IDType;
+  setMapMode: React.Dispatch<React.SetStateAction<IDType>>;
 }
 
-function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
+const VIEW_MORE = "View more about ";
+const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
+
+function ViewChangerComponent({
+  selectedArea,
+  mapMode,
+  setMapMode,
+}: ViewChangerComponentsTypes) {
   const stateText = (
-    <div className=" px-3"  style={{ paddingTop: '2px' }}>
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>State</span>
     </div>
   );
   const districtText = (
-    <div className=" px-3" style={{ paddingTop: '2px' }}>
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>District</span>
     </div>
   );
   const cityText = (
-    <div className=" px-3"  style={{ paddingTop: '2px' }}>
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>City</span>
     </div>
   );
@@ -45,7 +55,10 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
             <option> Last 6 Months </option>
             <option> Last 9 Months </option>
           </Input>
-          <button style={{ visibility: 'hidden' }} className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+          <button
+            style={{ visibility: "hidden" }}
+            className="bg-white text-dark shadow-none btn btn-icon-handler border-primary"
+          >
             <MdOutlineLocationCity
               style={{ marginTop: "-7px", marginLeft: "-1px" }}
               size={18}
@@ -60,7 +73,7 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
                 placement="top"
                 overlay={stateText}
               >
-                <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white">
+                <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white shadow-small">
                   <IoMapSharp
                     size={18}
                     style={{ marginTop: "-5px", marginLeft: "-1px" }}
@@ -72,7 +85,7 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
                 placement="top"
                 overlay={cityText}
               >
-                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
                     size={18}
@@ -84,7 +97,7 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
                 placement="top"
                 overlay={districtText}
               >
-                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
                     size={18}
@@ -93,7 +106,7 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
               </Tooltip>
             </div>
             <div>
-              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary">
+              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
                 <RiDropFill
                   size={18}
                   style={{ marginTop: "-7px", marginLeft: "-1px" }}
@@ -104,7 +117,7 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
         </div>
         <div className="mx-1 col-12 mt-4 pt-0">
           <div className="select-type-card">
-            <h5 className="mb-3">{mapMode.name.toUpperCase()} STARTUPS</h5>
+            <h5 className="mb-3">{selectedArea.name.toUpperCase()} STARTUPS</h5>
             <div>
               <label className="select-type-text">Select Type</label>
               <Input
@@ -124,6 +137,36 @@ function ViewChangerComponent({mapMode}:ViewChangerComponentsTypes) {
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
             </div>
+            {selectedArea.id !== "india" && (
+              <>
+                <button
+                  className="btn btn-radius search-btn w-100 mt-4"
+                  style={{
+                    fontFamily: "Montserrat",
+                    paddingTop: "7px",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    border: "2px solid #0177FA",
+                    marginBottom: "20px",
+                    boxShadow: "0px 0px 20px rgba(1, 119, 250, 0.19)",
+                  }}
+                >
+                  {VIEW_STATE_STARTUP_POLICY}
+                </button>
+                <button
+                  onClick={() => setMapMode(selectedArea)}
+                  className="btn btn-primary btn-radius search-btn w-100"
+                  style={{
+                    fontFamily: "Montserrat",
+                    paddingTop: "7px",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                  }}
+                >
+                  {VIEW_MORE + selectedArea.name}
+                </button>
+              </>
+            )}
           </div>
         </div>
         {/* <div
