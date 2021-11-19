@@ -6,6 +6,7 @@ import { GiPeru } from "react-icons/gi";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
+import * as MapVariables from "./Map/variables";
 import { IDType } from "./Map/variables";
 
 interface ViewChangerComponentsTypes {
@@ -14,7 +15,11 @@ interface ViewChangerComponentsTypes {
   setMapMode: React.Dispatch<React.SetStateAction<IDType>>;
 }
 
-function ViewChangerComponent({ selectedArea , mapMode}: ViewChangerComponentsTypes) {
+function ViewChangerComponent({
+  selectedArea,
+  mapMode,
+  setMapMode,
+}: ViewChangerComponentsTypes) {
   const stateText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>State</span>
@@ -129,17 +134,18 @@ function ViewChangerComponent({ selectedArea , mapMode}: ViewChangerComponentsTy
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
             </div>
-            <button
+            {/* <button
+              onClick={()=> setMapMode(selectedArea)}
               className="btn btn-primary btn-radius search-btn w-100 mt-3"
               style={{
                 fontFamily: "Montserrat",
                 paddingTop: "7px",
                 fontWeight: 600,
-                fontSize: '14px'
+                fontSize: "14px",
               }}
             >
-              View Insight 
-            </button>
+              View Insight
+            </button> */}
           </div>
         </div>
         {/* <div
