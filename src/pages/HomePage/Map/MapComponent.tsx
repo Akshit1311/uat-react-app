@@ -68,7 +68,7 @@ export default function IndiaMap({
       return setActiveStates(states);
     }
     setSelectedArea(state.accessor);
-    setMapMode(state.accessor)
+    // setMapMode(state.accessor)
     setActiveStates([state]);
   };
 
