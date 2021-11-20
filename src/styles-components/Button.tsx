@@ -32,7 +32,7 @@ export const Button = styled.button<ButtonTypes>({
 }, (props: ButtonTypes) => {
     return {
         border: `${props.border}`,
-        width: `${props.width}`,
+        width: `${props.width} !important`,
         backgroundColor: `${props.backgroundColor}`,
         color: `${props.color}`,
         flex: `${props.flex}`,

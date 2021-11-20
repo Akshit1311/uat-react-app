@@ -12,7 +12,7 @@ export function useQuery(apiUrl: string) {
         setLoading(true)
         try {
             const response = await axios.get(url ? url : apiUrl)
-            if(response.data){
+            if (response.data) {
                 setState(response.data)
             }
             console.log(response.data)

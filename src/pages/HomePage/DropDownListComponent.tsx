@@ -1,18 +1,16 @@
-import React,{ useEffect } from "react";
 import { GoSearch } from "react-icons/go";
 import "../../scss/HomePageStyles/dropDownListComponent.scss";
 import { Button } from "../../styles-components/Button";
 
 const DropDownListComponent = (props: any) => {
-  const { setMapMode, data, selectedState, accessor, handleClick , selectedItem} = props;
+  const { data, accessor, handleClick, selectedItem } = props;
   const stateList = data.map((dataObj: any) => (
     <div
       onClick={() => handleClick(dataObj)}
-      className={`list-card me-2 ${
-        selectedItem  === dataObj[accessor]
-          ? "selected-list-card"
-          : "unselected-list-card"
-      }`}
+      className={`list-card me-2 ${selectedItem === dataObj[accessor]
+        ? "selected-list-card"
+        : "unselected-list-card"
+        }`}
     >
       <h5 className="m-0 p-0">{dataObj[accessor]}</h5>
     </div>
