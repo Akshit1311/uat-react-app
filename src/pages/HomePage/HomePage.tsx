@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNavComponent";
-
 import DataTable from "./TableComponent"
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";

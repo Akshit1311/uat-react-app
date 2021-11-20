@@ -18,8 +18,6 @@ const Header = ({
   borderWidth,
   borderStyle,
   borderColor,
-  borderRight,
-  borderLeft,
   background,
   borderHeight,
   fontWeight,

@@ -148,7 +148,7 @@ function ViewChangerComponent({
                     fontSize: "14px",
                     border: "2px solid #0177FA",
                     marginBottom: "20px",
-                    boxShadow: "0px 0px 20px rgba(1, 119, 250, 0.19)",
+                    boxShadow: "0px 0px 10px rgba(1, 119, 250, 0.19)",
                   }}
                 >
                   {VIEW_STATE_STARTUP_POLICY}
