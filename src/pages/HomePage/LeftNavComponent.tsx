@@ -108,13 +108,12 @@ const LeftNavComponent = (props: any) => {
                 {selectedState.id !== 'none' && selectedSector.sector === '' && <span className="count-text ms-auto">{sectorState.length}</span>}
               </button>
               <div className="collapse mt-2" id="collapse2">
-                {selectedState.id !== 'none' && selectedSector.sector !== '' &&
-                  < DropDownListComponent
-                    accessor={"sector"}
-                    data={sectorState}
-                    selectedItem={selectedSector.sector}
-                    handleClick={handleSectorClick}
-                  />}
+                < DropDownListComponent
+                  accessor={"sector"}
+                  data={sectorState}
+                  selectedItem={selectedSector.sector}
+                  handleClick={handleSectorClick}
+                />
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
@@ -184,7 +183,7 @@ const LeftNavComponent = (props: any) => {
           <div className="left-nav-bottom-card row bg-white pt-3 ">
             <h6 className="px-0 card-heading-left-bottom">
               {" "}
-              VIEW STARTUP ECOSYSTEM INSIGHTS OF {mapMode.name.toUpperCase()}
+              VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA
             </h6>
             <span className="sub-heading px-0 mb-2 font-500">
               You can View Insights of India

@@ -43,7 +43,7 @@ const Header = ({
             borderLeft: borderLeftA,
           }}
         />
-        <p className="my-0 p-0 d-flex align-items-center" style={{marginLeft:'0.4rem'}}>{children}</p>
+        <p className="my-0 p-0 d-flex align-items-center" style={{ marginLeft: '0.4rem' }}>{children}</p>
       </div>
     </th>
   );
@@ -58,28 +58,28 @@ export default function DataTableComponent(props: any) {
             className="card d-flex flex-row justify-content-between"
             style={{ background: "white" }}
           >
-            <Header fontWeight={true}  borderLeft={true} borderWidth={"0px"}>
+            <Header fontWeight={true} borderLeft={true} borderWidth={"0px"}>
               States
             </Header>
-            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
               {'Total'}<br />Startups
             </Header>
-            <Header fontWeight={true}  borderStyle={"dashed"}>FFS</Header>
-            <Header fontWeight={true}  borderStyle={"dashed"}>Patient Startups</Header>
-            <Header fontWeight={true}  borderStyle={"dashed"}>Seed Fund Startups</Header>
-            <Header fontWeight={true}  borderStyle={"dashed"}>Showcased Startups</Header>
-            <Header fontWeight={true}  borderStyle={"dashed"}>DDIIT Recognised Startups</Header>
-            <Header fontWeight={true}  borderStyle={"dashed"}>Women Owned</Header>
-            <Header fontWeight={true}  borderColor={"#8a8a8a"} borderStyle={"solid"}>
+            <Header fontWeight={true} borderStyle={"dashed"}>FFS</Header>
+            <Header fontWeight={true} borderStyle={"dashed"}>Patient Startups</Header>
+            <Header fontWeight={true} borderStyle={"dashed"}>Seed Fund Startups</Header>
+            <Header fontWeight={true} borderStyle={"dashed"}>Showcased Startups</Header>
+            <Header fontWeight={true} borderStyle={"dashed"}>DDIIT Recognised Startups</Header>
+            <Header fontWeight={true} borderStyle={"dashed"}>Women Owned</Header>
+            <Header fontWeight={true} borderColor={"#8a8a8a"} borderStyle={"solid"}>
               Mentors
             </Header>
-            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
               Incubators
             </Header>
-            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
               Investors
             </Header>
-            <Header fontWeight={true}  borderColor={"lightgrey"} borderStyle={"solid"}>
+            <Header fontWeight={true} borderColor={"lightgrey"} borderStyle={"solid"}>
               Accelerators
             </Header>
             <Header
