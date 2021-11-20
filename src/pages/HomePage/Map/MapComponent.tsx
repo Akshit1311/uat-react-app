@@ -86,7 +86,7 @@ export default function IndiaMap({
         <p className="max-gradient-bar">2000</p>
       </div>
       <svg
-       
+
         xmlns="http://www.w3.org/2000/svg"
         viewBox={MAP_AREA}
         aria-label="Map of India"
@@ -115,24 +115,24 @@ export default function IndiaMap({
             />
           </Tooltip>
         ))}
-         <g style={{ transform: 'scale(1.42)'}}>
-        {
-          districtCircles.map((districts)=>(
-            <circle
-            transform="translate(88.29258755811814,359.06731422502867)"
-            fill-opacity="0.25"
-            pointer-events="all"
-            style={{ cursor: "pointer" }}
-            fill="red"
-            stroke="rgba(0, 123, 255, 0.4392156862745098)"
-            r="5.3065996645686395"
-          >
-            <title>0.2% from {title}</title>
-          </circle>
-          ))
-        }
+        <g style={{ transform: 'scale(1.42)' }}>
+          {
+            districtCircles.map((districts) => (
+              <circle
+                transform="translate(88.29258755811814,359.06731422502867)"
+                fill-opacity="0.25"
+                pointer-events="all"
+                style={{ cursor: "pointer" }}
+                fill="red"
+                stroke="rgba(0, 123, 255, 0.4392156862745098)"
+                r="5.3065996645686395"
+              >
+                <title>0.2% from {title}</title>
+              </circle>
+            ))
+          }
         </g>
-        <g style={{ transform: 'scale(1.42)'}}>
+        <g style={{ transform: 'scale(1.42)' }}>
           <circle
             transform="translate(88.29258755811814,359.06731422502867)"
             fill-opacity="0.25"
