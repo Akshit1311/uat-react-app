@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
-import DataTableComponent from "./TableComponent";
 import LeftNavComponent from "./LeftNavComponent";
+import DataTable from "./TableComponent"
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";
 import ViewChangerComponent from "./ViewChangerComponent";
@@ -23,6 +23,7 @@ const PageWrapper = styled.div({
 });
 
 const HomePage = () => {
+  const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(MapVariables.INDIA)
   const [mapMode, setMapMode] = useState<MapVariables.IDType>(MapVariables.INDIA)
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -44,19 +45,19 @@ const HomePage = () => {
               </div>
               <div className="col-12 col-md px-0 mx-0">
                 <div className="row px-0 mx-0">
-                  <CountsBlockComponent mapMode={mapMode} />
+                  <CountsBlockComponent selectedArea={selectedArea} />
                 </div>
                 <div className="col-12 row px-0 mx-0">
                   <div
                     className="col-12  p-5"
                     style={{ flex: "0 0 auto", width: "61%" }}
                   >
-                    <MapComponent setMapMode={setMapMode} mapMode={mapMode} />
+                    <MapComponent setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} />
                   </div>
                   <div className="col-12 " style={{
                     flex: "0 0 auto", width: "39%"
                   }}>
-                    <ViewChangerComponent mapMode={mapMode} />
+                    <ViewChangerComponent selectedArea={selectedArea} mapMode={mapMode} setMapMode={setMapMode} />
                   </div>
                 </div>
               </div>
@@ -75,7 +76,8 @@ const HomePage = () => {
                   backgroundColor={`${!startupListActive && "white"}`}
                   color={`${!startupListActive && "black"}`}
                   border={`${!startupListActive && "0px"}`}
-                  className={`font-family-Mont shadow-none  px-3 ${startupListActive && "btn-primary text-white"
+                  // fontWeight={"500px"}
+                  className={`font-500 font-family-Mont shadow-none  px-3 ${startupListActive && "btn-primary text-white"
                     }`}
                   onClick={toggleStartUp}
                 >
@@ -85,7 +87,8 @@ const HomePage = () => {
                   backgroundColor={`${startupListActive && "white"}`}
                   color={`${startupListActive && "black"}`}
                   border={`${startupListActive && "0px"}`}
-                  className={`font-family-Mont shadow-none  px-3 ${!startupListActive && "btn-primary text-white"
+                  // fontWeight={"500px"}
+                  className={`font-500 font-family-Mont shadow-none  px-3 ${!startupListActive && "btn-primary text-white"
                     }`}
                   onClick={toggleStartUp}
                 >
@@ -97,7 +100,7 @@ const HomePage = () => {
                   <StartupsListComponent data={startupsListData} />
                 )}
                 {!startupListActive && (
-                  <DataTableComponent data={dataTableData} />
+                  <DataTable data={dataTableData} />
                 )}
               </div>
             </div>

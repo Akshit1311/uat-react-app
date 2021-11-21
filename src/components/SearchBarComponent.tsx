@@ -39,7 +39,16 @@ const SearchBarComponent = ({
             borderBottomRightRadius: borderRadiusAll,
           }}
         />
-        <Button width={"111px"} className="font-family-Mont btn-radius">Search</Button>
+        <button
+          className="btn btn-primary btn-radius search-btn"
+          style={{
+            fontFamily: "Montserrat",
+            paddingTop: "7px",
+            fontWeight: 600,
+          }}
+        >
+          Search
+        </button>
       </div>
     </div>
   );
