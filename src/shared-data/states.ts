@@ -8,10 +8,6 @@ export const STATES: Array<stateType> = [
         state: "Andra Pradesh",
     },
     {
-        _id: "ct",
-        state: "Chattisgarh",
-    },
-    {
         _id: "ar",
         state: "Arunachal Pradesh",
     },
@@ -26,6 +22,10 @@ export const STATES: Array<stateType> = [
     {
         _id: "ch",
         state: "Chandigarh",
+    },
+    {
+        _id: "ct",
+        state: "Chattisgarh",
     },
     {
         _id: "dn",

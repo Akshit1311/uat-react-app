@@ -10,12 +10,20 @@
         font-size: 14px;
         line-height: 150%;
     }
-    .list-card {
+    .selected-list-card {
+        color: #feffff;
+        background-color: #0177fa;
+    }
+    .unselected-list-card {
         background: #f8f8f8;
+    }
+    .list-card {
+        // background: #f8f8f8;
         border-radius: 4px;
         margin-bottom: 12px;
         padding: 12px 12px 11px 12px;
-        &:hover {
+        cursor: pointer;
+        &:active {
             color: #feffff;
             background-color: #0177fa;
         }
@@ -34,11 +42,13 @@
     }
     .f-400 {
         font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        color: black;
     }
     //Custom Scroll Bar
     /* width */
     ::-webkit-scrollbar {
-        width: 6px;
+        width: 5px;
     }
 
     /* Track */

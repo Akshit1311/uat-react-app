@@ -1,17 +1,51 @@
+import { useState } from "react";
+import DropDownListComponent from "./DropDownListComponent";
 import "../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { FiChevronDown } from "react-icons/fi";
-import DropDownListComponent from "./DropDownListComponent";
-import { STATES } from "../../shared-data/states";
+import { Button } from "../../styles-components/Button";
 import { RoundedBadge } from "../../styles-components/Badge";
-import { useState } from 'react'
-const LeftNavComponent = () => {
-  const [stateCounter, setStateCounter] = useState(false);
-  const [stateNumber, setStateNumber] = useState(0);
+import HomePageApi from "../../config/homepageApis.json";
+import { useQuery } from "../../hooks/useQuery";
+import { MapVariablesArray as IndiaStates } from "./Map/variables";
 
-  function setStateHandler(val: number) {
-    setStateNumber(val);
-  }
+const INITIAL_SELECTED_STATE = {
+  id: "none",
+  name: "none",
+};
+
+const INITIAL_SELECTED_SECTOR = {
+  sector: "",
+  industryCount: 0,
+  sectorCount: 0,
+  totalCount: 0,
+};
+
+const LeftNavComponent = (props: any) => {
+  const { mapMode, setMapMode } = props;
+
+  const [selectedState, setSelectedState] = useState<any>(INITIAL_SELECTED_STATE);
+  const [selectedSector, setSelectedSector] = useState<any>(INITIAL_SELECTED_SECTOR);
+
+  const [fetchSectors, sectorState, sectorLoading] = useQuery("");
+
+  const handleStateClick = (state: any) => {
+    if (selectedState.id === state.id) {
+      setMapMode({ id: 'india', name: "India" })
+      return setSelectedState(INITIAL_SELECTED_STATE);
+    }
+    setSelectedState(state);
+    setMapMode({ id: state.id, name: state.name })
+    fetchSectors(HomePageApi.sectorByState + "/" + state.name.toLowerCase());
+  };
+
+  const handleSectorClick = (sectorObj: any) => {
+    if (selectedSector.sector === sectorObj.sector) {
+      return setSelectedSector(INITIAL_SELECTED_SECTOR);
+    }
+    setSelectedSector(sectorObj);
+  };
+
   return (
     <>
       <div className="left-side-nav-styles">
@@ -33,7 +67,7 @@ const LeftNavComponent = () => {
               />
             </div>
           </div>
-          <div className="row mb-3 px-2 py-0 bg-white dropdown-card">
+          <div className="row mb-3 ps-2 pe-0 py-0 bg-white dropdown-card">
             <div className="border-bottom-filter pt-2">
               <button
                 className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1"
@@ -42,17 +76,20 @@ const LeftNavComponent = () => {
                 data-bs-target="#collapse1"
                 aria-expanded="false"
                 aria-controls="collapse1"
-                onClick={() => setStateCounter(!stateCounter)}
               >
                 <FiChevronDown className="me-2" size={15} />
                 States
-                {stateCounter && <RoundedBadge className="ms-auto me-3">{stateNumber}</RoundedBadge>}
-                {stateCounter && <span className="count-text">27</span>}
-                {!stateCounter && <span className="count-text ms-auto">27</span>}
-
+                {selectedState.id !== 'none' && <RoundedBadge className="ms-auto me-3">1</RoundedBadge>}
+                {selectedState.id !== 'none' && <span className="count-text">{IndiaStates.length}</span>}
+                {selectedState.id === 'none' && <span className="count-text ms-auto">{IndiaStates.length}</span>}
               </button>
               <div className="collapse mt-2" id="collapse1">
-                <DropDownListComponent data={STATES} setStateHandler={(num: any) => setStateHandler(num)} />
+                <DropDownListComponent
+                  accessor={"name"}
+                  data={IndiaStates}
+                  handleClick={handleStateClick}
+                  selectedItem={selectedState.name}
+                />
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
@@ -66,14 +103,17 @@ const LeftNavComponent = () => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 Sector
-                <span className="ms-auto count-text">50</span>
+                {selectedState.id !== 'none' && selectedSector.sector !== '' && <RoundedBadge className="ms-auto me-3">1</RoundedBadge>}
+                {selectedState.id !== 'none' && selectedSector.sector !== '' && <span className="count-text">{sectorState.length}</span>}
+                {selectedState.id !== 'none' && selectedSector.sector === '' && <span className="count-text ms-auto">{sectorState.length}</span>}
               </button>
               <div className="collapse mt-2" id="collapse2">
-                <div className="card card-body">
-                  Some placeholder content for the collapse component. This
-                  panel is hidden by default but revealed when the user
-                  activates the relevant trigger.
-                </div>
+                < DropDownListComponent
+                  accessor={"sector"}
+                  data={sectorState}
+                  selectedItem={selectedSector.sector}
+                  handleClick={handleSectorClick}
+                />
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
@@ -148,9 +188,9 @@ const LeftNavComponent = () => {
             <span className="sub-heading px-0 mb-2 font-500">
               You can View Insights of India
             </span>
-            <button className="btn shadow-none btn-primary mt-2 btn-view-project">
-              View Insights
-            </button>
+            <div className="btn-view-project d-flex align-items-center ">
+              <Button width={"225px"}>View Insights</Button>
+            </div>
           </div>
         </div>
       </div>

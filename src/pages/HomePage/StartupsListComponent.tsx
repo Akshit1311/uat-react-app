@@ -66,7 +66,7 @@ function StartupsListComponent(props: any) {
         <div style={{ marginTop: "1rem", marginBottom: '0.2rem' }}>
           <SearchBarComponent />
         </div>
-        {console.log(screenWidth)}
+        {/* {console.log(screenWidth)} */}
         <div className="d-flex flex-wrap justify-content-between">{startupList}</div>
       </div>
     </div>

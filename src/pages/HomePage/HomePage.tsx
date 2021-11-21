@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNavComponent";
-
 import DataTable from "./TableComponent"
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";
@@ -11,6 +10,7 @@ import { STARTUPLIST } from "../../shared-data/startuplist";
 import { DATATABLEDATA } from "../../shared-data/dataTable";
 import styled from "styled-components";
 import * as MapVariables from "./Map/variables";
+import { Button } from "../../styles-components/Button";
 
 const PageWrapperContainer = styled.div({
   display: "flex",
@@ -41,7 +41,7 @@ const HomePage = () => {
                 className="col-12  px-0 p-0"
                 style={{ flex: "0 0 auto", width: "18.666667%" }}
               >
-                <LeftNavComponent></LeftNavComponent>
+                <LeftNavComponent setMapMode={setMapMode} mapMode={mapMode} ></LeftNavComponent>
               </div>
               <div className="col-12 col-md px-0 mx-0">
                 <div className="row px-0 mx-0">
@@ -72,22 +72,28 @@ const HomePage = () => {
             </div>
             <div className="row d-flex justify-content-center px-0 mx-0">
               <div className="btn-group text-center col-md-3 border button-togglers">
-                <button
-                  className={`font-500 font-14px font-family-Mont shadow-none btn btn-radius px-3 ${startupListActive && "btn-primary text-white"
+                <Button
+                  backgroundColor={`${!startupListActive && "white"}`}
+                  color={`${!startupListActive && "black"}`}
+                  border={`${!startupListActive && "0px"}`}
+                  // fontWeight={"500px"}
+                  className={`font-500 font-family-Mont shadow-none  px-3 ${startupListActive && "btn-primary text-white"
                     }`}
                   onClick={toggleStartUp}
                 >
-                  {" "}
                   Startups List
-                </button>
-                <button
-                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius-data-table px-3 ${!startupListActive && "btn-primary text-white"
+                </Button>
+                <Button
+                  backgroundColor={`${startupListActive && "white"}`}
+                  color={`${startupListActive && "black"}`}
+                  border={`${startupListActive && "0px"}`}
+                  // fontWeight={"500px"}
+                  className={`font-500 font-family-Mont shadow-none  px-3 ${!startupListActive && "btn-primary text-white"
                     }`}
                   onClick={toggleStartUp}
                 >
-                  {" "}
                   Data Table
-                </button>
+                </Button>
               </div>
               <div className="row mx-0 px-0">
                 {startupListActive && (

@@ -1,5 +1,6 @@
 import { GoSearch } from "react-icons/go";
 import "../scss/searchBarComponent.scss";
+import { Button } from "../styles-components/Button";
 
 interface SearchTypes {
   background?: string;
