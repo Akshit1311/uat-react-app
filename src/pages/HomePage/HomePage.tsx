@@ -11,6 +11,7 @@ import { DATATABLEDATA } from "../../shared-data/dataTable";
 import styled from "styled-components";
 import * as MapVariables from "./Map/variables";
 import { Button } from "../../styles-components/Button";
+import IndiaDistrictMap from "./DistrictMap/DistrictMapComponent";
 
 const PageWrapperContainer = styled.div({
   display: "flex",
@@ -52,7 +53,8 @@ const HomePage = () => {
                     className="col-12  p-5"
                     style={{ flex: "0 0 auto", width: "61%" }}
                   >
-                    <MapComponent setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} />
+                    {/* <MapComponent setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} /> */}
+                    <IndiaDistrictMap setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} />
                   </div>
                   <div className="col-12 " style={{
                     flex: "0 0 auto", width: "39%"

@@ -1,0 +1,120 @@
+import { useEffect, useState } from "react";
+// import { States, MapType } from "./states";
+import { Districts, DistrictMapType } from "../DistrictMap/Districts";
+import Tooltip from "rc-tooltip";
+import { IDType } from "../Map/variables";
+
+interface IndiaMapTypes {
+    selectedArea: IDType;
+    setSelectedArea: React.Dispatch<React.SetStateAction<IDType>>;
+    mapMode: IDType;
+}
+
+const MAP_AREA = "0 0 500 496";
+const WHITE = "#ffffff";
+const BLACK = "#000000";
+const THEME_COLOR = "rgb(1, 119, 250)";
+const THEME_COLOR_LITE = "rgb(96 169 251)";
+const ID = "id";
+
+// const INITIAL_TOOLTIP_STATE = { visible: false, x: 0, y: 0 };
+
+export default function IndiaDistrictMap({
+    selectedArea,
+    setSelectedArea,
+    mapMode,
+}: IndiaMapTypes) {
+    const [indiaMap, setIndiaMap] = useState<DistrictMapType[]>([]);
+    const [activeStates, setActiveStates] = useState<DistrictMapType[]>([]);
+    const [hoverStates, setHoverStates] = useState<DistrictMapType[]>([]);
+    // const [toolTipState, setToolTipState] = useState(INITIAL_TOOLTIP_STATE);
+
+    const stateValidator = (array: any, accessor: string, value: string) => {
+        return array.findIndex((obj: any) => obj[accessor] === value);
+    };
+
+    const fillClick = (stateId: string) => {
+        const selected = stateValidator(activeStates, ID, stateId);
+        if (selected !== -1) return true;
+    };
+    const fillHover = (stateId: string) => {
+        const selected = stateValidator(hoverStates, ID, stateId);
+        if (selected !== -1) return true;
+    };
+
+    const fillStates = (stateId: string) => {
+        if (fillHover(stateId)) return THEME_COLOR_LITE;
+        if (fillClick(stateId)) return THEME_COLOR;
+        return WHITE;
+    };
+
+    const fillStroke = (stateId: string) => {
+        if (fillHover(stateId)) return 1.5;
+        if (fillClick(stateId)) return 1.7;
+        return 0.7;
+    };
+
+    const handleMouseEnter = (state: DistrictMapType, mouseEvent: any) => {
+        setHoverStates([state]);
+        console.log(mouseEvent);
+    };
+    const handleStateMouseLeave = () => setHoverStates([]);
+
+    const handleStateClick = (state: DistrictMapType, index: number) => {
+        const isSelected = stateValidator(activeStates, ID, index.toString());
+        // if (isSelected !== -1) {
+        //   const states = [...activeStates];
+        //   states.splice(isSelected, 1);
+        //   return setActiveStates(states);
+        // }
+        // setSelectedArea(state.accessor);
+        // // setMapMode(state.accessor)
+        // setActiveStates([state]);
+    };
+
+    useEffect(() => {
+        if (selectedArea.id === "india") return setIndiaMap(Districts);
+        const state: DistrictMapType[] = Districts.filter(
+            (item) => item.id === selectedArea.id
+        );
+        setIndiaMap(state);
+    }, [mapMode]);
+
+    return (
+        <div className="m-2 mt-0" style={{ position: "relative" }}>
+            <div className="gradient-bar-map d-flex justify-content-between">
+                <p className="min-gradient-bar">0</p>
+                <p className="max-gradient-bar">2000</p>
+            </div>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox={MAP_AREA}
+                aria-label="Map of India"
+            >
+                {indiaMap.map((state: DistrictMapType, index: number) => (
+                    // <Tooltip
+                    //     placement="top"
+                    //     arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                    //     overlay={
+                    //         <p style={{ paddingTop: "1px" }} className="px-2">
+                    //             {/* {state.title} */}
+                    //         </p>
+                    //     }
+                    // >
+                    <path
+                        onMouseEnter={(e) => handleMouseEnter(state, e)}
+                        onMouseLeave={handleStateMouseLeave}
+                        onClick={(e) => handleStateClick(state, index)}
+                        key={state.id}
+                        d={state.d}
+                        id={state.id}
+                        fill={fillStates(index.toString())}
+                        stroke={BLACK}
+                        strokeWidth={fillStroke(index.toString())}
+                    />
+                    // </Tooltip>
+                ))}
+            </svg>
+        </div>
+    );
+}
