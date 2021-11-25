@@ -60,15 +60,15 @@ const CountCard = ({
         interval = setInterval(() => {
           setCurrentCount((prevState) => {
             if (prevState === Number(count) || prevState > Number(count)) {
-              return count
+              return count;
             }
             if (count > 1000) {
-              return prevState + 500
+              return prevState + 500;
             }
             if (count < 1000 && count > 500) {
-              return prevState + 10
+              return prevState + 10;
             }
-            return prevState + 1
+            return prevState + 1;
           });
         }, 1);
       } else if (currentCount === count) {
@@ -115,12 +115,27 @@ const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
         <h5>{selectedArea.name}</h5>
       </div>
       <div className="row count-div">
-        <CountCard {...resources} borderColor="#0177FA" accessor="Startup" name="Startups" />
-        <CountCard {...resources} borderColor="#ED8E00" accessor="Mentor" name="Mentors" />
+        <CountCard
+          {...resources}
+          borderColor="#0177FA"
+          accessor="Startup"
+          name="Startups"
+        />
+        <CountCard
+          {...resources}
+          borderColor="#ED8E00"
+          accessor="Mentor"
+          name="Mentors"
+        />
         <CountCard {...resources} borderColor="#7838e0" name="Incubator" />
         <CountCard {...resources} borderColor="#BDAA00" name="Investor" />
         <CountCard {...resources} borderColor="#CB3535" name="Accelerator" />
-        <CountCard {...resources} borderColor="#00AD11" accessor="GovernmentBody" name="Government" />
+        <CountCard
+          {...resources}
+          borderColor="#00AD11"
+          accessor="GovernmentBody"
+          name="Government"
+        />
       </div>
     </div>
   );

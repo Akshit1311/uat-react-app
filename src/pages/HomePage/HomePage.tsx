@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNavComponent";
-import DataTable from "./TableComponent"
+import DataTable from "./TableComponent";
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";
 import ViewChangerComponent from "./ViewChangerComponent";
@@ -23,8 +23,23 @@ const PageWrapper = styled.div({
 });
 
 const HomePage = () => {
-  const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(MapVariables.INDIA)
-  const [mapMode, setMapMode] = useState<MapVariables.IDType>(MapVariables.INDIA)
+  const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
+    MapVariables.INDIA
+  );
+  const [mapMode, setMapMode] = useState<MapVariables.IDType>(
+    MapVariables.INDIA
+  );
+
+  const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
+
+  const mapViewResources = {
+    isCircleActive,
+    mapMode,
+    setIsCircleActive,
+    setMapMode,
+    setSelectedArea,
+    selectedArea
+  };
 
   const [startupListActive, setStartupListActive] = useState(true);
   const [startupsListData] = useState(STARTUPLIST);
@@ -52,12 +67,21 @@ const HomePage = () => {
                     className="col-12  p-5"
                     style={{ flex: "0 0 auto", width: "61%" }}
                   >
-                    <MapComponent setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} />
+                    <MapComponent
+                     mapViewResource={mapViewResources}
+                    />
                   </div>
-                  <div className="col-12 " style={{
-                    flex: "0 0 auto", width: "39%"
-                  }}>
-                    <ViewChangerComponent selectedArea={selectedArea} mapMode={mapMode} setMapMode={setMapMode} />
+                  <div
+                    className="col-12 "
+                    style={{
+                      flex: "0 0 auto",
+                      width: "39%",
+                    }}
+                  >
+                    <ViewChangerComponent
+                      mapViewResources={mapViewResources}
+                      
+                    />
                   </div>
                 </div>
               </div>
