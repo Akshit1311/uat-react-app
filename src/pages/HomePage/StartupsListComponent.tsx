@@ -3,6 +3,7 @@ import React from "react";
 import SearchBarComponent from "../../components/SearchBarComponent";
 import { Badge } from "../../styles-components/Badge";
 import "../../scss/HomePageStyles/startupsListComponent.scss";
+import DisabledMap from "./Map/DisabledMap";
 
 function EmptyStartUp() {
   return (
@@ -60,7 +61,7 @@ function StartupsListComponent(props: any) {
   if (!props.data.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
-      <div style={{ minWidth: "0", maxWidth: "17%", width: extraSpacing + 'px' }} />
+      <div style={{ minWidth: "0", maxWidth: "15%", width: extraSpacing + 'px' }} />
       <div style={{ maxWidth: "55%", minWidth: "764px" }} className="startup-list-card-container p-4">
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
         <div style={{ marginTop: "1rem", marginBottom: '0.2rem' }}>
@@ -68,6 +69,9 @@ function StartupsListComponent(props: any) {
         </div>
         {/* {console.log(screenWidth)} */}
         <div className="d-flex flex-wrap justify-content-between">{startupList}</div>
+      </div>
+      <div style={{ minWidth: "0", width: "35%", marginTop: '6.5rem' }} className="ps-4">
+        <DisabledMap />
       </div>
     </div>
   );

@@ -149,7 +149,7 @@ function ViewChangerComponent({
               >
                 <RiDropFill
                   size={18}
-                  style={{ marginTop: "-7px", marginLeft: "-1px" }}
+                  style={{ marginTop: "-5px", marginLeft: "1px" }}
                 />
               </button>
             </div>

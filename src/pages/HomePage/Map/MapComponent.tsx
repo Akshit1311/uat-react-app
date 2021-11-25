@@ -3,12 +3,16 @@ import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
 import { District, DistrictType } from "./districts";
+import * as MapVariables from "./variables";
+import { DistrictBoarder, Districts2 } from "./districtsBoarders";
+import { GiEmptyMetalBucketHandle } from "react-icons/gi";
 
 interface IndiaMapTypes {
   mapViewResource: any;
 }
 
-const MAP_AREA = "0 0 650 696";
+const MAP_AREA_INDIA = "0 0 650 696";
+const MAP_AREA_DISTRICTS = "0 0 470 465";
 const WHITE = "#ffffff";
 const BLACK = "#000000";
 const THEME_COLOR = "rgb(1, 119, 250)";
@@ -23,6 +27,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
+  const [districtsBoarder, setDistrictsBoarder] = useState<any>([]);
 
   const stateValidator = (array: any, accessor: string, value: string) => {
     return array.findIndex((obj: any) => obj[accessor] === value);
@@ -63,7 +68,6 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       return setActiveStates(states);
     }
     setSelectedArea(state.accessor);
-    // setMapMode(state.accessor)
     setActiveStates([state]);
   };
 
@@ -71,7 +75,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     // if (districtWiseCircle.length > 0) return;
     const newArray = new Array();
     District.forEach((district: any) => {
-      console.log(district)
+      console.log(district);
       const newObj: any = new Object();
 
       if (district.title.toLowerCase() == "mumbai") {
@@ -80,15 +84,15 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         newObj["radius"] = "10";
       } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
         newObj["radius"] = "20";
-      } else if (district.title.toLowerCase()  === "Khordha".toLowerCase()) {
+      } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
         newObj["radius"] = "15";
-      } else if (district.title.toLowerCase()  === "Pune".toLowerCase()) {
+      } else if (district.title.toLowerCase() === "Pune".toLowerCase()) {
         newObj["radius"] = "13";
-      } else if (district.title.toLowerCase()  === "Guntur".toLowerCase()) {
+      } else if (district.title.toLowerCase() === "Guntur".toLowerCase()) {
         newObj["radius"] = "14";
-      } else if (district.title.toLowerCase()  === "Udupi".toLowerCase()) {
+      } else if (district.title.toLowerCase() === "Udupi".toLowerCase()) {
         newObj["radius"] = "15";
-      } else if (district.title.toLowerCase()  === "Kollam".toLowerCase()) {
+      } else if (district.title.toLowerCase() === "Kollam".toLowerCase()) {
         newObj["radius"] = "12";
       } else {
         newObj["radius"] = "0";
@@ -98,8 +102,21 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       newObj["id"] = district.id;
       newArray.push(newObj);
     });
-    console.log(newArray)
-    setDistrictWiseCircle(newArray)
+    console.log(newArray);
+    setDistrictWiseCircle(newArray);
+  };
+
+  const pupulateDistrictsBoarders = () => {
+    setDistrictsBoarder(Districts2);
+  };
+
+  const getViewBoxArea = () => {
+    if (mapMode.id === MapVariables.DISTRICT.id) return MAP_AREA_DISTRICTS;
+    if (mapMode.id === MapVariables.INDIA.id) return MAP_AREA_INDIA;
+  };
+  const getViewBoxAreaCircle = () => {
+    if (mapMode.id === MapVariables.DISTRICT.id) return "scale(1.38)";
+    if (mapMode.id === MapVariables.INDIA.id) return "scale(1.42)";
   };
 
   useEffect(() => {
@@ -108,62 +125,125 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     //   (item) => item.id === selectedArea.id
     // );
     setIndiaMap(States);
-    populateDisctrictCircle()
-  }, []);
+    populateDisctrictCircle();
+    pupulateDistrictsBoarders();
+  }, [mapMode]);
 
   return (
     <div className="m-2 mt-0" style={{ position: "relative" }}>
-      <div className="gradient-bar-map d-flex justify-content-between">
-        <p className="min-gradient-bar">0</p>
-        <p className="max-gradient-bar">2000</p>
-      </div>
+      {!isCircleActive && (
+        <div className="gradient-bar-map d-flex justify-content-between">
+          <p className="min-gradient-bar">0</p>
+          <p className="max-gradient-bar">2000</p>
+        </div>
+      )}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox={MAP_AREA}
+        viewBox={getViewBoxArea()}
         aria-label="Map of India"
       >
-        {indiaMap.map((state: MapType) => (
-          <Tooltip
-            placement="top"
-            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-            overlay={
-              <p style={{ paddingTop: "1px" }} className="px-2">
-                {state.accessor.name}
-              </p>
-            }
-          >
+        {mapMode.id === MapVariables.INDIA.id &&
+          indiaMap.map((state: MapType) => (
+            <Tooltip
+              placement="top"
+              arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+              overlay={
+                <p style={{ paddingTop: "1px" }} className="px-2">
+                  {state.accessor.name}
+                </p>
+              }
+            >
+              <path
+                onMouseEnter={(e) => handleMouseEnter(state, e)}
+                onMouseLeave={handleStateMouseLeave}
+                onClick={(e) => handleStateClick(state)}
+                key={state.id}
+                d={state.d}
+                id={state.id}
+                fill={fillStates(state.id)}
+                stroke={BLACK}
+                strokeWidth={fillStroke(state.id)}
+              />
+            </Tooltip>
+          ))}
+
+        {mapMode.id === MapVariables.CITY.id && <div />}
+
+        {mapMode.id === MapVariables.DISTRICT.id &&
+          districtsBoarder.map((district: any, index: number) => (
             <path
-              onMouseEnter={(e) => handleMouseEnter(state, e)}
-              onMouseLeave={handleStateMouseLeave}
-              onClick={(e) => handleStateClick(state)}
-              key={state.id}
-              d={state.d}
-              id={state.id}
-              // opacity
-              fill={fillStates(state.id)}
+              key={index}
+              d={district.d}
+              id={district.title}
+              fill={"none"}
               stroke={BLACK}
-              strokeWidth={fillStroke(state.id)}
+              strokeWidth={"0.5"}
             />
-          </Tooltip>
-        ))}
-        {isCircleActive && (
-          <g style={{ transform: "scale(1.42)" }}>
-            {districtWiseCircle.map((districts: DistrictType) => (
+          ))}
+      </svg>
+      {isCircleActive && (
+        <>
+          <svg
+            style={{ position: "absolute", left: 0 }}
+            viewBox={MAP_AREA_INDIA}
+          >
+            <g style={{ transform: getViewBoxAreaCircle() }}>
+              {districtWiseCircle.map((districts: DistrictType) => (
+                <circle
+                  transform={districts.transform}
+                  fill-opacity="0.25"
+                  pointer-events="all"
+                  style={{ cursor: "pointer" }}
+                  fill="none"
+                  stroke="#0177FA"
+                  strokeWidth="1.4"
+                  r={districts.radius}
+                >
+                  <title>{districts.title}</title>
+                </circle>
+              ))}
+            </g>
+            <g style={{ transform: getViewBoxAreaCircle() }}>
               <circle
-                transform={districts.transform}
+                transform={"translate(300,37)"}
                 fill-opacity="0.25"
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
                 fill="none"
-                stroke="rgba(0, 123, 255, 1)"
-                r={districts.radius}
+                stroke="#0177FA"
+                strokeWidth="1.4"
+                r={35}
               >
-                <title>{districts.title}</title>
+                <title>{"Info"}</title>
               </circle>
-            ))}
-          </g>
-        )}
-      </svg>
+              <circle
+                transform={"translate(300,52)"}
+                fill-opacity="0.25"
+                pointer-events="all"
+                style={{ cursor: "pointer" }}
+                fill="none"
+                stroke="#0177FA"
+                strokeWidth="1.4"
+                r={50}
+              >
+                <title>{"Info"}</title>
+              </circle>
+              <circle
+                transform={"translate(300,67)"}
+                fill-opacity="0.25"
+                pointer-events="all"
+                style={{ cursor: "pointer" }}
+                fill="none"
+                stroke="#0177FA"
+                strokeWidth="1.4"
+                r={65}
+              >
+                <title>{"Info"}</title>
+              </circle>
+            </g>
+          </svg>
+        </>
+      )}
     </div>
   );
 }

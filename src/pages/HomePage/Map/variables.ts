@@ -16,6 +16,11 @@ export const DISTRICT: IDType = {
   name: "District",
 };
 
+export const AN:IDType = {
+  id:"an",
+  name:"Andaman and Nicobar Islands"
+}
+
 export const AP: IDType = {
   id: "ap",
   name: "Andra Pradesh",
