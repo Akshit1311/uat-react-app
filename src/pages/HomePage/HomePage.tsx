@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNavComponent";
-import DataTable from "./TableComponent"
+import DataTable from "./TableComponent";
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";
 import ViewChangerComponent from "./ViewChangerComponent";
@@ -22,8 +22,23 @@ const PageWrapper = styled.div({
 });
 
 const HomePage = () => {
-  const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(MapVariables.INDIA)
-  const [mapMode, setMapMode] = useState<MapVariables.IDType>(MapVariables.INDIA)
+  const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
+    MapVariables.INDIA
+  );
+  const [mapMode, setMapMode] = useState<MapVariables.IDType>(
+    MapVariables.INDIA
+  );
+
+  const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
+
+  const mapViewResources = {
+    isCircleActive,
+    mapMode,
+    setIsCircleActive,
+    setMapMode,
+    setSelectedArea,
+    selectedArea
+  };
 
   const [startupListActive, setStartupListActive] = useState(true);
   const [startupsListData] = useState(STARTUPLIST);
@@ -51,12 +66,21 @@ const HomePage = () => {
                     className="col-12  p-5"
                     style={{ flex: "0 0 auto", width: "61%" }}
                   >
-                    <MapComponent setSelectedArea={setSelectedArea} mapMode={mapMode} selectedArea={selectedArea} />
+                    <MapComponent
+                     mapViewResource={mapViewResources}
+                    />
                   </div>
-                  <div className="col-12 " style={{
-                    flex: "0 0 auto", width: "39%"
-                  }}>
-                    <ViewChangerComponent selectedArea={selectedArea} mapMode={mapMode} setMapMode={setMapMode} />
+                  <div
+                    className="col-12 "
+                    style={{
+                      flex: "0 0 auto",
+                      width: "39%",
+                    }}
+                  >
+                    <ViewChangerComponent
+                      mapViewResources={mapViewResources}
+                      
+                    />
                   </div>
                 </div>
               </div>
@@ -72,16 +96,18 @@ const HomePage = () => {
             <div className="row d-flex justify-content-center px-0 mx-0">
               <div className="btn-group text-center col-md-3 border button-togglers">
                 <button
-                  className={`font-500 font-14px font-family-Mont shadow-none btn btn-radius px-3 ${startupListActive && "btn-primary text-white"
-                    }`}
+                  className={`font-500 font-14px font-family-Mont shadow-none btn btn-radius px-3 ${
+                    startupListActive && "btn-primary text-white"
+                  }`}
                   onClick={toggleStartUp}
                 >
                   {" "}
                   Startups List
                 </button>
                 <button
-                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius-data-table px-3 ${!startupListActive && "btn-primary text-white"
-                    }`}
+                  className={`font-500 font-14px font-family-Mont  shadow-none btn btn-radius-data-table px-3 ${
+                    !startupListActive && "btn-primary text-white"
+                  }`}
                   onClick={toggleStartUp}
                 >
                   {" "}
@@ -92,9 +118,7 @@ const HomePage = () => {
                 {startupListActive && (
                   <StartupsListComponent data={startupsListData} />
                 )}
-                {!startupListActive && (
-                  <DataTable data={dataTableData} />
-                )}
+                {!startupListActive && <DataTable data={dataTableData} />}
               </div>
             </div>
           </PageWrapper>

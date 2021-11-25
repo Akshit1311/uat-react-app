@@ -7,6 +7,14 @@ export const INDIA: IDType = {
   id: "india",
   name: "India",
 };
+export const CITY: IDType = {
+  id: "city",
+  name: "City",
+};
+export const DISTRICT: IDType = {
+  id: "district",
+  name: "District",
+};
 
 export const AP: IDType = {
   id: "ap",

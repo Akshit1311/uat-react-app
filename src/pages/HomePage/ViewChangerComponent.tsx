@@ -10,19 +10,23 @@ import * as MapVariables from "./Map/variables";
 import { IDType } from "./Map/variables";
 
 interface ViewChangerComponentsTypes {
-  selectedArea: IDType;
-  mapMode: IDType;
-  setMapMode: React.Dispatch<React.SetStateAction<IDType>>;
+  mapViewResources: any;
 }
 
 const VIEW_MORE = "View more about ";
 const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
 
 function ViewChangerComponent({
-  selectedArea,
-  mapMode,
-  setMapMode,
+  mapViewResources,
 }: ViewChangerComponentsTypes) {
+  const {
+    isCircleActive,
+    mapMode,
+    setIsCircleActive,
+    setMapMode,
+    setSelectedArea,
+    selectedArea,
+  } = mapViewResources;
   const stateText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>State</span>
@@ -38,6 +42,15 @@ function ViewChangerComponent({
       <span>City</span>
     </div>
   );
+
+  const defaultView = () => setMapMode(MapVariables.INDIA);
+
+  const circleView = () => {
+    setIsCircleActive((prevState: boolean) => !prevState);
+  };
+
+  const districtView = () => setMapMode(MapVariables.DISTRICT);
+  const cityView = () => setMapMode(MapVariables.CITY);
   return (
     <div className="view-changer-component-styles">
       <div className="">
@@ -73,7 +86,14 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={stateText}
               >
-                <button className="bg-primary shadow-none btn btn-outline btn-icon-handler text-white shadow-small">
+                <button
+                  onClick={defaultView}
+                  className={`${
+                    mapMode.id === MapVariables.INDIA.id
+                      ? "bg-primary text-white"
+                      : "bg-white text-dark"
+                  } shadow-none btn btn-outline btn-icon-handler shadow-small`}
+                >
                   <IoMapSharp
                     size={18}
                     style={{ marginTop: "-5px", marginLeft: "-1px" }}
@@ -85,7 +105,14 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={cityText}
               >
-                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
+                <button
+                  onClick={cityView}
+                  className={`${
+                    mapMode.id === MapVariables.CITY.id
+                      ? "bg-primary text-white"
+                      : "bg-white text-dark"
+                  } shadow-none btn btn-icon-handler border-primary shadow-small`}
+                >
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
                     size={18}
@@ -97,7 +124,15 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={districtText}
               >
-                <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
+                <button
+                  onClick={districtView}
+                  className={`${
+                    mapMode.id === MapVariables.DISTRICT.id
+                      ? "bg-primary text-white"
+                      : "bg-white text-dark"
+                  }
+                    shadow-none btn btn-icon-handler border-primary shadow-small`}
+                >
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
                     size={18}
@@ -106,7 +141,12 @@ function ViewChangerComponent({
               </Tooltip>
             </div>
             <div>
-              <button className="bg-white text-dark shadow-none btn btn-icon-handler border-primary shadow-small">
+              <button
+                onClick={circleView}
+                className={`${
+                  isCircleActive ? "bg-primary text-white" : "bg-white text-dark"
+                }  shadow-none btn btn-icon-handler border-primary shadow-small`}
+              >
                 <RiDropFill
                   size={18}
                   style={{ marginTop: "-7px", marginLeft: "-1px" }}
