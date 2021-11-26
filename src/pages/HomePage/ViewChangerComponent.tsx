@@ -8,6 +8,8 @@ import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
 import * as MapVariables from "./Map/variables";
 import { IDType } from "./Map/variables";
+import moment from "moment";
+import HomeApis from "../../config/homepageApis.json";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -26,6 +28,7 @@ function ViewChangerComponent({
     setMapMode,
     setSelectedArea,
     selectedArea,
+    getCounts,
   } = mapViewResources;
   const stateText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
@@ -51,6 +54,20 @@ function ViewChangerComponent({
 
   const districtView = () => setMapMode(MapVariables.DISTRICT);
   const cityView = () => setMapMode(MapVariables.CITY);
+
+  const dateRangeChange = async (changeEvent: any) => {
+    const value = changeEvent.target.value;
+    if (value === "none") {
+      return getCounts();
+    }
+    const today = new Date();
+    const beginDate = await moment(today).format("YYYY-MM-DD");
+    const endDate = await moment(today)
+      .subtract({ months: value })
+      .format("YYYY-MM-DD");
+
+    getCounts(HomeApis.countDateRange + beginDate + "/" + endDate);
+  };
   return (
     <div className="view-changer-component-styles">
       <div className="">
@@ -61,12 +78,13 @@ function ViewChangerComponent({
             name="select"
             type="select"
             className="Input-Select-Box shadow-none"
+            onChange={dateRangeChange}
             style={{ border: "2px solid #0177FA" }}
           >
-            <option>Select </option>
-            <option> Last 3 Months </option>
-            <option> Last 6 Months </option>
-            <option> Last 9 Months </option>
+            <option value="none">Select </option>
+            <option value="3"> Last 3 Months </option>
+            <option value="6"> Last 6 Months </option>
+            <option value="9"> Last 9 Months </option>
           </Input>
           <button
             style={{ visibility: "hidden" }}
@@ -144,7 +162,9 @@ function ViewChangerComponent({
               <button
                 onClick={circleView}
                 className={`${
-                  isCircleActive ? "bg-primary text-white" : "bg-white text-dark"
+                  isCircleActive
+                    ? "bg-primary text-white"
+                    : "bg-white text-dark"
                 }  shadow-none btn btn-icon-handler border-primary shadow-small`}
               >
                 <RiDropFill

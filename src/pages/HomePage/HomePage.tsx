@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import DataTable from "./TableComponent";
@@ -11,6 +11,8 @@ import { DATATABLEDATA } from "../../shared-data/dataTable";
 import styled from "styled-components";
 import * as MapVariables from "./Map/variables";
 import { Button } from "../../styles-components/Button";
+import { useQuery } from "../../hooks/useQuery";
+import HomePageApi from "../../config/homepageApis.json";
 
 const PageWrapperContainer = styled.div({
   display: "flex",
@@ -32,13 +34,20 @@ const HomePage = () => {
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
 
+  const [getCounts, countState, countLoading] = useQuery(HomePageApi.countBlockEndPoint);
+  const countResource = {
+    getCounts,
+    countState,
+    countLoading
+  }
+
   const mapViewResources = {
     isCircleActive,
     mapMode,
     setIsCircleActive,
     setMapMode,
     setSelectedArea,
-    selectedArea
+    selectedArea, getCounts
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -60,7 +69,7 @@ const HomePage = () => {
               </div>
               <div className="col-12 col-md px-0 mx-0">
                 <div className="row px-0 mx-0">
-                  <CountsBlockComponent selectedArea={selectedArea} />
+                  <CountsBlockComponent countResource={countResource} selectedArea={selectedArea} />
                 </div>
                 <div className="col-12 row px-0 mx-0">
                   <div

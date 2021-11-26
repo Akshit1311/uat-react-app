@@ -19,7 +19,7 @@ export function useQuery(apiUrl: string) {
       if (response.data) {
         setState(response.data);
       }
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       setError({ error: true, errorMessage: error });
     } finally {

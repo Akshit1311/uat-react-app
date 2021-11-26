@@ -4,8 +4,8 @@ import { IDType } from "./Map/variables";
 import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
-import FadeLoader from "react-spinners/FadeLoader"
-import { css } from "@emotion/react"
+import FadeLoader from "react-spinners/FadeLoader";
+import { css } from "@emotion/react";
 
 const override = css`
   display: block;
@@ -15,6 +15,7 @@ const override = css`
 
 interface CountBlockTypes {
   selectedArea: IDType;
+  countResource: any;
 }
 
 interface CountCardTypes {
@@ -24,7 +25,7 @@ interface CountCardTypes {
   setActiveCard: React.Dispatch<React.SetStateAction<string>>;
   borderColor: string;
   accessor?: string;
-  loading: boolean
+  loading: boolean;
 }
 
 interface CountCardWrapperTypes {
@@ -56,12 +57,14 @@ const CountCard = ({
   state,
   setActiveCard,
   borderColor,
-  accessor, loading
+  accessor,
+  loading,
 }: CountCardTypes) => {
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
 
   useEffect(() => {
+    setCurrentCount(0)
     const count = state[accessor ? accessor : name];
     if (count && count > 0) {
       let interval: any;
@@ -86,7 +89,7 @@ const CountCard = ({
       return () => clearInterval(interval);
     }
     console.log("End Interval");
-  }, [state]);
+  }, [state, loading]);
   return (
     <>
       <CountCardWrapper
@@ -95,23 +98,32 @@ const CountCard = ({
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
       >
-        { loading && <FadeLoader color={"#0177FA"} loading={loading} radius={20} css={override} />}
+        {loading && (
+          <FadeLoader
+            color={"#0177FA"}
+            loading={loading}
+            radius={"2"}
+            css={override}
+          />
+        )}
         {!loading && (
-
-        <div className=" d-flex flex-column h-100 p-3 justify-content-between">
-          <h4 className="m-0 p-0">{currentCount}</h4>
-          <h6 className="mx-0 mb-0 p-0">{name}</h6>
-        </div>
+          <div className=" d-flex flex-column h-100 p-3 justify-content-between">
+            <h4 className="m-0 p-0">{currentCount}</h4>
+            <h6 className="mx-0 mb-0 p-0">{name}</h6>
+          </div>
         )}
       </CountCardWrapper>
     </>
   );
 };
 
-const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
-  const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
+const CountsBlockComponent = ({
+  selectedArea,
+  countResource,
+}: CountBlockTypes) => {
+  // const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-
+  const { getCounts, countState, countLoading } = countResource;
   useEffect(() => {
     getCounts();
   }, []);
@@ -119,9 +131,10 @@ const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
   const resources = {
     activeCard,
     setActiveCard,
-    state,
-    loading
+    state: countState,
+    loading: countLoading,
   };
+
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
