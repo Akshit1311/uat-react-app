@@ -81,7 +81,7 @@ function ViewChangerComponent({
             onChange={dateRangeChange}
             style={{ border: "2px solid #0177FA" }}
           >
-            <option value="none">Select </option>
+            <option value="none">All </option>
             <option value="3"> Last 3 Months </option>
             <option value="6"> Last 6 Months </option>
             <option value="9"> Last 9 Months </option>
