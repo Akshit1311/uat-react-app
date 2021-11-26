@@ -8,6 +8,7 @@ import { RoundedBadge } from "../../../styles-components/Badge";
 import HomePageApi from "../../../config/homepageApis.json";
 import { useQuery } from "../../../hooks/useQuery";
 import { MapVariablesArray as IndiaStates } from "../Map/variables";
+import * as MapVariables from "../Map/variables"
 
 const INITIAL_SELECTED_STATE = {
   id: "none",
@@ -61,6 +62,7 @@ const LeftNavComponent = (props: any) => {
   };
 
   const onApplyState = () => {
+
     setSelectedArea(selectedState);
     fetchSectors(generateUrl(HomePageApi.sectorByState, selectedState.name));
     fetchStages(generateUrl(HomePageApi.stagesByState, selectedState.name));
@@ -144,8 +146,10 @@ const LeftNavComponent = (props: any) => {
                   selectedItem={selectedState.name}
                   handleApplyClick={onApplyState}
                   dropDownId={"#collapse1"}
-                  handleClearClick={() =>
+                  handleClearClick={() =>{
                     setSelectedState(INITIAL_SELECTED_STATE)
+                    setSelectedArea(MapVariables.INDIA)
+                  }
                   }
                 />
               </div>
