@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import https from "https";
 
 const ERROR_INITIAL_STATE = { error: false, errorMessage: "" };
 
@@ -9,19 +10,22 @@ export function useQuery(apiUrl: string) {
   const [error, setError] = useState<any>(ERROR_INITIAL_STATE);
 
   const fetch = async (url: string) => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await axios.get(url ? url : apiUrl)
+      const response = await axios({
+        url: url ? url : apiUrl,
+        httpsAgent: new https.Agent({ rejectUnauthorized: false }),
+      });
       if (response.data) {
-        setState(response.data)
+        setState(response.data);
       }
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
-      setError({ error: true, errorMessage: error })
+      setError({ error: true, errorMessage: error });
     } finally {
-      setLoading(false)
-      console.log(state)
+      setLoading(false);
+      console.log(state);
     }
-  }
+  };
   return [fetch, state, loading, error];
 }

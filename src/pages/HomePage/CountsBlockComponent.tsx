@@ -4,6 +4,14 @@ import { IDType } from "./Map/variables";
 import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
+import FadeLoader from "react-spinners/FadeLoader"
+import { css } from "@emotion/react"
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 interface CountBlockTypes {
   selectedArea: IDType;
@@ -16,6 +24,7 @@ interface CountCardTypes {
   setActiveCard: React.Dispatch<React.SetStateAction<string>>;
   borderColor: string;
   accessor?: string;
+  loading: boolean
 }
 
 interface CountCardWrapperTypes {
@@ -47,7 +56,7 @@ const CountCard = ({
   state,
   setActiveCard,
   borderColor,
-  accessor,
+  accessor, loading
 }: CountCardTypes) => {
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
@@ -86,10 +95,14 @@ const CountCard = ({
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
       >
+        { loading && <FadeLoader color={"#0177FA"} loading={loading} radius={20} css={override} />}
+        {!loading && (
+
         <div className=" d-flex flex-column h-100 p-3 justify-content-between">
           <h4 className="m-0 p-0">{currentCount}</h4>
           <h6 className="mx-0 mb-0 p-0">{name}</h6>
         </div>
+        )}
       </CountCardWrapper>
     </>
   );
@@ -97,7 +110,6 @@ const CountCard = ({
 
 const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
   const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
-  // const [renderCount, setRenderCount] = useState(false);
   const [activeCard, setActiveCard] = useState<string>("Startups");
 
   useEffect(() => {
@@ -108,6 +120,7 @@ const CountsBlockComponent = ({ selectedArea }: CountBlockTypes) => {
     activeCard,
     setActiveCard,
     state,
+    loading
   };
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">

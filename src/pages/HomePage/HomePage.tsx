@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
-import LeftNavComponent from "./LeftNavComponent";
+import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import DataTable from "./TableComponent";
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";
@@ -56,7 +56,7 @@ const HomePage = () => {
                 className="col-12  px-0 p-0"
                 style={{ flex: "0 0 auto", width: "18.666667%" }}
               >
-                <LeftNavComponent setMapMode={setMapMode} mapMode={mapMode} ></LeftNavComponent>
+                <LeftNavComponent selectedArea={selectedArea} setSelectedArea={setSelectedArea} ></LeftNavComponent>
               </div>
               <div className="col-12 col-md px-0 mx-0">
                 <div className="row px-0 mx-0">
