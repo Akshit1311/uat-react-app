@@ -18,9 +18,12 @@ export function useQuery(apiUrl: string) {
       });
       if (response.data) {
         setState(response.data);
+      } else {
+        setState([])
       }
       // console.log(response.data);
     } catch (error) {
+      setState([])
       setError({ error: true, errorMessage: error });
     } finally {
       setLoading(false);

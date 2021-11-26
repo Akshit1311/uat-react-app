@@ -15,7 +15,7 @@ const INITIAL_SELECTED_STATE = {
 };
 
 const INITIAL_SELECTED_SECTOR = {
-  sector: "",
+  sector: "none",
   industryCount: 0,
   sectorCount: 0,
   totalCount: 0,
@@ -43,6 +43,7 @@ const LeftNavComponent = (props: any) => {
     INITIAL_SELECTED_STAGES
   );
   const [appliedSector, setAppliedSector] = useState<any>({});
+  const [appliedStages, setAppliedStages] = useState<any>({name: ""});
 
   const [fetchSectors, sectorState, sectorLoading] = useQuery("");
   const [fetchStages, stagesState, stagesLoading] = useQuery("");
@@ -77,6 +78,14 @@ const LeftNavComponent = (props: any) => {
     }
     setSelectedSector(sectorObj);
   };
+
+  const handleStagesClick = (stage:any) =>{
+    setSelectedStages(stage)
+  }
+
+  const onApplyStages = () =>{
+    setAppliedStages(selectedStages)
+  }
 
   const stateApplied = Boolean(selectedState.id === selectedArea.id);
   const sectorApplied = Boolean(selectedState.id === selectedArea.id);
@@ -152,13 +161,13 @@ const LeftNavComponent = (props: any) => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 Sector
-                {selectedStages.stateName === appliedSector.sector && (
+                {selectedSector.sector === appliedSector.sector && (
                   <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
                 )}
-                {selectedStages.stateName === appliedSector.sector && (
+                {selectedSector.sector === appliedSector.sector && (
                   <span className="count-text">{sectorState.length}</span>
                 )}
-                {!(selectedStages.stateName === appliedSector.sector) && (
+                {!(selectedSector.sector === appliedSector.sector) && (
                   <span className="count-text ms-auto">
                     {sectorState.length}
                   </span>
@@ -209,10 +218,10 @@ const LeftNavComponent = (props: any) => {
                   loading={sectorLoading}
                   selectedItem={selectedSector.sector}
                   handleClick={handleSectorClick}
-                  handleApplyClick={onApplySector}
-                  dropDownId={"#collapse2"}
+                  handleApplyClick={onApplyStages}
+                  dropDownId={"#collapse3"}
                   handleClearClick={() =>
-                    setSelectedState(INITIAL_SELECTED_STATE)
+                    setSelectedStages({name: ""})
                   }
                 />
               </div>
@@ -229,25 +238,25 @@ const LeftNavComponent = (props: any) => {
               >
                  <FiChevronDown className="me-2" size={15} />
                 Stages
-                {selectedStages.stateName === appliedSector.sector && (
+                {selectedStages.name === appliedStages.name && (
                   <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
                 )}
-                {selectedStages.stateName === appliedSector.sector && (
-                  <span className="count-text">{sectorState.length}</span>
+                {selectedStages.name === appliedStages.name && (
+                  <span className="count-text">{4}</span>
                 )}
-                {!(selectedStages.stateName === appliedSector.sector) && (
+                {!(selectedStages.name === appliedStages.name) && (
                   <span className="count-text ms-auto">
-                    {sectorState.length}
+                    {0}
                   </span>
                 )}
               </button>
               <div className="collapse mt-2" id="collapse4">
                 <DropDownListComponent
-                  accessor={"stateName"}
-                  data={sectorState}
-                  loading={stagesLoading}
-                  selectedItem={selectedStages.stateName}
-                  handleClick={handleSectorClick}
+                  accessor={"name"}
+                  data={[{ name: "Ideation", }, { name: "Scaling" }, { name: "Early Traction" } , { name: "Validation" }]}
+                  loading={false}
+                  selectedItem={selectedStages.name}
+                  handleClick={handleStagesClick}
                   handleApplyClick={onApplySector}
                   dropDownId={"#collapse4"}
                   handleClearClick={() =>
