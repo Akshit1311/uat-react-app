@@ -16,10 +16,10 @@ export const DISTRICT: IDType = {
   name: "District",
 };
 
-export const AN:IDType = {
-  id:"an",
-  name:"Andaman and Nicobar Islands"
-}
+export const AN: IDType = {
+  id: "an",
+  name: "Andaman and Nicobar Islands",
+};
 
 export const AP: IDType = {
   id: "ap",
@@ -195,7 +195,40 @@ export const WB: IDType = {
   name: "West Bengal",
 };
 
-
 export const MapVariablesArray = [
-  AP, CT, AR, AS, BR, CH, DN,DD, DL, GA,GJ,HR, HP,JK,JH,KA,KL,LD, MP,MH, MN, ML, MZ, NL, OR, PY,PB, RJ,SK,TN,TG, TR,UP,UT, WB,
-]
+  AP,
+  CT,
+  AR,
+  AS,
+  BR,
+  CH,
+  DN,
+  DD,
+  DL,
+  GA,
+  GJ,
+  HR,
+  HP,
+  JK,
+  JH,
+  KA,
+  KL,
+  LD,
+  MP,
+  MH,
+  MN,
+  ML,
+  MZ,
+  NL,
+  OR,
+  PY,
+  PB,
+  RJ,
+  SK,
+  TN,
+  TG,
+  TR,
+  UP,
+  UT,
+  WB,
+];

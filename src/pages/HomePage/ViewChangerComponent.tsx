@@ -1,19 +1,39 @@
 import { Input } from "reactstrap";
+import React,{ useContext } from "react";
 import { IoMapSharp } from "react-icons/io5";
 import { RiDropFill } from "react-icons/ri";
 import { MdOutlineLocationCity } from "react-icons/md";
 import { GiPeru } from "react-icons/gi";
-import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
 import * as MapVariables from "./Map/variables";
-import { IDType } from "./Map/variables";
 import moment from "moment";
 import HomeApis from "../../config/homepageApis.json";
+import "../../scss/HomePageStyles/viewChangerComponent.scss";
+import { Card } from "../../styles-components/Cards";
+import { SelectBox, SelectBoxLabel } from "../../styles-components/SelectBox";
+import styled from "styled-components";
+import { IconButton } from "../../styles-components/Button";
+import { ThemeContext } from "../../config/context"
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
 }
+
+const DARK_THEME_DROPDOWN =  `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`
+const LIGHT_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`
+
+const ViewMoreButton = styled.button<any>`
+  font-family: Montserrat;
+  padding-top: 7px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid #0177fa;
+  margin-bottom: 20px;
+  color: ${(props) => props.theme.color};
+  box-shadow: ${(props) =>
+    props.shadow ? "0px 0px 10px rgba(1, 119, 250, 0.19)" : "none"} !important;
+`;
 
 const VIEW_MORE = "View more about ";
 const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
@@ -30,6 +50,9 @@ function ViewChangerComponent({
     selectedArea,
     getCounts,
   } = mapViewResources;
+
+  const theme = useContext(ThemeContext)
+
   const stateText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>State</span>
@@ -68,24 +91,30 @@ function ViewChangerComponent({
 
     getCounts(HomeApis.countDateRange + beginDate + "/" + endDate);
   };
+
+  const getThemeDropDownImage = () =>{
+    if(theme.dropDownColorCode === 1) return LIGHT_THEME_DROPDOWN
+    if(theme.dropDownColorCode === 0) return DARK_THEME_DROPDOWN
+  }
+
   return (
     <div className="view-changer-component-styles">
       <div className="">
-        <div className="mx-1 col-12 d-flex justify-content-between">
-          <p className="data-range-text m-0 p-0">Date Range</p>
-          <Input
+        <div className="mx-1 col-12 d-flex align-items-center justify-content-between">
+          <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
+          <SelectBox
             id="dataRangeSelectBox"
-            name="select"
-            type="select"
-            className="Input-Select-Box shadow-none"
+            marginBottom="0px"
+            style={{
+              backgroundImage: getThemeDropDownImage(),
+            }}
             onChange={dateRangeChange}
-            style={{ border: "2px solid #0177FA" }}
           >
             <option value="none">All </option>
             <option value="3"> Last 3 Months </option>
             <option value="6"> Last 6 Months </option>
             <option value="9"> Last 9 Months </option>
-          </Input>
+          </SelectBox>
           <button
             style={{ visibility: "hidden" }}
             className="bg-white text-dark shadow-none btn btn-icon-handler border-primary"
@@ -104,159 +133,109 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={stateText}
               >
-                <button
+                <IconButton
                   onClick={defaultView}
-                  className={`${
-                    mapMode.id === MapVariables.INDIA.id
-                      ? "bg-primary text-white"
-                      : "bg-white text-dark"
-                  } shadow-none btn btn-outline btn-icon-handler shadow-small`}
+                  active={mapMode.id === MapVariables.INDIA.id}
+                  className={`shadow-none btn btn-outline btn-icon-handler shadow-small`}
                 >
                   <IoMapSharp
                     size={18}
                     style={{ marginTop: "-5px", marginLeft: "-1px" }}
                   />
-                </button>
+                </IconButton>
               </Tooltip>
               <Tooltip
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 placement="top"
                 overlay={cityText}
               >
-                <button
+                <IconButton
                   onClick={cityView}
-                  className={`${
-                    mapMode.id === MapVariables.CITY.id
-                      ? "bg-primary text-white"
-                      : "bg-white text-dark"
-                  } shadow-none btn btn-icon-handler border-primary shadow-small`}
+                  active={mapMode.id === MapVariables.CITY.id}
+                  className={`shadow-none btn btn-icon-handler border-primary shadow-small`}
                 >
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
                     size={18}
                   />
-                </button>
+                </IconButton>
               </Tooltip>
               <Tooltip
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 placement="top"
                 overlay={districtText}
               >
-                <button
+                <IconButton
                   onClick={districtView}
-                  className={`${
-                    mapMode.id === MapVariables.DISTRICT.id
-                      ? "bg-primary text-white"
-                      : "bg-white text-dark"
-                  }
-                    shadow-none btn btn-icon-handler border-primary shadow-small`}
+                  active={mapMode.id === MapVariables.DISTRICT.id}
+                  className={`shadow-none btn btn-icon-handler border-primary shadow-small`}
                 >
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
                     size={18}
                   />
-                </button>
+                </IconButton>
               </Tooltip>
             </div>
             <div>
-              <button
+              <IconButton
+                active={isCircleActive}
                 onClick={circleView}
-                className={`${
-                  isCircleActive
-                    ? "bg-primary text-white"
-                    : "bg-white text-dark"
-                }  shadow-none btn btn-icon-handler border-primary shadow-small`}
+                className={`shadow-none btn btn-icon-handler border-primary shadow-small`}
               >
                 <RiDropFill
                   size={18}
                   style={{ marginTop: "-5px", marginLeft: "1px" }}
                 />
-              </button>
+              </IconButton>
             </div>
           </div>
         </div>
         <div className="mx-1 col-12 mt-4 pt-0">
-          <div className="select-type-card">
-            <h5 className="mb-3">{selectedArea.name.toUpperCase()} STARTUPS</h5>
+          <Card>
+            {/* <div className="select-type-card"> */}
+            <h5 className="mb-3 font-poppins">
+              {selectedArea.name.toUpperCase()} STARTUPS
+            </h5>
             <div>
-              <label className="select-type-text">Select Type</label>
-              <Input
-                id="exampleSelect"
-                name="select"
-                type="select"
-                className="Input-Select-Box2 shadow-none"
+              <SelectBoxLabel>Select Type</SelectBoxLabel>
+              <SelectBox
+                style={{
+                  backgroundImage: getThemeDropDownImage(),
+                }}
+                marginBottom="20px"
               >
                 <option>All Startups </option>
                 <option> 2 </option>
                 <option> 3 </option>
                 <option> 4 </option>
                 <option> 5 </option>
-              </Input>
+              </SelectBox>
             </div>
-            <div className="card d-flex flex-row align-items-center px-3 py-3 my-0">
+            <Card className="border d-flex flex-row align-items-center px-3 py-3 my-0 mb-1">
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
-            </div>
+            </Card>
             {selectedArea.id !== "india" && (
               <>
-                <button
-                  className="btn btn-radius search-btn w-100 mt-4"
-                  style={{
-                    fontFamily: "Montserrat",
-                    paddingTop: "7px",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    border: "2px solid #0177FA",
-                    marginBottom: "20px",
-                    boxShadow: "0px 0px 10px rgba(1, 119, 250, 0.19)",
-                  }}
+                <ViewMoreButton
+                  shadow={true}
+                  className="btn btn-radius w-100 mt-4"
                 >
                   {VIEW_STATE_STARTUP_POLICY}
-                </button>
-                <button
+                </ViewMoreButton>
+                <ViewMoreButton
+                  shadow={false}
                   onClick={() => setMapMode(selectedArea)}
-                  className="btn btn-primary btn-radius search-btn w-100"
-                  style={{
-                    fontFamily: "Montserrat",
-                    paddingTop: "7px",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                  }}
+                  className="btn btn-primary btn-radius w-100 text-white"
                 >
                   {VIEW_MORE + selectedArea.name}
-                </button>
+                </ViewMoreButton>
               </>
             )}
-          </div>
+            {/* </div> */}
+          </Card>
         </div>
-        {/* <div
-          className="mx-1 col-12"
-          style={{ background: "red", height: "50px" }}
-        ></div> */}
-        {/* <div className="row select-type-card">
-          <h5>INDIAN STARTUPS</h5>
-          <div>
-            <label className="select-type-text">Select Type</label>
-            <Input
-              id="exampleSelect"
-              name="select"
-              type="select"
-              className="Input-Select-Box2 shadow-none"
-            >
-              <option>All Startups </option>
-              <option> 2 </option>
-              <option> 3 </option>
-              <option> 4 </option>
-              <option> 5 </option>
-            </Input>
-          </div>
-          <div className="">
-            <div className="card d-flex flex-row align-items-center">
-              <h3>10254</h3>
-              <span className="selected-startups">All Startups</span>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

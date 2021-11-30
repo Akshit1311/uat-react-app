@@ -66,11 +66,16 @@ thead {
     border-radius: 5px !important;
     border: 1px solid #8a8a8a;
   }
+
+}
+
+.font-poppins {
+  font-family: 'Poppins';
 }
 
 .bg-wrapper {
   background-color: none !important;
-  background: linear-gradient(180deg, #fafbff 0%, #f6f6f6 100%) !important;
+  background: linear-gradient(180deg,#fafbff 0%, #ffff 100%) !important;
   background-size: cover;
   background-repeat: no-repeat !important;
 }
@@ -174,19 +179,20 @@ tbody {
 .search-bar-left::-webkit-input-placeholder {
   font-family: "Poppins" sans-serif;
   font-weight: 500;
-  color: #000000;
 }
 .search-bar-left::-moz-placeholder {
   font-family: "Poppins" sans-serif;
   font-weight: 500;
-  color: #000000;
 }
 .search-bar-left::-ms-input-placeholder {
   font-family: "Poppins" sans-serif;
   font-weight: 500;
-  color: #000000;
 }
 
 .shadow-small {
   box-shadow: 0px 0px 10px rgba(1, 119, 250, 0.19) !important;
 }
+
+// $form-select-indicator-color: "red";
+// :root{
+// }

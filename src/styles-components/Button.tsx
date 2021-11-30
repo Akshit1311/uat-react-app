@@ -43,3 +43,9 @@ export const Button = styled.button<ButtonTypes>({
     }
 }
 )
+
+export const IconButton = styled.div<any>`
+    color: ${props=> props.active ? "white" : props.theme.color};
+    background: ${props=> props.active ? "#0177FA" : props.theme.bgColor};
+    border: 2px solid ${"#0177FA"}
+`
