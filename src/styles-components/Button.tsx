@@ -10,6 +10,7 @@ interface ButtonTypes {
     flex?: string;
     boxShadow?: string;
     opacity?: string;
+    theme:any
 }
 
 export const Button = styled.button<ButtonTypes>({
@@ -17,7 +18,6 @@ export const Button = styled.button<ButtonTypes>({
     display: "inline-block",
     backgroundColor: "#0177fa",
     color: "white",
-    boxShadow: "0px 0px 20px rgba(1, 119, 250, 0.25)",
     textAlign: "center",
     textDecoration: "none",
     cursor: "pointer",
@@ -38,8 +38,14 @@ export const Button = styled.button<ButtonTypes>({
         flex: `${props.flex}`,
         marginRight: `${props.marginRight}`,
         marginLeft: `${props.marginLeft}`,
-        boxShadow: `${props.boxShadow}`,
+        boxShadow: `${props.theme.buttonShadow}`,
         opacity: `${props.opacity}`
     }
 }
 )
+
+export const IconButton = styled.div<any>`
+    color: ${props=> props.active ? "white" : props.theme.color};
+    background: ${props=> props.active ? "#0177FA" : props.theme.bgColor};
+    border: 2px solid ${"#0177FA"}
+`

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { States, MapType } from "./states";
 import { District, DistrictType } from "./districts";
 import * as MapVariables from "./variables";
+import { ThemeContext } from ".././../../config/context";
 
 const MAP_AREA_INDIA = "0 0 650 696";
 const BLACK = "#000000";
@@ -11,6 +12,9 @@ const CIRCLE_SCALE = "scale(1.42)"
 export default function DisabledMap() {
   const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
+ 
+  const theme = useContext(ThemeContext);
+
   const populateDisctrictCircle = () => {
     // if (districtWiseCircle.length > 0) return;
     const newArray = new Array();
@@ -62,7 +66,7 @@ export default function DisabledMap() {
             d={state.d}
             id={state.id}
             fill={"none"}
-            stroke={BLACK}
+            stroke={theme.map.mapBorder}
             strokeWidth={1}
           />
         ))}
