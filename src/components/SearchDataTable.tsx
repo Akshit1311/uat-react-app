@@ -40,7 +40,7 @@ const SearchBarComponent = ({
           overflow: "hidden",
         }}
       >
-        <div className="d-flex w-100">
+        <div className="d-flex w-60" >
           <IconSpan
             className="btn search-icon"
             style={{ background: backgroundAll }}

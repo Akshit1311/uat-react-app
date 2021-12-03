@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import DataTable from "./TableComponent";
@@ -14,6 +14,7 @@ import { Button } from "../../styles-components/Button";
 import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
+import { ThemeContext } from "../../config/context";
 
 const PageWrapperContainer = styled.div`
   display: flex;
@@ -51,6 +52,8 @@ const HomePage = (props: HomePageTypes) => {
   );
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
+
+  const theme = useContext(ThemeContext)
 
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
@@ -129,12 +132,11 @@ const HomePage = (props: HomePageTypes) => {
               </span>
             </Strip>
             <div className="row d-flex justify-content-center px-0 mx-0">
-              <div className="btn-group text-center col-md-3 border button-togglers">
+              <div className="btn-group text-center col-md-3 border button-togglers" style={{ border: "1px solid rgba(0,0,0,0.2)"}}>
                 <Button
-                  backgroundColor={`${!startupListActive && "white"}`}
-                  color={`${!startupListActive && "black"}`}
+                  backgroundColor={`${!startupListActive && theme.togglerButton.backgroundInactive}`}
+                  color={`${!startupListActive && theme.togglerButton.color}`}
                   border={`${!startupListActive && "0px"}`}
-                  // fontWeight={"500px"}
                   className={`font-500 font-family-Mont shadow-none  px-3 ${
                     startupListActive && "btn-primary text-white"
                   }`}
@@ -143,10 +145,9 @@ const HomePage = (props: HomePageTypes) => {
                   Startups List
                 </Button>
                 <Button
-                  backgroundColor={`${startupListActive && "white"}`}
-                  color={`${startupListActive && "black"}`}
+                  backgroundColor={`${startupListActive && theme.togglerButton.backgroundInactive}`}
+                  color={`${startupListActive && theme.togglerButton.color}`}
                   border={`${startupListActive && "0px"}`}
-                  // fontWeight={"500px"}
                   className={`font-500 font-family-Mont shadow-none  px-3 ${
                     !startupListActive && "btn-primary text-white"
                   }`}

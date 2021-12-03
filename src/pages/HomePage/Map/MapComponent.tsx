@@ -140,9 +140,9 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   };
 
   useEffect(() => {
-    // setIndiaMap(States);
+    setIndiaMap(States);
     console.log("States", States);
-    fetchStateListWithName();
+    // fetchStateListWithName();
     populateDistrictCircle();
     populateDistrictsBoarders();
   }, [mapMode, abc]);

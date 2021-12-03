@@ -23,7 +23,21 @@ export const PRIMARY_THEME = {
   },
   dropDownColorCode: 1,
 
-  bgStripe: "#f1f1f1"
+  bgStripe: "#f1f1f1",
+  bgStartupCard: "#f8f8f8",
+  bgBadge: "#E0E0E0",
+  dataTable:{
+    searchBorder: true,
+    searchBorderColor: "rgba(38, 40, 58, 1)" ,
+    color: "white",
+    
+  },
+  togglerButton:{
+    backgroundInactive:"white",
+    backgroundActive: "",
+    color: "black"
+  },
+  searchBg: "#f8f8f8"
 };
 
 export const DARK_THEME = {
@@ -44,7 +58,15 @@ export const DARK_THEME = {
     color: "white",
   },
   dropDownColorCode: 0,
-  bgStripe: "#1F1E2C"
+  bgStripe: "#1F1E2C",
+  bgStartupCard: "rgba(31, 30, 44, 1)",
+  bgBadge: "#26283A",
+  togglerButton:{
+    backgroundInactive:"rgba(31, 30, 44, 1)",
+    backgroundActive: "",
+    color: "white"
+  },
+  searchBg:"rgba(31, 30, 44, 1)"
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

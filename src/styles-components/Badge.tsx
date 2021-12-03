@@ -8,8 +8,9 @@ export const Badge = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 150%;
-    background-color: #E0E0E0;
+    background-color: ${props=> props.theme.bgBadge} ;
     width: fit-content;
+    color: ${props=> props.theme.color};
   `;
 
 export const RoundedBadge = styled.div`
