@@ -42,11 +42,12 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   },
   (props: any) => {
     return {
-      backgroundColor: props.active ? "#0177FA" : "white",
+      backgroundColor: props.active ? "#0177FA" : props.theme.bgCards,
       border: props.active
         ? "2px solid #0177FA"
         : `2px solid ${props.borderColor}`,
-      color: props.active ? "white" : "black",
+      color: props.active ? "white" : props.theme.color,
+      transition: "0.5s color",
     };
   }
 );
@@ -64,7 +65,7 @@ const CountCard = ({
   const active = name === activeCard;
 
   useEffect(() => {
-    setCurrentCount(0)
+    setCurrentCount(0);
     const count = state[accessor ? accessor : name];
     if (count && count > 0) {
       let interval: any;
@@ -102,7 +103,7 @@ const CountCard = ({
           <FadeLoader
             color={"#0177FA"}
             loading={loading}
-            radius={"2"}
+            radius={"2px"}
             css={override}
           />
         )}
@@ -116,6 +117,12 @@ const CountCard = ({
     </>
   );
 };
+
+const H5 = styled.h5<any>({}, (props) => {
+  return {
+    color: props.theme.color,
+  };
+});
 
 const CountsBlockComponent = ({
   selectedArea,
@@ -138,7 +145,7 @@ const CountsBlockComponent = ({
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
-        <h5>{selectedArea.name}</h5>
+        <H5>{selectedArea.stateName}</H5>
       </div>
       <div className="row count-div">
         <CountCard

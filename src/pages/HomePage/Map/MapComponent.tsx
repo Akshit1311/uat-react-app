@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
 import { District, DistrictType } from "./districts";
 import * as MapVariables from "./variables";
 import { DistrictBoarder, Districts2 } from "./districtsBoarders";
-import { GiEmptyMetalBucketHandle } from "react-icons/gi";
+import styled from "styled-components";
+import { statesDpiit } from "./statesApi";
+import { ThemeContext } from ".././../../config/context";
+import { useQuery } from "../../../hooks/useQuery";
 
 interface IndiaMapTypes {
   mapViewResource: any;
 }
 
-const MAP_AREA_INDIA = "0 0 650 696";
+const MapWrapper = styled.div`
+  color: ${(props) => props.theme.map.color} !important;
+`;
+const Path = styled.path`
+  stroke: ${(props) => props.theme.map.color};
+`;
+
+const MAP_AREA_INDIA = "0 0 820 696";
 const MAP_AREA_DISTRICTS = "0 0 470 465";
 const WHITE = "#ffffff";
 const BLACK = "#000000";
@@ -23,7 +33,10 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const { selectedArea, setSelectedArea, mapMode, isCircleActive } =
     mapViewResource;
 
-  const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
+  const theme = useContext(ThemeContext);
+
+  const [ fetchIndiaMap, indiaMap, loadingIndiaMap ] = useQuery('https://13.235.79.165:443/startup/states');
+
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
@@ -43,39 +56,42 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   };
 
   const fillStates = (stateId: string) => {
-    if (fillHover(stateId)) return THEME_COLOR_LITE;
-    if (fillClick(stateId)) return THEME_COLOR;
-    return "rgba(0,0,0,0)";
+    // if (fillHover(stateId)) return theme.map.hover;
+    if (fillClick(stateId)) return theme.map.click;
+    return theme.map.background;
   };
 
   const fillStroke = (stateId: string) => {
-    if (fillHover(stateId)) return 1.5;
-    if (fillClick(stateId)) return 1.7;
+    if (fillHover(stateId)) return 2;
+    if (fillClick(stateId)) return 2.5;
     return 1;
   };
+  const fillStrokeColor = (stateId: string) => {
+    if (fillHover(stateId)) return theme.map.hover;
+    if (fillClick(stateId)) return theme.map.color;
+    return theme.map.mapBorder
+  };
 
-  const handleMouseEnter = (state: MapType, mouseEvent: any) => {
+  const handleMouseEnter = (state: any, mouseEvent: any) => {
     setHoverStates([state]);
-    console.log(mouseEvent);
   };
   const handleStateMouseLeave = () => setHoverStates([]);
 
-  const handleStateClick = (state: MapType) => {
+  const handleStateClick = (state: any) => {
     const isSelected = stateValidator(activeStates, ID, state.id);
     if (isSelected !== -1) {
       const states = [...activeStates];
       states.splice(isSelected, 1);
       return setActiveStates(states);
     }
-    setSelectedArea(state.accessor);
+    setSelectedArea({ id:state.id, stateName: state.text });
     setActiveStates([state]);
   };
 
-  const populateDisctrictCircle = () => {
+  const populateDistrictCircle = () => {
     // if (districtWiseCircle.length > 0) return;
     const newArray = new Array();
     District.forEach((district: any) => {
-      console.log(district);
       const newObj: any = new Object();
 
       if (district.title.toLowerCase() == "mumbai") {
@@ -102,11 +118,10 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       newObj["id"] = district.id;
       newArray.push(newObj);
     });
-    console.log(newArray);
     setDistrictWiseCircle(newArray);
   };
 
-  const pupulateDistrictsBoarders = () => {
+  const populateDistrictsBoarders = () => {
     setDistrictsBoarder(Districts2);
   };
 
@@ -119,18 +134,20 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     if (mapMode.id === MapVariables.INDIA.id) return "scale(1.42)";
   };
 
+  const fetchStateListWithName = async () => {
+    const response = await statesDpiit("");
+    console.log("States Dpiit", response);
+    // setIndiaMap(States);
+  };
+
   useEffect(() => {
-    // if (selectedArea.id === "india") return setIndiaMap(States);
-    // const state: MapType[] = States.filter(
-    //   (item) => item.id === selectedArea.id
-    // );
-    setIndiaMap(States);
-    populateDisctrictCircle();
-    pupulateDistrictsBoarders();
-  }, [mapMode]);
+    fetchIndiaMap();
+    populateDistrictCircle();
+    populateDistrictsBoarders();
+  }, [mapMode, theme]);
 
   return (
-    <div className="m-2 mt-0" style={{ position: "relative" }}>
+    <MapWrapper className="m-2 mt-0" style={{ position: "relative" }}>
       {!isCircleActive && (
         <div className="gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
@@ -143,13 +160,13 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         aria-label="Map of India"
       >
         {mapMode.id === MapVariables.INDIA.id &&
-          indiaMap.map((state: MapType) => (
+          indiaMap.map((state:any) => (
             <Tooltip
               placement="top"
               arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
               overlay={
                 <p style={{ paddingTop: "1px" }} className="px-2">
-                  {state.accessor.name}
+                  {state.text}
                 </p>
               }
             >
@@ -161,12 +178,12 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 d={state.d}
                 id={state.id}
                 fill={fillStates(state.id)}
-                stroke={BLACK}
+                stroke={fillStrokeColor(state.id)}
                 strokeWidth={fillStroke(state.id)}
               />
             </Tooltip>
           ))}
-
+        {console.log("MapBorder", theme["map"].mapBorder)}
         {mapMode.id === MapVariables.CITY.id && <div />}
 
         {mapMode.id === MapVariables.DISTRICT.id &&
@@ -205,7 +222,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
             </g>
             <g style={{ transform: getViewBoxAreaCircle() }}>
               <circle
-                transform={"translate(300,37)"}
+                transform={"translate(510,37)"}
                 fill-opacity="0.25"
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
@@ -217,7 +234,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 <title>{"Info"}</title>
               </circle>
               <circle
-                transform={"translate(300,52)"}
+                transform={"translate(510,52)"}
                 fill-opacity="0.25"
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
@@ -229,7 +246,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 <title>{"Info"}</title>
               </circle>
               <circle
-                transform={"translate(300,67)"}
+                transform={"translate(510,67)"}
                 fill-opacity="0.25"
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
@@ -244,6 +261,6 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
           </svg>
         </>
       )}
-    </div>
+    </MapWrapper>
   );
 }

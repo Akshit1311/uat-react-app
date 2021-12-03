@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState, useEffect } from "react";
 import DropDownListComponent from "./DropDownListComponent";
 import "../../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -8,7 +8,9 @@ import { RoundedBadge } from "../../../styles-components/Badge";
 import HomePageApi from "../../../config/homepageApis.json";
 import { useQuery } from "../../../hooks/useQuery";
 import { MapVariablesArray as IndiaStates } from "../Map/variables";
-import * as MapVariables from "../Map/variables"
+import * as MapVariables from "../Map/variables";
+import { Card } from "../../../styles-components/Cards"
+import styled from "styled-components";
 
 const INITIAL_SELECTED_STATE = {
   id: "none",
@@ -31,6 +33,25 @@ const INITIAL_SELECTED_STAGES = {
   total: 0,
 };
 
+const DropDown = styled.button`
+color: ${props=> props.theme.colorCards} !important;
+`
+const SearchBarWrapper = styled.div`
+color: ${props=> props.theme.colorCards} !important;
+background: ${props=> props.theme.bgCards} !important;
+box-shadow: ${props=> props.theme.shadowCards} !important;
+`
+
+const SearchBarInput = styled.input`
+color: ${props=> props.theme.colorCards} !important;
+background: ${props=> props.theme.bgCards} !important;
+`
+
+const SpanIcon = styled.span`
+  color: ${props=> props.theme.color};
+  margin-top: 1.4px !important;
+`
+
 const LeftNavComponent = (props: any) => {
   const { setSelectedArea, selectedArea } = props;
 
@@ -49,9 +70,11 @@ const LeftNavComponent = (props: any) => {
   const [fetchSectors, sectorState, sectorLoading] = useQuery("");
   const [fetchStages, stagesState, stagesLoading] = useQuery("");
 
+  const [fetchStates, statesStates, statesLoading] = useQuery("https://13.235.79.165/startup/dpiit/states")
+
   const handleStateClick = (state: any) => {
     if (selectedState.id === state.id) {
-      setSelectedArea({ id: "india", name: "India" });
+      setSelectedArea({ id: "india", stateName: "India" });
       return setSelectedState(INITIAL_SELECTED_STATE);
     }
     setSelectedState(state);
@@ -64,15 +87,15 @@ const LeftNavComponent = (props: any) => {
   const onApplyState = () => {
 
     setSelectedArea(selectedState);
-    fetchSectors(generateUrl(HomePageApi.sectorByState, selectedState.name));
-    fetchStages(generateUrl(HomePageApi.stagesByState, selectedState.name));
+    fetchSectors(generateUrl(HomePageApi.sectorByState, selectedState.stateName));
+    fetchStages(generateUrl(HomePageApi.stagesByState, selectedState.stateName));
   };
 
   const onApplySector = () => {
     setAppliedSector(selectedSector);
   };
 
-  const oncancleClick = () => {};
+  const onDismissClick = () => {};
 
   const handleSectorClick = (sectorObj: any) => {
     if (selectedSector.sector === sectorObj.sector) {
@@ -92,30 +115,34 @@ const LeftNavComponent = (props: any) => {
   const stateApplied = Boolean(selectedState.id === selectedArea.id);
   const sectorApplied = Boolean(selectedState.id === selectedArea.id);
 
+  useEffect(()=>{
+    fetchStates()
+  },[])
+
   return (
     <>
       <div className="left-side-nav-styles">
         <div className="px-2">
           <div className="row search-bar-row">
-            <div className="rounded h-100 d-flex mx-0 px-0 search-bar">
-              <span
+            <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
+              <SpanIcon
                 className="btn shadow-none border-0 m-0 pe-1 ps-4 "
                 id="search-addon"
               >
                 <BiSearchAlt2 size={17.06} />
-              </span>
-              <input
+              </SpanIcon>
+              <SearchBarInput
                 type="search"
                 className="form-control ps-2 search-bar-left"
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="search-addon"
               />
-            </div>
+            </SearchBarWrapper>
           </div>
-          <div className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card" id="flush1">
+          <Card className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card" id="flush1">
             <div className="border-bottom-filter pt-2">
-              <button
+              <DropDown
                 className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed"
                 type="button"
                 data-bs-toggle="collapse"
@@ -129,21 +156,21 @@ const LeftNavComponent = (props: any) => {
                   <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
                 )}
                 {stateApplied && (
-                  <span className="count-text">{IndiaStates.length}</span>
+                  <span className="count-text">{statesStates.length}</span>
                 )}
                 {!stateApplied && (
                   <span className="count-text ms-auto">
-                    {IndiaStates.length}
+                    {statesStates.length}
                   </span>
                 )}
-              </button>
+              </DropDown>
               <div className="collapse mt-2" id="collapse1" data-bs-parent="flush1">
                 <DropDownListComponent
-                  accessor={"name"}
-                  data={IndiaStates}
+                  accessor={"stateName"}
+                  data={statesStates}
                   loading={false}
                   handleClick={handleStateClick}
-                  selectedItem={selectedState.name}
+                  selectedItem={selectedState.stateName}
                   handleApplyClick={onApplyState}
                   dropDownId={"#collapse1"}
                   handleClearClick={() =>{
@@ -155,7 +182,7 @@ const LeftNavComponent = (props: any) => {
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
-              <button
+              <DropDown
                 className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1"
                 type="button"
                 data-bs-toggle="collapse"
@@ -176,7 +203,7 @@ const LeftNavComponent = (props: any) => {
                     {sectorState.length}
                   </span>
                 )}
-              </button>
+              </DropDown>
               <div className="collapse mt-2" id="collapse2" data-bs-parent="flush1">
                 <DropDownListComponent
                   accessor={"sector"}
@@ -193,7 +220,7 @@ const LeftNavComponent = (props: any) => {
               </div>
             </div>
             <div className="border-bottom-filter pt-1">
-              <button
+              <DropDown
                 className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1"
                 type="button"
                 data-bs-toggle="collapse"
@@ -214,7 +241,7 @@ const LeftNavComponent = (props: any) => {
                     {0}
                   </span>
                 {/* // )} */}
-              </button>
+              </DropDown>
               <div className="collapse mt-2" id="collapse3" data-bs-parent="flush1">
                 <DropDownListComponent
                   accessor={"sector"}
@@ -232,7 +259,7 @@ const LeftNavComponent = (props: any) => {
             </div>
          
             <div className="border-bottom-filter pt-1">
-              <button
+              <DropDown
                 className="btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1"
                 type="button"
                 data-bs-toggle="collapse"
@@ -250,10 +277,10 @@ const LeftNavComponent = (props: any) => {
                 )}
                 {!(selectedStages.name === appliedStages.name) && (
                   <span className="count-text ms-auto">
-                    {0}
+                    {4}
                   </span>
                 )}
-              </button>
+              </DropDown>
               <div className="collapse mt-2" id="collapse4">
                 <DropDownListComponent
                   accessor={"name"}
@@ -270,7 +297,7 @@ const LeftNavComponent = (props: any) => {
               </div>
             </div>
             <div className="border-bottom-filter-last-element pt-1 pb-2">
-              <button
+              <DropDown
                 className="btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center"
                 type="button"
                 data-bs-toggle="collapse"
@@ -281,7 +308,7 @@ const LeftNavComponent = (props: any) => {
                 <FiChevronDown className="me-2" size={15} />
                 Winner Badges
                 <span className="ms-auto count-text">2</span>
-              </button>
+              </DropDown>
               <div className="collapse mt-2" id="collapse5">
                 <div className="card card-body">
                   Some placeholder content for the collapse component. This
@@ -290,8 +317,8 @@ const LeftNavComponent = (props: any) => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="left-nav-bottom-card row bg-white pt-3 ">
+          </Card>
+          <Card className="left-nav-bottom-card row pt-3 ">
             <h6 className="px-0 card-heading-left-bottom">
               {" "}
               VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA
@@ -302,7 +329,7 @@ const LeftNavComponent = (props: any) => {
             <div className="btn-view-project mx-0 px-0">
               <Button>View Insights</Button>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </>
