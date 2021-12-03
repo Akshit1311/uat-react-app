@@ -145,7 +145,7 @@ const CountsBlockComponent = ({
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
-        <H5>{selectedArea.name}</H5>
+        <H5>{selectedArea.stateName}</H5>
       </div>
       <div className="row count-div">
         <CountCard

@@ -195,7 +195,7 @@ function ViewChangerComponent({
           <Card>
             {/* <div className="select-type-card"> */}
             <h5 className="mb-3 font-poppins">
-              {selectedArea.name.toUpperCase()} STARTUPS
+              {selectedArea.stateName.toUpperCase()} STARTUPS
             </h5>
             <div>
               <SelectBoxLabel>Select Type</SelectBoxLabel>
@@ -229,7 +229,7 @@ function ViewChangerComponent({
                   onClick={() => setMapMode(selectedArea)}
                   className="btn btn-primary btn-radius w-100 text-white"
                 >
-                  {VIEW_MORE + selectedArea.name}
+                  {VIEW_MORE + selectedArea.stateName}
                 </ViewMoreButton>
               </>
             )}

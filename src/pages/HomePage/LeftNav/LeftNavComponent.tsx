@@ -74,7 +74,7 @@ const LeftNavComponent = (props: any) => {
 
   const handleStateClick = (state: any) => {
     if (selectedState.id === state.id) {
-      setSelectedArea({ id: "india", name: "India" });
+      setSelectedArea({ id: "india", stateName: "India" });
       return setSelectedState(INITIAL_SELECTED_STATE);
     }
     setSelectedState(state);
@@ -87,8 +87,8 @@ const LeftNavComponent = (props: any) => {
   const onApplyState = () => {
 
     setSelectedArea(selectedState);
-    fetchSectors(generateUrl(HomePageApi.sectorByState, selectedState.name));
-    fetchStages(generateUrl(HomePageApi.stagesByState, selectedState.name));
+    fetchSectors(generateUrl(HomePageApi.sectorByState, selectedState.stateName));
+    fetchStages(generateUrl(HomePageApi.stagesByState, selectedState.stateName));
   };
 
   const onApplySector = () => {
@@ -156,21 +156,21 @@ const LeftNavComponent = (props: any) => {
                   <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
                 )}
                 {stateApplied && (
-                  <span className="count-text">{IndiaStates.length}</span>
+                  <span className="count-text">{statesStates.length}</span>
                 )}
                 {!stateApplied && (
                   <span className="count-text ms-auto">
-                    {IndiaStates.length}
+                    {statesStates.length}
                   </span>
                 )}
               </DropDown>
               <div className="collapse mt-2" id="collapse1" data-bs-parent="flush1">
                 <DropDownListComponent
-                  accessor={"name"}
-                  data={IndiaStates}
+                  accessor={"stateName"}
+                  data={statesStates}
                   loading={false}
                   handleClick={handleStateClick}
-                  selectedItem={selectedState.name}
+                  selectedItem={selectedState.stateName}
                   handleApplyClick={onApplyState}
                   dropDownId={"#collapse1"}
                   handleClearClick={() =>{

@@ -1,19 +1,23 @@
 export interface IDType {
-  name: string;
+  name?: string;
   id: string;
+  stateName? :string
 }
 
 export const INDIA: IDType = {
   id: "india",
   name: "India",
+  stateName: "India"
 };
 export const CITY: IDType = {
   id: "city",
   name: "City",
+  stateName: "City"
 };
 export const DISTRICT: IDType = {
   id: "district",
   name: "District",
+  stateName: "Districts"
 };
 
 export const AN: IDType = {

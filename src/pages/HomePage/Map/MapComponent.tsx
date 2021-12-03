@@ -8,6 +8,7 @@ import { DistrictBoarder, Districts2 } from "./districtsBoarders";
 import styled from "styled-components";
 import { statesDpiit } from "./statesApi";
 import { ThemeContext } from ".././../../config/context";
+import { useQuery } from "../../../hooks/useQuery";
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -34,7 +35,8 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
 
   const theme = useContext(ThemeContext);
 
-  const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
+  const [ fetchIndiaMap, indiaMap, loadingIndiaMap ] = useQuery('https://13.235.79.165:443/startup/states');
+
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
@@ -60,8 +62,8 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   };
 
   const fillStroke = (stateId: string) => {
-    if (fillHover(stateId)) return 1.5;
-    if (fillClick(stateId)) return 2;
+    if (fillHover(stateId)) return 2;
+    if (fillClick(stateId)) return 2.5;
     return 1;
   };
   const fillStrokeColor = (stateId: string) => {
@@ -70,19 +72,19 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     return theme.map.mapBorder
   };
 
-  const handleMouseEnter = (state: MapType, mouseEvent: any) => {
+  const handleMouseEnter = (state: any, mouseEvent: any) => {
     setHoverStates([state]);
   };
   const handleStateMouseLeave = () => setHoverStates([]);
 
-  const handleStateClick = (state: MapType) => {
+  const handleStateClick = (state: any) => {
     const isSelected = stateValidator(activeStates, ID, state.id);
     if (isSelected !== -1) {
       const states = [...activeStates];
       states.splice(isSelected, 1);
       return setActiveStates(states);
     }
-    setSelectedArea(state.accessor);
+    setSelectedArea({ id:state.id, stateName: state.text });
     setActiveStates([state]);
   };
 
@@ -135,13 +137,11 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const fetchStateListWithName = async () => {
     const response = await statesDpiit("");
     console.log("States Dpiit", response);
-    setIndiaMap(States);
+    // setIndiaMap(States);
   };
 
   useEffect(() => {
-    setIndiaMap(States);
-    console.log("States", States);
-    // fetchStateListWithName();
+    fetchIndiaMap();
     populateDistrictCircle();
     populateDistrictsBoarders();
   }, [mapMode, theme]);
@@ -160,13 +160,13 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         aria-label="Map of India"
       >
         {mapMode.id === MapVariables.INDIA.id &&
-          indiaMap.map((state: MapType) => (
+          indiaMap.map((state:any) => (
             <Tooltip
               placement="top"
               arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
               overlay={
                 <p style={{ paddingTop: "1px" }} className="px-2">
-                  {state.accessor.name}
+                  {state.text}
                 </p>
               }
             >
