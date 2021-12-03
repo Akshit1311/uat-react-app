@@ -57,7 +57,7 @@ const DropDownListComponent = (props: any) => {
           <FadeLoader
             color={"#0177FA"}
             loading={loading}
-            radius={20}
+            radius={"2px"}
             css={override}
           />
           {noData ? (

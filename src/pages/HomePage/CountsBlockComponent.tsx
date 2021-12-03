@@ -103,7 +103,7 @@ const CountCard = ({
           <FadeLoader
             color={"#0177FA"}
             loading={loading}
-            radius={"2"}
+            radius={"2px"}
             css={override}
           />
         )}

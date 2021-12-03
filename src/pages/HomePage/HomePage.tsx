@@ -28,6 +28,9 @@ const PageWrapperContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat !important;
 `;
+const ButtonGroup = styled.div`
+  border: ${props=> props.theme.togglerButton.border};
+`;
 
 const PageWrapper = styled.div({
   maxWidth: "1366px",
@@ -36,7 +39,8 @@ const PageWrapper = styled.div({
 
 const Strip = styled.div`
   background-color: ${props=> props.theme.bgStripe};
-  color: ${props=> props.theme.color}
+  color: ${props=> props.theme.color};
+  box-shadow: ${props=> props.theme.shadowStripe};
 `
 
 interface HomePageTypes {
@@ -132,7 +136,7 @@ const HomePage = (props: HomePageTypes) => {
               </span>
             </Strip>
             <div className="row d-flex justify-content-center px-0 mx-0">
-              <div className="btn-group text-center col-md-3 border button-togglers" style={{ border: "1px solid rgba(0,0,0,0.2)"}}>
+              <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
                 <Button
                   backgroundColor={`${!startupListActive && theme.togglerButton.backgroundInactive}`}
                   color={`${!startupListActive && theme.togglerButton.color}`}
@@ -155,7 +159,7 @@ const HomePage = (props: HomePageTypes) => {
                 >
                   Data Table
                 </Button>
-              </div>
+              </ButtonGroup>
               <div className="row mx-0 px-0">
                 {startupListActive && (
                   <StartupsListComponent data={startupsListData} />

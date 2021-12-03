@@ -1,12 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 
-export const Card = styled.div`
+export const Card = styled.div<any>`
 padding: 20px 16px 20px 16px;
 background: ${props=> props.theme.bgCards} !important;
-box-shadow: 0px 0px 6px rgba(193, 193, 193, 0.25);
+box-shadow: ${props=> props.theme.shadowCards} !important;
 border-radius: 4px;
 color: ${props=> props.theme.colorCards} !important;
+border: ${ props=> props.border && props.theme.showCaseStartUpBorder}
 `
 // width: 102%;
 

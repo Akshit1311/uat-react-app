@@ -32,8 +32,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const { selectedArea, setSelectedArea, mapMode, isCircleActive } =
     mapViewResource;
 
-  const abc = useContext(ThemeContext);
-  console.log("Theme", abc);
+  const theme = useContext(ThemeContext);
 
   const [indiaMap, setIndiaMap] = useState<MapType[]>([]);
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
@@ -55,9 +54,9 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   };
 
   const fillStates = (stateId: string) => {
-    // if (fillHover(stateId)) return abc.map.hover;
-    if (fillClick(stateId)) return abc.map.click;
-    return abc.map.background;
+    // if (fillHover(stateId)) return theme.map.hover;
+    if (fillClick(stateId)) return theme.map.click;
+    return theme.map.background;
   };
 
   const fillStroke = (stateId: string) => {
@@ -66,9 +65,9 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     return 1;
   };
   const fillStrokeColor = (stateId: string) => {
-    if (fillHover(stateId)) return abc.map.hover;
-    if (fillClick(stateId)) return abc.map.color;
-    return abc.map.mapBorder
+    if (fillHover(stateId)) return theme.map.hover;
+    if (fillClick(stateId)) return theme.map.color;
+    return theme.map.mapBorder
   };
 
   const handleMouseEnter = (state: MapType, mouseEvent: any) => {
@@ -145,7 +144,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     // fetchStateListWithName();
     populateDistrictCircle();
     populateDistrictsBoarders();
-  }, [mapMode, abc]);
+  }, [mapMode, theme]);
 
   return (
     <MapWrapper className="m-2 mt-0" style={{ position: "relative" }}>
@@ -184,7 +183,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
               />
             </Tooltip>
           ))}
-        {console.log("MapBorder", abc["map"].mapBorder)}
+        {console.log("MapBorder", theme["map"].mapBorder)}
         {mapMode.id === MapVariables.CITY.id && <div />}
 
         {mapMode.id === MapVariables.DISTRICT.id &&

@@ -21,6 +21,7 @@ const Input = styled.input`
   border-radius: 4px;
   border: 0px;
   color: ${(props) => props.theme.color} !important;
+  font-family: 'Poppins';
 `;
 
 const SearchBarComponent = ({

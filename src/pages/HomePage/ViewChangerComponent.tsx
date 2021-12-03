@@ -212,7 +212,7 @@ function ViewChangerComponent({
                 <option> 5 </option>
               </SelectBox>
             </div>
-            <Card className="border d-flex flex-row align-items-center px-3 py-3 my-0 mb-1">
+            <Card className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1" border={true}>
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
             </Card>

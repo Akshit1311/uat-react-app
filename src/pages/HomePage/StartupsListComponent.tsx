@@ -17,7 +17,7 @@ function EmptyStartUp() {
 
 const StartUpCardContainer = styled.div`
   background: ${props=> props.theme.bgCards};
-  box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25);
+  box-shadow: ${props=> props.theme.shadowCards};
   border-radius: 4px;
   color: ${props=> props.theme.color}
 `;

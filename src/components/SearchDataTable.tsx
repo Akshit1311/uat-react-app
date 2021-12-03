@@ -1,12 +1,14 @@
 import { GoSearch } from "react-icons/go";
 import "../scss/searchBarComponent.scss";
-import { Button } from "../styles-components/Button";
 import styled from "styled-components";
+import { useContext } from "react";
+import { ThemeContext } from "../config/context";
 
 interface SearchTypes {
   background?: string;
   borderRadius?: string;
   placeholderClass?: string;
+  inputClass?: string;
 }
 
 const IconSpan = styled.span`
@@ -17,17 +19,20 @@ const IconSpan = styled.span`
 `;
 
 const Input = styled.input`
-  background: ${(props) => props.theme.searchBg} !important;
+  background: ${(props) => props.theme.searchBg};
   border-radius: 4px;
   border: 0px;
   color: ${(props) => props.theme.color} !important;
+  font-family: 'Poppins' !important;
 `;
 
 const SearchBarComponent = ({
   background,
   borderRadius,
   placeholderClass,
+  inputClass,
 }: SearchTypes) => {
+  const theme = useContext(ThemeContext);
   const borderRadiusAll = borderRadius ? borderRadius : "0px";
   const backgroundAll = background ? background : "#f8f8f8";
   return (
@@ -37,10 +42,9 @@ const SearchBarComponent = ({
         style={{
           borderTopLeftRadius: borderRadiusAll,
           borderBottomLeftRadius: borderRadiusAll,
-          overflow: "hidden",
         }}
       >
-        <div className="d-flex w-60" >
+        <div className={`d-flex w-60 ${inputClass}`}>
           <IconSpan
             className="btn search-icon"
             style={{ background: backgroundAll }}

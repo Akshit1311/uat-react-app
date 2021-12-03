@@ -27,17 +27,25 @@ export const PRIMARY_THEME = {
   bgStartupCard: "#f8f8f8",
   bgBadge: "#E0E0E0",
   dataTable:{
-    searchBorder: true,
-    searchBorderColor: "rgba(38, 40, 58, 1)" ,
+    searchBorderClass: "light-search-data-table" ,
     color: "white",
-    
+    bodyClass:"shadow-small-3",
+    searchBg:"#ffffff",
+    headerBorder: 'light-data-table-header',
+    inputClass:"bg-white",
+    dashedBorder: "black"
   },
   togglerButton:{
     backgroundInactive:"white",
     backgroundActive: "",
-    color: "black"
+    color: "black",
+    border:"1px solid rgba(0,0,0,0.2)"
   },
-  searchBg: "#f8f8f8"
+  searchBg: "#f8f8f8",
+  shadowCards:"0px 0px 10px rgba(193, 193, 193, 0.25)",
+  shadowStripe:"0px 0px 10px rgba(193, 193, 193, 0.25)",
+  buttonShadow:"0px 0px 20px rgba(1, 119, 250, 0.25)",
+  showCaseStartUpBorder:"1px solid #DDDDDD;"
 };
 
 export const DARK_THEME = {
@@ -51,7 +59,6 @@ export const DARK_THEME = {
   borderColor: "",
   map: {
     mapBorder: "white",
-
     hover: "#0177FA",
     click: "rgb(1, 119, 250)",
     background: "rgba(31, 30, 44, 1)",
@@ -61,12 +68,25 @@ export const DARK_THEME = {
   bgStripe: "#1F1E2C",
   bgStartupCard: "rgba(31, 30, 44, 1)",
   bgBadge: "#26283A",
+  dataTable:{
+    searchBorderClass:"dark-search-data-table",
+    bodyClass:"shadow-small-2",
+    searchBg:'rgba(31, 30, 44, 1)',
+    headerBorder: 'dark-data-table-header',
+    inputClass:"",
+    dashedBorder:"white"
+  },
   togglerButton:{
     backgroundInactive:"rgba(31, 30, 44, 1)",
     backgroundActive: "",
-    color: "white"
+    color: "white",
+    border:"1px solid rgba(255,255,255,0.2)"
   },
-  searchBg:"rgba(31, 30, 44, 1)"
+  searchBg:"rgba(31, 30, 44, 1)",
+  shadowCards:"0px 0px none",
+  shadowStripe:"0px 0px 0px 1px #444261",
+  buttonShadow:"0px none",
+  showCaseStartUpBorder:"1px solid #444261"
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

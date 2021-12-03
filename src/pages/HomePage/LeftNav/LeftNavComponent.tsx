@@ -39,6 +39,7 @@ color: ${props=> props.theme.colorCards} !important;
 const SearchBarWrapper = styled.div`
 color: ${props=> props.theme.colorCards} !important;
 background: ${props=> props.theme.bgCards} !important;
+box-shadow: ${props=> props.theme.shadowCards} !important;
 `
 
 const SearchBarInput = styled.input`
@@ -276,7 +277,7 @@ const LeftNavComponent = (props: any) => {
                 )}
                 {!(selectedStages.name === appliedStages.name) && (
                   <span className="count-text ms-auto">
-                    {0}
+                    {4}
                   </span>
                 )}
               </DropDown>
