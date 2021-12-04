@@ -10,7 +10,8 @@ interface ButtonTypes {
     flex?: string;
     boxShadow?: string;
     opacity?: string;
-    theme:any
+    theme:any;
+    noBorder?:boolean;
 }
 
 export const Button = styled.button<ButtonTypes>({
@@ -38,7 +39,7 @@ export const Button = styled.button<ButtonTypes>({
         flex: `${props.flex}`,
         marginRight: `${props.marginRight}`,
         marginLeft: `${props.marginLeft}`,
-        boxShadow: `${props.theme.buttonShadow}`,
+        boxShadow: `${props.noBorder ? "" :props.theme.buttonShadow}`,
         opacity: `${props.opacity}`
     }
 }
@@ -48,4 +49,5 @@ export const IconButton = styled.div<any>`
     color: ${props=> props.active ? "white" : props.theme.color};
     background: ${props=> props.active ? "#0177FA" : props.theme.bgColor};
     border: 2px solid ${"#0177FA"}
+    box-shadow: ${props=> props.theme.shadowMapView} !important;
 `

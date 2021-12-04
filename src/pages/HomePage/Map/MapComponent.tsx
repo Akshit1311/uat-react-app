@@ -193,7 +193,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
               d={district.d}
               id={district.title}
               fill={"none"}
-              stroke={BLACK}
+              stroke={theme.map.mapBorder}
               strokeWidth={"0.5"}
             />
           ))}

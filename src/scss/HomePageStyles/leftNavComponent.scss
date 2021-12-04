@@ -24,14 +24,12 @@
         font-size: 18px !important;
     }
     .border-bottom-filter {
-        border-bottom: 0.5px solid lightgray !important;
-        padding-left: 16px !important;
-        padding-right: 16px !important;
+        border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+        // margin-left: 16px !important;
+        // margin-right: 16px !important;
         line-height: 21px;
     }
     .border-bottom-filter-last-element {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
         line-height: 21px;
     }
     .sub-heading {
