@@ -15,6 +15,7 @@ import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
+import Table2 from "./Table2";
 
 const PageWrapperContainer = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ const PageWrapperContainer = styled.div`
   background-repeat: no-repeat !important;
 `;
 const ButtonGroup = styled.div`
-  border: ${props=> props.theme.togglerButton.border};
+  border: ${(props) => props.theme.togglerButton.border};
 `;
 
 const PageWrapper = styled.div({
@@ -38,10 +39,10 @@ const PageWrapper = styled.div({
 });
 
 const Strip = styled.div`
-  background-color: ${props=> props.theme.bgStripe};
-  color: ${props=> props.theme.color};
-  box-shadow: ${props=> props.theme.shadowStripe};
-`
+  background-color: ${(props) => props.theme.bgStripe};
+  color: ${(props) => props.theme.color};
+  box-shadow: ${(props) => props.theme.shadowStripe};
+`;
 
 interface HomePageTypes {
   navHeight: string;
@@ -57,7 +58,7 @@ const HomePage = (props: HomePageTypes) => {
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
 
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
@@ -138,7 +139,9 @@ const HomePage = (props: HomePageTypes) => {
             <div className="row d-flex justify-content-center px-0 mx-0">
               <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
                 <Button
-                  backgroundColor={`${!startupListActive && theme.togglerButton.backgroundInactive}`}
+                  backgroundColor={`${
+                    !startupListActive && theme.togglerButton.backgroundInactive
+                  }`}
                   color={`${!startupListActive && theme.togglerButton.color}`}
                   border={`${!startupListActive && "0px"}`}
                   className={`font-500 font-family-Mont shadow-none  px-3 ${
@@ -149,7 +152,9 @@ const HomePage = (props: HomePageTypes) => {
                   Startups List
                 </Button>
                 <Button
-                  backgroundColor={`${startupListActive && theme.togglerButton.backgroundInactive}`}
+                  backgroundColor={`${
+                    startupListActive && theme.togglerButton.backgroundInactive
+                  }`}
                   color={`${startupListActive && theme.togglerButton.color}`}
                   border={`${startupListActive && "0px"}`}
                   className={`font-500 font-family-Mont shadow-none  px-3 ${
@@ -164,7 +169,12 @@ const HomePage = (props: HomePageTypes) => {
                 {startupListActive && (
                   <StartupsListComponent data={startupsListData} />
                 )}
-                {!startupListActive && <DataTable data={dataTableData} />}
+                {!startupListActive && (
+                  <>
+                    <DataTable data={dataTableData} />
+                    <Table2 data={dataTableData} />
+                  </>
+                )}
               </div>
             </div>
           </PageWrapper>

@@ -45,7 +45,9 @@ export const PRIMARY_THEME = {
   shadowCards:"0px 0px 10px rgba(193, 193, 193, 0.25)",
   shadowStripe:"0px 0px 10px rgba(193, 193, 193, 0.25)",
   buttonShadow:"0px 0px 20px rgba(1, 119, 250, 0.25)",
-  showCaseStartUpBorder:"1px solid #DDDDDD;"
+  showCaseStartUpBorder:"1px solid #DDDDDD;",
+  shadowMapView: "0px 0px 20px rgba(1, 119, 250, 0.2)",
+  dropDownBorder:"light-border-bottom"
 };
 
 export const DARK_THEME = {
@@ -70,7 +72,7 @@ export const DARK_THEME = {
   bgBadge: "#26283A",
   dataTable:{
     searchBorderClass:"dark-search-data-table",
-    bodyClass:"shadow-small-2",
+    bodyClass:"",
     searchBg:'rgba(31, 30, 44, 1)',
     headerBorder: 'dark-data-table-header',
     inputClass:"",
@@ -85,8 +87,10 @@ export const DARK_THEME = {
   searchBg:"rgba(31, 30, 44, 1)",
   shadowCards:"0px 0px none",
   shadowStripe:"0px 0px 0px 1px #444261",
-  buttonShadow:"0px none",
-  showCaseStartUpBorder:"1px solid #444261"
+  buttonShadow:"0px 0px 20px rgba(1, 119, 250, 0.25)",
+  showCaseStartUpBorder:"1px solid #444261",
+  shadowMapView:" 0px 0px 20px rgba(1, 119, 250, 0.25)",
+  dropDownBorder:" border-bottom-filter "
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

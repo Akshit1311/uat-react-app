@@ -78,7 +78,7 @@ const DropDownListComponent = (props: any) => {
           border={"2px solid #000"}
           backgroundColor={"#fff"}
           color={"black"}
-          boxShadow={"0px 0px 10px rgba(193, 193, 193, 0.25)"}
+          noBorder={true}
           onClick={handleClearClick}
         >
           Clear

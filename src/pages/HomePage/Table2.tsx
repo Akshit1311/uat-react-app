@@ -42,7 +42,7 @@ const Header = ({
   const borderLeftA = `${borderWidthA} ${borderStyleA} ${borderColorA}`;
   return (
     <TH
-      className="header-cell"
+      className="header-cell-2"
       style={{
         fontWeight: fontWeight ? 700 : 400,
       }}
@@ -90,28 +90,26 @@ export default function DataTable(props: any) {
                   borderStyle={"solid"}
                   borderColor={'#8A8A8A'}
                 >
-                  {"Total"}
-                  <br />
-                  Startups
+                  Mentors
                 </Header>
                 <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
-                  FFS
+                  Incubator
                 </Header>
                 <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
-                  Patient Startups
+                  Investors
                 </Header>
                 <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
-                  Seed Fund Startups
+                  Accelerator
                 </Header>
                 <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
                   Showcased Startups
                 </Header>
                 <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
-                  DDIIT Recognised Startups
+                  Government
                 </Header>
-                <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
+                {/* <Header fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
                   Women Owned Startups
-                </Header>
+                </Header> */}
                 {/* <Header
               fontWeight={true}
               borderColor={"#8a8a8a"}
@@ -192,6 +190,75 @@ export default function DataTable(props: any) {
                 <Header borderHeight="50px" borderStyle={"dashed"}>
                   12000
                 </Header>
+                {/* <Header borderHeight="50px" borderStyle={"dashed"}>
+                  12000
+                </Header> */}
+                {/* <Header
+              borderHeight="50px"
+              borderColor={"#8a8a8a"}
+              borderStyle={"solid"}
+            >
+              12000
+            </Header>
+            <Header
+              borderHeight="50px"
+              borderColor={"lightgrey"}
+              borderStyle={"solid"}
+            >
+              12000
+            </Header> */}
+                {/* <Header
+              borderHeight="50px"
+              borderColor={"lightgrey"}
+              borderStyle={"solid"}
+            >
+              12000
+            </Header>
+            <Header
+              borderHeight="50px"
+              borderColor={"lightgrey"}
+              borderStyle={"solid"}
+            >
+              12000
+            </Header>
+            <Header
+              borderHeight="50px"
+              borderColor={"lightgrey"}
+              borderStyle={"solid"}
+            >
+              12000
+            </Header> */}
+              </tr>
+              <tr
+                className={`d-flex bg-white mt-2 flex-row justify-content-between radius-5 ${theme.dataTable.bodyClass}`}
+              >
+                <Header
+                  fontWeight={true}
+                  borderHeight="50px"
+                  borderLeft={true}
+                  borderWidth={"0px"}
+                >
+                  Maharashtra
+                </Header>
+                <Header
+                  borderHeight="50px"
+                  borderColor={"lightgrey"}
+                  borderStyle={"solid"}
+                >
+                  12000
+                </Header>
+                <Header borderHeight="50px" borderStyle={"dashed"}>
+                  12000
+                </Header>
+                <Header borderHeight="50px" borderStyle={"dashed"}>
+                  12000
+                </Header>
+                <Header borderHeight="50px" borderStyle={"dashed"}>
+                  12000
+                </Header>
+                <Header borderHeight="50px" borderStyle={"dashed"}>
+                  12000
+                </Header>
                 <Header borderHeight="50px" borderStyle={"dashed"}>
                   12000
                 </Header>
@@ -264,9 +331,6 @@ export default function DataTable(props: any) {
                 <Header borderHeight="50px" borderStyle={"dashed"}>
                   12000
                 </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
                 {/* <Header
               borderHeight="50px"
               borderColor={"#8a8a8a"}
@@ -319,81 +383,6 @@ export default function DataTable(props: any) {
                   borderColor={"lightgrey"}
                   borderStyle={"solid"}
                 >
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
-                  12000
-                </Header>
-                {/* <Header
-              borderHeight="50px"
-              borderColor={"#8a8a8a"}
-              borderStyle={"solid"}
-            >
-              12000
-            </Header>
-            <Header
-              borderHeight="50px"
-              borderColor={"lightgrey"}
-              borderStyle={"solid"}
-            >
-              12000
-            </Header> */}
-                {/* <Header
-              borderHeight="50px"
-              borderColor={"lightgrey"}
-              borderStyle={"solid"}
-            >
-              12000
-            </Header>
-            <Header
-              borderHeight="50px"
-              borderColor={"lightgrey"}
-              borderStyle={"solid"}
-            >
-              12000
-            </Header>
-            <Header
-              borderHeight="50px"
-              borderColor={"lightgrey"}
-              borderStyle={"solid"}
-            >
-              12000
-            </Header> */}
-              </tr>
-              <tr
-                className={`d-flex bg-white mt-2 flex-row justify-content-between radius-5 ${theme.dataTable.bodyClass}`}
-              >
-                <Header
-                  fontWeight={true}
-                  borderHeight="50px"
-                  borderLeft={true}
-                  borderWidth={"0px"}
-                >
-                  Maharashtra
-                </Header>
-                <Header
-                  borderHeight="50px"
-                  borderColor={"lightgrey"}
-                  borderStyle={"solid"}
-                >
-                  12000
-                </Header>
-                <Header borderHeight="50px" borderStyle={"dashed"}>
                   12000
                 </Header>
                 <Header borderHeight="50px" borderStyle={"dashed"}>

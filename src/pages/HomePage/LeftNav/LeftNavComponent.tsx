@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState, useEffect, useContext } from "react";
 import DropDownListComponent from "./DropDownListComponent";
 import "../../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -11,6 +11,7 @@ import { MapVariablesArray as IndiaStates } from "../Map/variables";
 import * as MapVariables from "../Map/variables";
 import { Card } from "../../../styles-components/Cards"
 import styled from "styled-components";
+import { ThemeContext } from "../../../config/context";
 
 const INITIAL_SELECTED_STATE = {
   id: "none",
@@ -72,6 +73,8 @@ const LeftNavComponent = (props: any) => {
 
   const [fetchStates, statesStates, statesLoading] = useQuery("https://13.235.79.165/startup/dpiit/states")
 
+  const theme= useContext(ThemeContext) 
+
   const handleStateClick = (state: any) => {
     if (selectedState.id === state.id) {
       setSelectedArea({ id: "india", stateName: "India" });
@@ -121,7 +124,7 @@ const LeftNavComponent = (props: any) => {
 
   return (
     <>
-      <div className="left-side-nav-styles">
+      <div className="left-side-nav-styles" style={{ position: 'sticky', top: '100px', left:0 }}>
         <div className="px-2">
           <div className="row search-bar-row">
             <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
@@ -140,10 +143,10 @@ const LeftNavComponent = (props: any) => {
               />
             </SearchBarWrapper>
           </div>
-          <Card className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card" id="flush1">
-            <div className="border-bottom-filter pt-2">
+          <Card className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card p-16px" id="flush1">
+            <div className={` ${theme.dropDownBorder} pt-2 px-0`}>
               <DropDown
-                className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed"
+                className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse1"
@@ -181,9 +184,9 @@ const LeftNavComponent = (props: any) => {
                 />
               </div>
             </div>
-            <div className="border-bottom-filter pt-1">
+            <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1"
+                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse2"
@@ -219,9 +222,9 @@ const LeftNavComponent = (props: any) => {
                 />
               </div>
             </div>
-            <div className="border-bottom-filter pt-1">
+            <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1"
+                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse3"
@@ -258,9 +261,9 @@ const LeftNavComponent = (props: any) => {
               </div>
             </div>
          
-            <div className="border-bottom-filter pt-1">
+            <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1"
+                className="btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1 px-0"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse4"
@@ -296,7 +299,7 @@ const LeftNavComponent = (props: any) => {
                 />
               </div>
             </div>
-            <div className="border-bottom-filter-last-element pt-1 pb-2">
+            <div className="border-bottom-filter-last-element pt-1 pb-2 px-0">
               <DropDown
                 className="btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center"
                 type="button"

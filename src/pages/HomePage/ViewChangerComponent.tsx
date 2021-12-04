@@ -1,5 +1,5 @@
 import { Input } from "reactstrap";
-import React,{ useContext } from "react";
+import React, { useContext } from "react";
 import { IoMapSharp } from "react-icons/io5";
 import { RiDropFill } from "react-icons/ri";
 import { MdOutlineLocationCity } from "react-icons/md";
@@ -14,14 +14,14 @@ import { Card } from "../../styles-components/Cards";
 import { SelectBox, SelectBoxLabel } from "../../styles-components/SelectBox";
 import styled from "styled-components";
 import { IconButton } from "../../styles-components/Button";
-import { ThemeContext } from "../../config/context"
+import { ThemeContext } from "../../config/context";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
 }
 
-const DARK_THEME_DROPDOWN =  `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`
-const LIGHT_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`
+const DARK_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
+const LIGHT_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
 
 const ViewMoreButton = styled.button<any>`
   font-family: Montserrat;
@@ -51,7 +51,7 @@ function ViewChangerComponent({
     getCounts,
   } = mapViewResources;
 
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
   const stateText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
@@ -92,10 +92,10 @@ function ViewChangerComponent({
     getCounts(HomeApis.countDateRange + beginDate + "/" + endDate);
   };
 
-  const getThemeDropDownImage = () =>{
-    if(theme.dropDownColorCode === 1) return LIGHT_THEME_DROPDOWN
-    if(theme.dropDownColorCode === 0) return DARK_THEME_DROPDOWN
-  }
+  const getThemeDropDownImage = () => {
+    if (theme.dropDownColorCode === 1) return LIGHT_THEME_DROPDOWN;
+    if (theme.dropDownColorCode === 0) return DARK_THEME_DROPDOWN;
+  };
 
   return (
     <div className="view-changer-component-styles">
@@ -136,7 +136,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={defaultView}
                   active={mapMode.id === MapVariables.INDIA.id}
-                  className={`shadow-none btn btn-outline btn-icon-handler shadow-small`}
+                  className={`btn btn-outline btn-icon-handler`}
                 >
                   <IoMapSharp
                     size={18}
@@ -152,7 +152,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={cityView}
                   active={mapMode.id === MapVariables.CITY.id}
-                  className={`shadow-none btn btn-icon-handler border-primary shadow-small`}
+                  className={`btn btn-icon-handler border-primary dark`}
                 >
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
@@ -168,7 +168,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={districtView}
                   active={mapMode.id === MapVariables.DISTRICT.id}
-                  className={`shadow-none btn btn-icon-handler border-primary shadow-small`}
+                  className={`btn btn-icon-handler border-primary`}
                 >
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
@@ -181,7 +181,7 @@ function ViewChangerComponent({
               <IconButton
                 active={isCircleActive}
                 onClick={circleView}
-                className={`shadow-none btn btn-icon-handler border-primary shadow-small`}
+                className={`btn btn-icon-handler border-primary shadow-small`}
               >
                 <RiDropFill
                   size={18}
@@ -212,7 +212,10 @@ function ViewChangerComponent({
                 <option> 5 </option>
               </SelectBox>
             </div>
-            <Card className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1" border={true}>
+            <Card
+              className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
+              border={true}
+            >
               <h3 className="p-0 m-0">10254</h3>
               <span className="selected-startups">All Startups</span>
             </Card>
