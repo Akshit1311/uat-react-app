@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import DataTable from "./TableComponent";
@@ -16,6 +16,8 @@ import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
 import Table2 from "./Table2";
+
+import { useMutate } from "../../hooks/useMutate";
 
 const PageWrapperContainer = styled.div`
   display: flex;
@@ -48,12 +50,23 @@ interface HomePageTypes {
   navHeight: string;
 }
 
+const INITIAL_FILTER_STATE = {
+  industries: [],
+  sectors: [],
+  states: [],
+  stages: [],
+  badges: [],
+};
+
 const HomePage = (props: HomePageTypes) => {
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
     MapVariables.INDIA
   );
   const [mapMode, setMapMode] = useState<MapVariables.IDType>(
     MapVariables.INDIA
+  );
+  const [appliedFilters, setAppliedFilters] = useState<any>(
+    INITIAL_FILTER_STATE
   );
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
@@ -63,6 +76,17 @@ const HomePage = (props: HomePageTypes) => {
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
   );
+
+  // const tagsResources = {
+  //   INITIAL_FILTER_STATE,
+  //   fetchFilterList,
+  //   filterState,
+  //   filterLoading,
+  //   fetchTags,
+  //   tagsState,
+  //   tagsLoading,
+  // };
+
   const countResource = {
     getCounts,
     countState,
@@ -97,7 +121,7 @@ const HomePage = (props: HomePageTypes) => {
                 className="col-12  px-0 p-0"
                 style={{ flex: "0 0 auto", width: "18.666667%" }}
               >
-                <LeftNavComponent
+                <LeftNavComponent appliedFilters={appliedFilters} setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
                   setSelectedArea={setSelectedArea}
                 ></LeftNavComponent>
@@ -167,12 +191,12 @@ const HomePage = (props: HomePageTypes) => {
               </ButtonGroup>
               <div className="row mx-0 px-0">
                 {startupListActive && (
-                  <StartupsListComponent data={startupsListData} />
+                  <StartupsListComponent appliedFilters={appliedFilters}  />
                 )}
                 {!startupListActive && (
                   <>
                     <DataTable data={dataTableData} />
-                    <Table2 data={dataTableData} />
+                    {/* <Table2 data={dataTableData} /> */}
                   </>
                 )}
               </div>

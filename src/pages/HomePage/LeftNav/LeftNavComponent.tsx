@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DropDownListComponent from "./DropDownListComponent";
 import "../../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -9,9 +9,10 @@ import HomePageApi from "../../../config/homepageApis.json";
 import { useQuery } from "../../../hooks/useQuery";
 import { MapVariablesArray as IndiaStates } from "../Map/variables";
 import * as MapVariables from "../Map/variables";
-import { Card } from "../../../styles-components/Cards"
+import { Card } from "../../../styles-components/Cards";
 import styled from "styled-components";
 import { ThemeContext } from "../../../config/context";
+import { useMutate } from "../../../hooks/useMutate";
 
 const INITIAL_SELECTED_STATE = {
   id: "none",
@@ -19,6 +20,7 @@ const INITIAL_SELECTED_STATE = {
 };
 
 const INITIAL_SELECTED_SECTOR = {
+  id: "",
   sector: "none",
   industryCount: 0,
   sectorCount: 0,
@@ -32,99 +34,246 @@ const INITIAL_SELECTED_STAGES = {
   earlyTraction: 0,
   scaling: 0,
   total: 0,
+  id: "",
+};
+const INITIAL_SELECTED_INDUSTRY = {
+  id: "",
+  name: "",
+  text: "",
 };
 
+const INITIAL_SELECTED_BADGES = {
+  id: "",
+  title: "",
+  description: "",
+  iconName: "",
+  iconLink: null,
+  createdDate: 0,
+  lastUpdatedDate: 0,
+  deleted: false,
+};
+
+const INITIAL_FILTER_STATE = {
+  state: false,
+  industry: false,
+  badges: false,
+  stages: false,
+  sector: false,
+  id: "",
+};
+
+interface FilterType {
+  industries: any[];
+  sectors: any[];
+  states: any[];
+  stages: any[];
+  badges: any[];
+}
+
 const DropDown = styled.button`
-color: ${props=> props.theme.colorCards} !important;
-`
+  color: ${(props) => props.theme.colorCards} !important;
+`;
 const SearchBarWrapper = styled.div`
-color: ${props=> props.theme.colorCards} !important;
-background: ${props=> props.theme.bgCards} !important;
-box-shadow: ${props=> props.theme.shadowCards} !important;
-`
+  color: ${(props) => props.theme.colorCards} !important;
+  background: ${(props) => props.theme.bgCards} !important;
+  box-shadow: ${(props) => props.theme.shadowCards} !important;
+`;
 
 const SearchBarInput = styled.input`
-color: ${props=> props.theme.colorCards} !important;
-background: ${props=> props.theme.bgCards} !important;
-`
+  color: ${(props) => props.theme.colorCards} !important;
+  background: ${(props) => props.theme.bgCards} !important;
+`;
 
 const SpanIcon = styled.span`
-  color: ${props=> props.theme.color};
+  color: ${(props) => props.theme.color};
   margin-top: 1.4px !important;
-`
+`;
+
+const INITIAL_FILTER_STATE2 = {
+  industries: [],
+  sectors: [],
+  states: [],
+  stages: [],
+  badges: [],
+};
 
 const LeftNavComponent = (props: any) => {
-  const { setSelectedArea, selectedArea } = props;
+  const { setSelectedArea, selectedArea, tagsResources, appliedFilters, setAppliedFilters } = props;
 
-  const [selectedState, setSelectedState] = useState<any>(
-    INITIAL_SELECTED_STATE
+  const [fetchFilterList, filterState, filterLoading] = useMutate(
+    "/startup/filter/defaults",
+    INITIAL_FILTER_STATE2
   );
-  const [selectedSector, setSelectedSector] = useState<any>(
-    INITIAL_SELECTED_SECTOR
+  
+  const theme = useContext(ThemeContext);
+
+  const [selectedState, setSelectedState] = useState<any[]>([]);
+  const [selectedSector, setSelectedSector] = useState<any[]>([]);
+  const [selectedStages, setSelectedStages] = useState<any[]>([]);
+  const [selectedIndustry, setSelectedIndustry] = useState<any[]>([]);
+  const [selectedBadges, setSelectedBadges] = useState<any[]>([]);
+
+  const [fetchBadges, badgesState, badgesLoading] = useQuery(
+    HomePageApi.badges
   );
-  const [selectedStages, setSelectedStages] = useState<any>(
-    INITIAL_SELECTED_STAGES
-  );
-  const [appliedSector, setAppliedSector] = useState<any>({});
-  const [appliedStages, setAppliedStages] = useState<any>({name: ""});
-
-  const [fetchSectors, sectorState, sectorLoading] = useQuery("");
-  const [fetchStages, stagesState, stagesLoading] = useQuery("");
-
-  const [fetchStates, statesStates, statesLoading] = useQuery("https://13.235.79.165/startup/dpiit/states")
-
-  const theme= useContext(ThemeContext) 
-
-  const handleStateClick = (state: any) => {
-    if (selectedState.id === state.id) {
-      setSelectedArea({ id: "india", stateName: "India" });
-      return setSelectedState(INITIAL_SELECTED_STATE);
-    }
-    setSelectedState(state);
-  };
 
   const generateUrl = (a: string, b: string) => {
     return a + "/" + b.toLowerCase();
   };
 
+  const findSelectedIndex = (array: any[], obj: any) =>
+    array.findIndex((item: any) => item.id === obj.id);
+
+  const handleStateClick = (state: any) => {
+    const stateIndex = findSelectedIndex(selectedState, state);
+    // if (stateIndex !== -1) {
+    //   // setSelectedArea({ id: "india", stateName: "India" });
+    //   return setSelectedState((prevState: any) => {
+    //     const newArray = [...prevState];
+    //     newArray.splice(stateIndex, 1);
+    //     return newArray;
+    //   });
+    // }
+    // return setSelectedState((prevState: any) => {
+    //   const newArray = [...prevState, state];
+    //   return newArray;
+    // });
+    if(stateIndex !== -1){
+      return setSelectedState([])
+    }
+    setSelectedState([state])
+
+  };
   const onApplyState = () => {
+    console.log("Applied Filters", appliedFilters);
+    const stateIdsForAPiRequest = new Array();
+    selectedState.forEach((state: any) => stateIdsForAPiRequest.push(state.id));
 
-    setSelectedArea(selectedState);
-    fetchSectors(generateUrl(HomePageApi.sectorByState, selectedState.stateName));
-    fetchStages(generateUrl(HomePageApi.stagesByState, selectedState.stateName));
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      states: stateIdsForAPiRequest,
+    }));
   };
-
-  const onApplySector = () => {
-    setAppliedSector(selectedSector);
-  };
-
-  const onDismissClick = () => {};
 
   const handleSectorClick = (sectorObj: any) => {
-    if (selectedSector.sector === sectorObj.sector) {
-      return setSelectedSector(INITIAL_SELECTED_SECTOR);
+    const sectorIndex = findSelectedIndex(selectedSector, sectorObj);
+    if (sectorIndex !== -1) {
+      return setSelectedSector((prevState: any) => {
+        const newSectors = [...prevState];
+        newSectors.splice(sectorIndex, 1);
+        return newSectors;
+      });
     }
-    setSelectedSector(sectorObj);
+    return setSelectedSector((prevState: any) => {
+      const newSectors = [...prevState, sectorObj];
+      return newSectors;
+    });
+  };
+  const onApplySector = () => {
+    const sectorIdsForAPiRequest = new Array();
+    selectedSector.forEach((sector: any) =>
+      sectorIdsForAPiRequest.push(sector.id)
+    );
+
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      sectors: sectorIdsForAPiRequest,
+    }));
   };
 
-  const handleStagesClick = (stage:any) =>{
-    setSelectedStages(stage)
-  }
+  const handleStagesClick = (stage: any) => {
+    const stagesIndex = findSelectedIndex(selectedStages, stage);
+    if (stagesIndex !== -1) {
+      return setSelectedStages((prevState: any) => {
+        const newStages = [...prevState];
+        newStages.splice(stagesIndex, 1);
+        return newStages;
+      });
+    }
+    return setSelectedStages((prevState: any) => {
+      const newStages = [...prevState, stage];
+      return newStages;
+    });
+  };
+  const onApplyStages = () => {
+    const stagesIdsForApiRequest = new Array();
+    selectedStages.forEach((sector: any) =>
+      stagesIdsForApiRequest.push(sector.id)
+    );
 
-  const onApplyStages = () =>{
-    setAppliedStages(selectedStages)
-  }
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      stages: stagesIdsForApiRequest,
+    }));
+  };
 
-  const stateApplied = Boolean(selectedState.id === selectedArea.id);
-  const sectorApplied = Boolean(selectedState.id === selectedArea.id);
+  const handleIndustryClick = (industry: any) => {
+    const industryIndex = findSelectedIndex(selectedIndustry, industry);
+    if (industryIndex !== -1) {
+      return setSelectedIndustry((prevState: any) => {
+        const newIndustry = [...prevState];
+        newIndustry.splice(industryIndex, 1);
+        return newIndustry;
+      });
+    }
+    return setSelectedIndustry((prevState: any) => {
+      const newIndustry = [...prevState, industry];
+      return newIndustry;
+    });
+  };
+  const onApplyIndustry = () => {
+    const stagesIdsForApiRequest = new Array();
+    selectedIndustry.forEach((sector: any) =>
+      stagesIdsForApiRequest.push(sector.id)
+    );
 
-  useEffect(()=>{
-    fetchStates()
-  },[])
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      industries: stagesIdsForApiRequest,
+    }));
+  };
 
+  const handleBadgesClick = (badges: any) => {
+    const badgesIndex = findSelectedIndex(selectedBadges, badges);
+    if (badgesIndex !== -1) {
+      return setSelectedBadges((prevState: any) => {
+        const newsBadges = [...prevState];
+        newsBadges.splice(badgesIndex, 1);
+        return newsBadges;
+      });
+    }
+    return setSelectedBadges((prevState: any) => {
+      const newsBadges = [...prevState, badges];
+      return newsBadges;
+    });
+  };
+  const onApplyBadges = () => {
+    const badgesIdsForApiRequest = new Array();
+    selectedBadges.forEach((sector: any) =>
+      badgesIdsForApiRequest.push(sector.id)
+    );
+
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      badges: badgesIdsForApiRequest,
+    }));
+  };
+
+  const trimBadges = (badges: any[]) => {
+    const newBadgesList = new Array();
+    badges.forEach((badge: any) =>
+      newBadgesList.push({ id: badge.id, value: badge.title })
+    );
+    return newBadgesList;
+  };
+
+  useEffect(() => {
+    fetchBadges();
+    fetchFilterList();
+  }, []);
   return (
     <>
-      <div className="left-side-nav-styles" style={{ position: 'sticky', top: '100px', left:0 }}>
+      <div className="left-side-nav-styles">
         <div className="px-2">
           <div className="row search-bar-row">
             <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
@@ -143,10 +292,13 @@ const LeftNavComponent = (props: any) => {
               />
             </SearchBarWrapper>
           </div>
-          <Card className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card p-16px" id="flush1">
+          <Card
+            className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card p-16px"
+            id="flush1"
+          >
             <div className={` ${theme.dropDownBorder} pt-2 px-0`}>
               <DropDown
-                className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0"
+                className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse1"
@@ -155,38 +307,43 @@ const LeftNavComponent = (props: any) => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 States
-                {stateApplied && (
-                  <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
+                {appliedFilters.states.length !== 0 && (
+                  <RoundedBadge className="ms-auto me-3">
+                    {appliedFilters.states.length}
+                  </RoundedBadge>
                 )}
-                {stateApplied && (
+                {/* {stateApplied && (
                   <span className="count-text">{statesStates.length}</span>
-                )}
-                {!stateApplied && (
+                )} */}
+                {
                   <span className="count-text ms-auto">
-                    {statesStates.length}
+                    {filterState.states.length}
                   </span>
-                )}
+                }
               </DropDown>
-              <div className="collapse mt-2" id="collapse1" data-bs-parent="flush1">
+              <div
+                className="collapse mt-2"
+                id="collapse1"
+                data-bs-parent="flush1"
+              >
                 <DropDownListComponent
-                  accessor={"stateName"}
-                  data={statesStates}
-                  loading={false}
+                  accessor={"states"}
+                  originalData={filterState.states}
+                  loading={filterLoading}
                   handleClick={handleStateClick}
-                  selectedItem={selectedState.stateName}
+                  selectedItem={selectedState}
                   handleApplyClick={onApplyState}
                   dropDownId={"#collapse1"}
-                  handleClearClick={() =>{
-                    setSelectedState(INITIAL_SELECTED_STATE)
-                    setSelectedArea(MapVariables.INDIA)
-                  }
-                  }
+                  handleClearClick={() => {
+                    setSelectedState([]);
+                    setSelectedArea(MapVariables.INDIA);
+                  }}
                 />
               </div>
             </div>
             <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0"
+                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse2"
@@ -195,36 +352,46 @@ const LeftNavComponent = (props: any) => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 Sector
-                {selectedSector.sector === appliedSector.sector && (
-                  <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
-                )}
-                {selectedSector.sector === appliedSector.sector && (
-                  <span className="count-text">{sectorState.length}</span>
-                )}
-                {!(selectedSector.sector === appliedSector.sector) && (
+                {
+                  <RoundedBadge
+                    hidden={appliedFilters.sectors.length === 0}
+                    className="ms-auto me-3"
+                  >
+                    {appliedFilters.sectors.length}
+                  </RoundedBadge>
+                }
+                {
                   <span className="count-text ms-auto">
-                    {sectorState.length}
+                    {filterState.sectors.length}
                   </span>
-                )}
+                }
               </DropDown>
-              <div className="collapse mt-2" id="collapse2" data-bs-parent="flush1">
+              <div
+                className="collapse mt-2"
+                id="collapse2"
+                data-bs-parent="flush1"
+              >
                 <DropDownListComponent
-                  accessor={"sector"}
-                  data={sectorState}
-                  loading={sectorLoading}
-                  selectedItem={selectedSector.sector}
+                  accessor={"sectors"}
+                  originalData={filterState.sectors}
+                  loading={filterLoading}
+                  selectedItem={selectedSector}
                   handleClick={handleSectorClick}
                   handleApplyClick={onApplySector}
                   dropDownId={"#collapse2"}
-                  handleClearClick={() =>
-                    setSelectedState(INITIAL_SELECTED_STATE)
-                  }
+                  handleClearClick={() => {
+                    setSelectedSector([]);
+                    setAppliedFilters((prevState: FilterType) => ({
+                      ...prevState,
+                      sector: false,
+                    }));
+                  }}
                 />
               </div>
             </div>
             <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0"
+                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse3"
@@ -233,75 +400,75 @@ const LeftNavComponent = (props: any) => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 Industry
-                {/* {selectedStages.stateName === appliedSector.sector && (
-                  <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
+                {appliedFilters.industries.length !== 0 && (
+                  <RoundedBadge className="ms-auto me-3">
+                    {appliedFilters.industries.length}
+                  </RoundedBadge>
                 )}
-                {selectedStages.stateName === appliedSector.sector && (
-                  <span className="count-text">{sectorState.length}</span>
-                )} */}
-                {/* {!(selectedStages.stateName === appliedSector.sector) && ( */}
+                {
                   <span className="count-text ms-auto">
-                    {0}
+                    {filterState.industries.length}
                   </span>
-                {/* // )} */}
+                }
               </DropDown>
-              <div className="collapse mt-2" id="collapse3" data-bs-parent="flush1">
+              <div
+                className="collapse mt-2"
+                id="collapse3"
+                data-bs-parent="flush1"
+              >
                 <DropDownListComponent
-                  accessor={"sector"}
-                  data={[]}
-                  loading={sectorLoading}
-                  selectedItem={selectedSector.sector}
-                  handleClick={handleSectorClick}
-                  handleApplyClick={onApplyStages}
+                  accessor={"industries"}
+                  originalData={filterState.industries}
+                  loading={filterLoading}
+                  selectedItem={selectedIndustry}
+                  handleClick={handleIndustryClick}
+                  handleApplyClick={onApplyIndustry}
                   dropDownId={"#collapse3"}
-                  handleClearClick={() =>
-                    setSelectedStages({name: ""})
-                  }
+                  handleClearClick={() => {
+                    setSelectedIndustry([]);
+                  }}
                 />
               </div>
             </div>
-         
+
             <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1 px-0"
+                className="btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse4"
                 aria-expanded="false"
                 aria-controls="collapse4"
               >
-                 <FiChevronDown className="me-2" size={15} />
+                <FiChevronDown className="me-2" size={15} />
                 Stages
-                {selectedStages.name === appliedStages.name && (
-                  <RoundedBadge className="ms-auto me-3">1</RoundedBadge>
+                {appliedFilters.stages.length !== 0 && (
+                  <RoundedBadge className="ms-auto me-3">
+                    {appliedFilters.stages.length}
+                  </RoundedBadge>
                 )}
-                {selectedStages.name === appliedStages.name && (
-                  <span className="count-text">{4}</span>
-                )}
-                {!(selectedStages.name === appliedStages.name) && (
+                {
                   <span className="count-text ms-auto">
-                    {4}
+                    {filterState.stages.length}
                   </span>
-                )}
+                }
               </DropDown>
               <div className="collapse mt-2" id="collapse4">
                 <DropDownListComponent
-                  accessor={"name"}
-                  data={[{ name: "Ideation", }, { name: "Scaling" }, { name: "Early Traction" } , { name: "Validation" }]}
-                  loading={false}
-                  selectedItem={selectedStages.name}
+                  accessor={"stages"}
+                  originalData={filterState.stages}
+                  loading={filterLoading}
+                  selectedItem={selectedStages}
                   handleClick={handleStagesClick}
-                  handleApplyClick={onApplySector}
+                  handleApplyClick={onApplyStages}
                   dropDownId={"#collapse4"}
-                  handleClearClick={() =>
-                    setSelectedState(INITIAL_SELECTED_STATE)
-                  }
+                  handleClearClick={() => setSelectedStages([])}
                 />
               </div>
             </div>
             <div className="border-bottom-filter-last-element pt-1 pb-2 px-0">
               <DropDown
-                className="btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center"
+                className="btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center position-relative"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse5"
@@ -310,18 +477,31 @@ const LeftNavComponent = (props: any) => {
               >
                 <FiChevronDown className="me-2" size={15} />
                 Winner Badges
-                <span className="ms-auto count-text">2</span>
+                {appliedFilters.badges.length > 0 && (
+                  <RoundedBadge className="ms-auto me-3">
+                    {appliedFilters.badges.length}
+                  </RoundedBadge>
+                )}
+                <span className="count-text ms-auto">{badgesState.length}</span>
               </DropDown>
               <div className="collapse mt-2" id="collapse5">
-                <div className="card card-body">
-                  Some placeholder content for the collapse component. This
-                  panel is hidden by default but revealed when the user
-                  activates the relevant trigger.
-                </div>
+                <DropDownListComponent
+                  accessor={"value"}
+                  originalData={trimBadges(badgesState)}
+                  loading={badgesLoading}
+                  selectedItem={selectedBadges}
+                  handleClick={handleBadgesClick}
+                  handleApplyClick={onApplyBadges}
+                  noSort={true}
+                  dropDownId={"#collapse5"}
+                  handleClearClick={() => {
+                    setSelectedBadges([]);
+                  }}
+                />
               </div>
             </div>
           </Card>
-          <Card className="left-nav-bottom-card row pt-3 ">
+          <Card className="left-nav-bottom-card row pt-3 pb-0">
             <h6 className="px-0 card-heading-left-bottom">
               {" "}
               VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA

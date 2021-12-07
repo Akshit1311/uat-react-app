@@ -1,11 +1,12 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
-import React,{ useContext } from "react";
+import React,{ useContext, useEffect } from "react";
 import SearchBarComponent from "../../components/SearchBarComponent";
 import { Badge } from "../../styles-components/Badge";
 import "../../scss/HomePageStyles/startupsListComponent.scss";
 import DisabledMap from "./Map/DisabledMap";
 import styled from "styled-components";
 import { ThemeContext } from "../../config/context"
+import { useMutate } from "../../hooks/useMutate"
 
 function EmptyStartUp() {
   return (
@@ -66,6 +67,9 @@ function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
 
 function StartupsListComponent(props: any) {
   const theme = useContext(ThemeContext)
+  const [fetchTags, tagsState, tagsLoading] = useMutate("/startup/filter", []);
+
+
   const [screenWidth, setScreenWidth] = React.useState<number>(0);
   const extraSpacing: number = screenWidth - 1150;
   const windowResize = (event: any) => {
@@ -77,11 +81,15 @@ function StartupsListComponent(props: any) {
     window.addEventListener("resize", windowResize, false);
   }, [screenWidth]);
 
-  const startupList = props.data.map((startUp: any) => (
+  const startupList = tagsState.map((startUp: any) => (
     <StartUpCard {...startUp} />
   ));
 
-  if (!props.data.length) return <EmptyStartUp />;
+  useEffect(()=>{
+    fetchTags(props.appliedFilters)
+  },[props.appliedFilters])
+
+  if (!tagsState.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
       <div

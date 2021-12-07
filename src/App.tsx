@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import AppNavigator from "./routes/AppNavigator";
 import { BrowserRouter } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-// import "./App.scss";
 import axios from "axios";
 import axiosConfig from "./config/axiosConfig.json";
 import styled, { ThemeProvider } from "styled-components";
 import { BiLoaderCircle } from "react-icons/bi";
-import {PRIMARY_THEME, DARK_THEME, ThemeContext } from "./config/context"
+import { PRIMARY_THEME, DARK_THEME, ThemeContext } from "./config/context";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./scss/componentStyles.scss";
+import "./App.scss";
 
 axios.defaults.baseURL = axiosConfig.baseURL;
 
@@ -40,7 +41,6 @@ function App() {
       return;
     }
   };
-  require("./App.scss");
   return (
     <>
       <ThemeProvider theme={theme}>

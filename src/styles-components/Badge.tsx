@@ -23,6 +23,9 @@ export const RoundedBadge = styled.div`
    color: #feffff;
   background-color: #0177fa;
    border-radius: 50%;
+   position: absolute;
+   right: 1rem;
+   visibility: ${props=> props.hidden ? "hidden": 'visible'};
   `
 // export const RoundedBadge = styled.span`
 //     padding-top: 3px;

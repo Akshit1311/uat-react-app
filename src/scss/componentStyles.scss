@@ -1,0 +1,15 @@
+$primaryColor: #0177fa;
+$primaryFont: 14px;
+$buttonFamily: "Montserrat";
+
+
+.data-table-view-more-button {
+  color: $primaryColor !important;
+  cursor: pointer;
+  font-family: $buttonFamily;
+  font-size: $primaryFont;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -2,5 +2,9 @@
     "countBlockEndPoint": "/startup/count/all",
     "sectorByState": "/startup/sectors",
     "stagesByState": "/startup/stages",
-    "countDateRange": "/startup/count/"
+    "countDateRange": "/startup/count/",
+    "statesList":"/startup/dpiit/states",
+    "allIndustry":"/startup/industry/all",
+    "subIndustry":"/startup/subIndustry/",
+    "badges":"/startup/badges"
 }
