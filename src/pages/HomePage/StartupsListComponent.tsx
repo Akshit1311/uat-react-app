@@ -126,11 +126,9 @@ function StartupsListComponent(props: any) {
   if (!tagsState.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
-      <div
-        style={{ minWidth: "0", maxWidth: "15%", width: extraSpacing + "px" }}
-      />
+      <div style={{  minWidth: "19.66%" }} />
       <StartUpCardContainer
-        style={{ maxWidth: "55%", minWidth: "764px" }}
+        style={{ maxWidth: '55%'}}
         className="startup-list-card-container p-4"
       >
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>

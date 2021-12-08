@@ -53,7 +53,7 @@ const INITIAL_SELECTED_BADGES = {
   deleted: false,
 };
 
-const INITIAL_FILTER_STATE = {
+const INITIAL_TOGGLE_STATE = {
   state: false,
   industry: false,
   badges: false,
@@ -118,6 +118,10 @@ const LeftNavComponent = (props: any) => {
   const [selectedStages, setSelectedStages] = useState<any[]>([]);
   const [selectedIndustry, setSelectedIndustry] = useState<any[]>([]);
   const [selectedBadges, setSelectedBadges] = useState<any[]>([]);
+
+  const [leftNavWidth, setLeftNavWidth ] = useState<number>(0)
+
+  const [ toogleState, setToogleState ] = useState<any>(INITIAL_TOGGLE_STATE)
 
   const [fetchBadges, badgesState, badgesLoading] = useQuery(
     HomePageApi.badges
@@ -295,9 +299,10 @@ const LeftNavComponent = (props: any) => {
       setAppliedFilters((prevState: any) => ({ ...prevState, states: [] }));
     }
   }, [selectedArea]);
+  window.addEventListener('resize', ()=> setLeftNavWidth(window.innerWidth))
   return (
     <>
-      <div className="left-side-nav-styles">
+      <div className="left-side-nav-styles" style={{ position: 'fixed', width: leftNavWidth > 1366 ? '250px' : '18.666667%', top: '70px', zIndex: 10 }}>
         <div className="px-2">
           <div className="row search-bar-row">
             <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">

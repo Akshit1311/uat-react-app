@@ -134,11 +134,11 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     if (mapMode.id === MapVariables.INDIA.id) return "scale(1.42)";
   };
 
-  const fetchStateListWithName = async () => {
-    const response = await statesDpiit("");
-    console.log("States Dpiit", response);
-    // setIndiaMap(States);
-  };
+  // const fetchStateListWithName = async () => {
+  //   const response = await statesDpiit("");
+  //   console.log("States Dpiit", response);
+  //   // setIndiaMap(States);
+  // };
 
   useEffect(() => {
     fetchIndiaMap();
