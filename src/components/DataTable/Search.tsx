@@ -5,6 +5,8 @@ import { ThemeContext } from "../../config/context";
 import { IconSpan, Input } from './styled'
 import { SearchTypes } from "./types"
 import "../../scss/searchBarComponent.scss";
+import React,{ useState } from "react"
+
 
 export default function Search({
     background,
@@ -15,6 +17,7 @@ export default function Search({
     value
   }: SearchTypes){
     const theme = useContext(ThemeContext);
+    const [searchQuery, setSearchQuery] = useState<string>()
     const borderRadiusAll = borderRadius ? borderRadius : "0px";
     const backgroundAll = background ? background : "#f8f8f8";
     return(
@@ -44,11 +47,12 @@ export default function Search({
               borderTopRightRadius: borderRadiusAll,
               borderBottomRightRadius: borderRadiusAll,
             }}
-            onChange={onChange}
-            value={value}
+            onChange={(e:any)=> setSearchQuery(e.target.value)}
+            value={searchQuery}
           />
         </div>
         <button
+          onClick={()=> onChange(searchQuery)}
           className="btn btn-primary btn-radius search-btn"
           style={{
             fontFamily: "Montserrat",

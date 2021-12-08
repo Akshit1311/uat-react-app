@@ -9,7 +9,7 @@ export function useMutate(apiUrl: string, initialState: any) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(ERROR_INITIAL_STATE);
 
-  const fetch = async (url: string, body: string) => {
+  const fetch = async (body: string) => {
     setLoading(true);
     try {
       const config = {

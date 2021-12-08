@@ -26,10 +26,11 @@ const Cells = ({
         fontWeight: fontWeight ? 700 : 400,
       }}
     >
-      <div className="d-flex">
+      <div className="d-flex h-100">
         <div
           style={{
-            height: borderHeight ? borderHeight : "63px",
+            height: '100%',
+            minHeight: borderHeight ? borderHeight : "63px",
             borderLeft: borderLeftA,
           }}
         />

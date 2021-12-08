@@ -15,7 +15,6 @@ import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
-import Table2 from "./Table2";
 
 import { useMutate } from "../../hooks/useMutate";
 

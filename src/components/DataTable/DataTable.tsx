@@ -16,8 +16,8 @@ export default function DataTable(props: any) {
 
   const theme = useContext(ThemeContext);
 
-  const onSearch = (changeEvent: any) => {
-    const value = changeEvent.target.value;
+  const onSearch = (query:string) => {
+    const value = query
     const list = originalData.filter((item) =>
       item.text.toLowerCase().includes(value.toLowerCase())
     );
@@ -64,8 +64,9 @@ export default function DataTable(props: any) {
           </div>
           <Body renderedData={renderedData} bodyConfig={bodyConfig} />
         </table>
-        {renderedData.length !== originalData.length && (
+        {(
           <div
+          style={{ visibility: renderedData.length !== originalData.length ? "visible": "hidden"}}
             className="my-4 data-table-view-more-button"
             onClick={handleViewMore}
           >

@@ -1,5 +1,5 @@
 import { Input } from "reactstrap";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMapSharp } from "react-icons/io5";
 import { RiDropFill } from "react-icons/ri";
 import { MdOutlineLocationCity } from "react-icons/md";
@@ -15,6 +15,7 @@ import { SelectBox, SelectBoxLabel } from "../../styles-components/SelectBox";
 import styled from "styled-components";
 import { IconButton } from "../../styles-components/Button";
 import { ThemeContext } from "../../config/context";
+import { useQuery } from "../../hooks/useQuery";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -53,6 +54,16 @@ function ViewChangerComponent({
 
   const theme = useContext(ThemeContext);
 
+  const [fetchDateRange, dateRangeState, dateRangeLoading] = useQuery(
+    "/static/searchDateRanges"
+  );
+  const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
+    "/static/startupTypes"
+  );
+  const [fetchStartUpCount, countState, countLoading] = useQuery("");
+
+  const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
+
   const stateText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
       <span>State</span>
@@ -83,19 +94,34 @@ function ViewChangerComponent({
     if (value === "none") {
       return getCounts();
     }
-    const today = new Date();
-    const beginDate = await moment(today).format("YYYY-MM-DD");
-    const endDate = await moment(today)
-      .subtract({ months: value })
-      .format("YYYY-MM-DD");
+    // const today = new Date();
+    // const beginDate = await moment(today).format("YYYY-MM-DD");
+    // const endDate = await moment(today)
+    //   .subtract({ months: value })
+    //   .format("YYYY-MM-DD");
+    const valueSplit = value.split("/");
+    const beginData = valueSplit[0];
+    const endDate = valueSplit[1];
+    getCounts(HomeApis.countDateRange + value);
+  };
 
-    getCounts(HomeApis.countDateRange + beginDate + "/" + endDate);
+  const startTypeChange = (changeEvent: any) => {
+    const value = changeEvent.target.value;
+    console.log(value);
+    setSelectedStartupType(value);
+    fetchStartUpCount("/startup/startupCount/" + value);
   };
 
   const getThemeDropDownImage = () => {
     if (theme.dropDownColorCode === 1) return LIGHT_THEME_DROPDOWN;
     if (theme.dropDownColorCode === 0) return DARK_THEME_DROPDOWN;
   };
+
+  useEffect(() => {
+    fetchDateRange();
+    fetchStartUpTypes();
+    fetchStartUpCount("/startup/startupCount/0");
+  }, []);
 
   return (
     <div className="view-changer-component-styles">
@@ -111,9 +137,9 @@ function ViewChangerComponent({
             onChange={dateRangeChange}
           >
             <option value="none">All </option>
-            <option value="3"> Last 3 Months </option>
-            <option value="6"> Last 6 Months </option>
-            <option value="9"> Last 9 Months </option>
+            {dateRangeState.map((item: any) => (
+              <option value={item.from + "/" + item.to}> {item.text} </option>
+            ))}
           </SelectBox>
           <button
             style={{ visibility: "hidden" }}
@@ -204,20 +230,23 @@ function ViewChangerComponent({
                   backgroundImage: getThemeDropDownImage(),
                 }}
                 marginBottom="20px"
+                onChange={startTypeChange}
               >
-                <option>All Startups </option>
-                <option> 2 </option>
-                <option> 3 </option>
-                <option> 4 </option>
-                <option> 5 </option>
+                {startUpTypes.map((item: any) => (
+                  <option value={item.index}>{item.text}</option>
+                ))}
               </SelectBox>
             </div>
             <Card
               className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
               border={true}
             >
-              <h3 className="p-0 m-0">10254</h3>
-              <span className="selected-startups">All Startups</span>
+              <h3 className="p-0 m-0">{countState}</h3>
+              <span className="selected-startups">
+                {startUpTypes[selectedStartUpType]
+                  ? startUpTypes[selectedStartUpType].text
+                  : ""}
+              </span>
             </Card>
             {selectedArea.id !== "india" && (
               <>

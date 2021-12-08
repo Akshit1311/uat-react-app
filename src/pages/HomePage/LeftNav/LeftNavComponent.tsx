@@ -145,7 +145,6 @@ const LeftNavComponent = (props: any) => {
 
   };
   const onApplyState = () => {
-    console.log("Applied Filters", appliedFilters);
     const stateIdsForAPiRequest = new Array();
     selectedState.forEach((state: any) => stateIdsForAPiRequest.push(state.id));
 
