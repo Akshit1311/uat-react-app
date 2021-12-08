@@ -109,7 +109,7 @@ function StartupsListComponent(props: any) {
     const windowWidth: number = window.innerWidth;
     setScreenWidth(windowWidth);
   };
-  
+
   React.useEffect(() => {
     if (screenWidth === 0) setScreenWidth(window.innerWidth);
     window.addEventListener("resize", windowResize, false);
@@ -137,7 +137,6 @@ function StartupsListComponent(props: any) {
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
           <SearchBarComponent background={theme.searchBg} />
         </div>
-        {/* {console.log(screenWidth)} */}
         <div className="d-flex flex-wrap justify-content-between">
           {startupList}
         </div>

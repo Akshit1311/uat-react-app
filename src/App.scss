@@ -25,6 +25,9 @@ body {
 .border-black-1px {
   border: 1px solid black;
 }
+.f-14px{
+  font-size: 14px;
+}
 
 .p-16px{
   padding-left: 16px !important;
@@ -35,7 +38,15 @@ body {
   border-radius: 10px !important;
   overflow: hidden;
 }
-
+.font-bold{
+  font-weight: bold;
+}
+.font-12px{
+  font-size: 12px;
+}
+.font-Mont{
+  font-family: "Montserrat";
+}
 .radius-5{
   border-radius: 5px !important;
   overflow: hidden;

@@ -64,9 +64,8 @@ const HomePage = (props: HomePageTypes) => {
   const [mapMode, setMapMode] = useState<MapVariables.IDType>(
     MapVariables.INDIA
   );
-  const [appliedFilters, setAppliedFilters] = useState<any>(
-    INITIAL_FILTER_STATE
-  );
+  const [appliedFilters, setAppliedFilters] =
+    useState<any>(INITIAL_FILTER_STATE);
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
 
@@ -90,6 +89,7 @@ const HomePage = (props: HomePageTypes) => {
     getCounts,
     countState,
     countLoading,
+    setSelectedArea
   };
 
   const mapViewResources = {
@@ -100,6 +100,7 @@ const HomePage = (props: HomePageTypes) => {
     setSelectedArea,
     selectedArea,
     getCounts,
+    countState,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -120,7 +121,9 @@ const HomePage = (props: HomePageTypes) => {
                 className="col-12  px-0 p-0"
                 style={{ flex: "0 0 auto", width: "18.666667%" }}
               >
-                <LeftNavComponent appliedFilters={appliedFilters} setAppliedFilters={setAppliedFilters}
+                <LeftNavComponent
+                  appliedFilters={appliedFilters}
+                  setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
                   setSelectedArea={setSelectedArea}
                 ></LeftNavComponent>
@@ -190,7 +193,7 @@ const HomePage = (props: HomePageTypes) => {
               </ButtonGroup>
               <div className="row mx-0 px-0">
                 {startupListActive && (
-                  <StartupsListComponent appliedFilters={appliedFilters}  />
+                  <StartupsListComponent appliedFilters={appliedFilters} />
                 )}
                 {!startupListActive && (
                   <>

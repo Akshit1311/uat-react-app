@@ -98,13 +98,19 @@ const INITIAL_FILTER_STATE2 = {
 };
 
 const LeftNavComponent = (props: any) => {
-  const { setSelectedArea, selectedArea, tagsResources, appliedFilters, setAppliedFilters } = props;
+  const {
+    setSelectedArea,
+    selectedArea,
+    tagsResources,
+    appliedFilters,
+    setAppliedFilters,
+  } = props;
 
   const [fetchFilterList, filterState, filterLoading] = useMutate(
     "/startup/filter/defaults",
     INITIAL_FILTER_STATE2
   );
-  
+
   const theme = useContext(ThemeContext);
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -138,11 +144,10 @@ const LeftNavComponent = (props: any) => {
     //   const newArray = [...prevState, state];
     //   return newArray;
     // });
-    if(stateIndex !== -1){
-      return setSelectedState([])
+    if (stateIndex !== -1) {
+      return setSelectedState([]);
     }
-    setSelectedState([state])
-
+    setSelectedState([state]);
   };
   const onApplyState = () => {
     const stateIdsForAPiRequest = new Array();
@@ -152,6 +157,11 @@ const LeftNavComponent = (props: any) => {
       ...prevState,
       states: stateIdsForAPiRequest,
     }));
+    const area = {
+      id: selectedState[0].id,
+      stateName: selectedState[0].value,
+    };
+    setSelectedArea(area);
   };
 
   const handleSectorClick = (sectorObj: any) => {
@@ -270,6 +280,21 @@ const LeftNavComponent = (props: any) => {
     fetchBadges();
     fetchFilterList();
   }, []);
+
+  useEffect(() => {
+    if (selectedArea.id !== "india") {
+      setSelectedState([
+        { id: selectedArea.id, value: selectedArea.stateName },
+      ]);
+      setAppliedFilters((prevState: any) => ({
+        ...prevState,
+        states: [selectedArea.id],
+      }));
+    } else {
+      setSelectedState([]);
+      setAppliedFilters((prevState: any) => ({ ...prevState, states: [] }));
+    }
+  }, [selectedArea]);
   return (
     <>
       <div className="left-side-nav-styles">

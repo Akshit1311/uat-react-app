@@ -30,6 +30,6 @@ export function useQuery(apiUrl: string) {
       setLoading(false);
       console.log(state);
     }
-  };
-  return [fetch, state, loading, error];
+  }; 
+  return [fetch, state, loading, error, ];
 }

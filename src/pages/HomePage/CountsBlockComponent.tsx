@@ -130,9 +130,14 @@ const CountsBlockComponent = ({
 }: CountBlockTypes) => {
   // const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-  const { getCounts, countState, countLoading } = countResource;
+  const { getCounts, countState, countLoading, setSelectedArea } = countResource;
+
+  const [fetchInitialCount, initialCountState] = useQuery(
+    HomePageApi.countBlockEndPoint
+  );
   useEffect(() => {
     getCounts();
+    fetchInitialCount();
   }, []);
 
   const resources = {
@@ -170,6 +175,25 @@ const CountsBlockComponent = ({
           name="Government"
         />
       </div>
+      {selectedArea.id !== "india" ? (
+        <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex">
+          {/* <p className="m-0 p-0">India</p> */}
+          <p
+            className="my-0 p-0 font-bold font-Mont font-12px mt-2 position-absolute"
+            style={{ marginLeft: "22px" }}
+          >
+            <a
+              onClick={() => setSelectedArea({ id: 'india', stateName: 'India' })}
+              style={{ color: "#0177FA", textDecoration: "underline", cursor: 'pointer' }}
+            >
+              {"India"}
+            </a>{" "}
+            | Startups {" " + initialCountState.Startup}
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

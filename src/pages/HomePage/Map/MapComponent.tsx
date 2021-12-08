@@ -30,7 +30,7 @@ const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
 export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
-  const { selectedArea, setSelectedArea, mapMode, isCircleActive } =
+  const { selectedArea, setSelectedArea, mapMode, isCircleActive,countState } =
     mapViewResource;
 
   const theme = useContext(ThemeContext);
@@ -147,11 +147,11 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   }, [mapMode, theme]);
 
   return (
-    <MapWrapper className="m-2 mt-0" style={{ position: "relative" }}>
+    <MapWrapper className="m-2 mt-0 pt-3" style={{ position: "relative" }}>
       {!isCircleActive && (
         <div className="gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
-          <p className="max-gradient-bar">2000</p>
+          <p className="max-gradient-bar">{countState.maxRange}</p>
         </div>
       )}
       <svg
@@ -211,7 +211,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
-                  fill="none"
+                  fill={'rgba(202, 227, 255, 0.4)'}
                   stroke="#0177FA"
                   strokeWidth="1.4"
                   r={districts.radius}
