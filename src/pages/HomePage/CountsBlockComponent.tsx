@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../scss/HomePageStyles/countBlockComponent.scss";
 import { IDType } from "./Map/variables";
 import { useQuery } from "../../hooks/useQuery";
@@ -6,6 +6,7 @@ import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
 import FadeLoader from "react-spinners/FadeLoader";
 import { css } from "@emotion/react";
+import  { ThemeContext }  from "../../config/context"
 
 const override = css`
   display: block;
@@ -128,11 +129,17 @@ const CountsBlockComponent = ({
   selectedArea,
   countResource,
 }: CountBlockTypes) => {
+  const theme  = useContext(ThemeContext)
   // const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-  const { getCounts, countState, countLoading } = countResource;
+  const { getCounts, countState, countLoading, setSelectedArea } = countResource;
+
+  const [fetchInitialCount, initialCountState] = useQuery(
+    HomePageApi.countBlockEndPoint
+  );
   useEffect(() => {
     getCounts();
+    fetchInitialCount();
   }, []);
 
   const resources = {
@@ -170,6 +177,31 @@ const CountsBlockComponent = ({
           name="Government"
         />
       </div>
+      {selectedArea.id !== "india" ? (
+        <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex">
+          {/* <p className="m-0 p-0">India</p> */}
+          <p
+            className="my-0 p-0 font-bold d-flex font-Mont font-12px mt-2 position-absolute"
+            style={{ marginLeft: "22px" }}
+          >
+            <a
+              onClick={() => setSelectedArea({ id: 'india', stateName: 'India' })}
+              style={{ textDecoration: 'none', color: "#0177FA", cursor: 'pointer', width: 'fit-content' }} className="d-flex flex-column"
+            >
+              <div>
+              {"India"}
+              </div>
+              <div style={{ background: "#0177FA", height: '1px' }}></div>
+            </a>{" "}
+            <div className="ms-1" style={{ color: theme.color }}>
+            | Startups {" " + initialCountState.Startup}
+
+            </div>
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

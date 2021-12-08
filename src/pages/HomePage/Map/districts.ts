@@ -1137,7 +1137,7 @@ export const District: DistrictType[] = [
   },
   {
     transform: "translate(172.36285979902468,411.43483171242474)",
-    title: " Puducherry",
+    title: "Puducherry",
     id: function () {
       return this.title;
     },
@@ -1235,7 +1235,7 @@ export const District: DistrictType[] = [
   },
   {
     transform: "translate(102.42093283897917,259.37054812571915)",
-    title: " Barwani",
+    title: "Barwani",
     id: function () {
       return this.title;
     },
@@ -1270,14 +1270,14 @@ export const District: DistrictType[] = [
   },
   {
     transform: "translate(234.02321854271574,259.02834967526394)",
-    title: " Jharsuguda",
+    title: "Jharsuguda",
     id: function () {
       return this.title;
     },
   },
   {
     transform: "translate(198.11350315917673,260.6423781741584)",
-    title: " Bametara",
+    title: "Bametara",
     id: function () {
       return this.title;
     },
@@ -1606,7 +1606,7 @@ export const District: DistrictType[] = [
   },
   {
     transform:"translate(346.5035125661571,231.56906855881587)",
-    title:" Gomati",
+    title:"Gomati",
     id: function () {
       return this.title;
     },
@@ -1620,14 +1620,14 @@ export const District: DistrictType[] = [
   },
   {
     transform:"translate(388.6188742161431,191.53945464108895)",
-    title:" Zunheboto",
+    title:"Zunheboto",
     id: function () {
       return this.title;
     },
   },
   {
     transform:"translate(389.3446801769057,197.3597290268727)",
-    title:" Phek",
+    title:"Phek",
     id: function () {
       return this.title;
     },
@@ -1641,7 +1641,7 @@ export const District: DistrictType[] = [
   },
   {
     transform:"translate(332.0886414136844,197.718472332838)",
-    title:" East Garo Hills",
+    title:"East Garo Hills",
     id: function () {
       return this.title;
     },

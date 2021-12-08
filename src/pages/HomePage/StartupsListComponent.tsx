@@ -1,11 +1,13 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
-import React,{ useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchBarComponent from "../../components/SearchBarComponent";
 import { Badge } from "../../styles-components/Badge";
 import "../../scss/HomePageStyles/startupsListComponent.scss";
 import DisabledMap from "./Map/DisabledMap";
 import styled from "styled-components";
-import { ThemeContext } from "../../config/context"
+import { ThemeContext } from "../../config/context";
+import { useMutate } from "../../hooks/useMutate";
+import UserDefault from "../../assets/user_default.jpg";
 
 function EmptyStartUp() {
   return (
@@ -16,17 +18,26 @@ function EmptyStartUp() {
 }
 
 const StartUpCardContainer = styled.div`
-  background: ${props=> props.theme.bgCards};
-  box-shadow: ${props=> props.theme.shadowCards};
+  background: ${(props) => props.theme.bgCards};
+  box-shadow: ${(props) => props.theme.shadowCards};
   border-radius: 4px;
-  color: ${props=> props.theme.color}
+  color: ${(props) => props.theme.color};
 `;
 
 const StartUpCardWrapper = styled.div`
-  background: ${props=> props.theme.bgStartupCard };
-`
+  background: ${(props) => props.theme.bgStartupCard};
+`;
 
-function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
+function StartUpCard({
+  _id,
+  img_url,
+  sectors,
+  name: company,
+  city,
+  state,
+  stages,
+  form80IacStatus,
+}: any) {
   return (
     <>
       <StartUpCardWrapper
@@ -36,27 +47,51 @@ function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
       >
         <div>
           <img
-            src={img_url}
-            className="rounded-circle border"
+            src={UserDefault}
+            className="rounded-circle border w-60-h-60"
             alt="main-logo"
-            width="60px"
-            height="60px"
           />
         </div>
-        <div className="p-2 py-0  ms-0 row d-flex justify-content-left">
-          <h6 className=" my-0 py-0 company-title">{company}</h6>
+        <div
+          className={`p-2 py-0  ms-0 row d-flex justify-content-left ${
+            form80IacStatus ? "" : "pb-0"
+          }`}
+        >
+          <h6 className=" my-0 py-0 company-title">
+            {company.length > 35 ? company.slice(0, 35) + "..." : company}
+          </h6>
           <div className="">
             <div className="stage-sector-div d-flex  flex-wrap">
-              <Badge className="me-2-5 mt-2-5">Stage: {stage}</Badge>
-              <Badge className="mt-2-5">Sector: {sector}</Badge>
+              {stages ? (
+                <Badge className="me-2-5 mt-2-5">Stage: {stages}</Badge>
+              ) : (
+                <></>
+              )}
+              {Array.isArray(sectors) ? (
+                <Badge className="mt-2-5">
+                  Sector: {Array.isArray(sectors) ? sectors[0] : ""}
+                </Badge>
+              ) : (
+                <></>
+              )}
             </div>
-            <div>
-              <Badge className="mt-2">Tax Exempted</Badge>
-            </div>
+            {form80IacStatus ? (
+              <div>
+                <Badge className="mt-2">Tax Exempted</Badge>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          <div className="m-1 d-flex flex-row align-items-center mt-2-5">
+          <div
+            className={`m-1 d-flex flex-row align-items-center ${
+              form80IacStatus ? "mt-2-5" : "mt-0"
+            }`}
+          >
             <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
-            <h6 className="ms-1 my-0 py-0  start-up-location">{location}</h6>
+            <h6 className="ms-1 my-0 py-0  start-up-location">
+              {city + ", " + state}
+            </h6>
           </div>
         </div>
       </StartUpCardWrapper>
@@ -65,37 +100,41 @@ function StartUpCard({ _id, img_url, sector, company, location, stage }: any) {
 }
 
 function StartupsListComponent(props: any) {
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
+  const [fetchTags, tagsState, tagsLoading] = useMutate("/startup/filter", []);
+
   const [screenWidth, setScreenWidth] = React.useState<number>(0);
   const extraSpacing: number = screenWidth - 1150;
   const windowResize = (event: any) => {
     const windowWidth: number = window.innerWidth;
     setScreenWidth(windowWidth);
   };
+
   React.useEffect(() => {
     if (screenWidth === 0) setScreenWidth(window.innerWidth);
     window.addEventListener("resize", windowResize, false);
   }, [screenWidth]);
 
-  const startupList = props.data.map((startUp: any) => (
+  const startupList = tagsState.map((startUp: any) => (
     <StartUpCard {...startUp} />
   ));
 
-  if (!props.data.length) return <EmptyStartUp />;
+  useEffect(() => {
+    fetchTags(props.appliedFilters);
+  }, [props.appliedFilters]);
+
+  if (!tagsState.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
-      <div
-        style={{ minWidth: "0", maxWidth: "15%", width: extraSpacing + "px" }}
-      />
+      <div style={{  minWidth: "19.66%" }} />
       <StartUpCardContainer
-        style={{ maxWidth: "55%", minWidth: "764px" }}
+        style={{ maxWidth: '55%'}}
         className="startup-list-card-container p-4"
       >
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
-          <SearchBarComponent background={theme.searchBg}  />
+          <SearchBarComponent background={theme.searchBg} />
         </div>
-        {/* {console.log(screenWidth)} */}
         <div className="d-flex flex-wrap justify-content-between">
           {startupList}
         </div>

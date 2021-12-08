@@ -3,6 +3,10 @@ import "../../../scss/HomePageStyles/dropDownListComponent.scss";
 import { Button } from "../../../styles-components/Button";
 import FadeLoader from "react-spinners/FadeLoader";
 import { css } from "@emotion/react";
+import { useEffect, useState } from "react";
+import React,{ useContext } from "react"
+import { ThemeContext } from "../../../config/context";
+import styled from "styled-components";
 
 const override = css`
   display: block;
@@ -10,9 +14,19 @@ const override = css`
   border-color: red;
 `;
 
+const SearchWrapper = styled.div`
+  background: ${props=> props.theme.dropDown.searchBackground} !important;
+  border: 1px solid ${props=> props.theme.dropDown.searchBorder} !important;
+  color: ${props=> props.theme.color} !important;
+`
+const Input = styled.input`
+  background: ${props=> props.theme.dropDown.searchBackground} !important;
+  color: ${props=> props.theme.color} !important;
+`
+
 const DropDownListComponent = (props: any) => {
   let {
-    data,
+    originalData,
     accessor,
     handleClick,
     selectedItem,
@@ -20,40 +34,76 @@ const DropDownListComponent = (props: any) => {
     loading,
     handleClearClick,
     dropDownId,
+    noSort,
   } = props;
-  console.log("loading");
-  const stateList = data.map((dataObj: any) => {
+
+  const theme = useContext(ThemeContext)
+
+  const [data, setData] = useState<any>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const findSelectedState = (dataObj: any) =>
+    selectedItem.find((item: any) => item.id === dataObj.id);
+
+    const bgUnSelected = () =>{
+      if(theme.theme === 'dark') return "unselected-list-card-dark"
+      if(theme.theme === 'light') return "unselected-list-card-light"
+    }  
+
+  const list: any[] = data.map((dataObj: any) => {
     return (
       <div
         onClick={() => handleClick(dataObj)}
         className={`list-card me-2 ${
-          selectedItem === dataObj[accessor]
+          findSelectedState(dataObj)
             ? "selected-list-card"
-            : "unselected-list-card"
+            : bgUnSelected()
         }`}
       >
-        <h5 className="m-0 p-0">{dataObj[accessor]}</h5>
+        {console.log("SelectedItem", dataObj)}
+        <h5 className="m-0 p-0">{dataObj["value"]}</h5>
       </div>
     );
   });
-  const noData = Boolean(data.length === 0 && !loading)
+
+  const noData: boolean = Boolean(data.length === 0 && !loading);
+
+  const onSearch = (changeEvent: any) => {
+    const changedValue: string = changeEvent.target.value;
+    setSearchQuery(changedValue);
+    const filteredList: any[] = originalData.filter((item: any) =>
+      item["value"].toLowerCase().includes(changedValue.toLowerCase())
+    );
+    setData(filteredList);
+  };
+
+  useEffect(() => {
+    const sort = originalData.sort((a: any, b: any) => a.value.localeCompare(b.value));
+    setData(sort)
+  }, [originalData.length,loading]);
   return (
-    <div className="drop-down-list-component pe-0 me-0">
-      <div className="state-search-bar me-3">
+    <div className="drop-down-list-component">
+      <SearchWrapper className={`state-search-bar me-3`}>
         <div className="d-flex">
-          <span className="btn my-0 me-0 pe-0">
+          <span className="btn my-0 me-0 pe-0" style={{ color: theme.color}}>
             <GoSearch />
           </span>
-          <input
+          <Input
             type="text"
-            className="ms-0 form-control me-3 border-0 shadow-none f-400"
+            value={searchQuery}
+            onChange={onSearch}
+            className={`ms-0 form-control me-3 border-0 shadow-none f-400`}
             placeholder="Search"
           />
         </div>
-      </div>
+      </SearchWrapper>
 
       <div className="state-container">
-        <div className={`d-flex flex-column justify-content-center align-items-center ${noData && 'h-100'}`}>
+        <div
+          className={`d-flex flex-column justify-content-center align-items-center ${
+            noData && "h-100"
+          }`}
+        >
           <FadeLoader
             color={"#0177FA"}
             loading={loading}
@@ -71,13 +121,14 @@ const DropDownListComponent = (props: any) => {
             ""
           )}
         </div>
-        {data.length && !loading ? stateList : ""}
+        {list}
+        {/* {data.length && !loading ?  : ""} */}
       </div>
       <div className="my-3 d-flex justify-content-between me-3">
         <Button
-          border={"2px solid #000"}
-          backgroundColor={"#fff"}
-          color={"black"}
+          border={`2px solid ${theme.dropDown.cancelBorder}`}
+          backgroundColor={theme.dropDown.cancel}
+          color={theme.dropDown.cancelColor}
           noBorder={true}
           onClick={handleClearClick}
         >

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import DataTable from "./TableComponent";
@@ -15,7 +15,8 @@ import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
-import Table2 from "./Table2";
+
+import { useMutate } from "../../hooks/useMutate";
 
 const PageWrapperContainer = styled.div`
   display: flex;
@@ -48,6 +49,14 @@ interface HomePageTypes {
   navHeight: string;
 }
 
+const INITIAL_FILTER_STATE = {
+  industries: [],
+  sectors: [],
+  states: [],
+  stages: [],
+  badges: [],
+};
+
 const HomePage = (props: HomePageTypes) => {
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
     MapVariables.INDIA
@@ -55,6 +64,8 @@ const HomePage = (props: HomePageTypes) => {
   const [mapMode, setMapMode] = useState<MapVariables.IDType>(
     MapVariables.INDIA
   );
+  const [appliedFilters, setAppliedFilters] =
+    useState<any>(INITIAL_FILTER_STATE);
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
 
@@ -63,10 +74,22 @@ const HomePage = (props: HomePageTypes) => {
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
   );
+
+  // const tagsResources = {
+  //   INITIAL_FILTER_STATE,
+  //   fetchFilterList,
+  //   filterState,
+  //   filterLoading,
+  //   fetchTags,
+  //   tagsState,
+  //   tagsLoading,
+  // };
+
   const countResource = {
     getCounts,
     countState,
     countLoading,
+    setSelectedArea,
   };
 
   const mapViewResources = {
@@ -77,6 +100,7 @@ const HomePage = (props: HomePageTypes) => {
     setSelectedArea,
     selectedArea,
     getCounts,
+    countState,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -98,11 +122,13 @@ const HomePage = (props: HomePageTypes) => {
                 style={{ flex: "0 0 auto", width: "18.666667%" }}
               >
                 <LeftNavComponent
+                  appliedFilters={appliedFilters}
+                  setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
                   setSelectedArea={setSelectedArea}
                 ></LeftNavComponent>
               </div>
-              <div className="col-12 col-md px-0 mx-0">
+              <div className="col-12 col-md px-0 mx-0 w-100" style={{ width: '61%'}}>
                 <div className="row px-0 mx-0">
                   <CountsBlockComponent
                     countResource={countResource}
@@ -128,9 +154,14 @@ const HomePage = (props: HomePageTypes) => {
                 </div>
               </div>
             </div>
-            <Strip className="row text-center mx-0 strip  align-items-center d-flex">
+            <Strip className="row mx-0 strip  align-items-center d-flex">
               <span className="m-0 strip-text">
-                <b className="me-3 strip-bold-text">Please Note :</b>
+                <b
+                  className="me-3 strip-bold-text"
+                  style={{ marginLeft: "19.66%" }}
+                >
+                  Please Note :
+                </b>
                 The information is based on self declaration by community
                 members. Startup India dosen't moderate the information
                 collected.
@@ -167,12 +198,12 @@ const HomePage = (props: HomePageTypes) => {
               </ButtonGroup>
               <div className="row mx-0 px-0">
                 {startupListActive && (
-                  <StartupsListComponent data={startupsListData} />
+                  <StartupsListComponent appliedFilters={appliedFilters} />
                 )}
                 {!startupListActive && (
                   <>
                     <DataTable data={dataTableData} />
-                    <Table2 data={dataTableData} />
+                    {/* <Table2 data={dataTableData} /> */}
                   </>
                 )}
               </div>

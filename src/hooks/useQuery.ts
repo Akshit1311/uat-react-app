@@ -17,6 +17,7 @@ export function useQuery(apiUrl: string) {
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       });
       if (response.data) {
+        console.log('Date Range', response.data)
         setState(response.data);
       } else {
         setState([])
@@ -29,6 +30,6 @@ export function useQuery(apiUrl: string) {
       setLoading(false);
       console.log(state);
     }
-  };
-  return [fetch, state, loading, error];
+  }; 
+  return [fetch, state, loading, error, ];
 }

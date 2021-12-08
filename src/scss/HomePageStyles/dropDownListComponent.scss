@@ -1,4 +1,5 @@
 .drop-down-list-component {
+    margin-right: -0.75rem;
     .state-container {
         overflow-y: scroll;
         height: 268px;
@@ -13,9 +14,6 @@
     .selected-list-card {
         color: #feffff;
         background-color: #0177fa;
-    }
-    .unselected-list-card {
-        background: #f8f8f8;
     }
     .list-card {
         // background: #f8f8f8;
