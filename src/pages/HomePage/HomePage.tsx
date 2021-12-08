@@ -89,7 +89,7 @@ const HomePage = (props: HomePageTypes) => {
     getCounts,
     countState,
     countLoading,
-    setSelectedArea
+    setSelectedArea,
   };
 
   const mapViewResources = {
@@ -154,9 +154,14 @@ const HomePage = (props: HomePageTypes) => {
                 </div>
               </div>
             </div>
-            <Strip className="row text-center mx-0 strip  align-items-center d-flex">
+            <Strip className="row mx-0 strip  align-items-center d-flex">
               <span className="m-0 strip-text">
-                <b className="me-3 strip-bold-text">Please Note :</b>
+                <b
+                  className="me-3 strip-bold-text"
+                  style={{ marginRight: "19.66%" }}
+                >
+                  Please Note :
+                </b>
                 The information is based on self declaration by community
                 members. Startup India dosen't moderate the information
                 collected.

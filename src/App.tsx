@@ -32,15 +32,20 @@ function App() {
     if (currentThemeNumber === 1) {
       setTheme(DARK_THEME);
       setThemeNumber(0);
+      require('./scss/theme/darkTheme.scss')
       return;
     }
 
     if (currentThemeNumber === 0) {
       setTheme(PRIMARY_THEME);
       setThemeNumber(1);
+      require('./scss/theme/lightTheme.scss')
       return;
     }
   };
+  React.useEffect(()=>{
+    require('./scss/theme/lightTheme.scss')
+  },[])
   return (
     <>
       <ThemeProvider theme={theme}>

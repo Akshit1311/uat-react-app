@@ -3,6 +3,7 @@ import React from "react";
 export const NAVBAR_HEIGHT = "4.5rem";
 
 export const PRIMARY_THEME = {
+  theme: "light",
   blue: "",
   white: "",
   text: "",
@@ -47,10 +48,18 @@ export const PRIMARY_THEME = {
   buttonShadow:"0px 0px 20px rgba(1, 119, 250, 0.25)",
   showCaseStartUpBorder:"1px solid #DDDDDD;",
   shadowMapView: "0px 0px 20px rgba(1, 119, 250, 0.2)",
-  dropDownBorder:"light-border-bottom"
+  dropDownBorder:"light-border-bottom",
+  dropDown:{
+    cancel: 'white',
+    cancelBorder: 'black',
+    cancelColor: "black",
+    searchBackground: "",
+    searchBorder: "black"
+  }
 };
 
 export const DARK_THEME = {
+  theme: 'dark',
   color: "white",
   bgColorStart: "rgba(31, 30, 44, 1)",
   bgColorEnd: "rgba(31, 30, 44, 1)",
@@ -90,7 +99,14 @@ export const DARK_THEME = {
   buttonShadow:"0px 0px 20px rgba(1, 119, 250, 0.25)",
   showCaseStartUpBorder:"1px solid #444261",
   shadowMapView:" 0px 0px 20px rgba(1, 119, 250, 0.25)",
-  dropDownBorder:" border-bottom-filter "
+  dropDownBorder:" border-bottom-filter ",
+  dropDown:{
+    cancel:"#25283A",
+    cancelBorder: "white",
+    cancelColor: "white",
+    searchBackground: "black",
+    searchBorder: "#444261"
+  }
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

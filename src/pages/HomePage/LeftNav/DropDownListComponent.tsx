@@ -4,12 +4,25 @@ import { Button } from "../../../styles-components/Button";
 import FadeLoader from "react-spinners/FadeLoader";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
+import React,{ useContext } from "react"
+import { ThemeContext } from "../../../config/context";
+import styled from "styled-components";
 
 const override = css`
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
+
+const SearchWrapper = styled.div`
+  background: ${props=> props.theme.dropDown.searchBackground} !important;
+  border: 1px solid ${props=> props.theme.dropDown.searchBorder} !important;
+  color: ${props=> props.theme.color} !important;
+`
+const Input = styled.input`
+  background: ${props=> props.theme.dropDown.searchBackground} !important;
+  color: ${props=> props.theme.color} !important;
+`
 
 const DropDownListComponent = (props: any) => {
   let {
@@ -24,11 +37,18 @@ const DropDownListComponent = (props: any) => {
     noSort,
   } = props;
 
+  const theme = useContext(ThemeContext)
+
   const [data, setData] = useState<any>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const findSelectedState = (dataObj: any) =>
     selectedItem.find((item: any) => item.id === dataObj.id);
+
+    const bgUnSelected = () =>{
+      if(theme.theme === 'dark') return "unselected-list-card-dark"
+      if(theme.theme === 'light') return "unselected-list-card-light"
+    }  
 
   const list: any[] = data.map((dataObj: any) => {
     return (
@@ -37,7 +57,7 @@ const DropDownListComponent = (props: any) => {
         className={`list-card me-2 ${
           findSelectedState(dataObj)
             ? "selected-list-card"
-            : "unselected-list-card"
+            : bgUnSelected()
         }`}
       >
         {console.log("SelectedItem", dataObj)}
@@ -58,26 +78,25 @@ const DropDownListComponent = (props: any) => {
   };
 
   useEffect(() => {
-    console.log("Original Data", originalData)
     const sort = originalData.sort((a: any, b: any) => a.value.localeCompare(b.value));
     setData(sort)
   }, [originalData.length,loading]);
   return (
     <div className="drop-down-list-component">
-      <div className="state-search-bar me-3">
+      <SearchWrapper className={`state-search-bar me-3`}>
         <div className="d-flex">
-          <span className="btn my-0 me-0 pe-0">
+          <span className="btn my-0 me-0 pe-0" style={{ color: theme.color}}>
             <GoSearch />
           </span>
-          <input
+          <Input
             type="text"
             value={searchQuery}
             onChange={onSearch}
-            className="ms-0 form-control me-3 border-0 shadow-none f-400"
+            className={`ms-0 form-control me-3 border-0 shadow-none f-400`}
             placeholder="Search"
           />
         </div>
-      </div>
+      </SearchWrapper>
 
       <div className="state-container">
         <div
@@ -107,9 +126,9 @@ const DropDownListComponent = (props: any) => {
       </div>
       <div className="my-3 d-flex justify-content-between me-3">
         <Button
-          border={"2px solid #000"}
-          backgroundColor={"#fff"}
-          color={"black"}
+          border={`2px solid ${theme.dropDown.cancelBorder}`}
+          backgroundColor={theme.dropDown.cancel}
+          color={theme.dropDown.cancelColor}
           noBorder={true}
           onClick={handleClearClick}
         >

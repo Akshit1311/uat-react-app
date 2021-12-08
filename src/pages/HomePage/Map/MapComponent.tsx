@@ -21,8 +21,8 @@ const Path = styled.path`
   stroke: ${(props) => props.theme.map.color};
 `;
 
-const MAP_AREA_INDIA = "0 0 820 696";
-const MAP_AREA_DISTRICTS = "0 0 470 465";
+const MAP_AREA_INDIA = "0 0 930 806";
+const MAP_AREA_DISTRICTS = "0 0 620 614";
 const WHITE = "#ffffff";
 const BLACK = "#000000";
 const THEME_COLOR = "rgb(1, 119, 250)";
@@ -91,33 +91,131 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const populateDistrictCircle = () => {
     // if (districtWiseCircle.length > 0) return;
     const newArray = new Array();
-    District.forEach((district: any) => {
-      const newObj: any = new Object();
-
-      if (district.title.toLowerCase() == "mumbai") {
-        newObj["radius"] = "18";
-      } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
-        newObj["radius"] = "10";
-      } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
-        newObj["radius"] = "20";
-      } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
-        newObj["radius"] = "15";
-      } else if (district.title.toLowerCase() === "Pune".toLowerCase()) {
-        newObj["radius"] = "13";
-      } else if (district.title.toLowerCase() === "Guntur".toLowerCase()) {
-        newObj["radius"] = "14";
-      } else if (district.title.toLowerCase() === "Udupi".toLowerCase()) {
-        newObj["radius"] = "15";
-      } else if (district.title.toLowerCase() === "Kollam".toLowerCase()) {
-        newObj["radius"] = "12";
-      } else {
-        newObj["radius"] = "0";
-      }
-      newObj["transform"] = district.transform;
-      newObj["title"] = district.title;
-      newObj["id"] = district.id;
-      newArray.push(newObj);
-    });
+    if(mapMode.id === MapVariables.DISTRICT.id ){
+      District.forEach((district: any) => {
+        const newObj: any = new Object();
+  
+        if (district.title.toLowerCase() == "mumbai") {
+          newObj["radius"] = "18";
+        } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
+          newObj["radius"] = "10";
+        } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
+          newObj["radius"] = "20";
+        } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Pune".toLowerCase()) {
+          newObj["radius"] = "13";
+        } else if (district.title.toLowerCase() === "Guntur".toLowerCase()) {
+          newObj["radius"] = "14";
+        } else if (district.title.toLowerCase() === "Udupi".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Kollam".toLowerCase()) {
+          newObj["radius"] = "12";
+        } else {
+          newObj["radius"] = "0";
+        }
+        newObj["transform"] = district.transform;
+        newObj["title"] = district.title;
+        newObj["id"] = district.id;
+        newArray.push(newObj);
+      });
+    }
+    if(mapMode.id === MapVariables.INDIA.id ){
+      District.forEach((district: any) => {
+        const newObj: any = new Object();
+  
+        if (district.title.toLowerCase() == "mumbai") {
+          newObj["radius"] = "0";
+        } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
+          newObj["radius"] = "50";
+        } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
+          newObj["radius"] = "60";
+        } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
+          newObj["radius"] = "70";
+        
+        } else {
+          newObj["radius"] = "0";
+        }
+        newObj["transform"] = district.transform;
+        newObj["title"] = district.title;
+        newObj["id"] = district.id;
+        newArray.push(newObj);
+      });
+    }
+    if(mapMode.id === MapVariables.CITY.id ){
+      District.forEach((district: any) => {
+        const newObj: any = new Object();
+  
+        if (district.title.toLowerCase() == "mumbai") {
+          newObj["radius"] = "18";
+        } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
+          newObj["radius"] = "10";
+        } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
+          newObj["radius"] = "20";
+        } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Pune".toLowerCase()) {
+          newObj["radius"] = "13";
+        } else if (district.title.toLowerCase() === "Guntur".toLowerCase()) {
+          newObj["radius"] = "14";
+        } else if (district.title.toLowerCase() === "Udupi".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Koraput".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Chikkaballapura".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Sundargarh".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Haver".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Papum Pare".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Shivamogga".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Malkangiri".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Visakhapatnam".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Cuttack".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "East Garo Hills".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Nashik".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Kalahandi".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Subarnapur".toLowerCase()) {
+          newObj["radius"] = "15";
+        } else if (district.title.toLowerCase() === "Bametara".toLowerCase()) {
+          newObj["radius"] = "12";
+        } else if (district.title.toLowerCase() === "Phek".toLowerCase()) {
+          newObj["radius"] = "12";
+        } else if (district.title.toLowerCase() === "Zunheboto".toLowerCase()) {
+          newObj["radius"] = "12";
+        } else if (district.title.toLowerCase() === "Wokha".toLowerCase()) {
+          newObj["radius"] = "12";
+        } else if (district.title.toLowerCase() === "Gomati".toLowerCase()) {
+          newObj["radius"] = "12";
+        } else {
+          newObj["radius"] = "0";
+        }
+        newObj["transform"] = district.transform;
+        newObj["title"] = district.title;
+        newObj["id"] = district.id;
+        newArray.push(newObj);
+      });
+    }
+    
     setDistrictWiseCircle(newArray);
   };
 
@@ -128,10 +226,12 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const getViewBoxArea = () => {
     if (mapMode.id === MapVariables.DISTRICT.id) return MAP_AREA_DISTRICTS;
     if (mapMode.id === MapVariables.INDIA.id) return MAP_AREA_INDIA;
+    if (mapMode.id === MapVariables.CITY.id) return MAP_AREA_INDIA;
   };
   const getViewBoxAreaCircle = () => {
     if (mapMode.id === MapVariables.DISTRICT.id) return "scale(1.38)";
     if (mapMode.id === MapVariables.INDIA.id) return "scale(1.42)";
+    if (mapMode.id === MapVariables.CITY.id) return "scale(1.42)";
   };
 
   // const fetchStateListWithName = async () => {
@@ -169,7 +269,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   {state.text}
                 </p>
               }
-            >
+            >       
               <path
                 onMouseEnter={(e) => handleMouseEnter(state, e)}
                 onMouseLeave={handleStateMouseLeave}
@@ -184,7 +284,30 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
             </Tooltip>
           ))}
         {console.log("MapBorder", theme["map"].mapBorder)}
-        {mapMode.id === MapVariables.CITY.id && <div />}
+        {mapMode.id === MapVariables.CITY.id &&
+          indiaMap.map((state:any) => (
+            <Tooltip
+              placement="top"
+              arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+              overlay={
+                <p style={{ paddingTop: "1px" }} className="px-2">
+                  {state.text}
+                </p>
+              }
+            >       
+              <path
+                onMouseEnter={(e) => handleMouseEnter(state, e)}
+                onMouseLeave={handleStateMouseLeave}
+                onClick={(e) => handleStateClick(state)}
+                key={state.id}
+                d={state.d}
+                id={state.id}
+                fill={fillStates(state.id)}
+                stroke={fillStrokeColor(state.id)}
+                strokeWidth={fillStroke(state.id)}
+              />
+            </Tooltip>
+          ))}
 
         {mapMode.id === MapVariables.DISTRICT.id &&
           districtsBoarder.map((district: any, index: number) => (

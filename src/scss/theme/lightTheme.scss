@@ -1,0 +1,18 @@
+.btn-icon-handler {
+  border: 2px solid #0177fa;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 47px;
+  height: 36px;
+  margin-right: 12px;
+  &:hover {
+    color: white;
+  }
+  &:not(.bg-active):hover {
+    color: black;
+  }
+}
+
+.unselected-list-card-light {
+  background: #f8f8f8 !important;
+}

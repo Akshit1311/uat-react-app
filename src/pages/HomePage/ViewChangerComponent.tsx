@@ -162,7 +162,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={defaultView}
                   active={mapMode.id === MapVariables.INDIA.id}
-                  className={`btn btn-outline btn-icon-handler`}
+                  className={`btn btn-outline btn-icon-handler ${mapMode.id === MapVariables.INDIA.id ? "bg-active":""}`}
                 >
                   <IoMapSharp
                     size={18}
@@ -178,7 +178,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={cityView}
                   active={mapMode.id === MapVariables.CITY.id}
-                  className={`btn btn-icon-handler border-primary dark`}
+                  className={`btn btn-icon-handler border-primary dark `}
                 >
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
