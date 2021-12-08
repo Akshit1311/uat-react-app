@@ -121,15 +121,11 @@ const LeftNavComponent = (props: any) => {
 
   const [leftNavWidth, setLeftNavWidth ] = useState<number>(0)
 
-  const [ toogleState, setToogleState ] = useState<any>(INITIAL_TOGGLE_STATE)
+  const [ toggleState, setToggleState ] = useState<any>(INITIAL_TOGGLE_STATE)
 
   const [fetchBadges, badgesState, badgesLoading] = useQuery(
     HomePageApi.badges
   );
-
-  const generateUrl = (a: string, b: string) => {
-    return a + "/" + b.toLowerCase();
-  };
 
   const findSelectedIndex = (array: any[], obj: any) =>
     array.findIndex((item: any) => item.id === obj.id);
@@ -302,7 +298,7 @@ const LeftNavComponent = (props: any) => {
   window.addEventListener('resize', ()=> setLeftNavWidth(window.innerWidth))
   return (
     <>
-      <div className="left-side-nav-styles" style={{ position: 'fixed', width: leftNavWidth > 1366 ? '250px' : '18.666667%', top: '70px', zIndex: 10 }}>
+      <div className="left-side-nav-styles" style={{ position: 'fixed', width: leftNavWidth > 1366 ? '250px' : '18.666667%',left:0, top: '70px', zIndex: 10 }}>
         <div className="px-2">
           <div className="row search-bar-row">
             <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
@@ -327,7 +323,7 @@ const LeftNavComponent = (props: any) => {
           >
             <div className={` ${theme.dropDownBorder} pt-2 px-0`}>
               <DropDown
-                className="btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative"
+                className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative ${!toggleState.states ? 'collapsed' : ''}`}
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse1"
@@ -372,7 +368,7 @@ const LeftNavComponent = (props: any) => {
             </div>
             <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative"
+                className={`btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative ${!toggleState.sectors ? 'collapsed': ''}`}
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse2"
@@ -420,7 +416,7 @@ const LeftNavComponent = (props: any) => {
             </div>
             <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative"
+                className={`btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative ${!toggleState.industries ? 'collapsed' :''}`}
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse3"
@@ -462,7 +458,7 @@ const LeftNavComponent = (props: any) => {
 
             <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
               <DropDown
-                className="btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative"
+                className={`btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative ${!toggleState.stages ? 'collapsed':''}`}
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse4"
@@ -497,7 +493,7 @@ const LeftNavComponent = (props: any) => {
             </div>
             <div className="border-bottom-filter-last-element pt-1 pb-2 px-0">
               <DropDown
-                className="btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center position-relative"
+                className={`btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center position-relative ${!toggleState.badges ? 'collapsed' :''}` }
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse5"

@@ -6,8 +6,8 @@ import axiosConfig from "./config/axiosConfig.json";
 import styled, { ThemeProvider } from "styled-components";
 import { BiLoaderCircle } from "react-icons/bi";
 import { PRIMARY_THEME, DARK_THEME, ThemeContext } from "./config/context";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./scss/componentStyles.scss";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "./scss/componentStyles.scss";
 import "./App.scss";
 
 axios.defaults.baseURL = axiosConfig.baseURL;
