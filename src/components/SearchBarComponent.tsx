@@ -7,6 +7,9 @@ interface SearchTypes {
   background?: string;
   borderRadius?: string;
   placeholderClass?: string;
+  onChange?:any;
+  value?:string;
+  handleApply:any
 }
 
 const IconSpan = styled.span`
@@ -28,6 +31,9 @@ const SearchBarComponent = ({
   background,
   borderRadius,
   placeholderClass,
+  onChange,
+  value,
+  handleApply
 }: SearchTypes) => {
   const borderRadiusAll = borderRadius ? borderRadius : "0px";
   const backgroundAll = background ? background : "#f8f8f8";
@@ -49,9 +55,10 @@ const SearchBarComponent = ({
             <GoSearch style={{ marginTop: "-2px" }} />
           </IconSpan>
           <Input
-            type="text"
+            type="text" value={value}
             className={`form-control me-3 px-0 search-input shadow-none search-bar-placeholder ${placeholderClass}`}
             placeholder="Search"
+            onChange={onChange}
             style={{
               background: backgroundAll,
               color: "black",
@@ -60,7 +67,8 @@ const SearchBarComponent = ({
             }}
           />
         </div>
-        <button
+        <button 
+          onClick={handleApply}
           className="btn btn-primary btn-radius search-btn"
           style={{
             fontFamily: "Montserrat",

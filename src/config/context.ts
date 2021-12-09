@@ -55,7 +55,9 @@ export const PRIMARY_THEME = {
     cancelColor: "black",
     searchBackground: "",
     searchBorder: "black"
-  }
+  },
+  iconButtonBackground:"white",
+  color2:"black"
 };
 
 export const DARK_THEME = {
@@ -104,9 +106,11 @@ export const DARK_THEME = {
     cancel:"#25283A",
     cancelBorder: "white",
     cancelColor: "white",
-    searchBackground: "black",
+    searchBackground: "rgba(31, 30, 44, 1)",
     searchBorder: "#444261"
-  }
+  },
+  iconButtonBackground:"rgba(38, 40, 58, 1)",
+  color2: 'white'
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

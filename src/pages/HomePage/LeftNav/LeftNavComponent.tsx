@@ -331,16 +331,17 @@ const LeftNavComponent = (props: any) => {
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
-  window.addEventListener("resize", () => setLeftNavWidth(window.innerWidth));
+  // window.addEventListener("resize", () => setLeftNavWidth(window.innerWidth));
   return (
     <>
       <div
         className="left-side-nav-styles"
         style={{
-          position: "fixed",
-          width: leftNavWidth > 1366 ? "250px" : "18.666667%",
-          left: 0,
-          top: "70px",
+          position: "sticky",
+          // width: "18.666667%",
+          // left: 0,
+          // maxWidth: '250px',
+          top: "96px",
           zIndex: 10,
         }}
       >
@@ -385,7 +386,7 @@ const LeftNavComponent = (props: any) => {
                   States
                   {appliedFilters.states.length !== 0 && (
                     <RoundedBadge className="ms-auto me-3">
-                      {appliedFilters.states.length}
+                      { appliedFilters.states.length}
                     </RoundedBadge>
                   )}
                   {

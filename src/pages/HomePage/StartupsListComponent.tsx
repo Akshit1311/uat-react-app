@@ -1,5 +1,5 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBarComponent from "../../components/SearchBarComponent";
 import { Badge } from "../../styles-components/Badge";
 import "../../scss/HomePageStyles/startupsListComponent.scss";
@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { ThemeContext } from "../../config/context";
 import { useMutate } from "../../hooks/useMutate";
 import UserDefault from "../../assets/user_default.jpg";
+import MoonLoader from "react-spinners/MoonLoader";
 
 function EmptyStartUp() {
   return (
@@ -37,6 +38,7 @@ function StartUpCard({
   state,
   stages,
   form80IacStatus,
+  tagsLoading,
 }: any) {
   return (
     <>
@@ -52,56 +54,75 @@ function StartUpCard({
             alt="main-logo"
           />
         </div>
-        <div
-          className={`p-2 py-0  ms-0 row d-flex justify-content-left ${
-            form80IacStatus ? "" : "pb-0"
-          }`}
-        >
-          <h6 className=" my-0 py-0 company-title">
-            {company.length > 35 ? company.slice(0, 35) + "..." : company}
-          </h6>
-          <div className="">
-            <div className="stage-sector-div d-flex  flex-wrap">
-              {stages ? (
-                <Badge className="me-2-5 mt-2-5 d-flex">
-                  <div>Stage:</div>
-                  <div className="d-flex flex-wrap ms-2">
-                    {stages.map((item: string) => (
-                      <div className="me-1">{item}{', '}</div>
-                    ))}
+        {tagsLoading && (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+            <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25"} />
+          </div>
+        )}
+        {!tagsLoading && (
+          <div className={`p-2 py-0  ms-0  ${form80IacStatus ? "" : "pb-0"}`}>
+            <h6
+              className=" my-0 py-0 company-title text-overflow"
+              style={{ maxHeight: "45px !important", overflow: "hidden" }}
+            >
+              {company.length > 35 ? company.slice(0, 30) + "..." : company}
+            </h6>
+            {form80IacStatus ||
+            (stages && stages.length) ||
+            (sectors && sectors.length) ? (
+              <div className="">
+                <div className="stage-sector-div d-flex  flex-wrap">
+                  {stages ? (
+                    <Badge className="me-2-5 mt-2-5 d-flex">
+                      <div>Stage:</div>
+                      <div className="d-flex flex-wrap ms-2">
+                        {stages.map((item: string) => (
+                          <div className="me-1">
+                            {item}
+                            {", "}
+                          </div>
+                        ))}
+                      </div>
+                    </Badge>
+                  ) : (
+                    <></>
+                  )}
+                  {Array.isArray(sectors) ? (
+                    <Badge className="mt-2-5 d-flex">
+                      <div>Sector:</div>
+                      <div className="ms-2 d-flex flex-wrap">
+                        {Array.isArray(sectors)
+                          ? sectors.map((item: string) => <div>{item}</div>)
+                          : ""}
+                      </div>
+                    </Badge>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                {form80IacStatus ? (
+                  <div>
+                    <Badge className="mt-2">Tax Exempted</Badge>
                   </div>
-                </Badge>
-              ) : (
-                <></>
-              )}
-              {Array.isArray(sectors) ? (
-                <Badge className="mt-2-5 d-flex">
-                  <div>Sector:</div>
-                  <div className="ms-2">{Array.isArray(sectors) ? sectors[0] : ""}</div>
-                </Badge>
-              ) : (
-                <></>
-              )}
-            </div>
-            {form80IacStatus ? (
-              <div>
-                <Badge className="mt-2">Tax Exempted</Badge>
+                ) : (
+                  <></>
+                )}
               </div>
             ) : (
               <></>
             )}
+            <div
+              className={`m-1 d-flex flex-row align-items-center ${
+                form80IacStatus ? "mt-2-5" : "mt-2"
+              }`}
+            >
+              <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
+              <h6 className="ms-1 my-0 py-0  start-up-location">
+                {city + ", " + state}
+              </h6>
+            </div>
           </div>
-          <div
-            className={`m-1 d-flex flex-row align-items-center ${
-              form80IacStatus ? "mt-2-5" : "mt-0"
-            }`}
-          >
-            <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
-            <h6 className="ms-1 my-0 py-0  start-up-location">
-              {city + ", " + state}
-            </h6>
-          </div>
-        </div>
+        )}
       </StartUpCardWrapper>
     </>
   );
@@ -110,8 +131,11 @@ function StartUpCard({
 function StartupsListComponent(props: any) {
   const theme = useContext(ThemeContext);
   const [fetchTags, tagsState, tagsLoading] = useMutate("/startup/filter", []);
+  const [renderedData, setRenderedData] = useState<any[]>([]);
 
   const [screenWidth, setScreenWidth] = React.useState<number>(0);
+  const [queryString, setQueryString] = useState<string>("");
+
   const extraSpacing: number = screenWidth - 1150;
   const windowResize = (event: any) => {
     const windowWidth: number = window.innerWidth;
@@ -123,28 +147,63 @@ function StartupsListComponent(props: any) {
     window.addEventListener("resize", windowResize, false);
   }, [screenWidth]);
 
-  const startupList = tagsState.map((startUp: any) => (
-    <StartUpCard {...startUp} />
+  const startupList = renderedData.map((startUp: any) => (
+    <StartUpCard {...startUp} tagsLoading={tagsLoading} />
   ));
+
+  const handleViewMore = () => {
+    setRenderedData(tagsState);
+  };
+
+  const onSearch = (changeEvent: any) => {
+    const value = changeEvent.target.value;
+    setQueryString(value);
+  };
+
+  const handleApply = () => {
+    console.log("QueryStrong", queryString, tagsState);
+    const filteredList = tagsState.filter((item: any) =>
+      item.name.toLowerCase().localeCompare(queryString.toLowerCase())
+    );
+    setRenderedData(filteredList);
+  };
+
+  useEffect(() => {
+    setRenderedData(tagsState.slice(0, 6));
+  }, [tagsState]);
 
   useEffect(() => {
     fetchTags(props.appliedFilters);
   }, [props.appliedFilters]);
 
-  if (!tagsState.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
-      <div style={{ minWidth: "19.66%" }} />
+      {/* <div style={{ minWidth: "19.66%" }} /> */}
       <StartUpCardContainer
-        style={{ maxWidth: "55%" }}
+        style={{ maxWidth: "65%",minWidth: "65%", marginLeft: "1.5%" }}
         className="startup-list-card-container p-4"
       >
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
-          <SearchBarComponent background={theme.searchBg} />
+          <SearchBarComponent
+            background={theme.searchBg}
+            handleApply={handleApply}
+            value={queryString}
+            onChange={onSearch}
+          />
         </div>
         <div className="d-flex flex-wrap justify-content-between">
           {startupList}
+        </div>
+        <div
+          style={{
+            visibility:
+              renderedData.length !== tagsState.length ? "visible" : "hidden",
+          }}
+          className="my-4 data-table-view-more-button"
+          onClick={handleViewMore}
+        >
+          View More
         </div>
       </StartUpCardContainer>
       <div

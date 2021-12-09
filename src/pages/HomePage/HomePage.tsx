@@ -119,7 +119,7 @@ const HomePage = (props: HomePageTypes) => {
             <div className="row px-0 mx-0">
               <div
                 className="col-12  px-0 p-0"
-                style={{ flex: "0 0 auto", width: "18.666667%" }}
+                style={{ flex: "0 0 18%", width: "18.666667%", minWidth: '18.675%' }}
               >
                 <LeftNavComponent
                   appliedFilters={appliedFilters}
@@ -128,7 +128,8 @@ const HomePage = (props: HomePageTypes) => {
                   setSelectedArea={setSelectedArea}
                 ></LeftNavComponent>
               </div>
-              <div className="col-12 col-md px-0 mx-0 w-100" style={{ width: '61%'}}>
+              <div style={{ flex: "62%"}} className="p-0">
+              <div className="col-12 col-md px-0 mx-0 w-100" >
                 <div className="row px-0 mx-0">
                   <CountsBlockComponent
                     countResource={countResource}
@@ -153,8 +154,7 @@ const HomePage = (props: HomePageTypes) => {
                   </div>
                 </div>
               </div>
-            </div>
-            <Strip className="row mx-0 strip  align-items-center d-flex">
+              <Strip className="row mx-0 strip  align-items-center d-flex">
               <span className="m-0 strip-text">
                 <b
                   className="me-3 strip-bold-text"
@@ -208,6 +208,9 @@ const HomePage = (props: HomePageTypes) => {
                 )}
               </div>
             </div>
+              </div>
+            </div>
+            
           </PageWrapper>
         </PageWrapperContainer>
       </div>

@@ -1,10 +1,10 @@
 import { GoSearch } from "react-icons/go";
 import "../../../scss/HomePageStyles/dropDownListComponent.scss";
 import { Button } from "../../../styles-components/Button";
-import FadeLoader from "react-spinners/FadeLoader";
+import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
-import React,{ useContext } from "react"
+import React, { useContext } from "react";
 import { ThemeContext } from "../../../config/context";
 import styled from "styled-components";
 
@@ -15,14 +15,14 @@ const override = css`
 `;
 
 const SearchWrapper = styled.div`
-  background: ${props=> props.theme.dropDown.searchBackground} !important;
-  border: 1px solid ${props=> props.theme.dropDown.searchBorder} !important;
-  color: ${props=> props.theme.color} !important;
-`
+  background: ${(props) => props.theme.dropDown.searchBackground} !important;
+  border: 1px solid ${(props) => props.theme.dropDown.searchBorder} !important;
+  color: ${(props) => props.theme.color} !important;
+`;
 const Input = styled.input`
-  background: ${props=> props.theme.dropDown.searchBackground} !important;
-  color: ${props=> props.theme.color} !important;
-`
+  background: ${(props) => props.theme.dropDown.searchBackground} !important;
+  color: ${(props) => props.theme.color} !important;
+`;
 
 const DropDownListComponent = (props: any) => {
   let {
@@ -37,7 +37,7 @@ const DropDownListComponent = (props: any) => {
     noSort,
   } = props;
 
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
   const [data, setData] = useState<any>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -45,19 +45,17 @@ const DropDownListComponent = (props: any) => {
   const findSelectedState = (dataObj: any) =>
     selectedItem.find((item: any) => item.id === dataObj.id);
 
-    const bgUnSelected = () =>{
-      if(theme.theme === 'dark') return "unselected-list-card-dark"
-      if(theme.theme === 'light') return "unselected-list-card-light"
-    }  
+  const bgUnSelected = () => {
+    if (theme.theme === "dark") return "unselected-list-card-dark";
+    if (theme.theme === "light") return "unselected-list-card-light";
+  };
 
   const list: any[] = data.map((dataObj: any) => {
     return (
       <div
         onClick={() => handleClick(dataObj)}
         className={`list-card me-2 ${
-          findSelectedState(dataObj)
-            ? "selected-list-card"
-            : bgUnSelected()
+          findSelectedState(dataObj) ? "selected-list-card" : bgUnSelected()
         }`}
       >
         {console.log("SelectedItem", dataObj)}
@@ -78,14 +76,16 @@ const DropDownListComponent = (props: any) => {
   };
 
   useEffect(() => {
-    const sort = originalData.sort((a: any, b: any) => a.value.localeCompare(b.value));
-    setData(sort)
-  }, [originalData.length,loading]);
+    const sort = originalData.sort((a: any, b: any) =>
+      a.value.localeCompare(b.value)
+    );
+    setData(sort);
+  }, [originalData.length, loading]);
   return (
     <div className="drop-down-list-component">
       <SearchWrapper className={`state-search-bar me-3`}>
         <div className="d-flex">
-          <span className="btn my-0 me-0 pe-0" style={{ color: theme.color}}>
+          <span className="btn my-0 me-0 pe-0" style={{ color: theme.color }}>
             <GoSearch />
           </span>
           <Input
@@ -99,17 +99,24 @@ const DropDownListComponent = (props: any) => {
       </SearchWrapper>
 
       <div className="state-container">
+        {loading ? (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+            <MoonLoader
+              color={"#0177FA"}
+              loading={loading}
+              size={"25"}
+              css={override}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div
           className={`d-flex flex-column justify-content-center align-items-center ${
             noData && "h-100"
           }`}
         >
-          <FadeLoader
-            color={"#0177FA"}
-            loading={loading}
-            radius={"2px"}
-            css={override}
-          />
           {noData ? (
             <p
               className="p-0 m-0"

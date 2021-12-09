@@ -4,7 +4,7 @@ import { IDType } from "./Map/variables";
 import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
-import FadeLoader from "react-spinners/FadeLoader";
+import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
 import  { ThemeContext }  from "../../config/context"
 
@@ -100,13 +100,17 @@ const CountCard = ({
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
       >
-        {loading && (
-          <FadeLoader
-            color={"#0177FA"}
-            loading={loading}
-            radius={"2px"}
-            css={override}
-          />
+       {loading ? (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+            <MoonLoader
+              color={active ? 'white' : "#0177FA"}
+              loading={loading}
+              size={"25"}
+              css={override}
+            />
+          </div>
+        ) : (
+          <></>
         )}
         {!loading && (
           <div className=" d-flex flex-column h-100 p-3 justify-content-between">

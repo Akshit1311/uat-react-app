@@ -48,7 +48,7 @@ export default function DataTable(props: any) {
 
   return (
     <div className="d-flex">
-      <div style={{ minWidth: "19.66%" }} />
+      {/* <div style={{ minWidth: "19.66%" }} /> */}
       <div className="w-100 data-table p-0 m-0">
         <table className="w-100">
           <Header headerConfig={headerConfig} />

@@ -87,7 +87,10 @@ function ViewChangerComponent({
   };
 
   const districtView = () => setMapMode(MapVariables.DISTRICT);
-  const cityView = () => setMapMode(MapVariables.CITY);
+  const cityView = () =>{
+    setMapMode(MapVariables.CITY);
+    circleView()
+  } 
 
   const dateRangeChange = async (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -163,13 +166,13 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={defaultView}
                   active={mapMode.id === MapVariables.INDIA.id}
-                  className={`btn btn-outline btn-icon-handler ${
+                  className={`btn-outline btn-icon-handler ${
                     mapMode.id === MapVariables.INDIA.id ? "bg-active" : ""
                   }`}
                 >
                   <IoMapSharp
                     size={18}
-                    style={{ marginTop: "-5px", marginLeft: "-1px" }}
+                    style={{ marginTop: "0px", marginLeft: "-1px" }}
                   />
                 </IconButton>
               </Tooltip>
@@ -182,7 +185,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={cityView}
                   active={mapMode.id === MapVariables.CITY.id}
-                  className={`btn btn-icon-handler border-primary dark `}
+                  className={`btn btn-icon-handler border-primary dark ${mapMode.id === MapVariables.CITY.id ? "bg-active" : ""}`}
                 >
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
@@ -199,7 +202,7 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={districtView}
                   active={mapMode.id === MapVariables.DISTRICT.id}
-                  className={`btn btn-icon-handler border-primary`}
+                  className={`btn btn-icon-handler border-primary ${mapMode.id === MapVariables.DISTRICT.id ? "bg-active" : ""}`}
                 >
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
@@ -212,7 +215,7 @@ function ViewChangerComponent({
               <IconButton
                 active={isCircleActive}
                 onClick={circleView}
-                className={`btn btn-icon-handler border-primary shadow-small`}
+                className={`btn btn-icon-handler border-primary shadow-small ${isCircleActive ? "bg-active" : "" }`}
               >
                 <RiDropFill
                   size={18}
@@ -242,7 +245,7 @@ function ViewChangerComponent({
                 ))}
               </SelectBox>
             </div>
-            <Card
+            <Card background={theme.bgColorStart}
               className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
               border={true}
             >

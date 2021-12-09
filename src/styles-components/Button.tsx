@@ -45,9 +45,12 @@ export const Button = styled.button<ButtonTypes>({
 }
 )
 
-export const IconButton = styled.div<any>`
-    color: ${props=> props.active ? "white" : props.theme.color};
-    background: ${props=> props.active ? "#0177FA" : props.theme.bgColor};
+export const IconButton = styled.button<any>`
+color: ${props=> props.active ? "white" : props.theme.color2};
+    background: ${props=> props.active ? "#0177FA" : props.theme.iconButtonBackground};
     border: 2px solid ${"#0177FA"}
     box-shadow: ${props=> props.theme.shadowMapView} !important;
+    &:hover{
+        color: ${props=> props.active ? "white" : props.theme.color2};
+    }
 `

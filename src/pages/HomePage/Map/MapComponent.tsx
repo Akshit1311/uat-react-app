@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { statesDpiit } from "./statesApi";
 import { ThemeContext } from ".././../../config/context";
 import { useQuery } from "../../../hooks/useQuery";
+import MoonLoader from "react-spinners/MoonLoader";
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -30,12 +31,14 @@ const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
 export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
-  const { selectedArea, setSelectedArea, mapMode, isCircleActive,countState } =
+  const { selectedArea, setSelectedArea, mapMode, isCircleActive, countState } =
     mapViewResource;
 
   const theme = useContext(ThemeContext);
 
-  const [ fetchIndiaMap, indiaMap, loadingIndiaMap ] = useQuery('https://13.235.79.165:443/startup/states');
+  const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
+    "https://13.235.79.165:443/startup/states"
+  );
 
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -69,7 +72,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const fillStrokeColor = (stateId: string) => {
     if (fillHover(stateId)) return theme.map.hover;
     if (fillClick(stateId)) return theme.map.color;
-    return theme.map.mapBorder
+    return theme.map.mapBorder;
   };
 
   const handleMouseEnter = (state: any, mouseEvent: any) => {
@@ -84,20 +87,22 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       states.splice(isSelected, 1);
       return setActiveStates(states);
     }
-    setSelectedArea({ id:state.id, stateName: state.text });
+    setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
   };
 
   const populateDistrictCircle = () => {
     // if (districtWiseCircle.length > 0) return;
     const newArray = new Array();
-    if(mapMode.id === MapVariables.DISTRICT.id ){
+    if (mapMode.id === MapVariables.DISTRICT.id) {
       District.forEach((district: any) => {
         const newObj: any = new Object();
-  
+
         if (district.title.toLowerCase() == "mumbai") {
           newObj["radius"] = "18";
-        } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() == "Krishnagiri".toLowerCase()
+        ) {
           newObj["radius"] = "10";
         } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
           newObj["radius"] = "20";
@@ -120,19 +125,20 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         newArray.push(newObj);
       });
     }
-    if(mapMode.id === MapVariables.INDIA.id ){
+    if (mapMode.id === MapVariables.INDIA.id) {
       District.forEach((district: any) => {
         const newObj: any = new Object();
-  
+
         if (district.title.toLowerCase() == "mumbai") {
           newObj["radius"] = "0";
-        } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() == "Krishnagiri".toLowerCase()
+        ) {
           newObj["radius"] = "50";
         } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
           newObj["radius"] = "60";
         } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
           newObj["radius"] = "70";
-        
         } else {
           newObj["radius"] = "0";
         }
@@ -142,13 +148,15 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         newArray.push(newObj);
       });
     }
-    if(mapMode.id === MapVariables.CITY.id ){
+    if (mapMode.id === MapVariables.CITY.id) {
       District.forEach((district: any) => {
         const newObj: any = new Object();
-  
+
         if (district.title.toLowerCase() == "mumbai") {
           newObj["radius"] = "18";
-        } else if (district.title.toLowerCase() == "Krishnagiri".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() == "Krishnagiri".toLowerCase()
+        ) {
           newObj["radius"] = "10";
         } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
           newObj["radius"] = "20";
@@ -162,39 +170,65 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
           newObj["radius"] = "15";
         } else if (district.title.toLowerCase() === "Koraput".toLowerCase()) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Chikkaballapura".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Chikkaballapura".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Sundargarh".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Sundargarh".toLowerCase()
+        ) {
           newObj["radius"] = "15";
         } else if (district.title.toLowerCase() === "Haver".toLowerCase()) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Papum Pare".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Papum Pare".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Shivamogga".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Shivamogga".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Puducherry".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Puducherry".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Puducherry".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Malkangiri".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Malkangiri".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Puducherry".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Visakhapatnam".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Visakhapatnam".toLowerCase()
+        ) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Puducherry".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Puducherry".toLowerCase()
+        ) {
           newObj["radius"] = "15";
         } else if (district.title.toLowerCase() === "Cuttack".toLowerCase()) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "East Garo Hills".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "East Garo Hills".toLowerCase()
+        ) {
           newObj["radius"] = "15";
         } else if (district.title.toLowerCase() === "Nashik".toLowerCase()) {
           newObj["radius"] = "15";
         } else if (district.title.toLowerCase() === "Kalahandi".toLowerCase()) {
           newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Subarnapur".toLowerCase()) {
+        } else if (
+          district.title.toLowerCase() === "Subarnapur".toLowerCase()
+        ) {
           newObj["radius"] = "15";
         } else if (district.title.toLowerCase() === "Bametara".toLowerCase()) {
           newObj["radius"] = "12";
@@ -215,7 +249,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         newArray.push(newObj);
       });
     }
-    
+
     setDistrictWiseCircle(newArray);
   };
 
@@ -254,75 +288,86 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
           <p className="max-gradient-bar">{countState.maxRange}</p>
         </div>
       )}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox={getViewBoxArea()}
-        aria-label="Map of India"
-      >
-        {mapMode.id === MapVariables.INDIA.id &&
-          indiaMap.map((state:any) => (
-            <Tooltip
-              placement="top"
-              animation="zoom"
-              arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-              overlay={
-                <p style={{ paddingTop: "1px" }} className="px-2">
-                  {state.text}
-                </p>
-              }
-            >       
-              <path
-                onMouseEnter={(e) => handleMouseEnter(state, e)}
-                onMouseLeave={handleStateMouseLeave}
-                onClick={(e) => handleStateClick(state)}
-                key={state.id}
-                d={state.d}
-                id={state.id}
-                fill={fillStates(state.id)}
-                stroke={fillStrokeColor(state.id)}
-                strokeWidth={fillStroke(state.id)}
-              />
-            </Tooltip>
-          ))}
-        {console.log("MapBorder", theme["map"].mapBorder)}
-        {mapMode.id === MapVariables.CITY.id &&
-          indiaMap.map((state:any) => (
-            <Tooltip
-              placement="top"
-              arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-              overlay={
-                <p style={{ paddingTop: "1px" }} className="px-2">
-                  {state.text}
-                </p>
-              }
-            >       
-              <path
-                onMouseEnter={(e) => handleMouseEnter(state, e)}
-                onMouseLeave={handleStateMouseLeave}
-                onClick={(e) => handleStateClick(state)}
-                key={state.id}
-                d={state.d}
-                id={state.id}
-                fill={fillStates(state.id)}
-                stroke={fillStrokeColor(state.id)}
-                strokeWidth={fillStroke(state.id)}
-              />
-            </Tooltip>
-          ))}
+      {loadingIndiaMap && (
+        <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
+          <MoonLoader
+            color={"#0177FA"}
+            loading={loadingIndiaMap}
+            size={"25"}
+          />
+        </div>
+      )}
+      {!loadingIndiaMap && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={getViewBoxArea()}
+          aria-label="Map of India"
+        >
+          {mapMode.id === MapVariables.INDIA.id &&
+            indiaMap.map((state: any) => (
+              <Tooltip
+                placement="top"
+                animation="zoom"
+                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                overlay={
+                  <p style={{ paddingTop: "1px" }} className="px-2">
+                    {state.text}
+                  </p>
+                }
+              >
+                <path
+                  onMouseEnter={(e) => handleMouseEnter(state, e)}
+                  onMouseLeave={handleStateMouseLeave}
+                  onClick={(e) => handleStateClick(state)}
+                  key={state.id}
+                  d={state.d}
+                  id={state.id}
+                  fill={fillStates(state.id)}
+                  stroke={fillStrokeColor(state.id)}
+                  strokeWidth={fillStroke(state.id)}
+                />
+              </Tooltip>
+            ))}
+          {console.log("MapBorder", theme["map"].mapBorder)}
+          {mapMode.id === MapVariables.CITY.id &&
+            indiaMap.map((state: any) => (
+              <Tooltip
+                placement="top"
+                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                overlay={
+                  <p style={{ paddingTop: "1px" }} className="px-2">
+                    {state.text}
+                  </p>
+                }
+              >
+                <path
+                  onMouseEnter={(e) => handleMouseEnter(state, e)}
+                  onMouseLeave={handleStateMouseLeave}
+                  onClick={(e) => handleStateClick(state)}
+                  key={state.id}
+                  d={state.d}
+                  id={state.id}
+                  fill={fillStates(state.id)}
+                  stroke={fillStrokeColor(state.id)}
+                  strokeWidth={fillStroke(state.id)}
+                />
+              </Tooltip>
+            ))}
 
-        {mapMode.id === MapVariables.DISTRICT.id &&
-          districtsBoarder.map((district: any, index: number) => (
-            <path
-              key={index}
-              d={district.d}
-              id={district.title}
-              fill={"none"}
-              stroke={theme.map.mapBorder}
-              strokeWidth={"0.5"}
-            />
-          ))}
-      </svg>
-      {isCircleActive && (
+          {mapMode.id === MapVariables.DISTRICT.id &&
+            districtsBoarder.map((district: any, index: number) => (
+              <path
+                key={index}
+                d={district.d}
+                id={district.title}
+                fill={"none"}
+                stroke={theme.map.mapBorder}
+                strokeWidth={"0.5"}
+              />
+            ))}
+        </svg>
+      )}
+      {!loadingIndiaMap && isCircleActive && (
         <>
           <svg
             style={{ position: "absolute", left: 0 }}
@@ -335,7 +380,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
-                  fill={'rgba(202, 227, 255, 0.4)'}
+                  fill={"rgba(202, 227, 255, 0.4)"}
                   stroke="#0177FA"
                   strokeWidth="1.4"
                   r={districts.radius}

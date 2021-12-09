@@ -11,6 +11,7 @@ import {
   ThemeProvider as MaterialUiThemeProvider,
   createTheme,
 } from "@mui/material/styles";
+import './scss/componentStyles.scss'
 
 axios.defaults.baseURL = axiosConfig.baseURL;
 
