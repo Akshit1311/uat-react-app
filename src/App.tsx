@@ -6,9 +6,13 @@ import axiosConfig from "./config/axiosConfig.json";
 import styled, { ThemeProvider } from "styled-components";
 import { BiLoaderCircle } from "react-icons/bi";
 import { PRIMARY_THEME, DARK_THEME, ThemeContext } from "./config/context";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "./scss/componentStyles.scss";
 import "./App.scss";
+import {
+  ThemeProvider as MaterialUiThemeProvider,
+  createTheme,
+} from "@mui/material/styles";
+import { green, purple } from "@mui/material/colors";
+import { TheaterComedySharp } from "@mui/icons-material";
 
 axios.defaults.baseURL = axiosConfig.baseURL;
 
@@ -32,32 +36,39 @@ function App() {
     if (currentThemeNumber === 1) {
       setTheme(DARK_THEME);
       setThemeNumber(0);
-      require('./scss/theme/darkTheme.scss')
+      require("./scss/theme/darkTheme.scss");
       return;
     }
 
     if (currentThemeNumber === 0) {
       setTheme(PRIMARY_THEME);
       setThemeNumber(1);
-      require('./scss/theme/lightTheme.scss')
+      require("./scss/theme/lightTheme.scss");
       return;
     }
   };
-  React.useEffect(()=>{
-    require('./scss/theme/lightTheme.scss')
-  },[])
+  const myTheme = createTheme({
+    palette: {
+      mode: themeNumber === 0 ? "dark" : "light",
+    },
+  });
+  React.useEffect(() => {
+    require("./scss/theme/lightTheme.scss");
+  }, []);
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ThemeContext.Provider value={theme}>
-          <BrowserRouter>
-            <AppNavigator />
-          </BrowserRouter>
-          <ThemeButton onClick={themeHandler}>
-            <BiLoaderCircle />
-          </ThemeButton>
-        </ThemeContext.Provider>
-      </ThemeProvider>
+      <MaterialUiThemeProvider theme={myTheme}>
+        <ThemeProvider theme={theme}>
+          <ThemeContext.Provider value={theme}>
+            <BrowserRouter>
+              <AppNavigator />
+            </BrowserRouter>
+            <ThemeButton onClick={themeHandler}>
+              <BiLoaderCircle />
+            </ThemeButton>
+          </ThemeContext.Provider>
+        </ThemeProvider>
+      </MaterialUiThemeProvider>
     </>
   );
 }

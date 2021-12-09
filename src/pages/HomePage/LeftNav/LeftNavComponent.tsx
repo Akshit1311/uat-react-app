@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import DropDownListComponent from "./DropDownListComponent";
 import "../../../scss/HomePageStyles/leftNavComponent.scss";
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -13,45 +13,16 @@ import { Card } from "../../../styles-components/Cards";
 import styled from "styled-components";
 import { ThemeContext } from "../../../config/context";
 import { useMutate } from "../../../hooks/useMutate";
-
-const INITIAL_SELECTED_STATE = {
-  id: "none",
-  name: "none",
-};
-
-const INITIAL_SELECTED_SECTOR = {
-  id: "",
-  sector: "none",
-  industryCount: 0,
-  sectorCount: 0,
-  totalCount: 0,
-};
-
-const INITIAL_SELECTED_STAGES = {
-  stateName: "none",
-  ideation: 0,
-  validation: 0,
-  earlyTraction: 0,
-  scaling: 0,
-  total: 0,
-  id: "",
-};
-const INITIAL_SELECTED_INDUSTRY = {
-  id: "",
-  name: "",
-  text: "",
-};
-
-const INITIAL_SELECTED_BADGES = {
-  id: "",
-  title: "",
-  description: "",
-  iconName: "",
-  iconLink: null,
-  createdDate: 0,
-  lastUpdatedDate: 0,
-  deleted: false,
-};
+import * as React from "react";
+import { styled as MaterialStyled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import MuiAccordionSummary, {
+  AccordionSummaryProps,
+} from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const INITIAL_TOGGLE_STATE = {
   state: false,
@@ -70,8 +41,70 @@ interface FilterType {
   badges: any[];
 }
 
+const Accordion = MaterialStyled((props: AccordionProps) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `0px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  "&:last-child": {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+// MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper
+
+const AccordionSummary = MaterialStyled((props: AccordionSummaryProps) => {
+  const theme = useContext(ThemeContext);
+  return (
+    <MuiAccordionSummary
+      expandIcon={
+        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.color }} />
+      }
+      {...props}
+    />
+  );
+})(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? "rgba(37, 40, 58, 1)" : "white",
+  flexDirection: "row-reverse",
+  border: "0px",
+  paddingLeft: 0,
+  paddingRight: 0,
+  alignItems: "flex-end",
+  paddingBottom: "5px",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(-180deg)",
+    marginRight: "10px",
+    marginBottom: "4px",
+  },
+  "& .MuiAccordionSummary-expandIconWrapper": {
+    marginRight: "10px",
+    marginBottom: "4px",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: "0px",
+    margin: 0,
+    padding: 0,
+  },
+}));
+
+const AccordionDetails = MaterialStyled(MuiAccordionDetails)(({ theme }) => ({
+  padding: 0,
+  background: theme.palette.mode === "dark" ? "rgba(37, 40, 58, 1)" : "white",
+  // borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
+
 const DropDown = styled.button`
   color: ${(props) => props.theme.colorCards} !important;
+  padding: 0px !important;
 `;
 const SearchBarWrapper = styled.div`
   color: ${(props) => props.theme.colorCards} !important;
@@ -111,6 +144,8 @@ const LeftNavComponent = (props: any) => {
     INITIAL_FILTER_STATE2
   );
 
+  const [expanded, setExpanded] = React.useState<string | false>("");
+
   const theme = useContext(ThemeContext);
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -119,9 +154,7 @@ const LeftNavComponent = (props: any) => {
   const [selectedIndustry, setSelectedIndustry] = useState<any[]>([]);
   const [selectedBadges, setSelectedBadges] = useState<any[]>([]);
 
-  const [leftNavWidth, setLeftNavWidth ] = useState<number>(0)
-
-  const [ toggleState, setToggleState ] = useState<any>(INITIAL_TOGGLE_STATE)
+  const [leftNavWidth, setLeftNavWidth] = useState<number>(0);
 
   const [fetchBadges, badgesState, badgesLoading] = useQuery(
     HomePageApi.badges
@@ -295,62 +328,76 @@ const LeftNavComponent = (props: any) => {
       setAppliedFilters((prevState: any) => ({ ...prevState, states: [] }));
     }
   }, [selectedArea]);
-  window.addEventListener('resize', ()=> setLeftNavWidth(window.innerWidth))
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+      setExpanded(newExpanded ? panel : false);
+    };
+  window.addEventListener("resize", () => setLeftNavWidth(window.innerWidth));
   return (
     <>
-      <div className="left-side-nav-styles" style={{ position: 'fixed', width: leftNavWidth > 1366 ? '250px' : '18.666667%',left:0, top: '70px', zIndex: 10 }}>
+      <div
+        className="left-side-nav-styles"
+        style={{
+          position: "fixed",
+          width: leftNavWidth > 1366 ? "250px" : "18.666667%",
+          left: 0,
+          top: "70px",
+          zIndex: 10,
+        }}
+      >
         <div className="px-2">
-          <div className="row search-bar-row">
-            <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
-              <SpanIcon
-                className="btn shadow-none border-0 m-0 pe-1 ps-4 "
-                id="search-addon"
-              >
-                <BiSearchAlt2 size={17.06} />
-              </SpanIcon>
-              <SearchBarInput
-                type="search"
-                className="form-control ps-2 search-bar-left"
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="search-addon"
-              />
-            </SearchBarWrapper>
-          </div>
+          {!expanded ? (
+            <div className="row search-bar-row">
+              <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
+                <SpanIcon
+                  className="btn shadow-none border-0 m-0 pe-1 ps-4 "
+                  id="search-addon"
+                >
+                  <BiSearchAlt2 size={17.06} />
+                </SpanIcon>
+                <SearchBarInput
+                  type="search"
+                  className="form-control ps-2 search-bar-left"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                />
+              </SearchBarWrapper>
+            </div>
+          ) : (
+            <></>
+          )}
           <Card
-            className="row mb-3 ps-2 pe-0 py-0 bg-white accordion accordion-flush dropdown-card p-16px"
+            className="row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px"
             id="flush1"
           >
-            <div className={` ${theme.dropDownBorder} pt-2 px-0`}>
-              <DropDown
-                className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative ${!toggleState.states ? 'collapsed' : ''}`}
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse1"
-                aria-expanded="false"
-                aria-controls="collapse1"
+            <Accordion
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
               >
-                <FiChevronDown className="me-2" size={15} />
-                States
-                {appliedFilters.states.length !== 0 && (
-                  <RoundedBadge className="ms-auto me-3">
-                    {appliedFilters.states.length}
-                  </RoundedBadge>
-                )}
-                {/* {stateApplied && (
-                  <span className="count-text">{statesStates.length}</span>
-                )} */}
-                {
-                  <span className="count-text ms-auto">
-                    {filterState.states.length}
-                  </span>
-                }
-              </DropDown>
-              <div
-                className="collapse mt-2"
-                id="collapse1"
-                data-bs-parent="flush1"
-              >
+                <DropDown
+                  className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                  type="button"
+                >
+                  States
+                  {appliedFilters.states.length !== 0 && (
+                    <RoundedBadge className="ms-auto me-3">
+                      {appliedFilters.states.length}
+                    </RoundedBadge>
+                  )}
+                  {
+                    <span className="count-text ms-auto">
+                      {filterState.states.length}
+                    </span>
+                  }
+                </DropDown>
+              </AccordionSummary>
+              <AccordionDetails>
                 <DropDownListComponent
                   accessor={"states"}
                   originalData={filterState.states}
@@ -364,38 +411,34 @@ const LeftNavComponent = (props: any) => {
                     setSelectedArea(MapVariables.INDIA);
                   }}
                 />
-              </div>
-            </div>
-            <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
-              <DropDown
-                className={`btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative ${!toggleState.sectors ? 'collapsed': ''}`}
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse2"
-                aria-expanded="false"
-                aria-controls="collapse2"
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel2"}
+              onChange={handleChange("panel2")}
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
               >
-                <FiChevronDown className="me-2" size={15} />
-                Sector
-                {
-                  <RoundedBadge
-                    hidden={appliedFilters.sectors.length === 0}
-                    className="ms-auto me-3"
-                  >
-                    {appliedFilters.sectors.length}
-                  </RoundedBadge>
-                }
-                {
-                  <span className="count-text ms-auto">
-                    {filterState.sectors.length}
-                  </span>
-                }
-              </DropDown>
-              <div
-                className="collapse mt-2"
-                id="collapse2"
-                data-bs-parent="flush1"
-              >
+                <DropDown
+                  className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                  type="button"
+                >
+                  Sector
+                  {appliedFilters.sectors.length !== 0 && (
+                    <RoundedBadge className="ms-auto me-3">
+                      {appliedFilters.sectors.length}
+                    </RoundedBadge>
+                  )}
+                  {
+                    <span className="count-text ms-auto">
+                      {filterState.sectors.length}
+                    </span>
+                  }
+                </DropDown>
+              </AccordionSummary>
+              <AccordionDetails>
                 <DropDownListComponent
                   accessor={"sectors"}
                   originalData={filterState.sectors}
@@ -406,41 +449,36 @@ const LeftNavComponent = (props: any) => {
                   dropDownId={"#collapse2"}
                   handleClearClick={() => {
                     setSelectedSector([]);
-                    setAppliedFilters((prevState: FilterType) => ({
-                      ...prevState,
-                      sector: false,
-                    }));
                   }}
                 />
-              </div>
-            </div>
-            <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
-              <DropDown
-                className={`btn shadow-none collapsed d-flex w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative ${!toggleState.industries ? 'collapsed' :''}`}
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse3"
-                aria-expanded="false"
-                aria-controls="collapse3"
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel3"}
+              onChange={handleChange("panel3")}
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
               >
-                <FiChevronDown className="me-2" size={15} />
-                Industry
-                {appliedFilters.industries.length !== 0 && (
-                  <RoundedBadge className="ms-auto me-3">
-                    {appliedFilters.industries.length}
-                  </RoundedBadge>
-                )}
-                {
-                  <span className="count-text ms-auto">
-                    {filterState.industries.length}
-                  </span>
-                }
-              </DropDown>
-              <div
-                className="collapse mt-2"
-                id="collapse3"
-                data-bs-parent="flush1"
-              >
+                <DropDown
+                  className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                  type="button"
+                >
+                  Industry
+                  {appliedFilters.sectors.length !== 0 && (
+                    <RoundedBadge className="ms-auto me-3">
+                      {appliedFilters.industries.length}
+                    </RoundedBadge>
+                  )}
+                  {
+                    <span className="count-text ms-auto">
+                      {filterState.industries.length}
+                    </span>
+                  }
+                </DropDown>
+              </AccordionSummary>
+              <AccordionDetails>
                 <DropDownListComponent
                   accessor={"industries"}
                   originalData={filterState.industries}
@@ -453,32 +491,34 @@ const LeftNavComponent = (props: any) => {
                     setSelectedIndustry([]);
                   }}
                 />
-              </div>
-            </div>
-
-            <div className={` ${theme.dropDownBorder} pt-1 px-0`}>
-              <DropDown
-                className={`btn shadow-none d-flex collapsed w-100 mx-0 px-0 align-items-center mt-1 px-0 position-relative ${!toggleState.stages ? 'collapsed':''}`}
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse4"
-                aria-expanded="false"
-                aria-controls="collapse4"
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel4"}
+              onChange={handleChange("panel4")}
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
               >
-                <FiChevronDown className="me-2" size={15} />
-                Stages
-                {appliedFilters.stages.length !== 0 && (
-                  <RoundedBadge className="ms-auto me-3">
-                    {appliedFilters.stages.length}
-                  </RoundedBadge>
-                )}
-                {
-                  <span className="count-text ms-auto">
-                    {filterState.stages.length}
-                  </span>
-                }
-              </DropDown>
-              <div className="collapse mt-2" id="collapse4">
+                <DropDown
+                  className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                  type="button"
+                >
+                  Stages
+                  {appliedFilters.sectors.length !== 0 && (
+                    <RoundedBadge className="ms-auto me-3">
+                      {appliedFilters.stages.length}
+                    </RoundedBadge>
+                  )}
+                  {
+                    <span className="count-text ms-auto">
+                      {filterState.stages.length}
+                    </span>
+                  }
+                </DropDown>
+              </AccordionSummary>
+              <AccordionDetails>
                 <DropDownListComponent
                   accessor={"stages"}
                   originalData={filterState.stages}
@@ -489,27 +529,32 @@ const LeftNavComponent = (props: any) => {
                   dropDownId={"#collapse4"}
                   handleClearClick={() => setSelectedStages([])}
                 />
-              </div>
-            </div>
-            <div className="border-bottom-filter-last-element pt-1 pb-2 px-0">
-              <DropDown
-                className={`btn shadow-none d-flex w-100 collapsed mx-0 px-0 align-items-center position-relative ${!toggleState.badges ? 'collapsed' :''}` }
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse5"
-                aria-expanded="false"
-                aria-controls="collapse5"
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel5"}
+              onChange={handleChange("panel5")}
+            >
+              <AccordionSummary
+                aria-controls="panel1d-content"
+                id="panel1d-header"
               >
-                <FiChevronDown className="me-2" size={15} />
-                Winner Badges
-                {appliedFilters.badges.length > 0 && (
-                  <RoundedBadge className="ms-auto me-3">
-                    {appliedFilters.badges.length}
-                  </RoundedBadge>
-                )}
-                <span className="count-text ms-auto">{badgesState.length}</span>
-              </DropDown>
-              <div className="collapse mt-2" id="collapse5">
+                <DropDown
+                  className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                  type="button"
+                >
+                  Winner Badges
+                  {appliedFilters.badges.length > 0 && (
+                    <RoundedBadge className="ms-auto me-3">
+                      {appliedFilters.badges.length}
+                    </RoundedBadge>
+                  )}
+                  <span className="count-text ms-auto">
+                    {badgesState.length}
+                  </span>
+                </DropDown>
+              </AccordionSummary>
+              <AccordionDetails>
                 <DropDownListComponent
                   accessor={"value"}
                   originalData={trimBadges(badgesState)}
@@ -523,8 +568,8 @@ const LeftNavComponent = (props: any) => {
                     setSelectedBadges([]);
                   }}
                 />
-              </div>
-            </div>
+              </AccordionDetails>
+            </Accordion>
           </Card>
           <Card className="left-nav-bottom-card row pt-3 pb-0">
             <h6 className="px-0 card-heading-left-bottom">
