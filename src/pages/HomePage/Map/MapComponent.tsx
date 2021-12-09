@@ -263,6 +263,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
           indiaMap.map((state:any) => (
             <Tooltip
               placement="top"
+              animation="zoom"
               arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
               overlay={
                 <p style={{ paddingTop: "1px" }} className="px-2">

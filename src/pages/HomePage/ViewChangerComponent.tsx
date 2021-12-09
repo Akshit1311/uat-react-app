@@ -155,6 +155,7 @@ function ViewChangerComponent({
           <div className="d-flex justify-content-between">
             <div>
               <Tooltip
+                animation="zoom"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 placement="top"
                 overlay={stateText}
@@ -162,7 +163,9 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={defaultView}
                   active={mapMode.id === MapVariables.INDIA.id}
-                  className={`btn btn-outline btn-icon-handler ${mapMode.id === MapVariables.INDIA.id ? "bg-active":""}`}
+                  className={`btn btn-outline btn-icon-handler ${
+                    mapMode.id === MapVariables.INDIA.id ? "bg-active" : ""
+                  }`}
                 >
                   <IoMapSharp
                     size={18}
@@ -171,6 +174,7 @@ function ViewChangerComponent({
                 </IconButton>
               </Tooltip>
               <Tooltip
+                animation="zoom"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 placement="top"
                 overlay={cityText}
@@ -187,6 +191,7 @@ function ViewChangerComponent({
                 </IconButton>
               </Tooltip>
               <Tooltip
+                animation="zoom"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 placement="top"
                 overlay={districtText}

@@ -18,3 +18,38 @@
   border: 1px solid #444261;
   border-radius: 7px !important;
 }
+
+
+.rc-tooltip {
+  font-weight: 500;
+  font-size: 14px !important;
+}
+.rc-tooltip-arrow {
+  bottom: -5px;
+  margin-left: -6px;
+  border-width: 6px 0px 6px 6px;
+  border-top-color: #0177fa !important;
+}
+.rc-tooltip-inner {
+  height: 29px;
+  padding: 0 !important;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background-color: black;
+  border-radius: 6px !important;
+  min-height: 29px !important;
+  border: 2px solid #0177fa !important;
+  opacity: 1 !important;
+  border-top: blue;
+}
+.city-tooltip .rc-tooltip-inner {
+  height: 29px;
+  padding-right: 32px !important;
+  opacity: 1 !important;
+  background: black;
+}
+
+.rc-tooltip-placement-top .rc-tooltip-arrow-inner, .rc-tooltip-placement-topLeft .rc-tooltip-arrow-inner, .rc-tooltip-placement-topRight .rc-tooltip-arrow-inner{
+  border-top-color: black !important;
+}

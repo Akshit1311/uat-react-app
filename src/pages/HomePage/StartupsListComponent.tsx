@@ -63,13 +63,21 @@ function StartUpCard({
           <div className="">
             <div className="stage-sector-div d-flex  flex-wrap">
               {stages ? (
-                <Badge className="me-2-5 mt-2-5">Stage: {stages}</Badge>
+                <Badge className="me-2-5 mt-2-5 d-flex">
+                  <div>Stage:</div>
+                  <div className="d-flex flex-wrap ms-2">
+                    {stages.map((item: string) => (
+                      <div className="me-1">{item}{', '}</div>
+                    ))}
+                  </div>
+                </Badge>
               ) : (
                 <></>
               )}
               {Array.isArray(sectors) ? (
-                <Badge className="mt-2-5">
-                  Sector: {Array.isArray(sectors) ? sectors[0] : ""}
+                <Badge className="mt-2-5 d-flex">
+                  <div>Sector:</div>
+                  <div className="ms-2">{Array.isArray(sectors) ? sectors[0] : ""}</div>
                 </Badge>
               ) : (
                 <></>
@@ -126,9 +134,9 @@ function StartupsListComponent(props: any) {
   if (!tagsState.length) return <EmptyStartUp />;
   return (
     <div className="mb-5 startup-list-styles d-flex">
-      <div style={{  minWidth: "19.66%" }} />
+      <div style={{ minWidth: "19.66%" }} />
       <StartUpCardContainer
-        style={{ maxWidth: '55%'}}
+        style={{ maxWidth: "55%" }}
         className="startup-list-card-container p-4"
       >
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>

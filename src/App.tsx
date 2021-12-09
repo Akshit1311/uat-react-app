@@ -11,8 +11,6 @@ import {
   ThemeProvider as MaterialUiThemeProvider,
   createTheme,
 } from "@mui/material/styles";
-import { green, purple } from "@mui/material/colors";
-import { TheaterComedySharp } from "@mui/icons-material";
 
 axios.defaults.baseURL = axiosConfig.baseURL;
 

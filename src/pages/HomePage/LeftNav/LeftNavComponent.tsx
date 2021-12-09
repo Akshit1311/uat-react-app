@@ -45,6 +45,7 @@ const Accordion = MaterialStyled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
   border: `0px solid ${theme.palette.divider}`,
+  background: theme.palette.mode === "dark" ? "rgba(37, 40, 58, 1)" : "white",
   "&:not(:last-child)": {
     borderBottom: `1px solid ${theme.palette.divider}`,
     paddingLeft: 0,
@@ -58,8 +59,6 @@ const Accordion = MaterialStyled((props: AccordionProps) => (
     display: "none",
   },
 }));
-
-// MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper
 
 const AccordionSummary = MaterialStyled((props: AccordionSummaryProps) => {
   const theme = useContext(ThemeContext);
@@ -99,7 +98,6 @@ const AccordionSummary = MaterialStyled((props: AccordionSummaryProps) => {
 const AccordionDetails = MaterialStyled(MuiAccordionDetails)(({ theme }) => ({
   padding: 0,
   background: theme.palette.mode === "dark" ? "rgba(37, 40, 58, 1)" : "white",
-  // borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
 const DropDown = styled.button`
@@ -466,7 +464,7 @@ const LeftNavComponent = (props: any) => {
                   type="button"
                 >
                   Industry
-                  {appliedFilters.sectors.length !== 0 && (
+                  {appliedFilters.industries.length !== 0 && (
                     <RoundedBadge className="ms-auto me-3">
                       {appliedFilters.industries.length}
                     </RoundedBadge>
@@ -506,7 +504,7 @@ const LeftNavComponent = (props: any) => {
                   type="button"
                 >
                   Stages
-                  {appliedFilters.sectors.length !== 0 && (
+                  {appliedFilters.stages.length !== 0 && (
                     <RoundedBadge className="ms-auto me-3">
                       {appliedFilters.stages.length}
                     </RoundedBadge>
