@@ -210,4 +210,4 @@ const CountsBlockComponent = ({
   );
 };
 
-export default CountsBlockComponent;
+export default React.memo(CountsBlockComponent);

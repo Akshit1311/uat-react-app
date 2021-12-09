@@ -5,7 +5,25 @@ import { ThemeContext } from "../../config/context";
 import DataTable from "../../components/DataTable";
 import { useQuery } from "../../hooks/useQuery";
 
-export default function DataTableComponent(props: any) {
+const startupLoops: any[] = [
+  "totalStartups",
+  "FFS",
+  "patientStartups",
+  "seedFundStartups",
+  "showcasedStartups",
+  "dpiitRecognised",
+  "womenOwned",
+];
+
+const mentorsLoop: any[] = [
+  "Mentor",
+  "Incubator",
+  "Investor",
+  "Accelerator",
+  "GovernmentBody",
+];
+
+function DataTableComponent(props: any) {
   const theme = useContext(ThemeContext);
 
   const [fetch, state, loading] = useQuery(
@@ -19,7 +37,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderLeft: true,
           borderWidth: "0px",
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -28,7 +46,7 @@ export default function DataTableComponent(props: any) {
           background: "white",
           borderStyle: "solid",
           borderColor: "#8A8A8A",
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -36,7 +54,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -44,7 +62,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -52,7 +70,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -60,7 +78,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -68,7 +86,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
@@ -76,55 +94,55 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
     ],
     bodyConfig: [
       {
-        defaultAccessor:"",
+        defaultAccessor: "",
         accessor: "text",
         cellConfig: {
           fontWeight: true,
           borderLeft: true,
           borderWidth: "0px",
-          cellClass:"header-cell"
+          cellClass: "header-cell",
         },
       },
       {
         accessor: "totalStartups",
         defaultAccessor: "stateStatistics",
-        cellConfig: { borderStyle:'dashed',    cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "FFS",
-        cellConfig: { borderStyle:'dashed',    cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "patientStartups",
-        cellConfig: { borderStyle:'dashed',    cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "seedFundStartups",
-        cellConfig: { borderStyle:'dashed',   cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "showcasedStartups",
-        cellConfig: { borderStyle:'dashed',    cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "dpiitRecognised",
-        cellConfig: { borderStyle:'dashed',    cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "womenOwned",
-        cellConfig: { borderStyle:'dashed',    cellClass:"header-cell"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
       },
     ],
   };
@@ -135,7 +153,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderLeft: true,
           borderWidth: "0px",
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
       {
@@ -144,7 +162,7 @@ export default function DataTableComponent(props: any) {
           background: "white",
           borderStyle: "solid",
           borderColor: "#8A8A8A",
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
       {
@@ -152,7 +170,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
       {
@@ -160,7 +178,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
       {
@@ -168,7 +186,7 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
       {
@@ -176,56 +194,67 @@ export default function DataTableComponent(props: any) {
         cellConfig: {
           borderStyle: "dashed",
           borderColor: theme.dataTable.dashedBorder,
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
     ],
     bodyConfig: [
       {
-        defaultAccessor:"",
+        defaultAccessor: "",
         accessor: "text",
         cellConfig: {
           fontWeight: true,
           borderLeft: true,
           borderWidth: "0px",
-          cellClass:"header-cell-2"
+          cellClass: "header-cell-2",
         },
       },
       {
         accessor: "Mentor",
         defaultAccessor: "stateStatistics",
-        cellConfig: { borderStyle:'dashed', cellClass:"header-cell-2"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "Incubator",
-        cellConfig: { borderStyle:'dashed', cellClass:"header-cell-2"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "Investor",
-        cellConfig: { borderStyle:'dashed', cellClass:"header-cell-2"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "Accelerator",
-        cellConfig: { borderStyle:'dashed', cellClass:"header-cell-2"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "GovernmentBody",
-        cellConfig: { borderStyle:'dashed', cellClass:"header-cell-2"},
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
       },
     ],
   };
+
+  const addTotal = () => {};
 
   useEffect(() => {
     fetch();
   }, []);
   return (
     <>
-      <DataTable {...table1Configs} bodyData={state.data || []} />
-      <DataTable {...table2Configs} bodyData={state.data || []} />
+      <DataTable
+        {...table1Configs}
+        bodyData={state.data || []}
+        loop={startupLoops}
+      />
+      <DataTable
+        {...table2Configs}
+        bodyData={state.data || []}
+        loop={mentorsLoop}
+      />
     </>
   );
 }
+export default React.memo(DataTableComponent);

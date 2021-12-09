@@ -119,7 +119,11 @@ const HomePage = (props: HomePageTypes) => {
             <div className="row px-0 mx-0">
               <div
                 className="col-12  px-0 p-0"
-                style={{ flex: "0 0 18%", width: "18.666667%", minWidth: '18.675%' }}
+                style={{
+                  flex: "0 0 18%",
+                  width: "18.666667%",
+                  minWidth: "18.675%",
+                }}
               >
                 <LeftNavComponent
                   appliedFilters={appliedFilters}
@@ -128,89 +132,110 @@ const HomePage = (props: HomePageTypes) => {
                   setSelectedArea={setSelectedArea}
                 ></LeftNavComponent>
               </div>
-              <div style={{ flex: "62%"}} className="p-0">
-              <div className="col-12 col-md px-0 mx-0 w-100" >
-                <div className="row px-0 mx-0">
-                  <CountsBlockComponent
-                    countResource={countResource}
-                    selectedArea={selectedArea}
-                  />
-                </div>
-                <div className="col-12 row px-0 mx-0">
-                  <div
-                    className="col-12  p-4 pe-0"
-                    style={{ flex: "0 0 auto", width: "61%" }}
-                  >
-                    <MapComponent mapViewResource={mapViewResources} />
+              <div style={{ flex: "62%" }} className="p-0">
+                <div className="col-12 col-md px-0 mx-0 w-100">
+                  <div className="row px-0 mx-0">
+                    <CountsBlockComponent
+                      countResource={countResource}
+                      selectedArea={selectedArea}
+                    />
                   </div>
-                  <div
-                    className="col-12 "
-                    style={{
-                      flex: "0 0 auto",
-                      width: "39%",
-                    }}
-                  >
-                    <ViewChangerComponent mapViewResources={mapViewResources} />
+                  <div className="col-12 row px-0 mx-0">
+                    <div
+                      className="col-12  p-4 pe-0"
+                      style={{ flex: "0 0 auto", width: "61%" }}
+                    >
+                      <MapComponent mapViewResource={mapViewResources} />
+                    </div>
+                    <div
+                      className="col-12 "
+                      style={{
+                        flex: "0 0 auto",
+                        width: "39%",
+                      }}
+                    >
+                      <ViewChangerComponent
+                        mapViewResources={mapViewResources}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <Strip className="row mx-0 strip  align-items-center d-flex">
-              <span className="m-0 strip-text">
-                <b
-                  className="me-3 strip-bold-text"
-                  style={{ marginLeft: "19.66%" }}
-                >
-                  Please Note :
-                </b>
-                The information is based on self declaration by community
-                members. Startup India dosen't moderate the information
-                collected.
-              </span>
-            </Strip>
-            <div className="row d-flex justify-content-center px-0 mx-0">
-              <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
-                <Button
-                  backgroundColor={`${
-                    !startupListActive && theme.togglerButton.backgroundInactive
-                  }`}
-                  color={`${!startupListActive && theme.togglerButton.color}`}
-                  border={`${!startupListActive && "0px"}`}
-                  className={`font-500 font-family-Mont shadow-none  px-3 ${
-                    startupListActive && "btn-primary text-white"
-                  }`}
-                  onClick={toggleStartUp}
-                >
-                  Startups List
-                </Button>
-                <Button
-                  backgroundColor={`${
-                    startupListActive && theme.togglerButton.backgroundInactive
-                  }`}
-                  color={`${startupListActive && theme.togglerButton.color}`}
-                  border={`${startupListActive && "0px"}`}
-                  className={`font-500 font-family-Mont shadow-none  px-3 ${
-                    !startupListActive && "btn-primary text-white"
-                  }`}
-                  onClick={toggleStartUp}
-                >
-                  Data Table
-                </Button>
-              </ButtonGroup>
-              <div className="row mx-0 px-0">
-                {startupListActive && (
-                  <StartupsListComponent appliedFilters={appliedFilters} />
-                )}
-                {!startupListActive && (
-                  <>
-                    <DataTable data={dataTableData} />
-                    {/* <Table2 data={dataTableData} /> */}
-                  </>
-                )}
+                <Strip className="row mx-0 strip  align-items-center d-flex">
+                  <span className="m-0 strip-text">
+                    <b
+                      className="me-3 strip-bold-text"
+                      style={{ marginLeft: "1.5%" }}
+                    >
+                      Please Note :
+                    </b>
+                    The information is based on self declaration by community
+                    members. Startup India dosen't moderate the information
+                    collected.
+                  </span>
+                </Strip>
+                <div className="row d-flex justify-content-center px-0 mx-0">
+                  <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
+                    <Button
+                      backgroundColor={`${
+                        !startupListActive &&
+                        theme.togglerButton.backgroundInactive
+                      }`}
+                      color={`${
+                        !startupListActive && theme.togglerButton.color
+                      }`}
+                      border={`${!startupListActive && "0px"}`}
+                      className={`font-500 font-family-Mont shadow-none  px-3 ${
+                        startupListActive && "btn-primary text-white"
+                      }`}
+                      onClick={toggleStartUp}
+                    >
+                      Startups List
+                    </Button>
+                    <Button
+                      backgroundColor={`${
+                        startupListActive &&
+                        theme.togglerButton.backgroundInactive
+                      }`}
+                      color={`${
+                        startupListActive && theme.togglerButton.color
+                      }`}
+                      border={`${startupListActive && "0px"}`}
+                      className={`font-500 font-family-Mont shadow-none  px-3 ${
+                        !startupListActive && "btn-primary text-white"
+                      }`}
+                      onClick={toggleStartUp}
+                    >
+                      Data Table
+                    </Button>
+                  </ButtonGroup>
+                  <div className="row mx-0 px-0">
+                    {startupListActive && (
+                      <div
+                        style={{
+                          display: startupListActive ? "block" : "none",
+                        }}
+                      >
+                        <StartupsListComponent
+                          appliedFilters={appliedFilters}
+                        />
+                      </div>
+                    )}
+                    {
+                      <>
+                        <div
+                          style={{
+                            display: !startupListActive ? "block" : "none",
+                          }}
+                        >
+                          <DataTable data={dataTableData} />
+                          {/* <Table2 data={dataTableData} /> */}
+                        </div>
+                      </>
+                    }
+                  </div>
+                </div>
               </div>
             </div>
-              </div>
-            </div>
-            
           </PageWrapper>
         </PageWrapperContainer>
       </div>
@@ -218,4 +243,4 @@ const HomePage = (props: HomePageTypes) => {
   );
 };
 
-export default HomePage;
+export default React.memo(HomePage);

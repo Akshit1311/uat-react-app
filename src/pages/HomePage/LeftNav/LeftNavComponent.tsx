@@ -386,7 +386,7 @@ const LeftNavComponent = (props: any) => {
                   States
                   {appliedFilters.states.length !== 0 && (
                     <RoundedBadge className="ms-auto me-3">
-                      { appliedFilters.states.length}
+                      {appliedFilters.states.length}
                     </RoundedBadge>
                   )}
                   {
@@ -588,4 +588,4 @@ const LeftNavComponent = (props: any) => {
   );
 };
 
-export default LeftNavComponent;
+export default React.memo(LeftNavComponent);

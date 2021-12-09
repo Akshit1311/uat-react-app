@@ -133,19 +133,7 @@ function StartupsListComponent(props: any) {
   const [fetchTags, tagsState, tagsLoading] = useMutate("/startup/filter", []);
   const [renderedData, setRenderedData] = useState<any[]>([]);
 
-  const [screenWidth, setScreenWidth] = React.useState<number>(0);
   const [queryString, setQueryString] = useState<string>("");
-
-  const extraSpacing: number = screenWidth - 1150;
-  const windowResize = (event: any) => {
-    const windowWidth: number = window.innerWidth;
-    setScreenWidth(windowWidth);
-  };
-
-  React.useEffect(() => {
-    if (screenWidth === 0) setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", windowResize, false);
-  }, [screenWidth]);
 
   const startupList = renderedData.map((startUp: any) => (
     <StartUpCard {...startUp} tagsLoading={tagsLoading} />
@@ -161,7 +149,6 @@ function StartupsListComponent(props: any) {
   };
 
   const handleApply = () => {
-    console.log("QueryStrong", queryString, tagsState);
     const filteredList = tagsState.filter((item: any) =>
       item.name.toLowerCase().localeCompare(queryString.toLowerCase())
     );
@@ -180,9 +167,10 @@ function StartupsListComponent(props: any) {
     <div className="mb-5 startup-list-styles d-flex">
       {/* <div style={{ minWidth: "19.66%" }} /> */}
       <StartUpCardContainer
-        style={{ maxWidth: "65%",minWidth: "65%", marginLeft: "1.5%" }}
-        className="startup-list-card-container p-4"
+        style={{ maxWidth: "65%", minWidth: "65%", marginLeft: "1.5%" }}
+        className="startup-list-card-container p-4 position-relative"
       >
+        
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
           <SearchBarComponent
@@ -205,6 +193,11 @@ function StartupsListComponent(props: any) {
         >
           View More
         </div>
+        {tagsLoading && (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center position-absolute">
+            <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25"} />
+          </div>
+        )}
       </StartUpCardContainer>
       <div
         style={{ minWidth: "0", width: "35%", marginTop: "6.5rem" }}
@@ -216,4 +209,4 @@ function StartupsListComponent(props: any) {
   );
 }
 
-export default StartupsListComponent;
+export default React.memo(StartupsListComponent);

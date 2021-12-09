@@ -154,4 +154,4 @@ const DropDownListComponent = (props: any) => {
   );
 };
 
-export default DropDownListComponent;
+export default React.memo(DropDownListComponent);
