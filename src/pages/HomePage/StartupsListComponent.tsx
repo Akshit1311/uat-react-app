@@ -164,11 +164,11 @@ function StartupsListComponent(props: any) {
   }, [props.appliedFilters]);
 
   return (
-    <div className="mb-5 startup-list-styles d-flex">
+    <div className="mb-5  startup-list-styles d-flex">
       {/* <div style={{ minWidth: "19.66%" }} /> */}
       <StartUpCardContainer
         style={{ maxWidth: "65%", minWidth: "65%", marginLeft: "1.5%" }}
-        className="startup-list-card-container p-4 position-relative"
+        className={`startup-list-card-container p-4 position-relative ${renderedData.length !== tagsState.length ? 'pb-0': ''}`}
       >
         
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
@@ -185,8 +185,8 @@ function StartupsListComponent(props: any) {
         </div>
         <div
           style={{
-            visibility:
-              renderedData.length !== tagsState.length ? "visible" : "hidden",
+            display:
+              renderedData.length !== tagsState.length ? "flex" : "none",
           }}
           className="my-4 data-table-view-more-button"
           onClick={handleViewMore}
