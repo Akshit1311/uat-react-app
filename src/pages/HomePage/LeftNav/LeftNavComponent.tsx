@@ -179,6 +179,7 @@ const LeftNavComponent = (props: any) => {
       return setSelectedState([]);
     }
     setSelectedState([state]);
+    setExpanded(false)
   };
   const onApplyState = () => {
     const stateIdsForAPiRequest = new Array();
@@ -212,15 +213,16 @@ const LeftNavComponent = (props: any) => {
   const onApplySector = () => {
     const sectorIdsForAPiRequest = new Array();
     selectedSector.forEach((sector: any) =>
-      sectorIdsForAPiRequest.push(sector.id)
+    sectorIdsForAPiRequest.push(sector.id)
     );
-
+    
     setAppliedFilters((prevState: any) => ({
       ...prevState,
       sectors: sectorIdsForAPiRequest,
     }));
+    setExpanded(false)
   };
-
+  
   const handleStagesClick = (stage: any) => {
     const stagesIndex = findSelectedIndex(selectedStages, stage);
     if (stagesIndex !== -1) {
@@ -245,8 +247,9 @@ const LeftNavComponent = (props: any) => {
       ...prevState,
       stages: stagesIdsForApiRequest,
     }));
+    setExpanded(false)
   };
-
+  
   const handleIndustryClick = (industry: any) => {
     const industryIndex = findSelectedIndex(selectedIndustry, industry);
     if (industryIndex !== -1) {
@@ -271,8 +274,9 @@ const LeftNavComponent = (props: any) => {
       ...prevState,
       industries: stagesIdsForApiRequest,
     }));
+    setExpanded(false)
   };
-
+  
   const handleBadgesClick = (badges: any) => {
     const badgesIndex = findSelectedIndex(selectedBadges, badges);
     if (badgesIndex !== -1) {
@@ -290,13 +294,14 @@ const LeftNavComponent = (props: any) => {
   const onApplyBadges = () => {
     const badgesIdsForApiRequest = new Array();
     selectedBadges.forEach((sector: any) =>
-      badgesIdsForApiRequest.push(sector.id)
+    badgesIdsForApiRequest.push(sector.id)
     );
-
+    
     setAppliedFilters((prevState: any) => ({
       ...prevState,
       badges: badgesIdsForApiRequest,
     }));
+    setExpanded(false)
   };
 
   const trimBadges = (badges: any[]) => {

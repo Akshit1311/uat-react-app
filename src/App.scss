@@ -179,7 +179,15 @@ tr {
 // }
 
 .header-cell {
-  width: 12.69%;
+  width: 10.8%;
+  padding: 10px;
+  padding-left: 0px;
+  padding-right: 0;
+  font-size: 13px;
+  font-family: Montserrat, sans-serif;
+}
+.header-cell-state {
+  width: 35%;
   padding: 10px;
   padding-left: 0px;
   padding-right: 0;
@@ -187,7 +195,7 @@ tr {
   font-family: Montserrat, sans-serif;
 }
 .header-cell-2 {
-  width: 17.29%;
+  width: 15.09%;
   padding: 10px;
   padding-left: 0px;
   padding-right: 0;

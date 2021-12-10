@@ -15,11 +15,11 @@ export default function Body({ renderedData, bodyConfig }: BodyTypes) {
             {bodyConfig.map((item: any, index) => (
               <>
                 {index === 0 ? (
-                  <Cells {...item.cellConfig} borderHeight="50px">
+                  <Cells {...item.cellConfig} maxWidth="auto" cellClass="header-cell-state" borderHeight="50px">
                     {body[item.accessor]}
                   </Cells>
                 ) : (
-                  <Cells {...item.cellConfig} borderHeight="50px">
+                  <Cells {...item.cellConfig} maxWidth="70px" borderHeight="50px">
                     {body[item.defaultAccessor][item.accessor]}
                   </Cells>
                 )}

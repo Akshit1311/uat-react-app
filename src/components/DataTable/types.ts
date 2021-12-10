@@ -10,6 +10,7 @@ export interface CellsType {
   fontWeight?: boolean;
   cellWidth?: string;
   cellClass: string;
+  maxWidth? :string;
 }
 
 export interface SearchTypes {

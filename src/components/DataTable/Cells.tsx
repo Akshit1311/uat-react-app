@@ -12,11 +12,12 @@ const Cells = ({
   background,
   borderHeight,
   fontWeight,
-  cellClass
+  cellClass, 
+  maxWidth
 }: CellsType) => {
   const theme = useContext(ThemeContext);
   const borderWidthA = borderWidth ? borderWidth : "0.1rem";
-  const borderStyleA = borderStyle ? borderStyle : "solid";
+  const borderStyleA = borderStyle ? 'solid' : "solid";
   const borderColorA = borderColor ? borderColor : theme.dataTable.dashedBorder;
   const borderLeftA = `${borderWidthA} ${borderStyleA} ${borderColorA}`;
   return (
@@ -32,12 +33,13 @@ const Cells = ({
             height: '100%',
             minHeight: borderHeight ? borderHeight : "63px",
             borderLeft: borderLeftA,
+            maxWidth: '100%'
           }}
         />
         <p
           className="my-0 p-0 d-flex align-items-center"
           style={{
-            maxWidth: "70px",
+            maxWidth: maxWidth ? maxWidth: '70px',
             marginLeft: "0.8rem",
           }}
         >

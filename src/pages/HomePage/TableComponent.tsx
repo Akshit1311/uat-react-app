@@ -37,7 +37,7 @@ function DataTableComponent(props: any) {
         cellConfig: {
           borderLeft: true,
           borderWidth: "0px",
-          cellClass: "header-cell",
+          cellClass: "header-cell-state",
         },
       },
       {
@@ -45,7 +45,7 @@ function DataTableComponent(props: any) {
         cellConfig: {
           background: "white",
           borderStyle: "solid",
-          borderColor: "#8A8A8A",
+          borderColor: theme.dataTable.dashedBorder,
           cellClass: "header-cell",
         },
       },
@@ -112,37 +112,37 @@ function DataTableComponent(props: any) {
       {
         accessor: "totalStartups",
         defaultAccessor: "stateStatistics",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "FFS",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "patientStartups",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "seedFundStartups",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "showcasedStartups",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "dpiitRecognised",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
       {
         defaultAccessor: "stateStatistics",
         accessor: "womenOwned",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell" },
+        cellConfig: { borderStyle: "dashed", cellClass: "header-cell", borderColor: theme.dataTable.dashedBorder },
       },
     ],
   };
@@ -153,7 +153,7 @@ function DataTableComponent(props: any) {
         cellConfig: {
           borderLeft: true,
           borderWidth: "0px",
-          cellClass: "header-cell-2",
+          cellClass: "header-cell-state",
         },
       },
       {

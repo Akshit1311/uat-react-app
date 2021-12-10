@@ -71,8 +71,8 @@ function StartUpCard({
             (stages && stages.length) ||
             (sectors && sectors.length) ? (
               <div className="">
-                <div className="stage-sector-div d-flex  flex-wrap">
-                  {stages ? (
+                <div className="stage-sector-div ">
+                  {/* {stages ? (
                     <Badge className="me-2-5 mt-2-5 d-flex">
                       <div>Stage:</div>
                       <div className="d-flex flex-wrap ms-2">
@@ -86,19 +86,53 @@ function StartUpCard({
                     </Badge>
                   ) : (
                     <></>
-                  )}
-                  {Array.isArray(sectors) ? (
-                    <Badge className="mt-2-5 d-flex">
-                      <div>Sector:</div>
-                      <div className="ms-2 d-flex flex-wrap">
-                        {Array.isArray(sectors)
-                          ? sectors.map((item: string) => <div>{item}</div>)
-                          : ""}
-                      </div>
-                    </Badge>
-                  ) : (
-                    <></>
-                  )}
+                  )} */}
+                  <div className="d-flex mt-1 align-items-center flex-wrap">
+                    <p className="font-Mont font-600 font-14px m-0 p-0 ">
+                      Stage:
+                    </p>
+                    {Array.isArray(sectors) ? (
+                      <>
+                        {stages.slice(0, 6).map((item: string) => (
+                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
+                            <div className="d-flex flex-wrap">{item}</div>
+                          </Badge>
+                        ))}
+                        {stages.length > 5 ? (
+                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
+                            <div>...</div>
+                          </Badge>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <div className="d-flex mt-2 align-items-center flex-wrap">
+                    <p className="font-Mont font-600 font-14px m-0 p-0 ">
+                      Sector:
+                    </p>
+                    {Array.isArray(sectors) ? (
+                      <>
+                        {sectors.slice(0, 5).map((item: string) => (
+                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
+                            <div className="d-flex flex-wrap">{item}</div>
+                          </Badge>
+                        ))}
+                        {sectors.length > 5 ? (
+                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1 px-3">
+                            <div className="d-flex flex-wrap">{'...'}</div>
+                          </Badge>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
                 {form80IacStatus ? (
                   <div>
@@ -135,9 +169,11 @@ function StartupsListComponent(props: any) {
 
   const [queryString, setQueryString] = useState<string>("");
 
-  const startupList = renderedData.map((startUp: any) => (
-    <StartUpCard {...startUp} tagsLoading={tagsLoading} />
-  ));
+  const startupList = React.useMemo(() => {
+    return renderedData.map((startUp: any) => (
+      <StartUpCard {...startUp} tagsLoading={tagsLoading} />
+    ));
+  }, [renderedData]);
 
   const handleViewMore = () => {
     setRenderedData(tagsState);
@@ -145,12 +181,13 @@ function StartupsListComponent(props: any) {
 
   const onSearch = (changeEvent: any) => {
     const value = changeEvent.target.value;
+    console.log(value);
     setQueryString(value);
   };
 
   const handleApply = () => {
     const filteredList = tagsState.filter((item: any) =>
-      item.name.toLowerCase().localeCompare(queryString.toLowerCase())
+      item.name.toLowerCase().includes(queryString.toLowerCase())
     );
     setRenderedData(filteredList);
   };
@@ -168,9 +205,10 @@ function StartupsListComponent(props: any) {
       {/* <div style={{ minWidth: "19.66%" }} /> */}
       <StartUpCardContainer
         style={{ maxWidth: "65%", minWidth: "65%", marginLeft: "1.5%" }}
-        className={`startup-list-card-container p-4 position-relative ${renderedData.length !== tagsState.length ? 'pb-0': ''}`}
+        className={`startup-list-card-container p-4 position-relative ${
+          renderedData.length !== tagsState.length ? "pb-0" : ""
+        }`}
       >
-        
         <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
           <SearchBarComponent
@@ -185,8 +223,7 @@ function StartupsListComponent(props: any) {
         </div>
         <div
           style={{
-            display:
-              renderedData.length !== tagsState.length ? "flex" : "none",
+            display: renderedData.length !== tagsState.length ? "flex" : "none",
           }}
           className="my-4 data-table-view-more-button"
           onClick={handleViewMore}

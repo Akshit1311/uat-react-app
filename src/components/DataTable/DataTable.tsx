@@ -75,11 +75,11 @@ export default function DataTable(props: any) {
 
   return (
     <div className="d-flex">
-      {/* <div style={{ minWidth: "19.66%" }} /> */}
+      <div style={{ minWidth: "1.3%" }} />
       <div className="w-100 data-table p-0 m-0">
-        <table className="w-100">
+        <table className="w-100 ">
           <Header headerConfig={headerConfig} />
-          <div className="mt-3 mb-2" style={{ maxWidth: "22rem" }}>
+          <div className="mt-3 mb-2" style={{ maxWidth: "21rem" }}>
             <SearchBarComponent
               background={theme.dataTable.searchBg}
               borderRadius="4px"
@@ -106,6 +106,7 @@ export default function DataTable(props: any) {
           </div>
         }
       </div>
+      <div style={{ minWidth: "1%" }} />
     </div>
   );
 }

@@ -83,7 +83,7 @@ const DropDownListComponent = (props: any) => {
   }, [originalData.length, loading]);
   return (
     <div className="drop-down-list-component">
-      <SearchWrapper className={`state-search-bar me-3`}>
+      <SearchWrapper className={`state-search-bar me-3`} style={{ marginTop: '6px' }}>
         <div className="d-flex">
           <span className="btn my-0 me-0 pe-0" style={{ color: theme.color }}>
             <GoSearch />

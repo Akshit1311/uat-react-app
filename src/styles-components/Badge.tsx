@@ -4,6 +4,7 @@ export const Badge = styled.div`
     border-radius: 12px;
     color: black;
     padding: 3px 6px;
+    padding-bottom: 2px !important;
     font-size: smaller;
     font-weight: 500;
     font-size: 12px;
@@ -11,6 +12,11 @@ export const Badge = styled.div`
     background-color: ${props=> props.theme.bgBadge} ;
     width: fit-content;
     color: ${props=> props.theme.color};
+    height: fit-content;
+    max-width: fit-content;
+    &:first-child{
+      margin-top: -1px !important;
+    }
   `;
 
 export const RoundedBadge = styled.div`

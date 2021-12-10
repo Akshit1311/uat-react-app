@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React,{ useEffect, useState, useContext } from "react";
 import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
@@ -30,7 +30,7 @@ const THEME_COLOR = "rgb(1, 119, 250)";
 const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
-export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
+ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const { selectedArea, setSelectedArea, mapMode, isCircleActive, countState } =
     mapViewResource;
 
@@ -304,7 +304,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
           aria-label="Map of India"
         >
           {mapMode.id === MapVariables.INDIA.id &&
-            indiaMap.map((state: any) => (
+            indiaMap.map((state: any, index:number) => (
               <Tooltip
                 placement="top"
                 animation="zoom"
@@ -319,7 +319,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   onMouseEnter={(e) => handleMouseEnter(state, e)}
                   onMouseLeave={handleStateMouseLeave}
                   onClick={(e) => handleStateClick(state)}
-                  key={state.id}
+                  key={index}
                   d={state.d}
                   id={state.id}
                   fill={fillStates(state.id)}
@@ -330,7 +330,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
             ))}
           {console.log("MapBorder", theme["map"].mapBorder)}
           {mapMode.id === MapVariables.CITY.id &&
-            indiaMap.map((state: any) => (
+            indiaMap.map((state: any, index:number) => (
               <Tooltip
                 placement="top"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -344,7 +344,7 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   onMouseEnter={(e) => handleMouseEnter(state, e)}
                   onMouseLeave={handleStateMouseLeave}
                   onClick={(e) => handleStateClick(state)}
-                  key={state.id}
+                  key={index}
                   d={state.d}
                   id={state.id}
                   fill={fillStates(state.id)}
@@ -433,3 +433,5 @@ export default function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     </MapWrapper>
   );
 }
+
+export default React.memo(IndiaMap)

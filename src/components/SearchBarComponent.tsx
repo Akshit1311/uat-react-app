@@ -2,6 +2,7 @@ import { GoSearch } from "react-icons/go";
 import "../scss/searchBarComponent.scss";
 import { Button } from "../styles-components/Button";
 import styled from "styled-components";
+import React from "react"
 
 interface SearchTypes {
   background?: string;
@@ -58,7 +59,7 @@ const SearchBarComponent = ({
             type="text" value={value}
             className={`form-control me-3 px-0 search-input shadow-none search-bar-placeholder ${placeholderClass}`}
             placeholder="Search"
-            onChange={onChange}
+            onChange={(e)=> onChange(e)}
             style={{
               background: backgroundAll,
               color: "black",
@@ -83,4 +84,4 @@ const SearchBarComponent = ({
   );
 };
 
-export default SearchBarComponent;
+export default React.memo(SearchBarComponent);
