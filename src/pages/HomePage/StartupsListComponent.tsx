@@ -65,7 +65,7 @@ function StartUpCard({
               className=" my-0 py-0 company-title text-overflow"
               style={{ maxHeight: "45px !important", overflow: "hidden" }}
             >
-              {company.length > 35 ? company.slice(0, 30) + "..." : company}
+              {company.length > 35 ? company.slice(0, 30).toUpperCase() + "..." : company}
             </h6>
             {form80IacStatus ||
             (stages && stages.length) ||
