@@ -40,6 +40,10 @@ function StartUpCard({
   form80IacStatus,
   tagsLoading,
 }: any) {
+  function htmlDecode(input:any) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
+  }
   return (
     <>
       <StartUpCardWrapper
@@ -65,7 +69,7 @@ function StartUpCard({
               className=" my-0 py-0 company-title text-overflow"
               style={{ maxHeight: "45px !important", overflow: "hidden" }}
             >
-              {company.length > 35 ? company.slice(0, 30) + "..." : company.toUpperCase()}
+              {company.length > 35 ? company.slice(0, 30) + "..." : htmlDecode(company.toUpperCase())}
             </h6>
             {form80IacStatus ||
             (stages && stages.length) ||
