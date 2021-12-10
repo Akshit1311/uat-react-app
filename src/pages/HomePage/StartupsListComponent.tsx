@@ -151,7 +151,7 @@ function StartUpCard({
               }`}
             >
               <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
-              <h6 className="ms-1 my-0 py-0  start-up-location">
+              <h6 className="ms-1 my-0 py-0  start-up-location w-100">
                 {city + ", " + state}
               </h6>
             </div>

@@ -131,7 +131,7 @@ const DropDownListComponent = (props: any) => {
         {list}
         {/* {data.length && !loading ?  : ""} */}
       </div>
-      <div className="my-3 d-flex justify-content-between me-3">
+      <div className="my-3 mt-2 d-flex justify-content-between me-3">
         <Button
           border={`2px solid ${theme.dropDown.cancelBorder}`}
           backgroundColor={theme.dropDown.cancel}

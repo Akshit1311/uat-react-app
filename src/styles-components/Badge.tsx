@@ -8,12 +8,11 @@ export const Badge = styled.div`
     font-size: smaller;
     font-weight: 500;
     font-size: 12px;
-    line-height: 150%;
     background-color: ${props=> props.theme.bgBadge} ;
-    width: fit-content;
+   
     color: ${props=> props.theme.color};
     height: fit-content;
-    max-width: fit-content;
+    max-width: 100% ;
     &:first-child{
       margin-top: -1px !important;
     }
