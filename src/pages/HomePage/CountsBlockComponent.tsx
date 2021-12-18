@@ -6,7 +6,7 @@ import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
 import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
-import  { ThemeContext }  from "../../config/context"
+import { ThemeContext } from "../../config/context";
 
 const override = css`
   display: block;
@@ -37,7 +37,7 @@ interface CountCardWrapperTypes {
 const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   {
     borderRadius: "4px",
-    height: "98px",
+    height: "76px",
     top: "43px",
     width: "170px",
   },
@@ -100,10 +100,10 @@ const CountCard = ({
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
       >
-       {loading ? (
+        {loading ? (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center">
             <MoonLoader
-              color={active ? 'white' : "#0177FA"}
+              color={active ? "white" : "#0177FA"}
               loading={loading}
               size={"25"}
               css={override}
@@ -113,7 +113,10 @@ const CountCard = ({
           <></>
         )}
         {!loading && (
-          <div className=" d-flex flex-column h-100 p-3 justify-content-between">
+          <div
+            className=" d-flex flex-column h-100 justify-content-between"
+            style={{ padding: "0.83rem" }}
+          >
             <h4 className="m-0 p-0">{currentCount}</h4>
             <h6 className="mx-0 mb-0 p-0">{name}</h6>
           </div>
@@ -126,6 +129,7 @@ const CountCard = ({
 const H5 = styled.h5<any>({}, (props) => {
   return {
     color: props.theme.color,
+    marginTop: '2px'
   };
 });
 
@@ -133,10 +137,11 @@ const CountsBlockComponent = ({
   selectedArea,
   countResource,
 }: CountBlockTypes) => {
-  const theme  = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
   // const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-  const { getCounts, countState, countLoading, setSelectedArea } = countResource;
+  const { getCounts, countState, countLoading, setSelectedArea } =
+    countResource;
 
   const [fetchInitialCount, initialCountState] = useQuery(
     HomePageApi.countBlockEndPoint
@@ -156,7 +161,43 @@ const CountsBlockComponent = ({
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
-        <H5>{selectedArea.stateName}</H5>
+        <div className="d-flex mt-3 px-0">
+          <H5>{selectedArea.stateName}</H5>
+          {selectedArea.id !== "india" ? (
+            <>
+              <div className="ms-3" />
+              <div className="font-bold" style={{ marginTop: "-2px" }}>
+                |
+              </div>
+              <div className="ms-3" />
+              <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex">
+                {/* <p className="m-0 p-0">India</p> */}
+                <p className="my-0 p-0  font-bold d-flex font-Mont font-12px mt-0">
+                  <div
+                    onClick={() =>
+                      setSelectedArea({ id: "india", stateName: "India" })
+                    }
+                    style={{
+                      textDecoration: "none",
+                      color: "#0177FA",
+                      cursor: "pointer",
+                      width: "fit-content",
+                    }}
+                    className="d-flex flex-column"
+                  >
+                    <div>{"India"}</div>
+                    <div style={{ background: "#0177FA", height: "1px" }}></div>
+                  </div>{" "}
+                  <div className="ms-1" style={{ color: theme.color }}>
+                    | Startups {" " + initialCountState.Startup}
+                  </div>
+                </p>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <div className="row count-div">
         <CountCard
@@ -181,31 +222,6 @@ const CountsBlockComponent = ({
           name="Government"
         />
       </div>
-      {selectedArea.id !== "india" ? (
-        <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex">
-          {/* <p className="m-0 p-0">India</p> */}
-          <p
-            className="my-0 p-0 font-bold d-flex font-Mont font-12px mt-2 position-absolute"
-            style={{ marginLeft: "22px" }}
-          >
-            <a
-              onClick={() => setSelectedArea({ id: 'india', stateName: 'India' })}
-              style={{ textDecoration: 'none', color: "#0177FA", cursor: 'pointer', width: 'fit-content' }} className="d-flex flex-column"
-            >
-              <div>
-              {"India"}
-              </div>
-              <div style={{ background: "#0177FA", height: '1px' }}></div>
-            </a>{" "}
-            <div className="ms-1" style={{ color: theme.color }}>
-            | Startups {" " + initialCountState.Startup}
-
-            </div>
-          </p>
-        </div>
-      ) : (
-        <></>
-      )}
     </div>
   );
 };

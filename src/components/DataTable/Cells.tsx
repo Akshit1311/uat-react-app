@@ -1,4 +1,4 @@
-import styled from "styled-components";
+
 import React, { useContext } from "react";
 import { ThemeContext } from "../../config/context";
 import { TH } from "./styled"
@@ -39,7 +39,6 @@ const Cells = ({
         <p
           className="my-0 p-0 d-flex align-items-center"
           style={{
-            maxWidth: maxWidth ? maxWidth: '70px',
             marginLeft: "0.8rem",
           }}
         >

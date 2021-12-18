@@ -6,6 +6,7 @@ export const TR = styled.tr`
   color: ${(props) => props.theme.colorCards};
   overflow: hidden;
   background: black !important;
+  width: 100%;
 `;
 
 export const TH = styled.th`

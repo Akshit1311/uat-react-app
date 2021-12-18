@@ -15,8 +15,7 @@ import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
-
-import { useMutate } from "../../hooks/useMutate";
+import DataTable2 from "./DataTable2";
 
 const PageWrapperContainer = styled.div`
   display: flex;
@@ -227,7 +226,7 @@ const HomePage = (props: HomePageTypes) => {
                             display: !startupListActive ? "block" : "none",
                           }}
                         >
-                          <DataTable data={dataTableData} />
+                          <DataTable2 />
                           {/* <Table2 data={dataTableData} /> */}
                         </div>
                       </>

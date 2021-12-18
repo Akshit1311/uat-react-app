@@ -1,4 +1,4 @@
-import React,{ useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { States, MapType } from "./states";
 import Tooltip from "rc-tooltip";
 import { IDType } from "./variables";
@@ -13,6 +13,24 @@ import MoonLoader from "react-spinners/MoonLoader";
 
 interface IndiaMapTypes {
   mapViewResource: any;
+}
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  React.useEffect(() => {
+    function updateSize() {
+      console.log(
+        "Window Height, Width",
+        window.innerHeight,
+        window.innerWidth
+      );
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
 }
 
 const MapWrapper = styled.div`
@@ -30,7 +48,7 @@ const THEME_COLOR = "rgb(1, 119, 250)";
 const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
- function IndiaMap({ mapViewResource }: IndiaMapTypes) {
+function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const { selectedArea, setSelectedArea, mapMode, isCircleActive, countState } =
     mapViewResource;
 
@@ -39,6 +57,7 @@ const ID = "id";
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
     "https://13.235.79.165:443/startup/states"
   );
+  const [height, width] = useWindowSize()
 
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -268,11 +287,7 @@ const ID = "id";
     if (mapMode.id === MapVariables.CITY.id) return "scale(1.42)";
   };
 
-  // const fetchStateListWithName = async () => {
-  //   const response = await statesDpiit("");
-  //   console.log("States Dpiit", response);
-  //   // setIndiaMap(States);
-  // };
+  const addMapSizeEventListner = () => {};
 
   useEffect(() => {
     fetchIndiaMap();
@@ -281,7 +296,7 @@ const ID = "id";
   }, [mapMode, theme]);
 
   return (
-    <MapWrapper className="m-2 mt-0 pt-3" style={{ position: "relative" }}>
+    <MapWrapper className="m-2 mt-0 pt-0" style={{ position: "relative" }}>
       {!isCircleActive && (
         <div className="gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
@@ -290,13 +305,10 @@ const ID = "id";
       )}
       {loadingIndiaMap && (
         <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
-          <MoonLoader
-            color={"#0177FA"}
-            loading={loadingIndiaMap}
-            size={"25"}
-          />
+          <MoonLoader color={"#0177FA"} loading={loadingIndiaMap} size={"25"} />
         </div>
       )}
+      {console.log("Height Width",height,width)}
       {!loadingIndiaMap && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +316,7 @@ const ID = "id";
           aria-label="Map of India"
         >
           {mapMode.id === MapVariables.INDIA.id &&
-            indiaMap.map((state: any, index:number) => (
+            indiaMap.map((state: any, index: number) => (
               <Tooltip
                 placement="top"
                 animation="zoom"
@@ -330,7 +342,7 @@ const ID = "id";
             ))}
           {console.log("MapBorder", theme["map"].mapBorder)}
           {mapMode.id === MapVariables.CITY.id &&
-            indiaMap.map((state: any, index:number) => (
+            indiaMap.map((state: any, index: number) => (
               <Tooltip
                 placement="top"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -434,4 +446,4 @@ const ID = "id";
   );
 }
 
-export default React.memo(IndiaMap)
+export default React.memo(IndiaMap);

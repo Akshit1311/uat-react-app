@@ -1,5 +1,5 @@
 export interface CellsType {
-  children: React.ReactNode;
+  children: any;
   borderWidth?: string;
   borderColor?: string;
   borderStyle?: string;
