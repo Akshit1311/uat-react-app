@@ -10,14 +10,6 @@ import { useMutate } from "../../hooks/useMutate";
 import UserDefault from "../../assets/user_default.jpg";
 import MoonLoader from "react-spinners/MoonLoader";
 
-function EmptyStartUp() {
-  return (
-    <div className="container text-center p-5">
-      <h1>Startup List is Empty</h1>
-    </div>
-  );
-}
-
 const StartUpCardContainer = styled.div`
   background: ${(props) => props.theme.bgCards};
   box-shadow: ${(props) => props.theme.shadowCards};
@@ -31,7 +23,7 @@ const StartUpCardWrapper = styled.div`
 
 function StartUpCard({
   _id,
-  img_url,
+
   sectors,
   name: company,
   city,
@@ -39,6 +31,7 @@ function StartUpCard({
   stages,
   form80IacStatus,
   tagsLoading,
+  logo
 }: any) {
   function htmlDecode(input:any) {
     var doc = new DOMParser().parseFromString(input, "text/html");
@@ -53,7 +46,7 @@ function StartUpCard({
       >
         <div>
           <img
-            src={UserDefault}
+            src={logo ? logo : UserDefault}
             className="rounded-circle border w-60-h-60"
             alt="main-logo"
           />

@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { States, MapType } from "./states";
+import { MapType } from "./states";
 import Tooltip from "rc-tooltip";
-import { IDType } from "./variables";
-import { District, DistrictType } from "./districts";
 import * as MapVariables from "./variables";
-import { DistrictBoarder, Districts2 } from "./districtsBoarders";
+import { Districts2 } from "./districtsBoarders";
 import styled from "styled-components";
-import { statesDpiit } from "./statesApi";
 import { ThemeContext } from ".././../../config/context";
 import { useQuery } from "../../../hooks/useQuery";
 import MoonLoader from "react-spinners/MoonLoader";
+import { DistrictType, District } from "./districts";
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -57,7 +55,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
     "https://13.235.79.165:443/startup/states"
   );
-  const [height, width] = useWindowSize()
+  const [width, height] = useWindowSize();
 
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -276,10 +274,34 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     setDistrictsBoarder(Districts2);
   };
 
+  const responsiveImageHeight = (mapArea: string) => {
+    console.log("Height", height)
+    const split: string[] = mapArea.split(" ");
+
+    // if (height > 728 && height < 800) return mapArea;
+    if (height > 768) {
+      const a: number = 768 - height;
+      split[2] = (Number(split[2]) + a).toString();
+      split[3] = (Number(split[3]) + a).toString();
+      console.log(split.toString().replaceAll(",", " "))
+      return split.toString().replaceAll(",", " ");
+    }
+    if (height < 768) {
+      const a: number = height - 768;
+      split[2] = (Number(split[2]) - a).toString();
+      split[3] = (Number(split[3]) - a).toString();
+      console.log(split.toString().replaceAll(",", " "))
+      return split.toString().replaceAll(",", " ");
+    }
+  };
+
   const getViewBoxArea = () => {
-    if (mapMode.id === MapVariables.DISTRICT.id) return MAP_AREA_DISTRICTS;
-    if (mapMode.id === MapVariables.INDIA.id) return MAP_AREA_INDIA;
-    if (mapMode.id === MapVariables.CITY.id) return MAP_AREA_INDIA;
+    if (mapMode.id === MapVariables.DISTRICT.id)
+      return responsiveImageHeight(MAP_AREA_DISTRICTS);
+    if (mapMode.id === MapVariables.INDIA.id)
+      return responsiveImageHeight(MAP_AREA_INDIA);
+    if (mapMode.id === MapVariables.CITY.id)
+      return responsiveImageHeight(MAP_AREA_INDIA);
   };
   const getViewBoxAreaCircle = () => {
     if (mapMode.id === MapVariables.DISTRICT.id) return "scale(1.38)";
@@ -308,7 +330,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
           <MoonLoader color={"#0177FA"} loading={loadingIndiaMap} size={"25"} />
         </div>
       )}
-      {console.log("Height Width",height,width)}
+      {console.log("Height Width", height, width)}
       {!loadingIndiaMap && (
         <svg
           xmlns="http://www.w3.org/2000/svg"

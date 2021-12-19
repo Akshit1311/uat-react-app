@@ -4,6 +4,8 @@ import https from "https";
 
 const ERROR_INITIAL_STATE = { error: false, errorMessage: "" };
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 export function useQuery(apiUrl: string) {
   const [state, setState] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,7 +16,7 @@ export function useQuery(apiUrl: string) {
     try {
       const response = await axios({
         url: url ? url : apiUrl,
-        httpsAgent: new https.Agent({ rejectUnauthorized: true }),
+        httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       });
       if (response.data) {
         console.log('Date Range', response.data)
