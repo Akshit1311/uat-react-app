@@ -194,7 +194,7 @@ function StartupsListComponent(props: any) {
           renderedData.length !== tagsState.length ? "pb-0" : ""
         }`}
       >
-        <h6 className="startup-heading p-0 m-0">STARTUPS</h6>
+        <h6 className="startup-heading p-0 m-0">{props.appliedFilters.roles ? props.appliedFilters.roles[0].toUpperCase(): "Startup"}</h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
           <SearchBarComponent
             background={theme.searchBg}
@@ -203,7 +203,7 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap justify-content-between align-items-center h-100">
+        <div className="d-flex flex-wrap justify-content-between h-100">
           {
             !tagsLoading && !tagsState.length ? (
               <div className="d-flex justify-content-center w-100">

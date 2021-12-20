@@ -52,7 +52,7 @@ const INITIAL_FILTER_STATE = {
   states: [],
   stages: [],
   badges: [],
-  roles: [],
+  roles: ['Startup'],
 };
 
 const HomePage = (props: HomePageTypes) => {
