@@ -23,6 +23,7 @@ interface CountBlockTypes {
 interface CountCardTypes {
   name: string;
   state: any;
+  acc? :string;
   activeCard: string;
   handleCardClick:any;
   borderColor: string;
@@ -56,7 +57,7 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
 
 const CountCard = ({
   activeCard,
-  name,
+  name,acc,
   state,
   borderColor,handleCardClick,
   accessor,
@@ -95,7 +96,7 @@ const CountCard = ({
   return (
     <>
       <CountCardWrapper
-        onClick={() => handleCardClick(name, accessor)}
+        onClick={() => handleCardClick(name, acc)}
         active={active}
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
@@ -152,6 +153,7 @@ const CountsBlockComponent = ({
   }, []);
 
   const handleCardClick = (name:string, accessor:string) =>{
+    console.log("Accessor",accessor)
     applyRoles(accessor)
     setActiveCard(name)
   }
@@ -210,16 +212,18 @@ const CountsBlockComponent = ({
           borderColor="#0177FA"
           accessor="Startup"
           name="Startups"
+          acc={"Startup"}
         />
         <CountCard
           {...resources}
           borderColor="#ED8E00"
           accessor="Mentor"
+          acc={"Mentor"}
           name="Mentors"
         />
-        <CountCard {...resources} borderColor="#7838e0" name="Incubator" />
-        <CountCard {...resources} borderColor="#BDAA00" name="Investor" />
-        <CountCard {...resources} borderColor="#CB3535" name="Accelerator" />
+        <CountCard {...resources} borderColor="#7838e0" name="Incubator" acc="Incubator" />
+        <CountCard {...resources} borderColor="#BDAA00" name="Investor" acc="Investor" />
+        <CountCard {...resources} borderColor="#CB3535" name="Accelerator" acc="Accelerator" />
         <CountCard
           {...resources}
           borderColor="#00AD11"
