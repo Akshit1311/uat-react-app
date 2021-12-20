@@ -152,7 +152,7 @@ const CountsBlockComponent = ({
   }, []);
 
   const handleCardClick = (name:string, accessor:string) =>{
-    applyRoles("GovernmentBody")
+    applyRoles(accessor)
     setActiveCard(name)
   }
 
