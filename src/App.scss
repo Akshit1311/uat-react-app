@@ -241,6 +241,11 @@ tbody {
   font-size: 14px !important;
 }
 
+.form-control:focus{
+  box-shadow: none !important;
+  border-color: none !important;
+}
+
 .font-15px {
   font-size: 15px;
 }

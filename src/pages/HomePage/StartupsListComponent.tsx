@@ -72,21 +72,6 @@ function StartUpCard({
             (sectors && sectors.length) ? (
               <div className="">
                 <div className="stage-sector-div ">
-                  {/* {stages ? (
-                    <Badge className="me-2-5 mt-2-5 d-flex">
-                      <div>Stage:</div>
-                      <div className="d-flex flex-wrap ms-2">
-                        {stages.map((item: string) => (
-                          <div className="me-1">
-                            {item}
-                            {", "}
-                          </div>
-                        ))}
-                      </div>
-                    </Badge>
-                  ) : (
-                    <></>
-                  )} */}
                   <div className="d-flex mt-1 align-items-center flex-wrap">
                     <p className="font-Mont font-600 font-14px m-0 p-0 ">
                       Stage:
@@ -218,10 +203,10 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap justify-content-between">
+        <div className="d-flex flex-wrap justify-content-between align-items-center h-100">
           {
             !tagsLoading && !tagsState.length ? (
-              <div className="d-flex justify-content-center w-100 h-100">
+              <div className="d-flex justify-content-center w-100">
                 <p className="font-Mont text-grey" style={{ fontSize: "14px", fontFamily: "Poppins" }}>No Data Available</p>
               </div>
             ) :(
