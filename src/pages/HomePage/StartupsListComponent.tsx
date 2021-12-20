@@ -37,9 +37,12 @@ function StartUpCard({
     var doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
   }
+  const redirect = () =>{
+    window.location.href = "https://www.startupindia.gov.in/content/sih/en/profile.Startup.61c03e7ae4b041b4edd317ce.html"
+  }
   return (
     <>
-      <StartUpCardWrapper
+      <StartUpCardWrapper onClick={redirect}
         key={_id}
         className="mb-0 d-flex flex-row start-up-card"
         style={{ marginTop: "1.3rem" }}
@@ -216,6 +219,17 @@ function StartupsListComponent(props: any) {
           />
         </div>
         <div className="d-flex flex-wrap justify-content-between">
+          {
+            !tagsLoading && !tagsState.length ? (
+              <div className="d-flex justify-content-center w-100 h-100">
+                <p className="font-Mont text-grey" style={{ fontSize: "14px", fontFamily: "Poppins" }}>No Data Available</p>
+              </div>
+            ) :(
+              <>
+              {startupList}
+              </>
+            )  
+          }
           {startupList}
         </div>
         <div

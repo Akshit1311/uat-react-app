@@ -36,7 +36,7 @@ const TableContainer = (props: any) => {
     loop.forEach((item: string) => {
       let sum = 0;
       originalData.forEach((dataValue: any) => {
-        sum += Number(dataValue.stateStatistics[item]);
+        sum += Number(dataValue.statistics[item]);
       });
       newObj[item] = sum;
     });
@@ -46,7 +46,7 @@ const TableContainer = (props: any) => {
       isUnionTerritory: false,
       name: "Total",
       text: "Total",
-      stateStatistics: newObj,
+      statistics: newObj,
     });
     return clone;
   };
@@ -61,7 +61,7 @@ const TableContainer = (props: any) => {
       item.text.toLowerCase().includes(value.toLowerCase())
     );
     setSearchQuery(value);
-    setRenderedData(list.slice(0, noOfItemsRender));
+    // setRenderedData(list.slice(0, noOfItemsRender));
   };
 
   const handleViewMore = () => {
@@ -74,12 +74,12 @@ const TableContainer = (props: any) => {
     }
 
     setNoOfItemRender(calculated);
-    setRenderedData(memorisedValue.slice(0, calculated));
+    // setRenderedData(memorisedValue.slice(0, calculated));
   };
 
   useEffect(() => {
     setOriginalData(bodyData);
-    setRenderedData(bodyData.slice(0, noOfItemsRender));
+    setRenderedData(bodyData);
     if (noOfItemsToRender) {
       setNoOfItemRender(noOfItemsToRender);
     }
@@ -98,11 +98,11 @@ const TableContainer = (props: any) => {
         <thead className="w-100 py-5 ">
           {headerGroups.map((headerGroup) => (
             <TR
-              {...headerGroup.getHeaderGroupProps()}
+              {...headerGroup.getHeaderGroupProps()} 
               className={`d-flex flex-row justify-content-between ${theme.dataTable.headerBorder}`}
             >
               {headerGroup.headers.map((column: any, index: number) => (
-                <Cells
+                <Cells {...column.getSortByToggleProps()}
                   cellClass={getHeaderCellClass(index)}
                   {...column.getHeaderProps()}
                   borderWidth={index === 0 ? "0px" : "1px"}
@@ -149,7 +149,7 @@ const TableContainer = (props: any) => {
           />
         </div>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.slice(0, noOfItemsRender).map((row) => {
             prepareRow(row);
             return (
               <tr

@@ -17,13 +17,14 @@ const override = css`
 interface CountBlockTypes {
   selectedArea: IDType;
   countResource: any;
+  applyRoles:any;
 }
 
 interface CountCardTypes {
   name: string;
   state: any;
   activeCard: string;
-  setActiveCard: React.Dispatch<React.SetStateAction<string>>;
+  handleCardClick:any;
   borderColor: string;
   accessor?: string;
   loading: boolean;
@@ -57,8 +58,7 @@ const CountCard = ({
   activeCard,
   name,
   state,
-  setActiveCard,
-  borderColor,
+  borderColor,handleCardClick,
   accessor,
   loading,
 }: CountCardTypes) => {
@@ -95,7 +95,7 @@ const CountCard = ({
   return (
     <>
       <CountCardWrapper
-        onClick={() => setActiveCard(name)}
+        onClick={() => handleCardClick(name, accessor)}
         active={active}
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
@@ -135,7 +135,7 @@ const H5 = styled.h5<any>({}, (props) => {
 
 const CountsBlockComponent = ({
   selectedArea,
-  countResource,
+  countResource,applyRoles
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   // const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
@@ -151,9 +151,14 @@ const CountsBlockComponent = ({
     fetchInitialCount();
   }, []);
 
+  const handleCardClick = (name:string, accessor:string) =>{
+    applyRoles("GovernmentBody")
+    setActiveCard(name)
+  }
+
   const resources = {
     activeCard,
-    setActiveCard,
+    handleCardClick,
     state: countState,
     loading: countLoading,
   };

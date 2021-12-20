@@ -9,7 +9,7 @@ export const TR = styled.tr`
   width: 100%;
 `;
 
-export const TH = styled.th`
+export const TH = styled.th<any>`
   background: ${(props) => props.theme.bgCards};
   color: ${(props) => props.theme.colorCards};
 `;

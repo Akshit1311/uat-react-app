@@ -7,13 +7,13 @@ import { useQuery } from "../../hooks/useQuery";
 import TableContainer from "../../components/ReactTable/TableContainer";
 
 const startupLoops: any[] = [
-  "totalStartups",
+  "Startup",
   "FFS",
-  "patientStartups",
-  "seedFundStartups",
-  "showcasedStartups",
-  "dpiitRecognised",
-  "womenOwned",
+  "PatentStartup",
+  "SeedFundStartup",
+  "ShowcasedStartups",
+  "DpiitCertified",
+  "WomenLed",
 ];
 
 const mentorsLoop: any[] = [
@@ -28,243 +28,8 @@ function DataTableComponent(props: any) {
   const theme = useContext(ThemeContext);
 
   const [fetch, state, loading] = useQuery(
-    "https://13.235.79.165:443/data/stateStatistics/2021-01-01/2021-12-01"
+    "https://13.235.79.165:443/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
   );
-
-  const table1Configs = {
-    headerConfig: [
-      {
-        label: "States",
-        cellConfig: {
-          borderLeft: true,
-          borderWidth: "0px",
-          cellClass: "header-cell-state",
-        },
-      },
-      {
-        label: "Total \n Startups",
-        cellConfig: {
-          background: "white",
-          borderStyle: "solid",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-      {
-        label: "FFS",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-      {
-        label: "Patient Startups",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-      {
-        label: "Seed Fund Startups",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-      {
-        label: "Showcased Startups",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-      {
-        label: "DPIIT Recognised Startups",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-      {
-        label: "Women Owned Startups",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell",
-        },
-      },
-    ],
-    bodyConfig: [
-      {
-        defaultAccessor: "",
-        accessor: "text",
-        cellConfig: {
-          fontWeight: true,
-          borderLeft: true,
-          borderWidth: "0px",
-          cellClass: "header-cell",
-        },
-      },
-      {
-        accessor: "totalStartups",
-        defaultAccessor: "stateStatistics",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "FFS",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "patientStartups",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "seedFundStartups",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "showcasedStartups",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "dpiitRecognised",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "womenOwned",
-        cellConfig: {
-          borderStyle: "dashed",
-          cellClass: "header-cell",
-          borderColor: theme.dataTable.dashedBorder,
-        },
-      },
-    ],
-  };
-  const table2Configs = {
-    headerConfig: [
-      {
-        label: "States",
-        cellConfig: {
-          borderLeft: true,
-          borderWidth: "0px",
-          cellClass: "header-cell-state",
-        },
-      },
-      {
-        label: "Mentors",
-        cellConfig: {
-          background: "white",
-          borderStyle: "solid",
-          borderColor: "#8A8A8A",
-          cellClass: "header-cell-2",
-        },
-      },
-      {
-        label: "Incubator",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell-2",
-        },
-      },
-      {
-        label: "Investors",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell-2",
-        },
-      },
-      {
-        label: "Accelerator",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell-2",
-        },
-      },
-      {
-        label: "Government",
-        cellConfig: {
-          borderStyle: "dashed",
-          borderColor: theme.dataTable.dashedBorder,
-          cellClass: "header-cell-2",
-        },
-      },
-    ],
-    bodyConfig: [
-      {
-        defaultAccessor: "",
-        accessor: "text",
-        cellConfig: {
-          fontWeight: true,
-          borderLeft: true,
-          borderWidth: "0px",
-          cellClass: "header-cell-2",
-        },
-      },
-      {
-        accessor: "Mentor",
-        defaultAccessor: "stateStatistics",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "Incubator",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "Investor",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "Accelerator",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
-      },
-      {
-        defaultAccessor: "stateStatistics",
-        accessor: "GovernmentBody",
-        cellConfig: { borderStyle: "dashed", cellClass: "header-cell-2" },
-      },
-    ],
-  };
 
   const columns = useMemo(
     () => [
@@ -274,32 +39,31 @@ function DataTableComponent(props: any) {
       },
       {
         Header: "Total Startups",
-        accessor: "stateStatistics.totalStartups",
+        accessor: "statistics.Startup",
       },
       {
         Header: "FFS",
-        accessor: "stateStatistics.patientStartups",
-        // Cell: (cellProps)=> <NormalCell {...cellProps} />
+        accessor: "statistics.FFS",
+      },
+      {
+        Header: "Patent Startup",
+        accessor: "statistics.PatentStartup",
       },
       {
         Header: "Seed Fund Startups",
-        accessor: "stateStatistics.seedFundStartups",
-        // Cell: (cellProps)=> <NormalCell {...cellProps} />
+        accessor: "statistics.SeedFundStartup",
       },
       {
         Header: "Showcased Startups",
-        accessor: "stateStatistics.showcasedStartups",
-        // Cell: (cellProps)=> <NormalCell {...cellProps} />
+        accessor: "statistics.ShowcasedStartups",
       },
       {
         Header: "DPIIT Recognised",
-        accessor: "stateStatistics.dpiitRecognised",
-        // Cell: (cellProps)=> <Discount {...cellProps} />
+        accessor: "statistics.DpiitCertified",
       },
       {
         Header: "Women Owned",
-        accessor: "stateStatistics.womenOwned",
-        // Cell: (cellProps)=> <NormalCell {...cellProps} />
+        accessor: "statistics.WomenLed",
       },
     ],
     []
@@ -312,23 +76,23 @@ function DataTableComponent(props: any) {
       },
       {
         Header: "Mentors",
-        accessor: "stateStatistics.totalStartups",
+        accessor: "statistics.Mentor",
       },
       {
         Header: "Incubator",
-        accessor: "stateStatistics.patientStartups",
+        accessor: "statistics.Incubator",
       },
       {
         Header: "Investors",
-        accessor: "stateStatistics.seedFundStartups",
+        accessor: "statistics.Investor",
       },
       {
         Header: "Accelerator",
-        accessor: "stateStatistics.showcasedStartups",
+        accessor: "statistics.Accelerator",
       },
       {
         Header: "Government",
-        accessor: "stateStatistics.dpiitRecognised",
+        accessor: "statistics.GovernmentBody",
       },
     ],
     []
@@ -341,13 +105,13 @@ function DataTableComponent(props: any) {
     <div className="ms-3 mt-3">
       <TableContainer
         columns={columns}
-        bodyData={state.data || []}
+        bodyData={(state.data) || []}
         loop={startupLoops}
         mentorsTable={false}
       />
       <TableContainer
         columns={columns2}
-        bodyData={state.data || []}
+        bodyData={(state.data) || []}
         loop={mentorsLoop}
         mentorsTable={true}
       />

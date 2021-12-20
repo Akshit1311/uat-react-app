@@ -19,6 +19,8 @@ import { useQuery } from "../../hooks/useQuery";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
+  setStartUpPolicyChart: React.Dispatch<boolean>;
+  fetchPolicy: any;
 }
 
 const DARK_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
@@ -41,6 +43,8 @@ const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
 
 function ViewChangerComponent({
   mapViewResources,
+  setStartUpPolicyChart,
+  fetchPolicy,
 }: ViewChangerComponentsTypes) {
   const {
     isCircleActive,
@@ -87,10 +91,10 @@ function ViewChangerComponent({
   };
 
   const districtView = () => setMapMode(MapVariables.DISTRICT);
-  const cityView = () =>{
+  const cityView = () => {
     setMapMode(MapVariables.CITY);
-    circleView()
-  } 
+    circleView();
+  };
 
   const dateRangeChange = async (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -185,7 +189,9 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={cityView}
                   active={mapMode.id === MapVariables.CITY.id}
-                  className={`btn btn-icon-handler border-primary dark ${mapMode.id === MapVariables.CITY.id ? "bg-active" : ""}`}
+                  className={`btn btn-icon-handler border-primary dark ${
+                    mapMode.id === MapVariables.CITY.id ? "bg-active" : ""
+                  }`}
                 >
                   <MdOutlineLocationCity
                     style={{ marginTop: "-5px", marginLeft: "1px" }}
@@ -202,7 +208,9 @@ function ViewChangerComponent({
                 <IconButton
                   onClick={districtView}
                   active={mapMode.id === MapVariables.DISTRICT.id}
-                  className={`btn btn-icon-handler border-primary ${mapMode.id === MapVariables.DISTRICT.id ? "bg-active" : ""}`}
+                  className={`btn btn-icon-handler border-primary ${
+                    mapMode.id === MapVariables.DISTRICT.id ? "bg-active" : ""
+                  }`}
                 >
                   <GiPeru
                     style={{ marginTop: "-6px", marginLeft: "-1px" }}
@@ -215,7 +223,9 @@ function ViewChangerComponent({
               <IconButton
                 active={isCircleActive}
                 onClick={circleView}
-                className={`btn btn-icon-handler border-primary shadow-small ${isCircleActive ? "bg-active" : "" }`}
+                className={`btn btn-icon-handler border-primary shadow-small ${
+                  isCircleActive ? "bg-active" : ""
+                }`}
               >
                 <RiDropFill
                   size={18}
@@ -245,7 +255,8 @@ function ViewChangerComponent({
                 ))}
               </SelectBox>
             </div>
-            <Card background={theme.bgColorStart}
+            <Card
+              background={theme.bgColorStart}
               className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
               border={true}
             >
@@ -266,7 +277,9 @@ function ViewChangerComponent({
                 </ViewMoreButton>
                 <ViewMoreButton
                   shadow={false}
-                  onClick={() => setMapMode(selectedArea)}
+                  onClick={() => {
+                    setStartUpPolicyChart(true);
+                  }}
                   className="btn btn-primary btn-radius w-100 text-white"
                 >
                   {VIEW_MORE + selectedArea.stateName}

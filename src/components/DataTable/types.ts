@@ -11,6 +11,7 @@ export interface CellsType {
   cellWidth?: string;
   cellClass: string;
   maxWidth? :string;
+  onClick? :string;
 }
 
 export interface SearchTypes {

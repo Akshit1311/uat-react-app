@@ -1,13 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
-import DataTable from "./TableComponent";
 import MapComponent from "./Map/MapComponent";
 import StartupsListComponent from "./StartupsListComponent";
 import ViewChangerComponent from "./ViewChangerComponent";
 import "../../scss/HomePageStyles/homePage.scss";
-import { STARTUPLIST } from "../../shared-data/startuplist";
-import { DATATABLEDATA } from "../../shared-data/dataTable";
 import styled from "styled-components";
 import * as MapVariables from "./Map/variables";
 import { Button } from "../../styles-components/Button";
@@ -16,6 +13,7 @@ import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
 import DataTable2 from "./DataTable2";
+import StatePolicy from "./Charts/StatePolicy";
 
 const PageWrapperContainer = styled.div`
   display: flex;
@@ -54,6 +52,7 @@ const INITIAL_FILTER_STATE = {
   states: [],
   stages: [],
   badges: [],
+  roles: [],
 };
 
 const HomePage = (props: HomePageTypes) => {
@@ -67,22 +66,22 @@ const HomePage = (props: HomePageTypes) => {
     useState<any>(INITIAL_FILTER_STATE);
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
+  const [startUpPolicyChart, setStartUpPolicyChart] = useState<boolean>(false);
+  const [selectedStateByMap, setSelectedStateByMap] = useState({
+    id: "",
+    name: "",
+  });
+  const [fetchPolicy, policyState, policyLoading] = useQuery("");
+
+  const applyRoles = (role:string) =>{
+    setAppliedFilters((prevState:any)=> ({ ...prevState, roles:[ role ]}))
+  }
 
   const theme = useContext(ThemeContext);
 
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
   );
-
-  // const tagsResources = {
-  //   INITIAL_FILTER_STATE,
-  //   fetchFilterList,
-  //   filterState,
-  //   filterLoading,
-  //   fetchTags,
-  //   tagsState,
-  //   tagsLoading,
-  // };
 
   const countResource = {
     getCounts,
@@ -100,12 +99,10 @@ const HomePage = (props: HomePageTypes) => {
     selectedArea,
     getCounts,
     countState,
+    setSelectedStateByMap,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
-  const [startupsListData] = useState(STARTUPLIST);
-  const [dataTableData] = useState(DATATABLEDATA);
-
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
   return (
     <>
@@ -129,6 +126,7 @@ const HomePage = (props: HomePageTypes) => {
                   setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
                   setSelectedArea={setSelectedArea}
+                  
                 ></LeftNavComponent>
               </div>
               <div style={{ flex: "62%" }} className="p-0">
@@ -137,6 +135,7 @@ const HomePage = (props: HomePageTypes) => {
                     <CountsBlockComponent
                       countResource={countResource}
                       selectedArea={selectedArea}
+                      applyRoles={applyRoles}
                     />
                   </div>
                   <div className="col-12 row px-0 mx-0">
@@ -144,7 +143,18 @@ const HomePage = (props: HomePageTypes) => {
                       className="col-12  p-4 pe-0"
                       style={{ flex: "0 0 auto", width: "61%" }}
                     >
-                      <MapComponent mapViewResource={mapViewResources} />
+                      {startUpPolicyChart && (
+                        <StatePolicy
+                          stateId={
+                            appliedFilters.states[0]
+                              ? appliedFilters.states[0]
+                              : ""
+                          }
+                        />
+                      )}
+                      {!startUpPolicyChart && (
+                        <MapComponent mapViewResource={mapViewResources} />
+                      )}
                     </div>
                     <div
                       className="col-12 "
@@ -155,6 +165,8 @@ const HomePage = (props: HomePageTypes) => {
                     >
                       <ViewChangerComponent
                         mapViewResources={mapViewResources}
+                        setStartUpPolicyChart={setStartUpPolicyChart}
+                        fetchPolicy={fetchPolicy}
                       />
                     </div>
                   </div>

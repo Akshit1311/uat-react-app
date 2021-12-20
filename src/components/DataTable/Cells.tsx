@@ -13,7 +13,8 @@ const Cells = ({
   borderHeight,
   fontWeight,
   cellClass, 
-  maxWidth
+  maxWidth,
+  onClick
 }: CellsType) => {
   const theme = useContext(ThemeContext);
   const borderWidthA = borderWidth ? borderWidth : "0.1rem";
@@ -21,7 +22,7 @@ const Cells = ({
   const borderColorA = borderColor ? borderColor : theme.dataTable.dashedBorder;
   const borderLeftA = `${borderWidthA} ${borderStyleA} ${borderColorA}`;
   return (
-    <TH
+    <TH onClick={onClick}
       className={cellClass}
       style={{
         fontWeight: fontWeight ? 700 : 400,

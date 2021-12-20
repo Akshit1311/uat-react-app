@@ -34,20 +34,20 @@ function useWindowSize() {
 const MapWrapper = styled.div`
   color: ${(props) => props.theme.map.color} !important;
 `;
-const Path = styled.path`
-  stroke: ${(props) => props.theme.map.color};
-`;
+// const Path = styled.path`
+//   stroke: ${(props) => props.theme.map.color};
+// `;
 
 const MAP_AREA_INDIA = "0 0 930 806";
 const MAP_AREA_DISTRICTS = "0 0 620 614";
-const WHITE = "#ffffff";
-const BLACK = "#000000";
-const THEME_COLOR = "rgb(1, 119, 250)";
-const THEME_COLOR_LITE = "rgb(96 169 251)";
+// const WHITE = "#ffffff";
+// const BLACK = "#000000";
+// const THEME_COLOR = "rgb(1, 119, 250)";
+// const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
 function IndiaMap({ mapViewResource }: IndiaMapTypes) {
-  const { selectedArea, setSelectedArea, mapMode, isCircleActive, countState } =
+  const { setSelectedStateByMap, setSelectedArea, mapMode, isCircleActive, countState } =
     mapViewResource;
 
   const theme = useContext(ThemeContext);
@@ -106,6 +106,8 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     }
     setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
+    console.log('Selected State', state)
+    setSelectedStateByMap(state)
   };
 
   const populateDistrictCircle = () => {
@@ -303,13 +305,12 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     if (mapMode.id === MapVariables.CITY.id)
       return responsiveImageHeight(MAP_AREA_INDIA);
   };
+  
   const getViewBoxAreaCircle = () => {
     if (mapMode.id === MapVariables.DISTRICT.id) return "scale(1.38)";
     if (mapMode.id === MapVariables.INDIA.id) return "scale(1.42)";
     if (mapMode.id === MapVariables.CITY.id) return "scale(1.42)";
   };
-
-  const addMapSizeEventListner = () => {};
 
   useEffect(() => {
     fetchIndiaMap();
