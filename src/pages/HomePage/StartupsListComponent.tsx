@@ -91,7 +91,7 @@ function StartUpCard({
                     <p className="font-Mont font-600 font-14px m-0 p-0 ">
                       Stage:
                     </p>
-                    {Array.isArray(sectors) ? (
+                    {Array.isArray(stages) ? (
                       <>
                         {stages.slice(0, 6).map((item: string) => (
                           <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
