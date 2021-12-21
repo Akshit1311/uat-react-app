@@ -33,7 +33,7 @@ export async function statesDpiit(values: any): Promise<MapType[]> {
   return new Promise(async (resolve, rejects) => {
     try {
       const response = await axios({
-        url: "https://13.235.79.165/startup/dpiit/states",
+        url: "https://api.startupindiaonline.com/startup/dpiit/states",
         method: "GET",
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       });

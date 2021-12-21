@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import https from "https";
 
 const ERROR_INITIAL_STATE = { error: false, errorMessage: "" };
 
@@ -16,7 +15,6 @@ export function useQuery(apiUrl: string) {
     try {
       const response = await axios({
         url: url ? url : apiUrl,
-        httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       });
       if (response.data) {
         console.log('Date Range', response.data)
