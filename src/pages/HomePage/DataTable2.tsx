@@ -28,7 +28,7 @@ function DataTableComponent(props: any) {
   const theme = useContext(ThemeContext);
 
   const [fetch, state, loading] = useQuery(
-    "https://13.235.79.165:443/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
+    "https://api.startupindiaonline.com/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
   );
 
   const columns = useMemo(

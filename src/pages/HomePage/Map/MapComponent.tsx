@@ -53,7 +53,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const theme = useContext(ThemeContext);
 
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
-    "https://13.235.79.165:443/startup/states"
+    "https://api.startupindiaonline.com/startup/states"
   );
   const [width, height] = useWindowSize();
 
