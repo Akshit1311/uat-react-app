@@ -163,10 +163,11 @@ const TableContainer = (props: any) => {
                         {...cell.getCellProps()}
                         maxWidth="auto"
                         cellClass={getHeaderCellClass(index)}
-                        borderHeight="50px"
+                        borderHeight="2.5rem"
                         borderWidth={index !== 0 ? "1px" : "0px"}
                         fontWeight={index === 0}
                         borderColor="#8A8A8A"
+                        textRight={true}
                       >
                         {cell.render("Cell")}
                       </Cells>

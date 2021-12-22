@@ -1,8 +1,7 @@
-
 import React, { useContext } from "react";
 import { ThemeContext } from "../../config/context";
-import { TH } from "./styled"
-import { CellsType } from "./types"
+import { TH } from "./styled";
+import { CellsType } from "./types";
 
 const Cells = ({
   children,
@@ -12,35 +11,37 @@ const Cells = ({
   background,
   borderHeight,
   fontWeight,
-  cellClass, 
+  cellClass,
   maxWidth,
-  onClick
+  onClick,
+  textRight,
 }: CellsType) => {
   const theme = useContext(ThemeContext);
   const borderWidthA = borderWidth ? borderWidth : "0.1rem";
-  const borderStyleA = borderStyle ? 'solid' : "solid";
+  const borderStyleA = borderStyle ? "solid" : "solid";
   const borderColorA = borderColor ? borderColor : theme.dataTable.dashedBorder;
   const borderLeftA = `${borderWidthA} ${borderStyleA} ${borderColorA}`;
   return (
-    <TH onClick={onClick}
-      className={cellClass}
-      style={{
-        fontWeight: fontWeight ? 700 : 400,
-      }}
-    >
-      <div className="d-flex h-100">
-        <div
-          style={{
-            height: '100%',
-            minHeight: borderHeight ? borderHeight : "63px",
-            borderLeft: borderLeftA,
-            maxWidth: '100%'
-          }}
-        />
+    <TH onClick={onClick} className={cellClass}>
+      <div
+        style={{
+          minHeight: borderHeight ? borderHeight : "63px",
+          borderLeft: borderLeftA,
+          position: "absolute",
+        }}
+      />
+      <div
+        style={{ minHeight: borderHeight ? borderHeight : "63px" }}
+        className={`d-flex h-100 ${
+          textRight && !fontWeight ? "justify-content-end" : ""
+        }`}
+      >
         <p
-          className="my-0 p-0 d-flex align-items-center"
+          className="my-0 p-0 d-flex align-items-center font-mont-data-table pe-3"
           style={{
             marginLeft: "0.8rem",
+            color: "black",
+            fontWeight: fontWeight ? 700 : 500,
           }}
         >
           {children}

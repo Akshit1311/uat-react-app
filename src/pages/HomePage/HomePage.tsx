@@ -12,7 +12,7 @@ import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
-import DataTable2 from "./DataTable2";
+import DataTable from "./DataTable";
 import StatePolicy from "./Charts/StatePolicy";
 import {
   PageWrapper,
@@ -42,6 +42,8 @@ const INITIAL_FILTER_STATE = {
   roles: ["Startup"],
 };
 
+
+
 const HomePage = (props: HomePageTypes) => {
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
     MapVariables.INDIA
@@ -58,7 +60,10 @@ const HomePage = (props: HomePageTypes) => {
     id: "",
     name: "",
   });
-
+  const [fetchTableData, tableState, tableLoading] = useQuery(
+    "/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
+  );
+  console.log("Selected State",selectedStateByMap)
   const [fetchPolicy, policyState, policyLoading] = useQuery("");
   const [selectedCountBlock, setSelectedCountBlock] = useState("Startup");
 
@@ -78,6 +83,8 @@ const HomePage = (props: HomePageTypes) => {
     countState,
     countLoading,
     setSelectedArea,
+    tableState,
+    selectedStateByMap, setSelectedStateByMap
   };
 
   const mapViewResources = {
@@ -228,8 +235,7 @@ const HomePage = (props: HomePageTypes) => {
                             display: !startupListActive ? "block" : "none",
                           }}
                         >
-                          <DataTable2 />
-                          {/* <Table2 data={dataTableData} /> */}
+                          <DataTable fetch={fetchTableData} state={tableState} loading={tableLoading} />
                         </div>
                       </>
                     }

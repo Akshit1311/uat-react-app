@@ -23,7 +23,7 @@ body {
 .bg-primary {
   background-color: #0177fa;
 }
-.h-65{
+.h-65 {
   height: 65vh !important;
   width: 100% !important;
 }
@@ -220,7 +220,7 @@ tr {
   font-family: Montserrat, sans-serif;
 }
 
-.w-49-h-250px{
+.w-49-h-250px {
   width: 49%;
   height: 250px;
 }
@@ -241,7 +241,7 @@ tbody {
   font-size: 14px !important;
 }
 
-.form-control:focus{
+.form-control:focus {
   box-shadow: none !important;
   border-color: none !important;
 }
@@ -321,4 +321,11 @@ tbody {
 }
 
 .accordion-button {
+}
+
+.font-mont-data-table {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
 }

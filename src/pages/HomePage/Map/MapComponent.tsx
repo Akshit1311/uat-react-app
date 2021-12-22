@@ -334,7 +334,6 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       {console.log("Height Width", height, width)}
       {!loadingIndiaMap && (
         <svg
-          xmlns="http://www.w3.org/2000/svg"
           viewBox={getViewBoxArea()}
           aria-label="Map of India"
         >
@@ -362,8 +361,8 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   strokeWidth={fillStroke(state.id)}
                 />
               </Tooltip>
-            ))}
-          {console.log("MapBorder", theme["map"].mapBorder)}
+            ))
+            }
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
               <Tooltip

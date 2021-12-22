@@ -58,7 +58,6 @@ const DropDownListComponent = (props: any) => {
           findSelectedState(dataObj) ? "selected-list-card" : bgUnSelected()
         }`}
       >
-        {console.log("SelectedItem", dataObj)}
         <h5 className="m-0 p-0">{dataObj["value"]}</h5>
       </div>
     );

@@ -63,6 +63,7 @@ const CountCard = ({
   accessor,
   loading,
 }: CountCardTypes) => {
+  console.log("CountBlock Child",state)
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
 
@@ -134,21 +135,50 @@ const H5 = styled.h5<any>({}, (props) => {
   };
 });
 
+export class CountBlockModel {
+  Exploring:number = 0;
+  Incubator:number = 0;
+  Corporate:number = 0;
+  SIH_Admin:number = 0;
+  Mentor:number = 0;
+  Academia:number = 0;
+  GovernmentBody:number = 0;
+  ConnectToPotentialPartner:number = 0;
+  IndiaMarketEntry:number= 0;
+  Individual:number= 0;
+  ServiceProvider:number = 0;
+  Investor:number = 0;
+  Startup:number = 0;
+  Accelerator:number = 0;
+  maxRange:number = 0;
+}
+
 const CountsBlockComponent = ({
   selectedArea,
   countResource,applyRoles
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-  const { getCounts, countState, countLoading, setSelectedArea } =
+  const { getCounts, countState, countLoading, setSelectedArea, tableState,selectedStateByMap, setSelectedStateByMap } =
     countResource;
 
-  const [fetchInitialCount, initialCountState] = useQuery(
-    HomePageApi.countBlockEndPoint
-  );
+  const [stateCounts, setStateCounts] = useState<CountBlockModel>(new CountBlockModel())
+
+  const filterStateCounts = () =>{
+    console.log("Table STate",tableState)
+    const state = tableState.data ? tableState.data.find((item:any)=> item.name.toLowerCase() === selectedStateByMap.name.toLowerCase() ) : undefined 
+    if(state){
+      console.log("State STatics",state.statistics)
+      setStateCounts(state.statistics)
+    } 
+  }
+
+  useEffect(()=>{
+    filterStateCounts()
+  },[selectedStateByMap,tableState])
+
   useEffect(() => {
     getCounts();
-    fetchInitialCount();
   }, []);
 
   const handleCardClick = (name:string, accessor:string) =>{
@@ -159,7 +189,7 @@ const CountsBlockComponent = ({
   const resources = {
     activeCard,
     handleCardClick,
-    state: countState,
+    state: selectedStateByMap.name && selectedStateByMap.name.length  ? stateCounts: countState,
     loading: countLoading,
   };
 
@@ -179,8 +209,13 @@ const CountsBlockComponent = ({
                 {/* <p className="m-0 p-0">India</p> */}
                 <p className="my-0 p-0  font-bold d-flex font-Mont font-12px mt-0">
                   <div
-                    onClick={() =>
+                    onClick={() =>{
                       setSelectedArea({ id: "india", stateName: "India" })
+                      setSelectedStateByMap({
+                        id: "",
+                        name: "",
+                      })
+                    }
                     }
                     style={{
                       textDecoration: "none",
@@ -194,7 +229,7 @@ const CountsBlockComponent = ({
                     <div style={{ background: "#0177FA", height: "1px" }}></div>
                   </div>{" "}
                   <div className="ms-1" style={{ color: theme.color }}>
-                    | Startups {" " + initialCountState.Startup}
+                    | Startups {" " + countState.Startup}
                   </div>
                 </p>
               </div>
