@@ -9,12 +9,17 @@ import { ThemeContext } from "../../config/context";
 import { useMutate } from "../../hooks/useMutate";
 import UserDefault from "../../assets/user_default.jpg";
 import MoonLoader from "react-spinners/MoonLoader";
+import { States } from "./Map/states";
 
 const StartUpCardContainer = styled.div`
   background: ${(props) => props.theme.bgCards};
   box-shadow: ${(props) => props.theme.shadowCards};
   border-radius: 4px;
   color: ${(props) => props.theme.color};
+  height: fit-content;
+  max-width: 65%;
+  min-width: 65%;
+  margin-left: 1.5%; 
 `;
 
 const StartUpCardWrapper = styled.div`
@@ -31,18 +36,69 @@ function StartUpCard({
   stages,
   form80IacStatus,
   tagsLoading,
-  logo
+  logo,
 }: any) {
-  function htmlDecode(input:any) {
+  function htmlDecode(input: any) {
     var doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
   }
-  const redirect = () =>{
-    window.location.href = "https://www.startupindia.gov.in/content/sih/en/profile.Startup.61c03e7ae4b041b4edd317ce.html"
-  }
+  const redirect = () => {
+    // window.location.href =
+    //   "https://www.startupindia.gov.in/content/sih/en/profile.Startup.61c03e7ae4b041b4edd317ce.html";
+  };
+
+  const tagsLoader = tagsLoading && (
+    <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+      <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25"} />
+    </div>
+  );
+
+  const stagesBadge =
+    Array.isArray(stages) && States.length > 0 ? (
+      <>
+        <p className="font-Mont font-600 font-14px m-0 p-0 ">Stage:</p>
+        {stages.slice(0, 6).map((item: string) => (
+          <Badge className="pb-0 d-flex m-1 me-0 mt-0">
+            <div className="d-flex flex-wrap">{item}</div>
+          </Badge>
+        ))}
+      </>
+    ) : (
+      <></>
+    );
+
+  const sectorBadge =
+    Array.isArray(sectors) && sectors.length ? (
+      <>
+        <p className="font-Mont font-600 font-14px m-0 p-0 ">Sector:</p>
+        {sectors.slice(0, 5).map((item: string) => (
+          <Badge className="pb-0 d-flex m-1 me-0 mt-0">
+            <div className="d-flex flex-wrap">{item}</div>
+          </Badge>
+        ))}
+        {sectors.length > 5 ? (
+          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1 px-3">
+            <div className="d-flex flex-wrap">{"..."}</div>
+          </Badge>
+        ) : (
+          <></>
+        )}
+      </>
+    ) : (
+      <></>
+    );
+
+  const taxExempted = form80IacStatus ? (
+    <div>
+      <Badge className="mt-2">Tax Exempted</Badge>
+    </div>
+  ) : (
+    <></>
+  );
   return (
     <>
-      <StartUpCardWrapper onClick={redirect}
+      <StartUpCardWrapper
+        onClick={redirect}
         key={_id}
         className="mb-0 d-flex flex-row start-up-card"
         style={{ marginTop: "1.3rem" }}
@@ -54,18 +110,20 @@ function StartUpCard({
             alt="main-logo"
           />
         </div>
-        {tagsLoading && (
-          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-            <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25"} />
-          </div>
-        )}
+        {tagsLoader}
         {!tagsLoading && (
           <div className={`p-2 py-0  ms-0  ${form80IacStatus ? "" : "pb-0"}`}>
             <h6
               className=" my-0 py-0 company-title text-overflow"
-              style={{ maxHeight: "45px !important", overflow: "hidden" }}
+              style={{
+                maxHeight: "45px !important",
+                overflow: "hidden",
+                textTransform: "uppercase",
+              }}
             >
-              {company.length > 35 ? company.slice(0, 30) + "..." : htmlDecode(company.toUpperCase())}
+              {company.length > 35
+                ? company.slice(0, 30) + "..."
+                : htmlDecode(company)}
             </h6>
             {form80IacStatus ||
             (stages && stages.length) ||
@@ -73,59 +131,13 @@ function StartUpCard({
               <div className="">
                 <div className="stage-sector-div ">
                   <div className="d-flex mt-1 align-items-center flex-wrap">
-                    <p className="font-Mont font-600 font-14px m-0 p-0 ">
-                      Stage:
-                    </p>
-                    {Array.isArray(stages) ? (
-                      <>
-                        {stages.slice(0, 6).map((item: string) => (
-                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
-                            <div className="d-flex flex-wrap">{item}</div>
-                          </Badge>
-                        ))}
-                        {stages.length > 5 ? (
-                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
-                            <div>...</div>
-                          </Badge>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                    {stagesBadge}
                   </div>
                   <div className="d-flex mt-2 align-items-center flex-wrap">
-                    <p className="font-Mont font-600 font-14px m-0 p-0 ">
-                      Sector:
-                    </p>
-                    {Array.isArray(sectors) ? (
-                      <>
-                        {sectors.slice(0, 5).map((item: string) => (
-                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1">
-                            <div className="d-flex flex-wrap">{item}</div>
-                          </Badge>
-                        ))}
-                        {sectors.length > 5 ? (
-                          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1 px-3">
-                            <div className="d-flex flex-wrap">{'...'}</div>
-                          </Badge>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                    {sectorBadge}
                   </div>
                 </div>
-                {form80IacStatus ? (
-                  <div>
-                    <Badge className="mt-2">Tax Exempted</Badge>
-                  </div>
-                ) : (
-                  <></>
-                )}
+                {taxExempted}
               </div>
             ) : (
               <></>
@@ -189,12 +201,13 @@ function StartupsListComponent(props: any) {
     <div className="mb-5  startup-list-styles d-flex">
       {/* <div style={{ minWidth: "19.66%" }} /> */}
       <StartUpCardContainer
-        style={{ maxWidth: "65%", minWidth: "65%", marginLeft: "1.5%" }}
         className={`startup-list-card-container p-4 position-relative ${
           renderedData.length !== tagsState.length ? "pb-0" : ""
         }`}
       >
-        <h6 className="startup-heading p-0 m-0">{props.appliedFilters.roles ? props.appliedFilters.roles[0].toUpperCase(): "Startup"}S</h6>
+        <h6 className="startup-heading p-0 m-0 text-uppercase">
+          {props.selectedCountBlock}S
+        </h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
           <SearchBarComponent
             background={theme.searchBg}
@@ -204,18 +217,19 @@ function StartupsListComponent(props: any) {
           />
         </div>
         <div className="d-flex flex-wrap justify-content-between h-100">
-          {
-            !tagsLoading && !tagsState.length ? (
-              <div className="d-flex justify-content-center w-100">
-                <p className="font-Mont text-grey" style={{ fontSize: "14px", fontFamily: "Poppins" }}>No Data Available</p>
-              </div>
-            ) :(
-              <>
-              {startupList}
-              </>
-            )  
-          }
-          {startupList}
+          {!tagsLoading && !tagsState.length ? (
+            <div className="d-flex justify-content-center w-100">
+              <p
+                className="font-Mont text-grey"
+                style={{ fontSize: "14px", fontFamily: "Poppins" }}
+              >
+                No Data Available
+              </p>
+            </div>
+          ) : (
+            <>{startupList}</>
+          )}
+          {/* {startupList} */}
         </div>
         <div
           style={{
@@ -224,7 +238,7 @@ function StartupsListComponent(props: any) {
           className="my-4 data-table-view-more-button"
           onClick={handleViewMore}
         >
-          View More
+          {queryString.length > 0 ? 'View All' : 'View More'}
         </div>
         {tagsLoading && (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center position-absolute">

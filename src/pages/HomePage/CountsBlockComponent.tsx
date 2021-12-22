@@ -139,7 +139,6 @@ const CountsBlockComponent = ({
   countResource,applyRoles
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
-  // const [getCounts, state, loading] = useQuery(HomePageApi.countBlockEndPoint);
   const [activeCard, setActiveCard] = useState<string>("Startups");
   const { getCounts, countState, countLoading, setSelectedArea } =
     countResource;
@@ -153,8 +152,7 @@ const CountsBlockComponent = ({
   }, []);
 
   const handleCardClick = (name:string, accessor:string) =>{
-    console.log("Accessor",accessor)
-    applyRoles(accessor)
+    applyRoles(accessor, name)
     setActiveCard(name)
   }
 
@@ -228,6 +226,7 @@ const CountsBlockComponent = ({
           {...resources}
           borderColor="#00AD11"
           accessor="GovernmentBody"
+          acc="GovernmentBody"
           name="Government"
         />
       </div>

@@ -14,27 +14,14 @@ import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
 import DataTable2 from "./DataTable2";
 import StatePolicy from "./Charts/StatePolicy";
+import {
+  PageWrapper,
+  PageWrapperContainer,
+} from "../../styles-components/PageWrapper";
 
-const PageWrapperContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  background-color: none !important;
-  background: linear-gradient(
-    180deg,
-    ${(props) => props.theme.bgColorStart} 0%,
-    ${(props) => props.theme.bgColorEnd} 100%
-  ) !important;
-  background-size: cover;
-  background-repeat: no-repeat !important;
-`;
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
 `;
-
-const PageWrapper = styled.div({
-  maxWidth: "1366px",
-  minWidth: "1080px",
-});
 
 const Strip = styled.div`
   background-color: ${(props) => props.theme.bgStripe};
@@ -52,7 +39,7 @@ const INITIAL_FILTER_STATE = {
   states: [],
   stages: [],
   badges: [],
-  roles: ['Startup'],
+  roles: ["Startup"],
 };
 
 const HomePage = (props: HomePageTypes) => {
@@ -71,11 +58,14 @@ const HomePage = (props: HomePageTypes) => {
     id: "",
     name: "",
   });
-  const [fetchPolicy, policyState, policyLoading] = useQuery("");
 
-  const applyRoles = (role:string) =>{
-    setAppliedFilters((prevState:any)=> ({ ...prevState, roles:[ role ]}))
-  }
+  const [fetchPolicy, policyState, policyLoading] = useQuery("");
+  const [selectedCountBlock, setSelectedCountBlock] = useState("Startup");
+
+  const applyRoles = (role: string, name: string) => {
+    setSelectedCountBlock(name);
+    setAppliedFilters((prevState: any) => ({ ...prevState, roles: [role] }));
+  };
 
   const theme = useContext(ThemeContext);
 
@@ -126,7 +116,6 @@ const HomePage = (props: HomePageTypes) => {
                   setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
                   setSelectedArea={setSelectedArea}
-                  
                 ></LeftNavComponent>
               </div>
               <div style={{ flex: "62%" }} className="p-0">
@@ -228,6 +217,7 @@ const HomePage = (props: HomePageTypes) => {
                       >
                         <StartupsListComponent
                           appliedFilters={appliedFilters}
+                          selectedCountBlock={selectedCountBlock}
                         />
                       </div>
                     )}
