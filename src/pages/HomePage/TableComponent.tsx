@@ -27,7 +27,7 @@ function DataTableComponent(props: any) {
   const theme = useContext(ThemeContext);
 
   const [fetch, state, loading] = useQuery(
-    "https://13.235.79.165:443/data/stateStatistics/2021-01-01/2021-12-01"
+    "https://api.startupindiaonline.com/data/stateStatistics/2021-01-01/2021-12-01"
   );
 
   const table1Configs = {
