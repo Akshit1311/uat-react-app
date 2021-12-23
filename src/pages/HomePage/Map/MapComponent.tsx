@@ -10,7 +10,8 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { DistrictType, District } from "./districts";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
-import { StateCircles } from "./StateCircle"
+import { StateCircles } from "./StateCircle";
+import { StateBorders } from "./StartupIndiaMap";
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -20,7 +21,7 @@ const MapWrapper = styled.div`
   color: ${(props) => props.theme.map.color} !important;
 `;
 
-const MAP_AREA_INDIA = "-200 0 930 806";
+const MAP_AREA_INDIA = "-200 0 1230 1106";
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
 
@@ -49,7 +50,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
   const [districtsBoarder, setDistrictsBoarder] = useState<any>([]);
 
-  const [stateBubbles, setStateBubbles] = useState<any[]>(StateCircles)
+  const [stateBubbles, setStateBubbles] = useState<any[]>(StateCircles);
   // const [maxValue, setMaxValue] = useState<number>(0)
 
   const stateValidator = (array: any, accessor: string, value: string) => {
@@ -75,11 +76,14 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     maxValue: number
   ) => {
     const findStateIndex = findCountTypeValue(stateId);
-    const stateValue = tableState.data[findStateIndex].statistics[accessor];
-    const opacity = (stateValue / maxValue) * 100;
-    return opacity;
+    if(findStateIndex !== -1){
+      const stateValue = tableState.data[findStateIndex].statistics[accessor];
+      const opacity = (stateValue / maxValue) * 100;
+      return opacity;
+    }
+    return 0
   };
-
+  console.log("India Map Svg", indiaMap)
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
     if (selected !== -1) return true;
@@ -337,7 +341,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     populateDistrictCircle();
     populateDistrictsBoarders();
   }, [mapMode, theme]);
- 
+
   const maxCountValue = findMaxValue(
     tableState.data || [],
     appliedFilters.roles
@@ -354,6 +358,22 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   //   })
   //   return []
   // }
+  const mixDataWithId = () => {
+    const findId = (stateName: string) =>
+      indiaMap.find((item: any) => {
+        return item.text.toLowerCase() == stateName.toLowerCase();
+      });
+    const newList = new Array();
+
+    StateBorders.forEach((i: any) => {
+      const filteredState = findId(i.name);
+      if (filteredState) {
+        i.id = filteredState.id;
+      }
+      newList.push(i);
+    });
+    console.log("New map List", newList);
+  };
 
   return (
     <MapWrapper
@@ -363,7 +383,9 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       {!isCircleActive && (
         <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
-          <p className="max-gradient-bar">{maxCountValue}</p>
+          <p onClick={mixDataWithId} className="max-gradient-bar">
+            {maxCountValue}
+          </p>
         </div>
       )}
       {loadingIndiaMap ||
@@ -376,40 +398,55 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
             />
           </div>
         ))}
+        {console.log("tableLoading", tableLoading)}
       {!loadingIndiaMap && !tableLoading && (
         <svg viewBox={getViewBoxArea()} aria-label="Map of India">
           {mapMode.id === MapVariables.INDIA.id &&
-            indiaMap.map((state: any, index: number) => (
-              <Tooltip
-                placement="top"
-                animation="zoom"
-                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                overlay={
-                  <p style={{ paddingTop: "1px" }} className="px-2">
-                    {state.text}
-                  </p>
-                }
-              >
-                <path
-                  onMouseEnter={(e) => handleMouseEnter(state, e)}
-                  onMouseLeave={handleStateMouseLeave}
-                  onClick={(e) => handleStateClick(state)}
-                  key={index}
-                  d={state.d}
-                  id={state.id}
-                  fillOpacity={
-                    getGradientColor(
-                      state.id,
-                      appliedFilters.roles,
-                      maxCountValue
-                    ) + "%"
+            StateBorders.map((state: any, index: number) => {
+              state.text = state.name
+              return (
+                <Tooltip
+                  placement="top"
+                  animation="zoom"
+                  arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                  overlay={
+                    <p style={{ paddingTop: "1px" }} className="px-2">
+                      {state.name || index}
+                    </p>
                   }
-                  fill={ThemeColorIdentifier(colorTheme)}
-                  stroke={fillStrokeColor(state.id)}
-                  strokeWidth={fillStroke(state.id)}
-                />
-              </Tooltip>
-            ))}
+                >
+                  <path
+                    // fill={state.fill}
+                    // stroke={state.stroke}
+                    opacity={state.opacity}
+                    // strokeOpacity={state.strokeOpacity}
+                    // strokeWidth={state.strokeWidth}
+                    strokeLinejoin={state.strokeLinejoin}
+                    transform={state.transform}
+                    d={state.d}
+                    onMouseEnter={(e) => handleMouseEnter(state, e)}
+                    onMouseLeave={handleStateMouseLeave}
+                    onClick={(e) => handleStateClick(state)}
+                    // key={index}
+                    // d={state.d}
+                    // id={index.toString()}
+                    fillOpacity={ tableState && tableState.data ?
+                      getGradientColor(
+                        state.id,
+                        appliedFilters.roles,
+                        maxCountValue
+                      ) + "%" : '1'
+                    }
+                    fill={ThemeColorIdentifier(colorTheme)}
+                    stroke={fillStrokeColor(state.id)}
+                    strokeWidth={fillStroke(state.id)}
+                  />
+                </Tooltip>
+              )
+            }
+
+            
+            )}
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
               <Tooltip
@@ -486,7 +523,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 </circle>
               ))}
             </g> */}
-            <g style={{ transform: 'scale(1)'}}>
+            <g style={{ transform: "scale(1)" }}>
               <circle
                 transform={"translate(510,37)"}
                 fill-opacity="0.25"

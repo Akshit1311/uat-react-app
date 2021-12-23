@@ -122,6 +122,7 @@ function ViewChangerComponent({
     fetchStartUpTypes();
     fetchStartUpCount("/startup/startupCount/0");
   }, []);
+  
 
   return (
     <div className="view-changer-component-styles">
