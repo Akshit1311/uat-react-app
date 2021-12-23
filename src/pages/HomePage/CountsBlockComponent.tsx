@@ -18,15 +18,15 @@ const override = css`
 interface CountBlockTypes {
   selectedArea: IDType;
   countResource: any;
-  applyRoles:any;
+  applyRoles: any;
 }
 
 interface CountCardTypes {
   name: string;
   state: any;
-  acc? :string;
+  acc?: string;
   activeCard: string;
-  handleCardClick:any;
+  handleCardClick: any;
   borderColor: string;
   accessor?: string;
   loading: boolean;
@@ -36,7 +36,7 @@ interface CountCardTypes {
 interface CountCardWrapperTypes {
   active: boolean;
   borderColor: string;
-  colorTheme:string;
+  colorTheme: string;
 }
 
 const CountCardWrapper = styled.div<CountCardWrapperTypes>(
@@ -48,7 +48,9 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   },
   (props: any) => {
     return {
-      backgroundColor: props.active ? ThemeColorIdentifier(props.colorTheme) : props.theme.bgCards,
+      backgroundColor: props.active
+        ? ThemeColorIdentifier(props.colorTheme)
+        : props.theme.bgCards,
       border: `2px solid ${props.borderColor}`,
       color: props.active ? "white" : props.theme.color,
       transition: "0.5s color",
@@ -58,19 +60,22 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
 
 const CountCard = ({
   activeCard,
-  name,acc,
+  name,
+  acc,
   state,
-  borderColor,handleCardClick,
+  borderColor,
+  handleCardClick,
   accessor,
-  loading, colorTheme
+  loading,
+  colorTheme,
 }: CountCardTypes) => {
-  console.log("CountBlock Child",state)
+  console.log("CountBlock Child", state);
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
 
   useEffect(() => {
     setCurrentCount(0);
-    const count = state[accessor ? accessor : name.slice(0,-1)];
+    const count = state[accessor ? accessor : name.slice(0, -1)];
     if (count && count > 0) {
       let interval: any;
       if (currentCount < count) {
@@ -133,82 +138,103 @@ const CountCard = ({
 const H5 = styled.h5<any>({}, (props) => {
   return {
     color: props.theme.color,
-    marginTop: '2px'
+    marginTop: "2px",
   };
 });
 
 export class CountBlockModel {
-  Exploring:number = 0;
-  Incubator:number = 0;
-  Corporate:number = 0;
-  SIH_Admin:number = 0;
-  Mentor:number = 0;
-  Academia:number = 0;
-  GovernmentBody:number = 0;
-  ConnectToPotentialPartner:number = 0;
-  IndiaMarketEntry:number= 0;
-  Individual:number= 0;
-  ServiceProvider:number = 0;
-  Investor:number = 0;
-  Startup:number = 0;
-  Accelerator:number = 0;
-  maxRange:number = 0;
+  Exploring: number = 0;
+  Incubator: number = 0;
+  Corporate: number = 0;
+  SIH_Admin: number = 0;
+  Mentor: number = 0;
+  Academia: number = 0;
+  GovernmentBody: number = 0;
+  ConnectToPotentialPartner: number = 0;
+  IndiaMarketEntry: number = 0;
+  Individual: number = 0;
+  ServiceProvider: number = 0;
+  Investor: number = 0;
+  Startup: number = 0;
+  Accelerator: number = 0;
+  maxRange: number = 0;
 }
 
 const CountsBlockComponent = ({
   selectedArea,
-  countResource,applyRoles
+  countResource,
+  applyRoles,
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-  const { getCounts, colorTheme, countState, countLoading,setPrimaryColorTheme, setSelectedArea, tableState,selectedStateByMap, setSelectedStateByMap } =
-    countResource;
+  const {
+    getCounts,
+    colorTheme,
+    countState,
+    countLoading,
+    setPrimaryColorTheme,
+    setSelectedArea,
+    tableState,
+    selectedStateByMap,
+    setSelectedStateByMap,
+  } = countResource;
 
-  const [stateCounts, setStateCounts] = useState<CountBlockModel>(new CountBlockModel())
+  const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
 
-  const filterStateCounts = () =>{
-    console.log("Table STate",tableState)
-    const state = tableState.data ? tableState.data.find((item:any)=> item.name.toLowerCase() === selectedStateByMap.name.toLowerCase() ) : undefined 
-    if(state){
-      console.log("State STatics",state.statistics)
-      setStateCounts(state.statistics)
-      
-    } 
-  }
+  const filterStateCounts = () => {
+    const state = tableState.data
+      ? tableState.data.find(
+          (item: any) =>
+            item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
+        )
+      : undefined;
+    if (state) {
+      const count = new CountBlockModel()
+      count.Incubator = state.statistics.Incubator
+      count.Mentor = state.statistics.Mentor
+      count.Accelerator = state.statistics.Accelerator
+      count.Startup = state.statistics.Startup
+      count.GovernmentBody = state.statistics.GovernmentBody
+      count.Investor = state.statistics.Investor
+      setStateCounts(count);
+    }
+  };
 
-  useEffect(()=>{
-    filterStateCounts()
-  },[selectedStateByMap,tableState])
+  useEffect(() => {
+    filterStateCounts();
+  }, [selectedStateByMap, tableState]);
 
   useEffect(() => {
     getCounts();
   }, []);
 
-  const getThemeName = (name:string) =>{
-    const value = name.toLowerCase()
-    console.log("Value Theme Color", value)
-    if(value === 'startups') return 'theme-1'
-    if(value === 'mentors') return 'theme-3'
-    if(value === 'incubators') return 'theme-4'
-    if(value === 'investors') return 'theme-5'
-    if(value === 'accelerators') return 'theme-6'
-    if(value === 'government') return 'theme-7'
-  }
+  const getThemeName = (name: string) => {
+    const value = name.toLowerCase();
+    if (value === "startups") return "theme-1";
+    if (value === "mentors") return "theme-3";
+    if (value === "incubators") return "theme-4";
+    if (value === "investors") return "theme-5";
+    if (value === "accelerators") return "theme-6";
+    if (value === "government") return "theme-7";
+  };
 
-  const handleCardClick = (name:string, accessor:string) =>{
-    applyRoles(accessor, name)
-    setActiveCard(name)
-    setPrimaryColorTheme(getThemeName(name))
-  }
+  const handleCardClick = (name: string, accessor: string) => {
+    applyRoles(accessor, name);
+    setActiveCard(name);
+    setPrimaryColorTheme(getThemeName(name));
+  };
 
   const resources = {
     activeCard,
     handleCardClick,
-    state: selectedStateByMap.name && selectedStateByMap.name.length  ? stateCounts: countState,
+    state:
+      selectedStateByMap.name && selectedStateByMap.name.length
+        ? stateCounts
+        : countState,
     loading: countLoading,
-    colorTheme
+    colorTheme,
   };
-  
+
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
@@ -225,14 +251,13 @@ const CountsBlockComponent = ({
                 {/* <p className="m-0 p-0">India</p> */}
                 <p className="my-0 p-0  font-bold d-flex font-Mont font-12px mt-0">
                   <div
-                    onClick={() =>{
-                      setSelectedArea({ id: "india", stateName: "India" })
+                    onClick={() => {
+                      setSelectedArea({ id: "india", stateName: "India" });
                       setSelectedStateByMap({
                         id: "",
                         name: "",
-                      })
-                    }
-                    }
+                      });
+                    }}
                     style={{
                       textDecoration: "none",
                       color: "#0177FA",
@@ -242,7 +267,10 @@ const CountsBlockComponent = ({
                     className="d-flex flex-column"
                   >
                     <div className="text-theme">{"India"}</div>
-                    <div className="background-color-theme" style={{ height: "1px" }}></div>
+                    <div
+                      className="background-color-theme"
+                      style={{ height: "1px" }}
+                    ></div>
                   </div>{" "}
                   <div className="ms-1" style={{ color: theme.color }}>
                     | Startups {" " + countState.Startup}
@@ -270,9 +298,24 @@ const CountsBlockComponent = ({
           acc={"Mentor"}
           name="Mentors"
         />
-        <CountCard {...resources} borderColor="#7838e0" name="Incubators" acc="Incubator" />
-        <CountCard {...resources} borderColor="#BDAA00" name="Investors" acc="Investor" />
-        <CountCard {...resources} borderColor="#CB3535" name="Accelerators" acc="Accelerator" />
+        <CountCard
+          {...resources}
+          borderColor="#7838e0"
+          name="Incubators"
+          acc="Incubator"
+        />
+        <CountCard
+          {...resources}
+          borderColor="#BDAA00"
+          name="Investors"
+          acc="Investor"
+        />
+        <CountCard
+          {...resources}
+          borderColor="#CB3535"
+          name="Accelerators"
+          acc="Accelerator"
+        />
         <CountCard
           {...resources}
           borderColor="#00AD11"

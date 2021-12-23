@@ -36,7 +36,7 @@ export const Button = styled.button<ButtonTypes>(
     return {
       border: `2px solid ${ThemeColorIdentifier(props.colorTheme)}`,
       width: `${props.width} !important`,
-      backgroundColor: `${props.backgroundColor}`,
+      backgroundColor: `${props.backgroundColor ? props.backgroundColor : ThemeColorIdentifier(props.colorTheme)}`,
       color: `${props.color}`,
       flex: `${props.flex}`,
       marginRight: `${props.marginRight}`,

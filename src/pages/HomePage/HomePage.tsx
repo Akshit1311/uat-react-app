@@ -197,8 +197,8 @@ const HomePage = (props: HomePageTypes) => {
                         !startupListActive && theme.togglerButton.color
                       }`}
                       border={`${!startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none  px-3 ${
-                        startupListActive && "btn-primary text-white"
+                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
+                        startupListActive && "text-white background-color-theme"
                       }`}
                       onClick={toggleStartUp}
                     >
@@ -213,8 +213,8 @@ const HomePage = (props: HomePageTypes) => {
                         startupListActive && theme.togglerButton.color
                       }`}
                       border={`${startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none  px-3 ${
-                        !startupListActive && "btn-primary text-white"
+                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${
+                        !startupListActive && "text-white background-color-theme"
                       }`}
                       onClick={toggleStartUp}
                     >

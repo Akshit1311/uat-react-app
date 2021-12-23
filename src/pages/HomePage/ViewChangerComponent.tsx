@@ -123,7 +123,11 @@ function ViewChangerComponent({
     fetchStartUpCount("/startup/startupCount/0");
   }, []);
   
-
+  const redirectToStatePolicy = () =>{
+    const stateToRedirect = selectedArea.stateName.replaceAll(' ','-')
+    window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`
+  }
+  
   return (
     <div className="view-changer-component-styles">
       <div className="">
@@ -265,6 +269,7 @@ function ViewChangerComponent({
               <>
                 <ViewMoreButton colorTheme={colorTheme}
                   shadow={true}
+                  onClick={()=> redirectToStatePolicy()}
                   className="btn btn-radius w-100 mt-4"
                 >
                   {VIEW_STATE_STARTUP_POLICY}

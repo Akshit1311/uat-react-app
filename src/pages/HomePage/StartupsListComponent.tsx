@@ -19,7 +19,7 @@ const StartUpCardContainer = styled.div`
   height: fit-content;
   max-width: 65%;
   min-width: 65%;
-  margin-left: 1.5%; 
+  margin-left: 1.5%;
 `;
 
 const StartUpCardWrapper = styled.div`
@@ -95,6 +95,17 @@ function StartUpCard({
   ) : (
     <></>
   );
+
+  // const htmlDecode2 = () =>{
+  //   const companyTitle = window.document.getElementById('company')
+  //   companyTitle?.innerText = company.length > 35
+  //   ? company.slice(0, 30) + "..."
+  //   : htmlDecode(company)
+  // }
+
+  // React.useEffect(()=>{
+  //   htmlDecode2()
+  // },[])
   return (
     <>
       <StartUpCardWrapper
@@ -120,9 +131,10 @@ function StartUpCard({
                 overflow: "hidden",
                 textTransform: "uppercase",
               }}
+              id="company"
             >
               {company.length > 35
-                ? company.slice(0, 30) + "..."
+                ? htmlDecode(company.slice(0, 30)) + "..."
                 : htmlDecode(company)}
             </h6>
             {form80IacStatus ||
@@ -238,7 +250,7 @@ function StartupsListComponent(props: any) {
           className="my-4 data-table-view-more-button text-theme"
           onClick={handleViewMore}
         >
-          {queryString.length > 0 ? 'View All' : 'View More'}
+          {queryString.length > 0 ? "View All" : "View More"}
         </div>
         {tagsLoading && (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center position-absolute">

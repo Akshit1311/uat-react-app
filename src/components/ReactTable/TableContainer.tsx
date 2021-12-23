@@ -108,7 +108,7 @@ const TableContainer = (props: any) => {
                   {...column.getHeaderProps()}
                   borderWidth={index === 0 ? "0px" : "1px"}
                   fontWeight={true}
-                  borderColor="#8A8A8A"
+                  borderColor="#8A8A8A" 
                 >
                   <div
                     {...column.getSortByToggleProps()}

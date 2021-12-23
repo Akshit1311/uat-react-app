@@ -31,7 +31,7 @@ const Cells = ({
         }}
       />
       <div
-        style={{ minHeight: borderHeight ? borderHeight : "63px" }}
+        style={{ minHeight: borderHeight ? borderHeight : "43px" }}
         className={`d-flex h-100 ${
           textRight && !fontWeight ? "justify-content-end" : ""
         }`}
