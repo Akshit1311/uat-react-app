@@ -273,13 +273,12 @@ function ViewChangerComponent({
                   onClick={() => {
                     setStartUpPolicyChart(true);
                   }}
-                  className="btn background-color-theme btn-radius w-100 text-white"
+                  className="btn background-color-theme btn-radius w-100 text-white mb-0"
                 >
                   {VIEW_MORE + selectedArea.stateName}
                 </ViewMoreButton>
               </>
             )}
-            {/* </div> */}
           </Card>
         </div>
       </div>

@@ -61,7 +61,7 @@ const TableContainer = (props: any) => {
       item.text.toLowerCase().includes(value.toLowerCase())
     );
     setSearchQuery(value);
-    // setRenderedData(list.slice(0, noOfItemsRender));
+    setRenderedData(list);
   };
 
   const handleViewMore = () => {
@@ -98,11 +98,12 @@ const TableContainer = (props: any) => {
         <thead className="w-100 py-5 ">
           {headerGroups.map((headerGroup) => (
             <TR
-              {...headerGroup.getHeaderGroupProps()} 
+              {...headerGroup.getHeaderGroupProps()}
               className={`d-flex flex-row justify-content-between ${theme.dataTable.headerBorder}`}
             >
               {headerGroup.headers.map((column: any, index: number) => (
-                <Cells {...column.getSortByToggleProps()}
+                <Cells
+                  {...column.getSortByToggleProps()}
                   cellClass={getHeaderCellClass(index)}
                   {...column.getHeaderProps()}
                   borderWidth={index === 0 ? "0px" : "1px"}

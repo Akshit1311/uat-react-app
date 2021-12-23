@@ -9,7 +9,8 @@ import { useQuery } from "../../../hooks/useQuery";
 import MoonLoader from "react-spinners/MoonLoader";
 import { DistrictType, District } from "./districts";
 import { useWindowSize } from "../../../hooks/useWindowSize";
-import { ThemeColorIdentifier } from "../../../helper-function/themeColor"
+import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
+import { StateCircles } from "./StateCircle"
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -29,8 +30,11 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     setSelectedArea,
     mapMode,
     isCircleActive,
-    countState,colorTheme,
-    tableState, appliedFilters,tableLoading
+    countState,
+    colorTheme,
+    tableState,
+    appliedFilters,
+    tableLoading,
   } = mapViewResource;
 
   const theme = useContext(ThemeContext);
@@ -45,6 +49,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
   const [districtsBoarder, setDistrictsBoarder] = useState<any>([]);
 
+  const [stateBubbles, setStateBubbles] = useState<any[]>(StateCircles)
   // const [maxValue, setMaxValue] = useState<number>(0)
 
   const stateValidator = (array: any, accessor: string, value: string) => {
@@ -53,23 +58,27 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
 
   const findMaxValue = (array: any[], accessor: string) => {
     const newList = [...array];
-    const n:any[] = []
+    const n: any[] = [];
     newList.forEach((a: any) => n.push(a.statistics[accessor]));
     const max = Math.max(...n);
     if (newList.length > 0) return max;
     else return 0;
   };
 
-  const findCountTypeValue = (stateId:string) =>{
-    return tableState.data.findIndex((item:any)=> item.id === stateId )
-  }
+  const findCountTypeValue = (stateId: string) => {
+    return tableState.data.findIndex((item: any) => item.id === stateId);
+  };
 
-  const getGradientColor = (stateId:string, accessor:string, maxValue:number) =>{
-    const findStateIndex = findCountTypeValue(stateId)
-    const stateValue = tableState.data[findStateIndex].statistics[accessor]
-    const opacity = (stateValue/maxValue) * 100
-    return opacity
-  }
+  const getGradientColor = (
+    stateId: string,
+    accessor: string,
+    maxValue: number
+  ) => {
+    const findStateIndex = findCountTypeValue(stateId);
+    const stateValue = tableState.data[findStateIndex].statistics[accessor];
+    const opacity = (stateValue / maxValue) * 100;
+    return opacity;
+  };
 
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
@@ -288,7 +297,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const responsiveImageHeight = (mapArea: string) => {
     console.log("Height", height);
     const split: string[] = mapArea.split(" ");
-
+    // -200 0 800 687
     // if (height > 728 && height < 800) return mapArea;
     if (height > 768) {
       const a: number = 768 - height;
@@ -301,6 +310,8 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       const a: number = height - 768;
       split[2] = (Number(split[2]) - a).toString();
       split[3] = (Number(split[3]) - a).toString();
+      if (Number(split[2]) < 800) split[2] = "800";
+      if (Number(split[3]) < 687) split[3] = "687";
       console.log(split.toString().replaceAll(",", " "));
       return split.toString().replaceAll(",", " ");
     }
@@ -326,22 +337,45 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     populateDistrictCircle();
     populateDistrictsBoarders();
   }, [mapMode, theme]);
-  const maxCountValue = findMaxValue(tableState.data || [], appliedFilters.roles)
+ 
+  const maxCountValue = findMaxValue(
+    tableState.data || [],
+    appliedFilters.roles
+  );
+
+  // const getBubbleData = (stateName:string) => {
+  //   const findState = StateCircle
+  // }
+
+  // const bubbleWrapper = (mapData:any) =>{
+  //   const newList:any[] = []
+  //   mapData.forEach((stateData:any)=>{
+  //     newList.push({})
+  //   })
+  //   return []
+  // }
+
   return (
-    <MapWrapper className="m-2 mt-0 pt-0 d-flex justify-content-center" style={{ position: "relative" }}>
+    <MapWrapper
+      className="m-2 mt-0 pt-0 d-flex justify-content-center"
+      style={{ position: "relative" }}
+    >
       {!isCircleActive && (
         <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
-          <p className="max-gradient-bar">
-            {maxCountValue}
-          </p>
+          <p className="max-gradient-bar">{maxCountValue}</p>
         </div>
       )}
-      {loadingIndiaMap || tableLoading && (
-        <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
-          <MoonLoader color={"#0177FA"} loading={loadingIndiaMap || tableLoading } size={"25"} />
-        </div>
-      )}
+      {loadingIndiaMap ||
+        (tableLoading && (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
+            <MoonLoader
+              color={"#0177FA"}
+              loading={loadingIndiaMap || tableLoading}
+              size={"25"}
+            />
+          </div>
+        ))}
       {!loadingIndiaMap && !tableLoading && (
         <svg viewBox={getViewBoxArea()} aria-label="Map of India">
           {mapMode.id === MapVariables.INDIA.id &&
@@ -363,7 +397,13 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   key={index}
                   d={state.d}
                   id={state.id}
-                  fillOpacity={getGradientColor(state.id, appliedFilters.roles, maxCountValue) + '%'}
+                  fillOpacity={
+                    getGradientColor(
+                      state.id,
+                      appliedFilters.roles,
+                      maxCountValue
+                    ) + "%"
+                  }
                   fill={ThemeColorIdentifier(colorTheme)}
                   stroke={fillStrokeColor(state.id)}
                   strokeWidth={fillStroke(state.id)}
@@ -415,6 +455,22 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
             viewBox={MAP_AREA_INDIA}
           >
             <g style={{ transform: getViewBoxAreaCircle() }}>
+              {stateBubbles.map((bubble: any, index: number) => (
+                <circle
+                  transform={bubble.transform}
+                  fill-opacity="0.05"
+                  pointer-events="all"
+                  style={{ cursor: "pointer" }}
+                  fill={ThemeColorIdentifier(colorTheme)}
+                  stroke={ThemeColorIdentifier(colorTheme)}
+                  strokeWidth="1.4"
+                  r={bubble.radius}
+                >
+                  <title>{bubble.title}</title>
+                </circle>
+              ))}
+            </g>
+            {/* <g style={{ transform: getViewBoxAreaCircle() }}>
               {districtWiseCircle.map((districts: DistrictType) => (
                 <circle
                   transform={districts.transform}
@@ -422,22 +478,22 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
                   fill={"rgba(202, 227, 255, 0.4)"}
-                  stroke="#0177FA"
+                  stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
                   r={districts.radius}
                 >
                   <title>{districts.title}</title>
                 </circle>
               ))}
-            </g>
-            <g style={{ transform: getViewBoxAreaCircle() }}>
+            </g> */}
+            <g style={{ transform: 'scale(1)'}}>
               <circle
                 transform={"translate(510,37)"}
                 fill-opacity="0.25"
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
                 fill="none"
-                stroke="#0177FA"
+                stroke={ThemeColorIdentifier(colorTheme)}
                 strokeWidth="1.4"
                 r={35}
               >
@@ -449,7 +505,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
                 fill="none"
-                stroke="#0177FA"
+                stroke={ThemeColorIdentifier(colorTheme)}
                 strokeWidth="1.4"
                 r={50}
               >
@@ -461,7 +517,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 pointer-events="all"
                 style={{ cursor: "pointer" }}
                 fill="none"
-                stroke="#0177FA"
+                stroke={ThemeColorIdentifier(colorTheme)}
                 strokeWidth="1.4"
                 r={65}
               >

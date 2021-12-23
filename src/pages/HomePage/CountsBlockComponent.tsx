@@ -241,8 +241,8 @@ const CountsBlockComponent = ({
                     }}
                     className="d-flex flex-column"
                   >
-                    <div>{"India"}</div>
-                    <div style={{ background: "#0177FA", height: "1px" }}></div>
+                    <div className="text-theme">{"India"}</div>
+                    <div className="background-color-theme" style={{ height: "1px" }}></div>
                   </div>{" "}
                   <div className="ms-1" style={{ color: theme.color }}>
                     | Startups {" " + countState.Startup}
