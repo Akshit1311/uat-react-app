@@ -96,7 +96,7 @@ body {
 }
 
 .gradient-bar-map {
-  background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
+  
   width: 260px;
   height: 10px;
   border-radius: 20px;
@@ -328,4 +328,92 @@ tbody {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
+}
+
+.theme-1{
+  .background-color-theme{
+    background-color: #0177FA !important;
+    border-color: #0177FA !important;
+  }
+  .text-theme{
+    color: #0177FA !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-2{
+  .background-color-theme{
+    background-color: #ED8E00 !important;
+    border-color: #ED8E00 !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-3{
+  .background-color-theme{
+    background-color: #ED8E00 !important;
+    border-color: #ED8E00 !important;
+  }
+  .text-theme{
+    color: #ED8E00 !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #ED8E00 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-4{
+  .background-color-theme{
+    background-color: #7838E0 !important;
+    border-color: #7838E0 !important;
+  }
+  .text-theme{
+    color: #7838E0 !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #7838E0 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-5{
+  .background-color-theme{
+    background-color: #BDAA00 !important;
+    border-color: #BDAA00 !important;
+  }
+  .text-theme{
+    color: #BDAA00 !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #BDAA00 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-6{
+  .background-color-theme{
+    background-color: #CB3535 !important;
+    border-color: #CB3535 !important;
+  }
+  .text-theme{
+    color: #CB3535 !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #CB3535 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-7{
+  .background-color-theme{
+    background-color: #00AD11 !important;
+    border-color: #00AD11 !important;
+  }
+  .text-theme{
+    color: #00AD11 !important;
+  }
+  .gradient-bar-map{
+    background: linear-gradient(270deg, #00AD11 0%, #ecf5ff 100%);
+  }
 }

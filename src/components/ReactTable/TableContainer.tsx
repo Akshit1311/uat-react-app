@@ -187,7 +187,7 @@ const TableContainer = (props: any) => {
                 ? "visible"
                 : "hidden",
           }}
-          className="my-4 data-table-view-more-button"
+          className="my-4 data-table-view-more-button text-theme"
           onClick={handleViewMore}
         >
           View More

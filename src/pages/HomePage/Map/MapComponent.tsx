@@ -8,47 +8,30 @@ import { ThemeContext } from ".././../../config/context";
 import { useQuery } from "../../../hooks/useQuery";
 import MoonLoader from "react-spinners/MoonLoader";
 import { DistrictType, District } from "./districts";
+import { useWindowSize } from "../../../hooks/useWindowSize";
+import { ThemeColorIdentifier } from "../../../helper-function/themeColor"
 
 interface IndiaMapTypes {
   mapViewResource: any;
 }
 
-function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
-  React.useEffect(() => {
-    function updateSize() {
-      console.log(
-        "Window Height, Width",
-        window.innerHeight,
-        window.innerWidth
-      );
-      setSize([window.innerWidth, window.innerHeight]);
-    }
-    window.addEventListener("resize", updateSize);
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-  return size;
-}
-
 const MapWrapper = styled.div`
   color: ${(props) => props.theme.map.color} !important;
 `;
-// const Path = styled.path`
-//   stroke: ${(props) => props.theme.map.color};
-// `;
 
 const MAP_AREA_INDIA = "0 0 930 806";
 const MAP_AREA_DISTRICTS = "0 0 620 614";
-// const WHITE = "#ffffff";
-// const BLACK = "#000000";
-// const THEME_COLOR = "rgb(1, 119, 250)";
-// const THEME_COLOR_LITE = "rgb(96 169 251)";
 const ID = "id";
 
 function IndiaMap({ mapViewResource }: IndiaMapTypes) {
-  const { setSelectedStateByMap, setSelectedArea, mapMode, isCircleActive, countState } =
-    mapViewResource;
+  const {
+    setSelectedStateByMap,
+    setSelectedArea,
+    mapMode,
+    isCircleActive,
+    countState,colorTheme,
+    tableState, appliedFilters,tableLoading
+  } = mapViewResource;
 
   const theme = useContext(ThemeContext);
 
@@ -62,9 +45,31 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
   const [districtsBoarder, setDistrictsBoarder] = useState<any>([]);
 
+  // const [maxValue, setMaxValue] = useState<number>(0)
+
   const stateValidator = (array: any, accessor: string, value: string) => {
     return array.findIndex((obj: any) => obj[accessor] === value);
   };
+
+  const findMaxValue = (array: any[], accessor: string) => {
+    const newList = [...array];
+    const n:any[] = []
+    newList.forEach((a: any) => n.push(a.statistics[accessor]));
+    const max = Math.max(...n);
+    if (newList.length > 0) return max;
+    else return 0;
+  };
+
+  const findCountTypeValue = (stateId:string) =>{
+    return tableState.data.findIndex((item:any)=> item.id === stateId )
+  }
+
+  const getGradientColor = (stateId:string, accessor:string, maxValue:number) =>{
+    const findStateIndex = findCountTypeValue(stateId)
+    const stateValue = tableState.data[findStateIndex].statistics[accessor]
+    const opacity = (stateValue/maxValue) * 100
+    return opacity
+  }
 
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
@@ -76,7 +81,11 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   };
 
   const fillStates = (stateId: string) => {
-    // if (fillHover(stateId)) return theme.map.hover;
+    if (fillClick(stateId)) return theme.map.click;
+    return theme.map.background;
+  };
+
+  const fillGradient = (stateId: string) => {
     if (fillClick(stateId)) return theme.map.click;
     return theme.map.background;
   };
@@ -106,8 +115,8 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     }
     setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
-    console.log('Selected State', state)
-    setSelectedStateByMap(state)
+    console.log("Selected State", state);
+    setSelectedStateByMap(state);
   };
 
   const populateDistrictCircle = () => {
@@ -277,7 +286,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   };
 
   const responsiveImageHeight = (mapArea: string) => {
-    console.log("Height", height)
+    console.log("Height", height);
     const split: string[] = mapArea.split(" ");
 
     // if (height > 728 && height < 800) return mapArea;
@@ -285,14 +294,14 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       const a: number = 768 - height;
       split[2] = (Number(split[2]) + a).toString();
       split[3] = (Number(split[3]) + a).toString();
-      console.log(split.toString().replaceAll(",", " "))
+      console.log(split.toString().replaceAll(",", " "));
       return split.toString().replaceAll(",", " ");
     }
     if (height < 768) {
       const a: number = height - 768;
       split[2] = (Number(split[2]) - a).toString();
       split[3] = (Number(split[3]) - a).toString();
-      console.log(split.toString().replaceAll(",", " "))
+      console.log(split.toString().replaceAll(",", " "));
       return split.toString().replaceAll(",", " ");
     }
   };
@@ -305,7 +314,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     if (mapMode.id === MapVariables.CITY.id)
       return responsiveImageHeight(MAP_AREA_INDIA);
   };
-  
+
   const getViewBoxAreaCircle = () => {
     if (mapMode.id === MapVariables.DISTRICT.id) return "scale(1.38)";
     if (mapMode.id === MapVariables.INDIA.id) return "scale(1.42)";
@@ -317,26 +326,25 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     populateDistrictCircle();
     populateDistrictsBoarders();
   }, [mapMode, theme]);
-
+  const maxCountValue = findMaxValue(tableState.data || [], appliedFilters.roles)
   return (
     <MapWrapper className="m-2 mt-0 pt-0" style={{ position: "relative" }}>
       {!isCircleActive && (
-        <div className="gradient-bar-map d-flex justify-content-between">
+        <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
-          <p className="max-gradient-bar">{countState.maxRange}</p>
+          <p className="max-gradient-bar">
+            {maxCountValue}
+          </p>
+          {/* <p className="max-gradient-bar">{countState.maxRange}</p> */}
         </div>
       )}
-      {loadingIndiaMap && (
+      {loadingIndiaMap || tableLoading && (
         <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
           <MoonLoader color={"#0177FA"} loading={loadingIndiaMap} size={"25"} />
         </div>
       )}
-      {console.log("Height Width", height, width)}
       {!loadingIndiaMap && (
-        <svg
-          viewBox={getViewBoxArea()}
-          aria-label="Map of India"
-        >
+        <svg viewBox={getViewBoxArea()} aria-label="Map of India">
           {mapMode.id === MapVariables.INDIA.id &&
             indiaMap.map((state: any, index: number) => (
               <Tooltip
@@ -356,13 +364,13 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   key={index}
                   d={state.d}
                   id={state.id}
-                  fill={fillStates(state.id)}
+                  fillOpacity={getGradientColor(state.id, appliedFilters.roles, maxCountValue) + '%'}
+                  fill={ThemeColorIdentifier(colorTheme)}
                   stroke={fillStrokeColor(state.id)}
                   strokeWidth={fillStroke(state.id)}
                 />
               </Tooltip>
-            ))
-            }
+            ))}
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
               <Tooltip

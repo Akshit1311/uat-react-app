@@ -1,23 +1,25 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { ThemeColorIdentifier } from "../helper-function/themeColor";
 
 interface ButtonTypes {
-    width?: any;
-    border?: string;
-    backgroundColor?: string;
-    color?: string;
-    marginRight?: string;
-    marginLeft?: string;
-    flex?: string;
-    boxShadow?: string;
-    opacity?: string;
-    theme:any;
-    noBorder?:boolean;
+  width?: any;
+  border?: string;
+  backgroundColor?: string;
+  color?: string;
+  marginRight?: string;
+  marginLeft?: string;
+  flex?: string;
+  boxShadow?: string;
+  opacity?: string;
+  theme: any;
+  noBorder?: boolean;
+  colorTheme: string;
 }
 
-export const Button = styled.button<ButtonTypes>({
+export const Button = styled.button<ButtonTypes>(
+  {
     padding: "0.375rem 0.75rem",
     display: "inline-block",
-    backgroundColor: "#0177fa",
     color: "white",
     textAlign: "center",
     textDecoration: "none",
@@ -29,28 +31,31 @@ export const Button = styled.button<ButtonTypes>({
     fontStyle: "normal",
     fontWeight: 600,
     lineHeight: "150% !important",
-    border: "2px solid #0177fa"
-}, (props: ButtonTypes) => {
+  },
+  (props: ButtonTypes) => {
     return {
-        border: `${props.border}`,
-        width: `${props.width} !important`,
-        backgroundColor: `${props.backgroundColor}`,
-        color: `${props.color}`,
-        flex: `${props.flex}`,
-        marginRight: `${props.marginRight}`,
-        marginLeft: `${props.marginLeft}`,
-        boxShadow: `${props.noBorder ? "" :props.theme.buttonShadow}`,
-        opacity: `${props.opacity}`
-    }
-}
-)
+      border: `2px solid ${ThemeColorIdentifier(props.colorTheme)}`,
+      width: `${props.width} !important`,
+      backgroundColor: `${props.backgroundColor}`,
+      color: `${props.color}`,
+      flex: `${props.flex}`,
+      marginRight: `${props.marginRight}`,
+      marginLeft: `${props.marginLeft}`,
+      boxShadow: `${props.noBorder ? "" : props.theme.buttonShadow}`,
+      opacity: `${props.opacity}`,
+    };
+  }
+);
 
 export const IconButton = styled.button<any>`
-color: ${props=> props.active ? "white" : props.theme.color2};
-    background: ${props=> props.active ? "#0177FA" : props.theme.iconButtonBackground};
-    border: 2px solid ${"#0177FA"}
-    box-shadow: ${props=> props.theme.shadowMapView} !important;
+color: ${(props) => (props.active ? "white" : props.theme.color2)};
+    background: ${(props) =>
+      props.active
+        ? ThemeColorIdentifier(props.colorTheme)
+        : props.theme.iconButtonBackground};
+    border: 2px solid ${(props)=>ThemeColorIdentifier(props.colorTheme)};
+    box-shadow: ${(props) => props.theme.shadowMapView} !important;
     &:hover{
-        color: ${props=> props.active ? "white" : props.theme.color2};
+        color: ${(props) => (props.active ? "white" : props.theme.color2)};
     }
-`
+`;

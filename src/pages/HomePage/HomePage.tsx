@@ -42,8 +42,6 @@ const INITIAL_FILTER_STATE = {
   roles: ["Startup"],
 };
 
-
-
 const HomePage = (props: HomePageTypes) => {
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
     MapVariables.INDIA
@@ -63,9 +61,10 @@ const HomePage = (props: HomePageTypes) => {
   const [fetchTableData, tableState, tableLoading] = useQuery(
     "/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
   );
-  console.log("Selected State",selectedStateByMap)
   const [fetchPolicy, policyState, policyLoading] = useQuery("");
   const [selectedCountBlock, setSelectedCountBlock] = useState("Startup");
+
+  const [primaryColorTheme, setPrimaryColorTheme] = useState("theme-1");
 
   const applyRoles = (role: string, name: string) => {
     setSelectedCountBlock(name);
@@ -84,7 +83,10 @@ const HomePage = (props: HomePageTypes) => {
     countLoading,
     setSelectedArea,
     tableState,
-    selectedStateByMap, setSelectedStateByMap
+    selectedStateByMap,
+    setSelectedStateByMap,
+    setPrimaryColorTheme,
+    colorTheme:primaryColorTheme,
   };
 
   const mapViewResources = {
@@ -96,7 +98,11 @@ const HomePage = (props: HomePageTypes) => {
     selectedArea,
     getCounts,
     countState,
+    tableState,
+    appliedFilters,
     setSelectedStateByMap,
+    colorTheme:primaryColorTheme,
+    tableLoading
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -104,7 +110,7 @@ const HomePage = (props: HomePageTypes) => {
   return (
     <>
       <div
-        className="border-bottom home-component-styles mx-0 px-0"
+        className={`border-bottom home-component-styles mx-0 px-0 ${primaryColorTheme}`}
         style={{ marginTop: NAVBAR_HEIGHT }}
       >
         <PageWrapperContainer>
@@ -122,7 +128,7 @@ const HomePage = (props: HomePageTypes) => {
                   appliedFilters={appliedFilters}
                   setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
-                  setSelectedArea={setSelectedArea}
+                  setSelectedArea={setSelectedArea} colorTheme={primaryColorTheme}
                 ></LeftNavComponent>
               </div>
               <div style={{ flex: "62%" }} className="p-0">
@@ -182,7 +188,7 @@ const HomePage = (props: HomePageTypes) => {
                 </Strip>
                 <div className="row d-flex justify-content-center px-0 mx-0">
                   <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
-                    <Button
+                    <Button colorTheme={primaryColorTheme}
                       backgroundColor={`${
                         !startupListActive &&
                         theme.togglerButton.backgroundInactive
@@ -198,7 +204,7 @@ const HomePage = (props: HomePageTypes) => {
                     >
                       Startups List
                     </Button>
-                    <Button
+                    <Button colorTheme={primaryColorTheme}
                       backgroundColor={`${
                         startupListActive &&
                         theme.togglerButton.backgroundInactive
@@ -222,7 +228,7 @@ const HomePage = (props: HomePageTypes) => {
                           display: startupListActive ? "block" : "none",
                         }}
                       >
-                        <StartupsListComponent
+                        <StartupsListComponent 
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
                         />
@@ -235,7 +241,11 @@ const HomePage = (props: HomePageTypes) => {
                             display: !startupListActive ? "block" : "none",
                           }}
                         >
-                          <DataTable fetch={fetchTableData} state={tableState} loading={tableLoading} />
+                          <DataTable
+                            fetch={fetchTableData}
+                            state={tableState}
+                            loading={tableLoading}
+                          />
                         </div>
                       </>
                     }

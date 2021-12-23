@@ -26,7 +26,6 @@ export const RoundedBadge = styled.div`
    justify-content: center;
    align-items: center;
    color: #feffff;
-  background-color: #0177fa;
    border-radius: 50%;
    position: absolute;
    right: 1rem;

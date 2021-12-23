@@ -206,7 +206,7 @@ function StartupsListComponent(props: any) {
         }`}
       >
         <h6 className="startup-heading p-0 m-0 text-uppercase">
-          {props.selectedCountBlock}S
+          {props.selectedCountBlock}
         </h6>
         <div style={{ marginTop: "1rem", marginBottom: "0.2rem" }}>
           <SearchBarComponent
@@ -235,7 +235,7 @@ function StartupsListComponent(props: any) {
           style={{
             display: renderedData.length !== tagsState.length ? "flex" : "none",
           }}
-          className="my-4 data-table-view-more-button"
+          className="my-4 data-table-view-more-button text-theme"
           onClick={handleViewMore}
         >
           {queryString.length > 0 ? 'View All' : 'View More'}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../config/context";
 import styled from "styled-components";
+import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 
 const override = css`
   display: block;
@@ -34,7 +35,7 @@ const DropDownListComponent = (props: any) => {
     loading,
     handleClearClick,
     dropDownId,
-    noSort,
+    noSort, colorTheme
   } = props;
 
   const theme = useContext(ThemeContext);
@@ -131,7 +132,7 @@ const DropDownListComponent = (props: any) => {
         {/* {data.length && !loading ?  : ""} */}
       </div>
       <div className="my-3 mt-2 d-flex justify-content-between me-3">
-        <Button
+        <Button colorTheme={colorTheme}
           border={`2px solid ${theme.dropDown.cancelBorder}`}
           backgroundColor={theme.dropDown.cancel}
           color={theme.dropDown.cancelColor}
@@ -140,10 +141,11 @@ const DropDownListComponent = (props: any) => {
         >
           Clear
         </Button>
-        <Button
+        <Button colorTheme={colorTheme}
           data-bs-toggle="collapse"
           data-bs-target={dropDownId.toString()}
           marginLeft={"12px"}
+          backgroundColor={ThemeColorIdentifier(colorTheme)}
           onClick={handleApplyClick}
         >
           Apply

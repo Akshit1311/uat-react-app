@@ -147,7 +147,7 @@ const LeftNavComponent = (props: any) => {
     selectedArea,
     tagsResources,
     appliedFilters,
-    setAppliedFilters,
+    setAppliedFilters, colorTheme
   } = props;
 
   const [fetchFilterList, filterState, filterLoading] = useMutate(
@@ -345,9 +345,6 @@ const LeftNavComponent = (props: any) => {
         className="left-side-nav-styles"
         style={{
           position: "sticky",
-          // width: "18.666667%",
-          // left: 0,
-          // maxWidth: '250px',
           top: "96px",
           zIndex: 10,
         }}
@@ -382,7 +379,7 @@ const LeftNavComponent = (props: any) => {
                     >
                       States
                       {appliedFilters.states.length !== 0 && (
-                        <RoundedBadge className="ms-auto me-3">
+                        <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.states.length}
                         </RoundedBadge>
                       )}
@@ -395,7 +392,7 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"states"}
+                      accessor={"states"} colorTheme={colorTheme}
                       originalData={filterState.states}
                       loading={filterLoading}
                       handleClick={handleStateClick}
@@ -423,7 +420,7 @@ const LeftNavComponent = (props: any) => {
                     >
                       Sector
                       {appliedFilters.sectors.length !== 0 && (
-                        <RoundedBadge className="ms-auto me-3">
+                        <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.sectors.length}
                         </RoundedBadge>
                       )}
@@ -436,7 +433,7 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"sectors"}
+                      accessor={"sectors"} colorTheme={colorTheme}
                       originalData={filterState.sectors}
                       loading={filterLoading}
                       selectedItem={selectedSector}
@@ -463,7 +460,7 @@ const LeftNavComponent = (props: any) => {
                     >
                       Industry
                       {appliedFilters.industries.length !== 0 && (
-                        <RoundedBadge className="ms-auto me-3">
+                        <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.industries.length}
                         </RoundedBadge>
                       )}
@@ -476,7 +473,7 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"industries"}
+                      accessor={"industries"} colorTheme={colorTheme}
                       originalData={filterState.industries}
                       loading={filterLoading}
                       selectedItem={selectedIndustry}
@@ -503,7 +500,7 @@ const LeftNavComponent = (props: any) => {
                     >
                       Stages
                       {appliedFilters.stages.length !== 0 && (
-                        <RoundedBadge className="ms-auto me-3">
+                        <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.stages.length}
                         </RoundedBadge>
                       )}
@@ -516,7 +513,7 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"stages"}
+                      accessor={"stages"} colorTheme={colorTheme}
                       originalData={filterState.stages}
                       loading={filterLoading}
                       selectedItem={selectedStages}
@@ -541,7 +538,7 @@ const LeftNavComponent = (props: any) => {
                     >
                       Winner Badges
                       {appliedFilters.badges.length > 0 && (
-                        <RoundedBadge className="ms-auto me-3">
+                        <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.badges.length}
                         </RoundedBadge>
                       )}
@@ -552,7 +549,7 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"value"}
+                      accessor={"value"} colorTheme={colorTheme}
                       originalData={trimBadges(badgesState)}
                       loading={badgesLoading}
                       selectedItem={selectedBadges}
@@ -580,7 +577,7 @@ const LeftNavComponent = (props: any) => {
               You can View Insights of India
             </span>
             <div className="btn-view-project mx-0 px-0">
-              <Button>View Insights</Button>
+              <Button colorTheme={colorTheme} className="background-color-theme">View Insights</Button>
             </div>
           </Card>
         </div>

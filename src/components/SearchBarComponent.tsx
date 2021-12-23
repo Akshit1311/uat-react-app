@@ -70,7 +70,7 @@ const SearchBarComponent = ({
         </div>
         <button 
           onClick={handleApply}
-          className="btn btn-primary btn-radius search-btn"
+          className="btn btn-primary btn-radius search-btn background-color-theme"
           style={{
             fontFamily: "Montserrat",
             paddingTop: "7px",

@@ -7,6 +7,7 @@ import styled from "styled-components";
 import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
 import { ThemeContext } from "../../config/context";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 
 const override = css`
   display: block;
@@ -29,11 +30,13 @@ interface CountCardTypes {
   borderColor: string;
   accessor?: string;
   loading: boolean;
+  colorTheme: string;
 }
 
 interface CountCardWrapperTypes {
   active: boolean;
   borderColor: string;
+  colorTheme:string;
 }
 
 const CountCardWrapper = styled.div<CountCardWrapperTypes>(
@@ -45,10 +48,8 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>(
   },
   (props: any) => {
     return {
-      backgroundColor: props.active ? "#0177FA" : props.theme.bgCards,
-      border: props.active
-        ? "2px solid #0177FA"
-        : `2px solid ${props.borderColor}`,
+      backgroundColor: props.active ? ThemeColorIdentifier(props.colorTheme) : props.theme.bgCards,
+      border: `2px solid ${props.borderColor}`,
       color: props.active ? "white" : props.theme.color,
       transition: "0.5s color",
     };
@@ -61,7 +62,7 @@ const CountCard = ({
   state,
   borderColor,handleCardClick,
   accessor,
-  loading,
+  loading, colorTheme
 }: CountCardTypes) => {
   console.log("CountBlock Child",state)
   const [currentCount, setCurrentCount] = useState<number>(0);
@@ -69,7 +70,7 @@ const CountCard = ({
 
   useEffect(() => {
     setCurrentCount(0);
-    const count = state[accessor ? accessor : name];
+    const count = state[accessor ? accessor : name.slice(0,-1)];
     if (count && count > 0) {
       let interval: any;
       if (currentCount < count) {
@@ -97,6 +98,7 @@ const CountCard = ({
   return (
     <>
       <CountCardWrapper
+        colorTheme={colorTheme}
         onClick={() => handleCardClick(name, acc)}
         active={active}
         borderColor={borderColor}
@@ -159,7 +161,7 @@ const CountsBlockComponent = ({
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const [activeCard, setActiveCard] = useState<string>("Startups");
-  const { getCounts, countState, countLoading, setSelectedArea, tableState,selectedStateByMap, setSelectedStateByMap } =
+  const { getCounts, colorTheme, countState, countLoading,setPrimaryColorTheme, setSelectedArea, tableState,selectedStateByMap, setSelectedStateByMap } =
     countResource;
 
   const [stateCounts, setStateCounts] = useState<CountBlockModel>(new CountBlockModel())
@@ -170,6 +172,7 @@ const CountsBlockComponent = ({
     if(state){
       console.log("State STatics",state.statistics)
       setStateCounts(state.statistics)
+      
     } 
   }
 
@@ -181,9 +184,21 @@ const CountsBlockComponent = ({
     getCounts();
   }, []);
 
+  const getThemeName = (name:string) =>{
+    const value = name.toLowerCase()
+    console.log("Value Theme Color", value)
+    if(value === 'startups') return 'theme-1'
+    if(value === 'mentors') return 'theme-3'
+    if(value === 'incubators') return 'theme-4'
+    if(value === 'investors') return 'theme-5'
+    if(value === 'accelerators') return 'theme-6'
+    if(value === 'government') return 'theme-7'
+  }
+
   const handleCardClick = (name:string, accessor:string) =>{
     applyRoles(accessor, name)
     setActiveCard(name)
+    setPrimaryColorTheme(getThemeName(name))
   }
 
   const resources = {
@@ -191,8 +206,9 @@ const CountsBlockComponent = ({
     handleCardClick,
     state: selectedStateByMap.name && selectedStateByMap.name.length  ? stateCounts: countState,
     loading: countLoading,
+    colorTheme
   };
-
+  
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
@@ -254,9 +270,9 @@ const CountsBlockComponent = ({
           acc={"Mentor"}
           name="Mentors"
         />
-        <CountCard {...resources} borderColor="#7838e0" name="Incubator" acc="Incubator" />
-        <CountCard {...resources} borderColor="#BDAA00" name="Investor" acc="Investor" />
-        <CountCard {...resources} borderColor="#CB3535" name="Accelerator" acc="Accelerator" />
+        <CountCard {...resources} borderColor="#7838e0" name="Incubators" acc="Incubator" />
+        <CountCard {...resources} borderColor="#BDAA00" name="Investors" acc="Investor" />
+        <CountCard {...resources} borderColor="#CB3535" name="Accelerators" acc="Accelerator" />
         <CountCard
           {...resources}
           borderColor="#00AD11"

@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { ThemeColorIdentifier } from "../helper-function/themeColor";
 
 export const SelectBox = styled.select<any>`
-border: 2px solid #0177FA !important;
+border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme)} !important;
 box-sizing: border-box;
 border-radius: 4px;
 font-style: normal;

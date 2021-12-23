@@ -16,6 +16,7 @@ import styled from "styled-components";
 import { IconButton } from "../../styles-components/Button";
 import { ThemeContext } from "../../config/context";
 import { useQuery } from "../../hooks/useQuery";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor"
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -31,7 +32,7 @@ const ViewMoreButton = styled.button<any>`
   padding-top: 7px;
   font-weight: 600;
   font-size: 14px;
-  border: 2px solid #0177fa;
+  border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme)};
   margin-bottom: 20px;
   color: ${(props) => props.theme.color};
   box-shadow: ${(props) =>
@@ -53,7 +54,7 @@ function ViewChangerComponent({
     setMapMode,
     setSelectedArea,
     selectedArea,
-    getCounts,
+    getCounts, colorTheme
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
@@ -101,14 +102,6 @@ function ViewChangerComponent({
     if (value === "none") {
       return getCounts();
     }
-    // const today = new Date();
-    // const beginDate = await moment(today).format("YYYY-MM-DD");
-    // const endDate = await moment(today)
-    //   .subtract({ months: value })
-    //   .format("YYYY-MM-DD");
-    const valueSplit = value.split("/");
-    const beginData = valueSplit[0];
-    const endDate = valueSplit[1];
     getCounts(HomeApis.countDateRange + value);
   };
 
@@ -137,7 +130,7 @@ function ViewChangerComponent({
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
           <SelectBox
             id="dataRangeSelectBox"
-            marginBottom="0px"
+            marginBottom="0px" colorTheme={colorTheme}
             style={{
               backgroundImage: getThemeDropDownImage(),
             }}
@@ -167,7 +160,7 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={stateText}
               >
-                <IconButton
+                <IconButton colorTheme={colorTheme}
                   onClick={defaultView}
                   active={mapMode.id === MapVariables.INDIA.id}
                   className={`btn-outline btn-icon-handler ${
@@ -187,9 +180,9 @@ function ViewChangerComponent({
                 overlay={cityText}
               >
                 <IconButton
-                  onClick={cityView}
+                  onClick={cityView} colorTheme={colorTheme}
                   active={mapMode.id === MapVariables.CITY.id}
-                  className={`btn btn-icon-handler border-primary dark ${
+                  className={`btn btn-icon-handler  dark ${
                     mapMode.id === MapVariables.CITY.id ? "bg-active" : ""
                   }`}
                 >
@@ -206,9 +199,9 @@ function ViewChangerComponent({
                 overlay={districtText}
               >
                 <IconButton
-                  onClick={districtView}
+                  onClick={districtView} colorTheme={colorTheme}
                   active={mapMode.id === MapVariables.DISTRICT.id}
-                  className={`btn btn-icon-handler border-primary ${
+                  className={`btn btn-icon-handler  ${
                     mapMode.id === MapVariables.DISTRICT.id ? "bg-active" : ""
                   }`}
                 >
@@ -221,9 +214,9 @@ function ViewChangerComponent({
             </div>
             <div>
               <IconButton
-                active={isCircleActive}
+                active={isCircleActive} colorTheme={colorTheme}
                 onClick={circleView}
-                className={`btn btn-icon-handler border-primary shadow-small ${
+                className={`btn btn-icon-handler shadow-small ${
                   isCircleActive ? "bg-active" : ""
                 }`}
               >
@@ -243,7 +236,7 @@ function ViewChangerComponent({
             </h5>
             <div>
               <SelectBoxLabel>Select Type</SelectBoxLabel>
-              <SelectBox
+              <SelectBox colorTheme={colorTheme}
                 style={{
                   backgroundImage: getThemeDropDownImage(),
                 }}
@@ -269,18 +262,18 @@ function ViewChangerComponent({
             </Card>
             {selectedArea.id !== "india" && (
               <>
-                <ViewMoreButton
+                <ViewMoreButton colorTheme={colorTheme}
                   shadow={true}
                   className="btn btn-radius w-100 mt-4"
                 >
                   {VIEW_STATE_STARTUP_POLICY}
                 </ViewMoreButton>
-                <ViewMoreButton
+                <ViewMoreButton colorTheme={colorTheme}
                   shadow={false}
                   onClick={() => {
                     setStartUpPolicyChart(true);
                   }}
-                  className="btn btn-primary btn-radius w-100 text-white"
+                  className="btn background-color-theme btn-radius w-100 text-white"
                 >
                   {VIEW_MORE + selectedArea.stateName}
                 </ViewMoreButton>
