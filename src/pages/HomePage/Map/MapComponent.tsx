@@ -19,7 +19,7 @@ const MapWrapper = styled.div`
   color: ${(props) => props.theme.map.color} !important;
 `;
 
-const MAP_AREA_INDIA = "0 0 930 806";
+const MAP_AREA_INDIA = "-200 0 930 806";
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
 
@@ -328,22 +328,21 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   }, [mapMode, theme]);
   const maxCountValue = findMaxValue(tableState.data || [], appliedFilters.roles)
   return (
-    <MapWrapper className="m-2 mt-0 pt-0" style={{ position: "relative" }}>
+    <MapWrapper className="m-2 mt-0 pt-0 d-flex justify-content-center" style={{ position: "relative" }}>
       {!isCircleActive && (
         <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
           <p className="max-gradient-bar">
             {maxCountValue}
           </p>
-          {/* <p className="max-gradient-bar">{countState.maxRange}</p> */}
         </div>
       )}
       {loadingIndiaMap || tableLoading && (
         <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
-          <MoonLoader color={"#0177FA"} loading={loadingIndiaMap} size={"25"} />
+          <MoonLoader color={"#0177FA"} loading={loadingIndiaMap || tableLoading } size={"25"} />
         </div>
       )}
-      {!loadingIndiaMap && (
+      {!loadingIndiaMap && !tableLoading && (
         <svg viewBox={getViewBoxArea()} aria-label="Map of India">
           {mapMode.id === MapVariables.INDIA.id &&
             indiaMap.map((state: any, index: number) => (
