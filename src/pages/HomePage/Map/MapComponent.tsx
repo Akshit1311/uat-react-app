@@ -76,14 +76,14 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
     maxValue: number
   ) => {
     const findStateIndex = findCountTypeValue(stateId);
-    if(findStateIndex !== -1){
+    if (findStateIndex !== -1) {
       const stateValue = tableState.data[findStateIndex].statistics[accessor];
       const opacity = (stateValue / maxValue) * 100;
       return opacity;
     }
-    return 0
+    return 0;
   };
-  console.log("India Map Svg", indiaMap)
+  console.log("India Map Svg", indiaMap);
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
     if (selected !== -1) return true;
@@ -324,10 +324,8 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const getViewBoxArea = () => {
     if (mapMode.id === MapVariables.DISTRICT.id)
       return responsiveImageHeight(MAP_AREA_DISTRICTS);
-    if (mapMode.id === MapVariables.INDIA.id)
-      return responsiveImageHeight(MAP_AREA_INDIA);
-    if (mapMode.id === MapVariables.CITY.id)
-      return responsiveImageHeight(MAP_AREA_INDIA);
+    if (mapMode.id === MapVariables.INDIA.id) return MAP_AREA_INDIA;
+    if (mapMode.id === MapVariables.CITY.id) return MAP_AREA_INDIA;
   };
 
   const getViewBoxAreaCircle = () => {
@@ -365,14 +363,23 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       });
     const newList = new Array();
 
-    StateBorders.forEach((i: any) => {
-      const filteredState = findId(i.name);
+    stateBubbles.forEach((i: any) => {
+      const filteredState = findId(i.title);
       if (filteredState) {
+        i.name = i.title;
+        i.text = i.title;
         i.id = filteredState.id;
       }
       newList.push(i);
     });
     console.log("New map List", newList);
+  };
+
+  const bubbleRadiusWraper = (percent: number) => {
+    console.log("Percentage Radius", percent);
+    const radius = (percent / 100) * 65;
+    console.log("Radius", radius);
+    return radius;
   };
 
   return (
@@ -398,12 +405,12 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
             />
           </div>
         ))}
-        {console.log("tableLoading", tableLoading)}
+      {console.log("tableLoading", tableLoading)}
       {!loadingIndiaMap && !tableLoading && (
         <svg viewBox={getViewBoxArea()} aria-label="Map of India">
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {
-              state.text = state.name
+              state.text = state.name;
               return (
                 <Tooltip
                   placement="top"
@@ -430,23 +437,20 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                     // key={index}
                     // d={state.d}
                     // id={index.toString()}
-                    fillOpacity={ tableState && tableState.data ?
+                    fillOpacity={ !isCircleActive ? tableState && tableState.data ?
                       getGradientColor(
                         state.id,
                         appliedFilters.roles,
                         maxCountValue
-                      ) + "%" : '1'
+                      ) + "%" : '1' : '0'
                     }
                     fill={ThemeColorIdentifier(colorTheme)}
                     stroke={fillStrokeColor(state.id)}
                     strokeWidth={fillStroke(state.id)}
                   />
                 </Tooltip>
-              )
-            }
-
-            
-            )}
+              );
+            })}
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
               <Tooltip
@@ -489,9 +493,9 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         <>
           <svg
             style={{ position: "absolute", left: 0 }}
-            viewBox={MAP_AREA_INDIA}
+            viewBox={"-200 0 1100 1000"}
           >
-            <g style={{ transform: getViewBoxAreaCircle() }}>
+            <g style={{ transform: "scale(1.2)" }}>
               {stateBubbles.map((bubble: any, index: number) => (
                 <circle
                   transform={bubble.transform}
@@ -501,7 +505,15 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   fill={ThemeColorIdentifier(colorTheme)}
                   stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
-                  r={bubble.radius}
+                  r={bubbleRadiusWraper(
+                    tableState && tableState.data
+                      ? getGradientColor(
+                          bubble.id,
+                          appliedFilters.roles,
+                          maxCountValue
+                        )
+                      : 1
+                  )}
                 >
                   <title>{bubble.title}</title>
                 </circle>
@@ -523,7 +535,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 </circle>
               ))}
             </g> */}
-            <g style={{ transform: "scale(1)" }}>
+            <g style={{ transform: "scale(1.2)" }}>
               <circle
                 transform={"translate(510,37)"}
                 fill-opacity="0.25"
