@@ -7,7 +7,7 @@ import DisabledMap from "./Map/DisabledMap";
 import styled from "styled-components";
 import { ThemeContext } from "../../config/context";
 import { useMutate } from "../../hooks/useMutate";
-import UserDefault from "../../assets/user_default.jpg";
+import UserDefault from "../../assets/unknown.png";
 import MoonLoader from "react-spinners/MoonLoader";
 import { States } from "./Map/states";
 
@@ -57,35 +57,45 @@ function StartUpCard({
 
   const stagesBadge =
     Array.isArray(stages) && States.length > 0 ? (
-      <>
+      <div className="d-flex mt-1">
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Stage:</p>
-        {stages.slice(0, 6).map((item: string) => (
-          <Badge className="pb-0 d-flex m-1 me-0 mt-0">
-            <div className="d-flex flex-wrap">{item}</div>
-          </Badge>
-        ))}
-      </>
+        <div className="d-flex align-items-center flex-wrap" style={{ marginLeft: '0.75rem' }}>
+          {stages.slice(0, 6).map((item: string) => (
+            <Badge className="pb-0 d-flex m-1 me-0 mt-0">
+              <div className="d-flex flex-wrap">{item}</div>
+            </Badge>
+          ))}
+        </div>
+      </div>
     ) : (
       <></>
     );
 
   const sectorBadge =
     Array.isArray(sectors) && sectors.length ? (
-      <>
+      <div
+        className="d-flex mt-2"
+        style={{ maxHeight: "50px", overflow: "hidden" }}
+      >
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Sector:</p>
-        {sectors.slice(0, 5).map((item: string) => (
-          <Badge className="pb-0 d-flex m-1 me-0 mt-0">
-            <div className="d-flex flex-wrap">{item}</div>
-          </Badge>
-        ))}
-        {sectors.length > 5 ? (
-          <Badge className="pb-0 d-flex m-1 me-0 mt-0 px-3">
-            <div className="d-flex flex-wrap">{"..."}</div>
-          </Badge>
-        ) : (
-          <></>
-        )}
-      </>
+        <div className="d-flex flex-wrap ms-2">
+          {sectors.slice(0, 5).map((item: string) => (
+            <Badge
+              className="pb-0 d-flex m-1 me-0 mt-0"
+              style={{ width: "fit-content" }}
+            >
+              <div className="d-flex flex-wrap">{item}</div>
+            </Badge>
+          ))}
+          {sectors.length > 5 ? (
+            <Badge className="pb-0 d-flex m-1 me-0 mt-0 px-3">
+              <div className="d-flex flex-wrap">{"..."}</div>
+            </Badge>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
     ) : (
       <></>
     );
@@ -102,7 +112,7 @@ function StartUpCard({
       ? htmlDecode(company.slice(0, 30))
       : htmlDecode(company);
 
-  function textCapitalise(decodedText: string | null):string {
+  function textCapitalise(decodedText: string | null): string {
     if (decodedText) {
       const split: any[] = decodedText.split(" ");
       let text: string = "";
@@ -110,13 +120,17 @@ function StartUpCard({
         if (index == 0) {
           const capitalLetter = title.charAt(0).toUpperCase();
           text = capitalLetter + title.slice(1, title.length).toLowerCase();
-          console.log("Capitabl Letter", text)
+          console.log("Capitabl Letter", text);
         } else {
           const capitalLetter = title.charAt(0).toUpperCase();
-          text = text + " " + capitalLetter + title.slice(1, title.length).toLowerCase();
-          console.log("Small Letter", text)
+          text =
+            text +
+            " " +
+            capitalLetter +
+            title.slice(1, title.length).toLowerCase();
+          console.log("Small Letter", text);
         }
-        console.log("Normal Text", text)
+        console.log("Normal Text", text);
       });
       return text;
     } else return "";
@@ -132,7 +146,7 @@ function StartUpCard({
         <div className="d-flex align-items-center">
           <img
             src={logo ? logo : UserDefault}
-            className="rounded-circle border w-60-h-60"
+            className="rounded-circle border w-60-h-60 bg-white "
             alt="main-logo"
           />
           <h6
@@ -145,22 +159,15 @@ function StartUpCard({
         {tagsLoader}
         {!tagsLoading && (
           <div
-            className={`p-2 px-0 py-0  ms-0  ${form80IacStatus ? "" : "pb-0"}`}
+            className={`p-2 px-0 py-0 d-flex flex-column justify-content-end ms-0 ${form80IacStatus ? "" : "pb-0"}`}
           >
             {form80IacStatus ||
             (stages && stages.length) ||
             (sectors && sectors.length) ? (
               <div className="">
-                <div className="stage-sector-div ">
-                  <div className="d-flex mt-1 align-items-center flex-wrap">
-                    {stagesBadge}
-                  </div>
-                  <div
-                    className="d-flex mt-2 align-items-center flex-wrap"
-                    style={{ maxHeight: "50px", overflow: "hidden" }}
-                  >
-                    {sectorBadge}
-                  </div>
+                <div className="stage-sector-div pb-0 mb-0 ">
+                  {stagesBadge}
+                  {sectorBadge}
                 </div>
                 {taxExempted}
               </div>
@@ -169,8 +176,8 @@ function StartUpCard({
             )}
             <div
               className={`m-1 d-flex flex-row align-items-center ${
-                form80IacStatus ? "mt-2-5" : "mt-2"
-              }`}
+                form80IacStatus ? "mt-2-5" : "mt-1"
+              }`} 
             >
               <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
               <h6 className="ms-1 my-0 py-0  start-up-location w-100">
@@ -275,7 +282,7 @@ function StartupsListComponent(props: any) {
         style={{ minWidth: "0", width: "35%", marginTop: "6.5rem" }}
         className="ps-4"
       >
-        <DisabledMap />
+        <DisabledMap mapViewResource={props.mapViewResource} />
       </div>
     </div>
   );

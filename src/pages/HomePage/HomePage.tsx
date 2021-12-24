@@ -144,10 +144,10 @@ const HomePage = (props: HomePageTypes) => {
                   </div>
                   <div className="col-12 row px-0 mx-0">
                     <div
-                      className="col-12  p-4 pe-0"
+                      className="col-12  p-4 pb-0 pe-0"
                       style={{ flex: "0 0 auto", width: "61%" }}
                     >
-                      {startUpPolicyChart && (
+                      {/* {startUpPolicyChart && (
                         <StatePolicy
                           stateId={
                             appliedFilters.states[0]
@@ -155,10 +155,10 @@ const HomePage = (props: HomePageTypes) => {
                               : ""
                           }
                         />
-                      )}
-                      {!startUpPolicyChart && (
-                        <MapComponent mapViewResource={mapViewResources} />
-                      )}
+                      )} */}
+                      {/* {!startUpPolicyChart && ( */}
+                        <MapComponent scaleBarVisible={true} mapViewResource={mapViewResources} />
+                      {/* )} */}
                     </div>
                     <div
                       className="col-12 "
@@ -233,6 +233,7 @@ const HomePage = (props: HomePageTypes) => {
                         <StartupsListComponent 
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
+                          mapViewResource={mapViewResources}
                         />
                       </div>
                     )}

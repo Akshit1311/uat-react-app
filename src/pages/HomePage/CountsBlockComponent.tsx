@@ -109,6 +109,12 @@ const CountCard = ({
             if (prevState === Number(count) || prevState < Number(count)) {
               return count;
             }
+            if((currentCount - count) > 10000){
+              return prevState - 500
+            }
+            if((currentCount - count) > 5000){
+              return prevState - 200
+            }
             if((currentCount - count) > 1000){
               return prevState - 100
             }
@@ -270,11 +276,11 @@ const CountsBlockComponent = ({
           {selectedArea.id !== "india" ? (
             <>
               <div className="ms-3" />
-              <div className="font-bold" style={{ marginTop: "-2px" }}>
+              <div className="font-bold" style={{ marginTop: "0.1rem", }}>
                 |
               </div>
               <div className="ms-3" />
-              <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex">
+              <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex mt-1">
                 {/* <p className="m-0 p-0">India</p> */}
                 <p className="my-0 p-0  font-bold d-flex font-Mont font-12px mt-0">
                   <div

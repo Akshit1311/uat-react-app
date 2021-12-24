@@ -15,6 +15,9 @@ import { StateBorders } from "./StartupIndiaMap";
 
 interface IndiaMapTypes {
   mapViewResource: any;
+  viewAreaMap?: string;
+  scaleBarVisible: boolean;
+  viewAreaCircle?: string;
 }
 
 const MapWrapper = styled.div`
@@ -25,7 +28,12 @@ const MAP_AREA_INDIA = "-200 0 1230 1106";
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
 
-function IndiaMap({ mapViewResource }: IndiaMapTypes) {
+function IndiaMap({
+  mapViewResource,
+  viewAreaMap,
+  viewAreaCircle,
+  scaleBarVisible,
+}: IndiaMapTypes) {
   const {
     setSelectedStateByMap,
     setSelectedArea,
@@ -324,8 +332,10 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
   const getViewBoxArea = () => {
     if (mapMode.id === MapVariables.DISTRICT.id)
       return responsiveImageHeight(MAP_AREA_DISTRICTS);
-    if (mapMode.id === MapVariables.INDIA.id) return MAP_AREA_INDIA;
-    if (mapMode.id === MapVariables.CITY.id) return MAP_AREA_INDIA;
+    if (mapMode.id === MapVariables.INDIA.id)
+      return viewAreaMap ? viewAreaMap : MAP_AREA_INDIA;
+    if (mapMode.id === MapVariables.CITY.id)
+      return viewAreaMap ? viewAreaMap : MAP_AREA_INDIA;
   };
 
   const getViewBoxAreaCircle = () => {
@@ -372,6 +382,8 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       }
       newList.push(i);
     });
+    console.log("India Map", indiaMap);
+    console.log("New Json", StateBorders);
     console.log("New map List", newList);
   };
 
@@ -387,12 +399,10 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative" }}
     >
-      {!isCircleActive && (
+      {!isCircleActive && scaleBarVisible && (
         <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
           <p className="min-gradient-bar">0</p>
-          <p onClick={mixDataWithId} className="max-gradient-bar">
-            {maxCountValue}
-          </p>
+          <p className="max-gradient-bar">{maxCountValue}</p>
         </div>
       )}
       {loadingIndiaMap ||
@@ -423,26 +433,23 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                   }
                 >
                   <path
-                    // fill={state.fill}
-                    // stroke={state.stroke}
                     opacity={state.opacity}
-                    // strokeOpacity={state.strokeOpacity}
-                    // strokeWidth={state.strokeWidth}
                     strokeLinejoin={state.strokeLinejoin}
                     transform={state.transform}
                     d={state.d}
                     onMouseEnter={(e) => handleMouseEnter(state, e)}
                     onMouseLeave={handleStateMouseLeave}
                     onClick={(e) => handleStateClick(state)}
-                    // key={index}
-                    // d={state.d}
-                    // id={index.toString()}
-                    fillOpacity={ !isCircleActive ? tableState && tableState.data ?
-                      getGradientColor(
-                        state.id,
-                        appliedFilters.roles,
-                        maxCountValue
-                      ) + "%" : '1' : '0'
+                    fillOpacity={
+                      !isCircleActive
+                        ? tableState && tableState.data
+                          ? getGradientColor(
+                              state.id,
+                              appliedFilters.roles,
+                              maxCountValue
+                            ) + "%"
+                          : "1"
+                        : "0"
                     }
                     fill={ThemeColorIdentifier(colorTheme)}
                     stroke={fillStrokeColor(state.id)}
@@ -493,7 +500,7 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
         <>
           <svg
             style={{ position: "absolute", left: 0 }}
-            viewBox={"-200 0 1100 1000"}
+            viewBox={viewAreaCircle ? viewAreaCircle : "-200 0 1100 1000"}
           >
             <g style={{ transform: "scale(1.2)" }}>
               {stateBubbles.map((bubble: any, index: number) => (
@@ -519,61 +526,88 @@ function IndiaMap({ mapViewResource }: IndiaMapTypes) {
                 </circle>
               ))}
             </g>
-            {/* <g style={{ transform: getViewBoxAreaCircle() }}>
-              {districtWiseCircle.map((districts: DistrictType) => (
+            {scaleBarVisible && (
+              <g style={{ transform: "scale(1.2)" }}>
                 <circle
-                  transform={districts.transform}
+                  transform={"translate(510,37)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
-                  fill={"rgba(202, 227, 255, 0.4)"}
+                  fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
-                  r={districts.radius}
+                  r={(65 / 100) * 50}
                 >
-                  <title>{districts.title}</title>
+                  <title>{"Info"}</title>
                 </circle>
-              ))}
-            </g> */}
-            <g style={{ transform: "scale(1.2)" }}>
-              <circle
-                transform={"translate(510,37)"}
-                fill-opacity="0.25"
-                pointer-events="all"
-                style={{ cursor: "pointer" }}
-                fill="none"
-                stroke={ThemeColorIdentifier(colorTheme)}
-                strokeWidth="1.4"
-                r={35}
-              >
-                <title>{"Info"}</title>
-              </circle>
-              <circle
-                transform={"translate(510,52)"}
-                fill-opacity="0.25"
-                pointer-events="all"
-                style={{ cursor: "pointer" }}
-                fill="none"
-                stroke={ThemeColorIdentifier(colorTheme)}
-                strokeWidth="1.4"
-                r={50}
-              >
-                <title>{"Info"}</title>
-              </circle>
-              <circle
-                transform={"translate(510,67)"}
-                fill-opacity="0.25"
-                pointer-events="all"
-                style={{ cursor: "pointer" }}
-                fill="none"
-                stroke={ThemeColorIdentifier(colorTheme)}
-                strokeWidth="1.4"
-                r={65}
-              >
-                <title>{"Info"}</title>
-              </circle>
-            </g>
+                <circle
+                  transform={"translate(510,52)"}
+                  fill-opacity="0.25"
+                  pointer-events="all"
+                  style={{ cursor: "pointer" }}
+                  fill="none"
+                  stroke={ThemeColorIdentifier(colorTheme)}
+                  strokeWidth="1.4"
+                  r={(65 / 100) * 75}
+                >
+                  <title>{"Info"}</title>
+                </circle>
+                <circle
+                  transform={"translate(510,67)"}
+                  fill-opacity="0.25"
+                  pointer-events="all"
+                  style={{ cursor: "pointer" }}
+                  fill="none"
+                  stroke={ThemeColorIdentifier(colorTheme)}
+                  strokeWidth="1.4"
+                  r={65}
+                >
+                  <title>{"Info"}</title>
+                </circle>
+              </g>
+            )}
           </svg>
+          {scaleBarVisible ? (
+            <div style={{ position: "absolute" }}>
+              {/* <div style={{ position: "relative" }}> */}
+              <p
+                className="max-gradient-bar p-0 m-0"
+                style={{
+                  fontSize: "8px",
+                  right: "-10.2rem",
+                  position: "absolute",
+                  top: "3.1rem",
+                }}
+              >
+                {Number.parseInt(((maxCountValue / 100) * 50).toString())}
+              </p>
+              <p
+                className="max-gradient-bar p-0 m-0"
+                style={{
+                  fontSize: "10px",
+                  right: "-10.4rem",
+                  position: "absolute",
+                  top: "4.4rem",
+                }}
+              >
+                {Number.parseInt(((maxCountValue / 100) * 75).toString())}
+              </p>
+              <p
+                className="max-gradient-bar p-0 m-0"
+                style={{
+                  fontSize: "12px",
+                  right: "-10.5rem",
+                  position: "absolute",
+                  top: "5.7rem",
+                }}
+              >
+                {maxCountValue}
+              </p>
+              {/* </div> */}
+            </div>
+          ) : (
+            <></>
+          )}
         </>
       )}
     </MapWrapper>

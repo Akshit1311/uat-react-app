@@ -236,7 +236,7 @@ function ViewChangerComponent({
         <div className="mx-1 col-12 mt-4 pt-0">
           <Card>
             {/* <div className="select-type-card"> */}
-            <h5 className="mb-3 font-poppins">
+            <h5 className="mb-3 text-bold font-Mont">
               {selectedArea.stateName.toUpperCase()} STARTUPS
             </h5>
             <div>
