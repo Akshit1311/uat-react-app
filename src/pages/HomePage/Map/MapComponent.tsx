@@ -529,7 +529,7 @@ function IndiaMap({
             {scaleBarVisible && (
               <g style={{ transform: "scale(1.2)" }}>
                 <circle
-                  transform={"translate(400,40)"}
+                  transform={"translate(400,47)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
@@ -541,7 +541,7 @@ function IndiaMap({
                   <title>{"Info"}</title>
                 </circle>
                 <circle
-                  transform={"translate(400,57)"}
+                  transform={"translate(400,66)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
@@ -553,7 +553,7 @@ function IndiaMap({
                   <title>{"Info"}</title>
                 </circle>
                 <circle
-                  transform={"translate(400,75)"}
+                  transform={"translate(400,85)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
@@ -575,7 +575,7 @@ function IndiaMap({
                   fontSize: "6px",
                   right: "-5.2rem",
                   position: "absolute",
-                  top: "2.4rem",
+                  top: "2.7rem",
                 }}
               >
                 {Number.parseInt(((maxCountValue / 100) * 50).toString())}
@@ -586,7 +586,7 @@ function IndiaMap({
                   fontSize: "8px",
                   right: "-5.5rem",
                   position: "absolute",
-                  top: "3.8rem",
+                  top: "4.1rem",
                 }}
               >
                 {Number.parseInt(((maxCountValue / 100) * 75).toString())}
@@ -597,7 +597,7 @@ function IndiaMap({
                   fontSize: "10px",
                   right: "-5.7rem",
                   position: "absolute",
-                  top: "5.2rem",
+                  top: "5.6rem",
                 }}
               >
                 {maxCountValue}
