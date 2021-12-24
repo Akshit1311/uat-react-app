@@ -109,13 +109,15 @@ const TableContainer = (props: any) => {
                   borderWidth={index === 0 ? "0px" : "1px"}
                   fontWeight={true}
                   borderColor="#8A8A8A" 
+                  borderHeight="48px"
                 >
                   <div
                     {...column.getSortByToggleProps()}
-                    className="d-flex align-items-center"
+                    className="d-flex align-items-center w-100"
+                    
                   >
                     <div>
-                      {index === 0
+                      {index === 0 || column.render('Header').toLowerCase() === 'seed fund startups'
                         ? column.render("Header")
                         : column
                             .render("Header")
