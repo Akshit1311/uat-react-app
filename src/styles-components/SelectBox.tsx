@@ -13,7 +13,7 @@ width:100%;
 color: ${props=> props.theme.colorSelect};
 background-color: ${props=> props.theme.bgCards};
 box-shadow: ${props=> props.theme.shadowSelect};
-padding: 0.35rem 0.45rem;
+padding: 0.35rem 0.55rem;
 background-position: right 0.75rem center;
 background-size: 16px 12px;
 background-repeat: no-repeat;

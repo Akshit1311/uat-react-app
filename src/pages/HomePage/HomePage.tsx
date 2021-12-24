@@ -28,6 +28,7 @@ const Strip = styled.div`
   color: ${(props) => props.theme.color};
   box-shadow: ${(props) => props.theme.shadowStripe};
 `;
+// box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25);
 
 interface HomePageTypes {
   navHeight: string;
@@ -174,9 +175,9 @@ const HomePage = (props: HomePageTypes) => {
                   </div>
                 </div>
                 <Strip className="row mx-0 strip  align-items-center d-flex">
-                  <span className="m-0 strip-text">
+                  <span className="m-0 strip-text font-Mont">
                     <b
-                      className="me-3 strip-bold-text"
+                      className="me-3 strip-bold-text font-Mont"
                       style={{ marginLeft: "1.5%" }}
                     >
                       Please Note :

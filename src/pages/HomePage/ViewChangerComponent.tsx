@@ -135,7 +135,7 @@ function ViewChangerComponent({
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
           <SelectBox
             id="dataRangeSelectBox"
-            marginBottom="0px" colorTheme={colorTheme}
+            marginBottom="-0.3rem" colorTheme={colorTheme}
             style={{
               backgroundImage: getThemeDropDownImage(),
             }}

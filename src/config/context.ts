@@ -24,7 +24,7 @@ export const PRIMARY_THEME = {
   },
   dropDownColorCode: 1,
 
-  bgStripe: "#f1f1f1",
+  bgStripe: "rgba(193, 193, 193, 0.25)",
   bgStartupCard: "#f8f8f8",
   bgBadge: "#E0E0E0",
   dataTable:{
