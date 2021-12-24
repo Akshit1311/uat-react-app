@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ThemeColorIdentifier } from "../helper-function/themeColor";
+import { ThemeColorIdentifier, ThemeShadowColorIdentifier } from "../helper-function/themeColor";
 
 export const SelectBox = styled.select<any>`
 border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme)} !important;
@@ -12,13 +12,13 @@ margin-bottom: ${props=> props.marginBottom};
 width:100%;
 color: ${props=> props.theme.colorSelect};
 background-color: ${props=> props.theme.bgCards};
-box-shadow: ${props=> props.theme.shadowSelect};
 padding: 0.35rem 0.55rem;
 background-position: right 0.75rem center;
 background-size: 16px 12px;
 background-repeat: no-repeat;
 appearance: none;
 `
+// box-shadow: ${props=> props.theme.shadowSelect + ThemeShadowColorIdentifier(props.colorTheme)};
 
 export const SelectBoxLabel = styled.label<any>`
 font-style: normal;

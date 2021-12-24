@@ -5,7 +5,7 @@ export const NAVBAR_HEIGHT = "4.5rem";
 export const PRIMARY_THEME = {
   theme: "light",
   blue: "",
-  white: "",
+  white: "white",
   text: "",
   bgColorStart: "#fafbff",
   bgColorEnd: "#ffff",
@@ -15,6 +15,7 @@ export const PRIMARY_THEME = {
   colorSelect: "#212529",
   shadowSelect: "none",
   borderColor: "",
+  bgCard4: 'white',
   map: {
     mapBorder: "#000000",
     hover: "black",
@@ -24,7 +25,7 @@ export const PRIMARY_THEME = {
   },
   dropDownColorCode: 1,
 
-  bgStripe: "rgba(193, 193, 193, 0.25)",
+  bgStripe: "rgb(255,255,255)",
   bgStartupCard: "#f8f8f8",
   bgBadge: "#E0E0E0",
   dataTable:{
@@ -110,7 +111,8 @@ export const DARK_THEME = {
     searchBorder: "#444261"
   },
   iconButtonBackground:"rgba(38, 40, 58, 1)",
-  color2: 'white'
+  color2: 'white',
+  bgCard: 'rgba(31, 30, 44, 1)'
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

@@ -108,7 +108,7 @@ const TableContainer = (props: any) => {
                   {...column.getHeaderProps()}
                   borderWidth={index === 0 ? "0px" : "1px"}
                   fontWeight={true}
-                  borderColor="#8A8A8A" 
+                  borderColor="#e5e5e5" 
                   borderHeight="48px"
                 >
                   <div
@@ -169,7 +169,7 @@ const TableContainer = (props: any) => {
                         borderHeight="2.5rem"
                         borderWidth={index !== 0 ? "1px" : "0px"}
                         fontWeight={index === 0}
-                        borderColor="#8A8A8A"
+                        borderColor="#e5e5e5"
                         textRight={true}
                       >
                         {cell.render("Cell")}

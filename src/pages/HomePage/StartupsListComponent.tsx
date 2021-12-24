@@ -57,11 +57,11 @@ function StartUpCard({
 
   const stagesBadge =
     Array.isArray(stages) && States.length > 0 ? (
-      <div className="d-flex mt-1">
+      <div className="d-flex" style={{ marginTop: '12px'}}>
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Stage:</p>
         <div className="d-flex align-items-center flex-wrap" style={{ marginLeft: '0.75rem' }}>
           {stages.slice(0, 6).map((item: string) => (
-            <Badge className="pb-0 d-flex m-1 me-0 mt-0">
+            <Badge className="pb-0 d-flex mb-2 me-2 mt-0 ms-0">
               <div className="d-flex flex-wrap">{item}</div>
             </Badge>
           ))}
@@ -74,21 +74,21 @@ function StartUpCard({
   const sectorBadge =
     Array.isArray(sectors) && sectors.length ? (
       <div
-        className="d-flex mt-2"
-        style={{ maxHeight: "50px", overflow: "hidden" }}
+        className="d-flex" 
+        style={{ maxHeight: "53px", overflow: "hidden",marginTop: '9px' }}
       >
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Sector:</p>
         <div className="d-flex flex-wrap ms-2">
           {sectors.slice(0, 5).map((item: string) => (
             <Badge
-              className="pb-0 d-flex m-1 me-0 mt-0"
+              className="pb-0 d-flex mb-2 me-2 mt-0 ms-0"
               style={{ width: "fit-content" }}
             >
               <div className="d-flex flex-wrap">{item}</div>
             </Badge>
           ))}
           {sectors.length > 5 ? (
-            <Badge className="pb-0 d-flex m-1 me-0 mt-0 px-3">
+            <Badge className="pb-0 d-flex mb-2 me-2 mt-0 ms-0 px-3">
               <div className="d-flex flex-wrap">{"..."}</div>
             </Badge>
           ) : (
@@ -101,7 +101,7 @@ function StartUpCard({
     );
 
   const taxExempted = form80IacStatus ? (
-    <div>
+    <div style={{ marginTop: '17px' }}>
       <Badge className="mt-2">Tax Exempted</Badge>
     </div>
   ) : (
@@ -150,7 +150,7 @@ function StartUpCard({
             alt="main-logo"
           />
           <h6
-            className=" my-0 py-0 company-title text-overflow ms-3"
+            className=" my-0 py-0 company-title text-overflow ms-2"
             id="company"
           >
             {textCapitalise(decodedText)}
@@ -159,7 +159,7 @@ function StartUpCard({
         {tagsLoader}
         {!tagsLoading && (
           <div
-            className={`p-2 px-0 py-0 d-flex flex-column justify-content-end ms-0 ${form80IacStatus ? "" : "pb-0"}`}
+            className={`p-2 px-0 py-0 d-flex flex-column justify-content-between h-100 ms-0 ${form80IacStatus ? "" : "pb-0"}`}
           >
             {form80IacStatus ||
             (stages && stages.length) ||
@@ -175,9 +175,7 @@ function StartUpCard({
               <></>
             )}
             <div
-              className={`m-1 d-flex flex-row align-items-center ${
-                form80IacStatus ? "mt-2-5" : "mt-1"
-              }`} 
+              className={`m-1 d-flex flex-row align-items-center mt-6`}
             >
               <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
               <h6 className="ms-1 my-0 py-0  start-up-location w-100">

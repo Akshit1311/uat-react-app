@@ -254,7 +254,7 @@ function ViewChangerComponent({
               </SelectBox>
             </div>
             <Card
-              background={theme.bgColorStart}
+              background={theme.bgCard4}
               className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
               border={true}
             >

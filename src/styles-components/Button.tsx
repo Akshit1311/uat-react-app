@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { ThemeColorIdentifier } from "../helper-function/themeColor";
+import {
+  ThemeColorIdentifier,
+  ThemeShadowIdentifier,
+} from "../helper-function/themeColor";
 
 interface ButtonTypes {
   width?: any;
@@ -36,26 +39,32 @@ export const Button = styled.button<ButtonTypes>(
     return {
       border: `2px solid ${ThemeColorIdentifier(props.colorTheme)}`,
       width: `${props.width} !important`,
-      backgroundColor: `${props.backgroundColor ? props.backgroundColor : ThemeColorIdentifier(props.colorTheme)}`,
+      backgroundColor: `${
+        props.backgroundColor
+          ? props.backgroundColor
+          : ThemeColorIdentifier(props.colorTheme)
+      }`,
       color: `${props.color}`,
       flex: `${props.flex}`,
       marginRight: `${props.marginRight}`,
       marginLeft: `${props.marginLeft}`,
-      boxShadow: `${props.noBorder ? "" : props.theme.buttonShadow}`,
+      boxShadow: `${
+        props.noBorder ? "" : ThemeShadowIdentifier(props.colorTheme)
+      }`,
       opacity: `${props.opacity}`,
     };
   }
 );
 
 export const IconButton = styled.button<any>`
-color: ${(props) => (props.active ? "white" : props.theme.color2)};
-    background: ${(props) =>
-      props.active
-        ? ThemeColorIdentifier(props.colorTheme)
-        : props.theme.iconButtonBackground};
-    border: 2px solid ${(props)=>ThemeColorIdentifier(props.colorTheme)};
-    box-shadow: ${(props) => props.theme.shadowMapView} !important;
-    &:hover{
-        color: ${(props) => (props.active ? "white" : props.theme.color2)};
-    }
+  color: ${(props) => (props.active ? "white" : props.theme.color2)};
+  background: ${(props) =>
+    props.active
+      ? ThemeColorIdentifier(props.colorTheme)
+      : props.theme.iconButtonBackground};
+  border: 2px solid ${(props) => ThemeColorIdentifier(props.colorTheme)};
+  box-shadow: ${(props) => ThemeShadowIdentifier(props.colorTheme)} !important;
+  &:hover {
+    color: ${(props) => (props.active ? "white" : props.theme.color2)};
+  }
 `;

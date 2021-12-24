@@ -282,7 +282,7 @@ const CountsBlockComponent = ({
               <div className="ms-3" />
               <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex mt-1">
                 {/* <p className="m-0 p-0">India</p> */}
-                <p className="my-0 p-0  font-bold d-flex font-Mont font-12px mt-0">
+                <p className="my-0 p-0 font-600 d-flex font-Mont font-12px mt-0">
                   <div
                     onClick={() => {
                       setSelectedArea({ id: "india", stateName: "India" });
