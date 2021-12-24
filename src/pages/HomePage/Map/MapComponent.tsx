@@ -389,7 +389,7 @@ function IndiaMap({
 
   const bubbleRadiusWraper = (percent: number) => {
     console.log("Percentage Radius", percent);
-    const radius = (percent / 100) * 65;
+    const radius = (percent / 100) * 75;
     console.log("Radius", radius);
     return radius;
   };
@@ -529,38 +529,38 @@ function IndiaMap({
             {scaleBarVisible && (
               <g style={{ transform: "scale(1.2)" }}>
                 <circle
-                  transform={"translate(510,37)"}
+                  transform={"translate(400,40)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
                   fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
-                  r={(65 / 100) * 50}
+                  r={(75 / 100) * 50}
                 >
                   <title>{"Info"}</title>
                 </circle>
                 <circle
-                  transform={"translate(510,52)"}
+                  transform={"translate(400,57)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
                   fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
-                  r={(65 / 100) * 75}
+                  r={(75 / 100) * 75}
                 >
                   <title>{"Info"}</title>
                 </circle>
                 <circle
-                  transform={"translate(510,67)"}
+                  transform={"translate(400,75)"}
                   fill-opacity="0.25"
                   pointer-events="all"
                   style={{ cursor: "pointer" }}
                   fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
-                  r={65}
+                  r={75}
                 >
                   <title>{"Info"}</title>
                 </circle>
@@ -569,14 +569,13 @@ function IndiaMap({
           </svg>
           {scaleBarVisible ? (
             <div style={{ position: "absolute" }}>
-              {/* <div style={{ position: "relative" }}> */}
               <p
                 className="max-gradient-bar p-0 m-0"
                 style={{
-                  fontSize: "8px",
-                  right: "-10.2rem",
+                  fontSize: "6px",
+                  right: "-5.2rem",
                   position: "absolute",
-                  top: "3.1rem",
+                  top: "2.4rem",
                 }}
               >
                 {Number.parseInt(((maxCountValue / 100) * 50).toString())}
@@ -584,10 +583,10 @@ function IndiaMap({
               <p
                 className="max-gradient-bar p-0 m-0"
                 style={{
-                  fontSize: "10px",
-                  right: "-10.4rem",
+                  fontSize: "8px",
+                  right: "-5.5rem",
                   position: "absolute",
-                  top: "4.4rem",
+                  top: "3.8rem",
                 }}
               >
                 {Number.parseInt(((maxCountValue / 100) * 75).toString())}
@@ -595,10 +594,10 @@ function IndiaMap({
               <p
                 className="max-gradient-bar p-0 m-0"
                 style={{
-                  fontSize: "12px",
-                  right: "-10.5rem",
+                  fontSize: "10px",
+                  right: "-5.7rem",
                   position: "absolute",
-                  top: "5.7rem",
+                  top: "5.2rem",
                 }}
               >
                 {maxCountValue}
