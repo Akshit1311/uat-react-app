@@ -76,8 +76,9 @@ const CountCard = ({
   useEffect(() => {
     
     const count = state[accessor ? accessor : name.slice(0, -1)];
-    console.log("Count Children Before starting count", count);
-    
+    if(count === 0){
+      setCurrentCount(0)
+    }
     if (count && count > currentCount) {
       let interval: any;
       if (currentCount < count) {
