@@ -11,7 +11,7 @@ export default function DisabledMap(props: any) {
         viewAreaMap="0 0 1030 906"
         scaleBarVisible={false}
       />
-      <div className="position-absolute h-100 w-100" style={{ zIndex: 10 }}>
+      <div className="position-absolute h-100 w-100" style={{ zIndex: 10, top: 0, left: 0 }}>
 
       </div>
     </div>

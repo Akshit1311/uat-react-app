@@ -57,7 +57,7 @@ function StartUpCard({
 
   const stagesBadge =
     Array.isArray(stages) && States.length > 0 ? (
-      <div className="d-flex" style={{ marginTop: '12px'}}>
+      <div className="d-flex" style={{ marginTop: '9px'}}>
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Stage:</p>
         <div className="d-flex align-items-center flex-wrap" style={{ marginLeft: '0.75rem' }}>
           {stages.slice(0, 6).map((item: string) => (
@@ -75,7 +75,7 @@ function StartUpCard({
     Array.isArray(sectors) && sectors.length ? (
       <div
         className="d-flex" 
-        style={{ maxHeight: "53px", overflow: "hidden",marginTop: '9px' }}
+        style={{ maxHeight: "53px", overflow: "hidden",marginTop: '7px' }}
       >
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Sector:</p>
         <div className="d-flex flex-wrap ms-2">
