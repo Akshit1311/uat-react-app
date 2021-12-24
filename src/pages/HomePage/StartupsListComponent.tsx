@@ -42,6 +42,8 @@ function StartUpCard({
     var doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
   }
+
+  const [capitalizeText, setCapitalizeText] = useState<string>("");
   const redirect = () => {
     // window.location.href =
     //   "https://www.startupindia.gov.in/content/sih/en/profile.Startup.61c03e7ae4b041b4edd317ce.html";
@@ -77,7 +79,7 @@ function StartUpCard({
           </Badge>
         ))}
         {sectors.length > 5 ? (
-          <Badge className="mx-1 my-1 pb-0 mb-0 d-flex m-1 px-3">
+          <Badge className="pb-0 d-flex m-1 me-0 mt-0 px-3">
             <div className="d-flex flex-wrap">{"..."}</div>
           </Badge>
         ) : (
@@ -95,48 +97,56 @@ function StartUpCard({
   ) : (
     <></>
   );
+  const decodedText: string | null =
+    company.length > 35
+      ? htmlDecode(company.slice(0, 30))
+      : htmlDecode(company);
 
-  // const htmlDecode2 = () =>{
-  //   const companyTitle = window.document.getElementById('company')
-  //   companyTitle?.innerText = company.length > 35
-  //   ? company.slice(0, 30) + "..."
-  //   : htmlDecode(company)
-  // }
-
-  // React.useEffect(()=>{
-  //   htmlDecode2()
-  // },[])
+  function textCapitalise(decodedText: string | null):string {
+    if (decodedText) {
+      const split: any[] = decodedText.split(" ");
+      let text: string = "";
+      split.forEach((title: string, index: number) => {
+        if (index == 0) {
+          const capitalLetter = title.charAt(0).toUpperCase();
+          text = capitalLetter + title.slice(1, title.length).toLowerCase();
+          console.log("Capitabl Letter", text)
+        } else {
+          const capitalLetter = title.charAt(0).toUpperCase();
+          text = text + " " + capitalLetter + title.slice(1, title.length).toLowerCase();
+          console.log("Small Letter", text)
+        }
+        console.log("Normal Text", text)
+      });
+      return text;
+    } else return "";
+  }
   return (
     <>
       <StartUpCardWrapper
         onClick={redirect}
         key={_id}
-        className="mb-0 d-flex flex-row start-up-card"
+        className="mb-0 d-flex flex-row start-up-card flex-column"
         style={{ marginTop: "1.3rem" }}
       >
-        <div>
+        <div className="d-flex align-items-center">
           <img
             src={logo ? logo : UserDefault}
             className="rounded-circle border w-60-h-60"
             alt="main-logo"
           />
+          <h6
+            className=" my-0 py-0 company-title text-overflow ms-3"
+            id="company"
+          >
+            {textCapitalise(decodedText)}
+          </h6>
         </div>
         {tagsLoader}
         {!tagsLoading && (
-          <div className={`p-2 py-0  ms-0  ${form80IacStatus ? "" : "pb-0"}`}>
-            <h6
-              className=" my-0 py-0 company-title text-overflow"
-              style={{
-                maxHeight: "45px !important",
-                overflow: "hidden",
-                textTransform: "uppercase",
-              }}
-              id="company"
-            >
-              {company.length > 35
-                ? htmlDecode(company.slice(0, 30)) + "..."
-                : htmlDecode(company)}
-            </h6>
+          <div
+            className={`p-2 px-0 py-0  ms-0  ${form80IacStatus ? "" : "pb-0"}`}
+          >
             {form80IacStatus ||
             (stages && stages.length) ||
             (sectors && sectors.length) ? (
@@ -145,7 +155,10 @@ function StartUpCard({
                   <div className="d-flex mt-1 align-items-center flex-wrap">
                     {stagesBadge}
                   </div>
-                  <div className="d-flex mt-2 align-items-center flex-wrap">
+                  <div
+                    className="d-flex mt-2 align-items-center flex-wrap"
+                    style={{ maxHeight: "50px", overflow: "hidden" }}
+                  >
                     {sectorBadge}
                   </div>
                 </div>
