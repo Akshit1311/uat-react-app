@@ -24,6 +24,73 @@ const MapWrapper = styled.div`
   color: ${(props) => props.theme.map.color} !important;
 `;
 
+const GradientBar = ({ maxCountValue }: any) => {
+  const [currentCount, setCurrentCount ] = useState<any>(0)
+  useEffect(() => {
+    
+    const count = maxCountValue;
+    console.log("Count Children Before starting count", count);
+    
+    if (count && count > currentCount) {
+      let interval: any;
+      if (currentCount < count) {
+        interval = setInterval(() => {
+          setCurrentCount((prevState:any) => {
+            if (prevState === Number(count) || prevState > Number(count)) {
+              return count;
+            }
+            if (count > 1000) {
+              return prevState + 500;
+            }
+            if (count < 1000 && count > 500) {
+              return prevState + 10;
+            }
+            return prevState + 1;
+          });
+        }, 1);
+      } else if (currentCount === count) {
+        clearInterval(interval);
+      } else {
+        console.log("SOmeethig Went Wrong")
+      }
+      return () => clearInterval(interval);
+    } else if(count && count <  currentCount) {
+      let interval: any;
+      if (currentCount > count) {
+        interval = setInterval(() => {
+          setCurrentCount((prevState:any) => {
+            if (prevState === Number(count) || prevState < Number(count)) {
+              return count;
+            }
+            if((currentCount - count) > 10000){
+              return prevState - 500
+            }
+            if((currentCount - count) > 5000){
+              return prevState - 200
+            }
+            if((currentCount - count) > 1000){
+              return prevState - 100
+            }
+            return prevState - 1;
+          });
+        }, 1);
+      } else if (currentCount === count) {
+        clearInterval(interval);
+      } else {
+        console.log("SOmeethig Went Wrong")
+      }
+      return () => clearInterval(interval);
+    }
+    console.log("End Interval");
+  }, [maxCountValue]);
+  return (
+    <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
+      <p className="min-gradient-bar">0</p>
+      <p className="max-gradient-bar">{currentCount}</p>
+    </div>
+  );
+};
+
 const MAP_AREA_INDIA = "-200 0 1230 1106";
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
@@ -400,10 +467,7 @@ function IndiaMap({
       style={{ position: "relative" }}
     >
       {!isCircleActive && scaleBarVisible && (
-        <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
-          <p className="min-gradient-bar">0</p>
-          <p className="max-gradient-bar">{maxCountValue}</p>
-        </div>
+        <GradientBar maxCountValue={maxCountValue} />
       )}
       {loadingIndiaMap ||
         (tableLoading && (
