@@ -41,6 +41,7 @@ const INITIAL_FILTER_STATE = {
   stages: [],
   badges: [],
   roles: ["Startup"],
+  counts: []
 };
 
 const HomePage = (props: HomePageTypes) => {

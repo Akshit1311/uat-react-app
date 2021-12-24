@@ -74,9 +74,11 @@ const CountCard = ({
   const active = name === activeCard;
 
   useEffect(() => {
-    setCurrentCount(0);
+    
     const count = state[accessor ? accessor : name.slice(0, -1)];
-    if (count && count > 0) {
+    console.log("Count Children Before starting count", count);
+    
+    if (count && count > currentCount) {
       let interval: any;
       if (currentCount < count) {
         interval = setInterval(() => {
@@ -95,11 +97,33 @@ const CountCard = ({
         }, 1);
       } else if (currentCount === count) {
         clearInterval(interval);
+      } else {
+        console.log("SOmeethig Went Wrong")
+      }
+      return () => clearInterval(interval);
+    } else if(count && count <  currentCount) {
+      let interval: any;
+      if (currentCount > count) {
+        interval = setInterval(() => {
+          setCurrentCount((prevState) => {
+            if (prevState === Number(count) || prevState < Number(count)) {
+              return count;
+            }
+            if((currentCount - count) > 1000){
+              return prevState - 100
+            }
+            return prevState - 1;
+          });
+        }, 1);
+      } else if (currentCount === count) {
+        clearInterval(interval);
+      } else {
+        console.log("SOmeethig Went Wrong")
       }
       return () => clearInterval(interval);
     }
     console.log("End Interval");
-  }, [state, loading]);
+  }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
   return (
     <>
       <CountCardWrapper
@@ -109,6 +133,8 @@ const CountCard = ({
         borderColor={borderColor}
         className="col-5 col-md count-single-card p-0"
       >
+        {" "}
+        {console.log("Count From Children", currentCount)}
         {loading ? (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center">
             <MoonLoader
@@ -138,7 +164,7 @@ const CountCard = ({
 const H5 = styled.h5<any>({}, (props) => {
   return {
     color: props.theme.color,
-    marginTop: '0.3rem'
+    marginTop: "0.3rem",
   };
 });
 
@@ -189,13 +215,14 @@ const CountsBlockComponent = ({
         )
       : undefined;
     if (state) {
-      const count = new CountBlockModel()
-      count.Incubator = state.statistics.Incubator
-      count.Mentor = state.statistics.Mentor
-      count.Accelerator = state.statistics.Accelerator
-      count.Startup = state.statistics.Startup
-      count.GovernmentBody = state.statistics.GovernmentBody
-      count.Investor = state.statistics.Investor
+      const count = new CountBlockModel();
+      count.Incubator = state.statistics.Incubator;
+      count.Mentor = state.statistics.Mentor;
+      count.Accelerator = state.statistics.Accelerator;
+      count.Startup = state.statistics.Startup;
+      count.GovernmentBody = state.statistics.GovernmentBody;
+      count.Investor = state.statistics.Investor;
+      console.log("Counts From Filter", count);
       setStateCounts(count);
     }
   };
