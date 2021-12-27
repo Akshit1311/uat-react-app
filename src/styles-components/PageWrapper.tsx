@@ -15,4 +15,5 @@ export const PageWrapperContainer = styled.div`
 export const PageWrapper = styled.div({
   maxWidth: "1366px",
   minWidth: "1080px",
+  width: '100%'
 });

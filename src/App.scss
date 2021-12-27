@@ -65,7 +65,7 @@ body {
   font-weight: bold;
 }
 .font-12px {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 .font-Mont {
   font-family: "Montserrat";
@@ -96,7 +96,6 @@ body {
 }
 
 .gradient-bar-map {
-  
   width: 175px;
   height: 10px;
   border-radius: 20px;
@@ -324,100 +323,215 @@ tbody {
 }
 
 .font-mont-data-table {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
 }
 
-.mt-6{
+.mt-6 {
   margin-top: 7px !important;
 }
 
-.theme-1{
-  .background-color-theme{
-    background-color: #0177FA !important;
-    border-color: #0177FA !important;
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.font-18px {
+  font-size: 18px !important;
+}
+
+.border-type-1 {
+  border-left: 1px solid black;
+}
+
+.border-type-2 {
+  border-left: 1px solid #8a8a8a;
+}
+
+.border-type-3 {
+  border-left: 1px dashed #8a8a8a;
+}
+
+@mixin viewInsightSections($fontSize, $fontWeight) {
+  @extend .d-flex;
+  @extend .p-2;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  justify-content: space-evenly;
+  div {
+    flex: 1;
+    width: 3rem !important;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .p-2;
+    @extend .px-3;
+
+    .MuiSvgIcon-root {
+      font-size: 20px;
+      margin-bottom: 2px;
+      visibility: hidden;
+      &:not(.hidden) {
+        visibility: visible;
+      }
+    }
+    span {
+      @extend .ps-3;
+    }
   }
-  .text-theme{
-    color: #0177FA !important;
+}
+
+@mixin scrollArea {
+  max-height: 40vh;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
   }
-  .gradient-bar-map{
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 0px grey;
+    border-radius: 10px;
+    height: 45px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 7px;
+  }
+  .search-bar {
+    @extend .position-sticky;
+    @extend .bg-white;
+    z-index: 10;
+    top: 0.5rem;
+  }
+}
+$primary: #0177fa;
+.view-insight-main {
+  @extend .font-Mont;
+  @extend .position-relative;
+  .view-insight-header {
+    @include viewInsightSections(14px, 600);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
+  }
+  .scroll-area {
+    @include scrollArea;
+  }
+  .view-insight-body {
+    @include viewInsightSections(12px, 500);
+    @extend .mt-2;
+    div:not(:first-child) {
+      justify-content: flex-end;
+    }
+    .icon-hover-selected {
+      color: $primary;
+      &:hover {
+        color: black;
+        transition: 0.3s ease-in;
+      }
+    }
+    .icon-hover-unselected {
+      color: black;
+      &:hover {
+        color: $primary;
+        transition: 0.3s ease-in;
+      }
+    }
+  }
+}
+.top-view-insight {
+  position: fixed;
+  right: 0px;
+}
+
+.theme-1 {
+  .background-color-theme {
+    background-color: #0177fa !important;
+    border-color: #0177fa !important;
+  }
+  .text-theme {
+    color: #0177fa !important;
+  }
+  .gradient-bar-map {
     background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
   }
 }
 
-.theme-2{
-  .background-color-theme{
-    background-color: #ED8E00 !important;
-    border-color: #ED8E00 !important;
+.theme-2 {
+  .background-color-theme {
+    background-color: #ed8e00 !important;
+    border-color: #ed8e00 !important;
   }
-  .gradient-bar-map{
+  .gradient-bar-map {
     background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
   }
 }
 
-.theme-3{
-  .background-color-theme{
-    background-color: #ED8E00 !important;
-    border-color: #ED8E00 !important;
+.theme-3 {
+  .background-color-theme {
+    background-color: #ed8e00 !important;
+    border-color: #ed8e00 !important;
   }
-  .text-theme{
-    color: #ED8E00 !important;
+  .text-theme {
+    color: #ed8e00 !important;
   }
-  .gradient-bar-map{
-    background: linear-gradient(270deg, #ED8E00 0%, #ecf5ff 100%);
-  }
-}
-
-.theme-4{
-  .background-color-theme{
-    background-color: #7838E0 !important;
-    border-color: #7838E0 !important;
-  }
-  .text-theme{
-    color: #7838E0 !important;
-  }
-  .gradient-bar-map{
-    background: linear-gradient(270deg, #7838E0 0%, #ecf5ff 100%);
+  .gradient-bar-map {
+    background: linear-gradient(270deg, #ed8e00 0%, #ecf5ff 100%);
   }
 }
 
-.theme-5{
-  .background-color-theme{
-    background-color: #BDAA00 !important;
-    border-color: #BDAA00 !important;
+.theme-4 {
+  .background-color-theme {
+    background-color: #7838e0 !important;
+    border-color: #7838e0 !important;
   }
-  .text-theme{
-    color: #BDAA00 !important;
+  .text-theme {
+    color: #7838e0 !important;
   }
-  .gradient-bar-map{
-    background: linear-gradient(270deg, #BDAA00 0%, #ecf5ff 100%);
-  }
-}
-
-.theme-6{
-  .background-color-theme{
-    background-color: #CB3535 !important;
-    border-color: #CB3535 !important;
-  }
-  .text-theme{
-    color: #CB3535 !important;
-  }
-  .gradient-bar-map{
-    background: linear-gradient(270deg, #CB3535 0%, #ecf5ff 100%);
+  .gradient-bar-map {
+    background: linear-gradient(270deg, #7838e0 0%, #ecf5ff 100%);
   }
 }
 
-.theme-7{
-  .background-color-theme{
-    background-color: #00AD11 !important;
-    border-color: #00AD11 !important;
+.theme-5 {
+  .background-color-theme {
+    background-color: #bdaa00 !important;
+    border-color: #bdaa00 !important;
   }
-  .text-theme{
-    color: #00AD11 !important;
+  .text-theme {
+    color: #bdaa00 !important;
   }
-  .gradient-bar-map{
-    background: linear-gradient(270deg, #00AD11 0%, #ecf5ff 100%);
+  .gradient-bar-map {
+    background: linear-gradient(270deg, #bdaa00 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-6 {
+  .background-color-theme {
+    background-color: #cb3535 !important;
+    border-color: #cb3535 !important;
+  }
+  .text-theme {
+    color: #cb3535 !important;
+  }
+  .gradient-bar-map {
+    background: linear-gradient(270deg, #cb3535 0%, #ecf5ff 100%);
+  }
+}
+
+.theme-7 {
+  .background-color-theme {
+    background-color: #00ad11 !important;
+    border-color: #00ad11 !important;
+  }
+  .text-theme {
+    color: #00ad11 !important;
+  }
+  .gradient-bar-map {
+    background: linear-gradient(270deg, #00ad11 0%, #ecf5ff 100%);
   }
 }

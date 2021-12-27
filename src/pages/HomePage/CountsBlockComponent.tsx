@@ -8,6 +8,7 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
 import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import { H5 } from "../../styles-components/Heading";
 
 const override = css`
   display: block;
@@ -168,12 +169,7 @@ const CountCard = ({
   );
 };
 
-const H5 = styled.h5<any>({}, (props) => {
-  return {
-    color: props.theme.color,
-    marginTop: "0.3rem",
-  };
-});
+
 
 export class CountBlockModel {
   Exploring: number = 0;

@@ -106,17 +106,6 @@ export default function StatePolicy({ stateId }: StatePolicyTypes) {
   return (
     <div className="d-flex flex-wrap">
       <div className="w-49-h-250px mt-2">
-        {/* <PieChart
-        label={({ dataEntry }) => `${dataEntry.value}%`}
-        labelStyle={(index) => ({
-          fill: "white",
-          fontSize: "5px",
-          fontFamily: "sans-serif",
-        })}
-        radius={42}
-        labelPosition={60}
-          data={sectorsWrapper( Array.isArray(policyState) ? null : policyState.sectors )}
-        /> */}
       </div>
       <div className="w-49-h-250px mt-2">
         <PieChart

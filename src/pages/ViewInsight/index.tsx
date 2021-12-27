@@ -1,120 +1,100 @@
 import * as React from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ThemeContext, NAVBAR_HEIGHT } from "../../config/context";
 import {
   PageWrapper,
   PageWrapperContainer,
 } from "../../styles-components/PageWrapper";
+import { H5 } from "../../styles-components/Heading";
+import { useWebQuery } from "../../hooks/useWebQuery";
+import Accordion from "./Accordion";
+import { useQuery } from "../../hooks/useQuery";
+import CountryMap from "./Map"
 
 export default function ControlledAccordions() {
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const query = useWebQuery();
   const theme = React.useContext(ThemeContext);
+  
+  const [fetchInsights, insightState] = useQuery("");
+  const [expanded, setExpanded] = React.useState<string | false>(false);
+
+  const localSectors = localStorage.getItem('Sector')
+  const selectedSectors:any[] = JSON.parse( localSectors ? localSectors.toString() : '0' )
+  
+  const localIndustries = localStorage.getItem('Industry')
+  const selectedIndustries:any[] = JSON.parse( localIndustries ? localIndustries.toString() : '0' )
+  
+  const localStages = localStorage.getItem('Stage')
+  const selectedStages:any[] = JSON.parse( localStages ? localStages.toString() : '0' )
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
+  React.useEffect(() => {
+    fetchInsights(
+      `/insight/state/${query.get('id')}/2021-01-01/2021-12-12`
+    );
+  }, [query.get('id')]);
+
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }}>
       <PageWrapperContainer>
-        <PageWrapper>
-          <Accordion
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-            >
-              <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                General settings
-              </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                I am an accordion
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-                feugiat. Aliquam eget maximus est, id dignissim quam.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel2"}
-            onChange={handleChange("panel2")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2bh-content"
-              id="panel2bh-header"
-            >
-              <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Users
-              </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                You are currently not an owner
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Donec placerat, lectus sed mattis semper, neque lectus feugiat
-                lectus, varius pulvinar diam eros in elit. Pellentesque
-                convallis laoreet laoreet.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel3"}
-            onChange={handleChange("panel3")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3bh-content"
-              id="panel3bh-header"
-            >
-              <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Advanced settings
-              </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                Filtering has been entirely disabled for whole web server
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
-                Integer sit amet egestas eros, vitae egestas augue. Duis vel est
-                augue.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel4"}
-            onChange={handleChange("panel4")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel4bh-content"
-              id="panel4bh-header"
-            >
-              <Typography sx={{ width: "33%", flexShrink: 0 }}>
-                Personal data
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
-                Integer sit amet egestas eros, vitae egestas augue. Duis vel est
-                augue.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+        <PageWrapper className="p-4">
+          <div className="mb-4">
+            <H5 className="text-uppercase font-Mont font-18px mb-0">
+              View Insights of {query.get("state")}
+            </H5>
+            <p className="font-Mont font-600 font-12px mt-1">
+              <span className="opacity-50">{"IndiaMap/ "}</span>
+              <span className="opacity-50">{query.get("state")}/ </span>
+              <span>View Insight</span>
+            </p>
+          </div>
+          <div className="row">
+            <div className="col-12 col-sm-9">
+              <Accordion
+                expanded={expanded}
+                panelName="panel1"
+                handleChange={handleChange}
+                title="Industry"
+                stateName={query.get("state")}
+                data={insightState.industry || []}
+                selectedData={selectedIndustries || [ ]}
+              />
+
+              <Accordion
+                expanded={expanded}
+                panelName="panel2"
+                handleChange={handleChange}
+                title="Sector"
+                data={insightState.sector || []}
+                stateName={query.get("state")}
+                selectedData={selectedSectors || []}
+              />
+
+              <Accordion
+                expanded={expanded}
+                panelName="panel3"
+                handleChange={handleChange}
+                title="Stage"
+                data={insightState.stage || []}
+                stateName={query.get("state")}
+                selectedData={selectedStages || []}
+              />
+
+              {/* <Accordion
+                expanded={expanded}
+                panelName="panel4"
+                handleChange={handleChange}
+                title="Startup with declared rewards"
+                stateName={query.get("state")}
+              /> */}
+            </div>
+            <div className="col-12 col-sm-3 pt-5  top-view-insight">
+              <CountryMap stateId={query.get('id')} />
+            </div>
+          </div>
         </PageWrapper>
       </PageWrapperContainer>
     </div>
