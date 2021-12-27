@@ -21,6 +21,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Link } from "react-router-dom"
 
 interface SearchBarTypes {
   filterState: any[];
@@ -133,13 +134,6 @@ const SpanIcon = styled.span`
   margin-top: 1.4px !important;
 `;
 
-const INITIAL_FILTER_STATE2 = {
-  industries: [],
-  sectors: [],
-  states: [],
-  stages: [],
-  badges: [],
-};
 
 const LeftNavComponent = (props: any) => {
   const {
@@ -147,13 +141,10 @@ const LeftNavComponent = (props: any) => {
     selectedArea,
     tagsResources,
     appliedFilters,
-    setAppliedFilters, colorTheme
+    setAppliedFilters, colorTheme, fetchFilterList, filterState, filterLoading
   } = props;
 
-  const [fetchFilterList, filterState, filterLoading] = useMutate(
-    "/startup/filter/defaults",
-    INITIAL_FILTER_STATE2
-  );
+ 
 
   const [expanded, setExpanded] = React.useState<string | false>("");
   const [searchBarExpanded, setSearchBarExpanded] = useState(false);
@@ -338,6 +329,8 @@ const LeftNavComponent = (props: any) => {
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
+
+    const viewInsightUrl = `/view-insight?id=${selectedState[0]? selectedState[0].id: ''}&state=${selectedState[0]? selectedState[0].value : ''}`
   // window.addEventListener("resize", () => setLeftNavWidth(window.innerWidth));
   return (
     <>
@@ -577,7 +570,9 @@ const LeftNavComponent = (props: any) => {
               You can View Insights of India
             </span>
             <div className="btn-view-project mx-0 px-0">
+              <Link to={viewInsightUrl}>
               <Button colorTheme={colorTheme} className="background-color-theme">View Insights</Button>
+              </Link>
             </div>
           </Card>
         </div>

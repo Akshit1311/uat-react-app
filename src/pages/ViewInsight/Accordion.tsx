@@ -41,22 +41,6 @@ const AccordionSummary = MaterialStyled((props: AccordionSummaryProps) => {
   border: "0px",
   paddingLeft: 0,
   paddingRight: 0,
-  //   alignItems: "flex-end",
-  //   paddingBottom: "5px",
-  //   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-  //     transform: "rotate(-180deg)",
-  //     marginRight: "10px",
-  //     marginBottom: "4px",
-  //   },
-  //   "& .MuiAccordionSummary-expandIconWrapper": {
-  //     marginRight: "10px",
-  //     marginBottom: "4px",
-  //   },
-  //   "& .MuiAccordionSummary-content": {
-  //     marginLeft: "0px",
-  //     margin: 0,
-  //     padding: 0,
-  //   },
 }));
 
 const AccordionDetails = MaterialStyled(MuiAccordionDetails)(({ theme }) => ({
@@ -176,11 +160,8 @@ export default function Accordion({
           <>
             <InsightTable
               data={type1State}
-              selectedData={selectedData}
               stateName={stateName}
               title={title}
-              setType1State={setType1State}
-              setType2State={setType2State}
               starFill={true}
               handleClickStar={onSelectedItemClick}
             />
@@ -198,10 +179,7 @@ export default function Accordion({
         <InsightTable
           data={type2State}
           stateName={stateName}
-          selectedData={type1State}
           title={title}
-          setType1State={setType1State}
-          setType2State={setType2State}
           handleClickStar={onUnselectedItemClick}
         />
         <div className="mb-2" />

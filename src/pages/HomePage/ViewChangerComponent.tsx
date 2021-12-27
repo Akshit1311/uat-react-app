@@ -16,12 +16,14 @@ import styled from "styled-components";
 import { IconButton } from "../../styles-components/Button";
 import { ThemeContext } from "../../config/context";
 import { useQuery } from "../../hooks/useQuery";
-import { ThemeColorIdentifier } from "../../helper-function/themeColor"
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
   setStartUpPolicyChart: React.Dispatch<boolean>;
   fetchPolicy: any;
+  setStateViewMode: React.Dispatch<boolean>;
+  stateViewMode: boolean;
 }
 
 const DARK_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
@@ -32,7 +34,7 @@ const ViewMoreButton = styled.button<any>`
   padding-top: 7px;
   font-weight: 600;
   font-size: 14px;
-  border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme)};
+  border: 2px solid ${(props: any) => ThemeColorIdentifier(props.colorTheme)};
   margin-bottom: 20px;
   color: ${(props) => props.theme.color};
   box-shadow: ${(props) =>
@@ -46,6 +48,8 @@ function ViewChangerComponent({
   mapViewResources,
   setStartUpPolicyChart,
   fetchPolicy,
+  setStateViewMode,
+  stateViewMode,
 }: ViewChangerComponentsTypes) {
   const {
     isCircleActive,
@@ -54,7 +58,8 @@ function ViewChangerComponent({
     setMapMode,
     setSelectedArea,
     selectedArea,
-    getCounts, colorTheme
+    getCounts,
+    colorTheme,
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
@@ -102,7 +107,7 @@ function ViewChangerComponent({
     if (value === "none") {
       return getCounts();
     }
-    getCounts(HomeApis.countDateRange + value);
+    getCounts(value);
   };
 
   const startTypeChange = (changeEvent: any) => {
@@ -122,12 +127,12 @@ function ViewChangerComponent({
     fetchStartUpTypes();
     fetchStartUpCount("/startup/startupCount/0");
   }, []);
-  
-  const redirectToStatePolicy = () =>{
-    const stateToRedirect = selectedArea.stateName.replaceAll(' ','-')
-    window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`
-  }
-  
+
+  const redirectToStatePolicy = () => {
+    const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
+    window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`;
+  };
+
   return (
     <div className="view-changer-component-styles">
       <div className="">
@@ -135,7 +140,8 @@ function ViewChangerComponent({
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
           <SelectBox
             id="dataRangeSelectBox"
-            marginBottom="-0.3rem" colorTheme={colorTheme}
+            marginBottom="-0.3rem"
+            colorTheme={colorTheme}
             style={{
               backgroundImage: getThemeDropDownImage(),
             }}
@@ -165,7 +171,8 @@ function ViewChangerComponent({
                 placement="top"
                 overlay={stateText}
               >
-                <IconButton colorTheme={colorTheme}
+                <IconButton
+                  colorTheme={colorTheme}
                   onClick={defaultView}
                   active={mapMode.id === MapVariables.INDIA.id}
                   className={`btn-outline btn-icon-handler ${
@@ -185,7 +192,8 @@ function ViewChangerComponent({
                 overlay={cityText}
               >
                 <IconButton
-                  onClick={cityView} colorTheme={colorTheme}
+                  onClick={cityView}
+                  colorTheme={colorTheme}
                   active={mapMode.id === MapVariables.CITY.id}
                   className={`btn btn-icon-handler  dark ${
                     mapMode.id === MapVariables.CITY.id ? "bg-active" : ""
@@ -204,7 +212,8 @@ function ViewChangerComponent({
                 overlay={districtText}
               >
                 <IconButton
-                  onClick={districtView} colorTheme={colorTheme}
+                  onClick={districtView}
+                  colorTheme={colorTheme}
                   active={mapMode.id === MapVariables.DISTRICT.id}
                   className={`btn btn-icon-handler  ${
                     mapMode.id === MapVariables.DISTRICT.id ? "bg-active" : ""
@@ -219,7 +228,8 @@ function ViewChangerComponent({
             </div>
             <div>
               <IconButton
-                active={isCircleActive} colorTheme={colorTheme}
+                active={isCircleActive}
+                colorTheme={colorTheme}
                 onClick={circleView}
                 className={`btn btn-icon-handler shadow-small ${
                   isCircleActive ? "bg-active" : ""
@@ -241,7 +251,8 @@ function ViewChangerComponent({
             </h5>
             <div>
               <SelectBoxLabel>Select Type</SelectBoxLabel>
-              <SelectBox colorTheme={colorTheme}
+              <SelectBox
+                colorTheme={colorTheme}
                 style={{
                   backgroundImage: getThemeDropDownImage(),
                 }}
@@ -267,22 +278,26 @@ function ViewChangerComponent({
             </Card>
             {selectedArea.id !== "india" && (
               <>
-                <ViewMoreButton colorTheme={colorTheme}
+                <ViewMoreButton
+                  colorTheme={colorTheme}
                   shadow={true}
-                  onClick={()=> redirectToStatePolicy()}
-                  className="btn btn-radius w-100 mt-4"
+                  onClick={() => redirectToStatePolicy()}
+                  className={`btn btn-radius w-100 mt-4 ${ stateViewMode ? 'mb-0': ''}`}
                 >
                   {VIEW_STATE_STARTUP_POLICY}
                 </ViewMoreButton>
-                <ViewMoreButton colorTheme={colorTheme}
-                  shadow={false}
-                  onClick={() => {
-                    setStartUpPolicyChart(true);
-                  }}
-                  className="btn background-color-theme btn-radius w-100 text-white mb-0"
-                >
-                  {VIEW_MORE + selectedArea.stateName}
-                </ViewMoreButton>
+                {!stateViewMode && (
+                  <ViewMoreButton
+                    colorTheme={colorTheme}
+                    shadow={false}
+                    onClick={() => {
+                      setStateViewMode(true);
+                    }}
+                    className="btn background-color-theme btn-radius w-100 text-white mb-0"
+                  >
+                    {VIEW_MORE + selectedArea.stateName}
+                  </ViewMoreButton>
+                )}
               </>
             )}
           </Card>

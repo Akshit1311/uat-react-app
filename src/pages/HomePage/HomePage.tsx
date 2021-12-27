@@ -18,6 +18,8 @@ import {
   PageWrapper,
   PageWrapperContainer,
 } from "../../styles-components/PageWrapper";
+import { useMutate } from "../../hooks/useMutate";
+import StateView from "./Map/StateView";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -30,6 +32,17 @@ const Strip = styled.div`
 `;
 // box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25);
 
+const INITIAL_FILTER_STATE2 = {
+  industries: [],
+  sectors: [],
+  states: [],
+  stages: [],
+  badges: [],
+  counts: [],
+  registrationFrom: "",
+  registrationTo: "",
+};
+
 interface HomePageTypes {
   navHeight: string;
 }
@@ -41,8 +54,28 @@ const INITIAL_FILTER_STATE = {
   stages: [],
   badges: [],
   roles: ["Startup"],
-  counts: []
+  counts: [],
+  registrationFrom: "",
+  registrationTo: "",
 };
+
+export class CountBlockModel {
+  Exploring: number = 0;
+  Incubator: number = 0;
+  Corporate: number = 0;
+  SIH_Admin: number = 0;
+  Mentor: number = 0;
+  Academia: number = 0;
+  GovernmentBody: number = 0;
+  ConnectToPotentialPartner: number = 0;
+  IndiaMarketEntry: number = 0;
+  Individual: number = 0;
+  ServiceProvider: number = 0;
+  Investor: number = 0;
+  Startup: number = 0;
+  Accelerator: number = 0;
+  maxRange: number = 0;
+}
 
 const HomePage = (props: HomePageTypes) => {
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
@@ -63,6 +96,13 @@ const HomePage = (props: HomePageTypes) => {
   const [fetchTableData, tableState, tableLoading] = useQuery(
     "/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
   );
+  const [fetchFilterList, filterState, filterLoading] = useMutate(
+    "/startup/filter/v2/defaults",
+    INITIAL_FILTER_STATE2
+  );
+
+  const [stateViewMode, setStateViewMode] = useState<boolean>(false);
+
   const [fetchPolicy, policyState, policyLoading] = useQuery("");
   const [selectedCountBlock, setSelectedCountBlock] = useState("Startup");
 
@@ -78,17 +118,55 @@ const HomePage = (props: HomePageTypes) => {
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
   );
+  const countWrrapper = (data: any[]) => {
+    console.error("FInd Index Data", data);
+    const obj = new CountBlockModel();
+    const findIndex = (countType: string) =>
+      data.findIndex((item) => item.id === countType);
+    obj.Investor = data[findIndex("Investor")]
+      ? data[findIndex("Investor")].value
+      : 0;
+    obj.Startup = data[findIndex("Startup")]
+      ? data[findIndex("Startup")].value
+      : 0;
+    obj.Incubator = data[findIndex("Incubator")]
+      ? data[findIndex("Incubator")].value
+      : 0;
+    obj.Mentor = data[findIndex("Mentor")]
+      ? data[findIndex("Mentor")].value
+      : 0;
+    obj.Accelerator = data[findIndex("Accelerator")]
+      ? data[findIndex("Accelerator")].value
+      : 0;
+    obj.GovernmentBody = data[findIndex("GovernmentBody")]
+      ? data[findIndex("GovernmentBody")].value
+      : 0;
+    return obj;
+  };
+
+  const fetchDefaultFilterValues = (value: string) => {
+    let split = ["", ""];
+    if (value) {
+      split = value.split("/");
+    }
+    const body = {
+      registrationFrom: split[0],
+      registrationTo: split[1],
+    };
+    setAppliedFilters((prevState: any) => ({ ...prevState, ...body }));
+    fetchFilterList(body);
+  };
 
   const countResource = {
-    getCounts,
-    countState,
+    getCounts: fetchDefaultFilterValues,
+    countState: countWrrapper(filterState.counts),
     countLoading,
     setSelectedArea,
     tableState,
     selectedStateByMap,
     setSelectedStateByMap,
     setPrimaryColorTheme,
-    colorTheme:primaryColorTheme,
+    colorTheme: primaryColorTheme,
   };
 
   const mapViewResources = {
@@ -98,13 +176,13 @@ const HomePage = (props: HomePageTypes) => {
     setMapMode,
     setSelectedArea,
     selectedArea,
-    getCounts,
+    getCounts: fetchDefaultFilterValues,
     countState,
     tableState,
     appliedFilters,
     setSelectedStateByMap,
-    colorTheme:primaryColorTheme,
-    tableLoading
+    colorTheme: primaryColorTheme,
+    tableLoading,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -130,7 +208,11 @@ const HomePage = (props: HomePageTypes) => {
                   appliedFilters={appliedFilters}
                   setAppliedFilters={setAppliedFilters}
                   selectedArea={selectedArea}
-                  setSelectedArea={setSelectedArea} colorTheme={primaryColorTheme}
+                  setSelectedArea={setSelectedArea}
+                  colorTheme={primaryColorTheme}
+                  fetchFilterList={fetchDefaultFilterValues}
+                  filterState={filterState}
+                  filterLoading={filterLoading}
                 ></LeftNavComponent>
               </div>
               <div style={{ flex: "62%" }} className="p-0">
@@ -140,6 +222,7 @@ const HomePage = (props: HomePageTypes) => {
                       countResource={countResource}
                       selectedArea={selectedArea}
                       applyRoles={applyRoles}
+                      setStateViewMap={setStateViewMode}
                     />
                   </div>
                   <div className="col-12 row px-0 mx-0">
@@ -147,18 +230,15 @@ const HomePage = (props: HomePageTypes) => {
                       className="col-12  p-4 pb-0 pe-0"
                       style={{ flex: "0 0 auto", width: "61%" }}
                     >
-                      {/* {startUpPolicyChart && (
-                        <StatePolicy
-                          stateId={
-                            appliedFilters.states[0]
-                              ? appliedFilters.states[0]
-                              : ""
-                          }
+                      {!stateViewMode && (
+                        <MapComponent
+                          scaleBarVisible={true}
+                          mapViewResource={mapViewResources}
                         />
-                      )} */}
-                      {/* {!startUpPolicyChart && ( */}
-                        <MapComponent scaleBarVisible={true} mapViewResource={mapViewResources} />
-                      {/* )} */}
+                      )}
+                      {stateViewMode && (
+                        <StateView selectedArea={appliedFilters.states[0]} />
+                      )}
                     </div>
                     <div
                       className="col-12 "
@@ -171,6 +251,8 @@ const HomePage = (props: HomePageTypes) => {
                         mapViewResources={mapViewResources}
                         setStartUpPolicyChart={setStartUpPolicyChart}
                         fetchPolicy={fetchPolicy}
+                        setStateViewMode={setStateViewMode}
+                        stateViewMode={stateViewMode}
                       />
                     </div>
                   </div>
@@ -190,7 +272,8 @@ const HomePage = (props: HomePageTypes) => {
                 </Strip>
                 <div className="row d-flex justify-content-center px-0 mx-0">
                   <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
-                    <Button colorTheme={primaryColorTheme}
+                    <Button
+                      colorTheme={primaryColorTheme}
                       backgroundColor={`${
                         !startupListActive &&
                         theme.togglerButton.backgroundInactive
@@ -206,7 +289,8 @@ const HomePage = (props: HomePageTypes) => {
                     >
                       Startups List
                     </Button>
-                    <Button colorTheme={primaryColorTheme}
+                    <Button
+                      colorTheme={primaryColorTheme}
                       backgroundColor={`${
                         startupListActive &&
                         theme.togglerButton.backgroundInactive
@@ -216,7 +300,8 @@ const HomePage = (props: HomePageTypes) => {
                       }`}
                       border={`${startupListActive && "0px"}`}
                       className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${
-                        !startupListActive && "text-white background-color-theme"
+                        !startupListActive &&
+                        "text-white background-color-theme"
                       }`}
                       onClick={toggleStartUp}
                     >
@@ -230,7 +315,7 @@ const HomePage = (props: HomePageTypes) => {
                           display: startupListActive ? "block" : "none",
                         }}
                       >
-                        <StartupsListComponent 
+                        <StartupsListComponent
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
                           mapViewResource={mapViewResources}

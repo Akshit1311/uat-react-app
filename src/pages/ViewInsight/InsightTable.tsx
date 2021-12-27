@@ -8,9 +8,6 @@ interface InsightTableProps {
   stateName: string | null;
   title: string;
   data: InsightRowType[];
-  selectedData: any[];
-  setType1State: React.Dispatch<any[]>;
-  setType2State: React.Dispatch<any[]>;
   starFill?: boolean;
   handleClickStar: any;
 }
@@ -19,9 +16,6 @@ export default function InsightTable({
   stateName,
   title,
   data,
-  selectedData,
-  setType1State,
-  setType2State,
   handleClickStar,
   starFill,
 }: InsightTableProps) {

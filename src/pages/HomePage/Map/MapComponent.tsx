@@ -158,7 +158,6 @@ function IndiaMap({
     }
     return 0;
   };
-  console.log("India Map Svg", indiaMap);
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
     if (selected !== -1) return true;
@@ -207,168 +206,6 @@ function IndiaMap({
     setSelectedStateByMap(state);
   };
 
-  const populateDistrictCircle = () => {
-    // if (districtWiseCircle.length > 0) return;
-    const newArray = new Array();
-    if (mapMode.id === MapVariables.DISTRICT.id) {
-      District.forEach((district: any) => {
-        const newObj: any = new Object();
-
-        if (district.title.toLowerCase() == "mumbai") {
-          newObj["radius"] = "18";
-        } else if (
-          district.title.toLowerCase() == "Krishnagiri".toLowerCase()
-        ) {
-          newObj["radius"] = "10";
-        } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
-          newObj["radius"] = "20";
-        } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Pune".toLowerCase()) {
-          newObj["radius"] = "13";
-        } else if (district.title.toLowerCase() === "Guntur".toLowerCase()) {
-          newObj["radius"] = "14";
-        } else if (district.title.toLowerCase() === "Udupi".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Kollam".toLowerCase()) {
-          newObj["radius"] = "12";
-        } else {
-          newObj["radius"] = "0";
-        }
-        newObj["transform"] = district.transform;
-        newObj["title"] = district.title;
-        newObj["id"] = district.id;
-        newArray.push(newObj);
-      });
-    }
-    if (mapMode.id === MapVariables.INDIA.id) {
-      District.forEach((district: any) => {
-        const newObj: any = new Object();
-
-        if (district.title.toLowerCase() == "mumbai") {
-          newObj["radius"] = "0";
-        } else if (
-          district.title.toLowerCase() == "Krishnagiri".toLowerCase()
-        ) {
-          newObj["radius"] = "50";
-        } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
-          newObj["radius"] = "60";
-        } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
-          newObj["radius"] = "70";
-        } else {
-          newObj["radius"] = "0";
-        }
-        newObj["transform"] = district.transform;
-        newObj["title"] = district.title;
-        newObj["id"] = district.id;
-        newArray.push(newObj);
-      });
-    }
-    if (mapMode.id === MapVariables.CITY.id) {
-      District.forEach((district: any) => {
-        const newObj: any = new Object();
-
-        if (district.title.toLowerCase() == "mumbai") {
-          newObj["radius"] = "18";
-        } else if (
-          district.title.toLowerCase() == "Krishnagiri".toLowerCase()
-        ) {
-          newObj["radius"] = "10";
-        } else if (district.title.toLowerCase() == "Jalgaon".toLowerCase()) {
-          newObj["radius"] = "20";
-        } else if (district.title.toLowerCase() === "Khordha".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Pune".toLowerCase()) {
-          newObj["radius"] = "13";
-        } else if (district.title.toLowerCase() === "Guntur".toLowerCase()) {
-          newObj["radius"] = "14";
-        } else if (district.title.toLowerCase() === "Udupi".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Koraput".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Chikkaballapura".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Sundargarh".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Haver".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Papum Pare".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Shivamogga".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Puducherry".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Puducherry".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Puducherry".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Malkangiri".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Puducherry".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Visakhapatnam".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Puducherry".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Cuttack".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "East Garo Hills".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Nashik".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Kalahandi".toLowerCase()) {
-          newObj["radius"] = "15";
-        } else if (
-          district.title.toLowerCase() === "Subarnapur".toLowerCase()
-        ) {
-          newObj["radius"] = "15";
-        } else if (district.title.toLowerCase() === "Bametara".toLowerCase()) {
-          newObj["radius"] = "12";
-        } else if (district.title.toLowerCase() === "Phek".toLowerCase()) {
-          newObj["radius"] = "12";
-        } else if (district.title.toLowerCase() === "Zunheboto".toLowerCase()) {
-          newObj["radius"] = "12";
-        } else if (district.title.toLowerCase() === "Wokha".toLowerCase()) {
-          newObj["radius"] = "12";
-        } else if (district.title.toLowerCase() === "Gomati".toLowerCase()) {
-          newObj["radius"] = "12";
-        } else {
-          newObj["radius"] = "0";
-        }
-        newObj["transform"] = district.transform;
-        newObj["title"] = district.title;
-        newObj["id"] = district.id;
-        newArray.push(newObj);
-      });
-    }
-
-    setDistrictWiseCircle(newArray);
-  };
-
   const populateDistrictsBoarders = () => {
     setDistrictsBoarder(Districts2);
   };
@@ -413,7 +250,6 @@ function IndiaMap({
 
   useEffect(() => {
     fetchIndiaMap();
-    populateDistrictCircle();
     populateDistrictsBoarders();
   }, [mapMode, theme]);
 
@@ -422,49 +258,15 @@ function IndiaMap({
     appliedFilters.roles
   );
 
-  // const getBubbleData = (stateName:string) => {
-  //   const findState = StateCircle
-  // }
-
-  // const bubbleWrapper = (mapData:any) =>{
-  //   const newList:any[] = []
-  //   mapData.forEach((stateData:any)=>{
-  //     newList.push({})
-  //   })
-  //   return []
-  // }
-  const mixDataWithId = () => {
-    const findId = (stateName: string) =>
-      indiaMap.find((item: any) => {
-        return item.text.toLowerCase() == stateName.toLowerCase();
-      });
-    const newList = new Array();
-
-    stateBubbles.forEach((i: any) => {
-      const filteredState = findId(i.title);
-      if (filteredState) {
-        i.name = i.title;
-        i.text = i.title;
-        i.id = filteredState.id;
-      }
-      newList.push(i);
-    });
-    console.log("India Map", indiaMap);
-    console.log("New Json", StateBorders);
-    console.log("New map List", newList);
-  };
-
   const bubbleRadiusWraper = (percent: number) => {
-    console.log("Percentage Radius", percent);
     const radius = (percent / 100) * 75;
-    console.log("Radius", radius);
     return radius;
   };
 
   return (
     <MapWrapper
-      className="m-2 mt-0 pt-0 d-flex justify-content-center"
-      style={{ position: "relative" }}
+        className="m-2 mt-0 pt-0 d-flex justify-content-center"
+        style={{ position: "relative" }}
     >
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />

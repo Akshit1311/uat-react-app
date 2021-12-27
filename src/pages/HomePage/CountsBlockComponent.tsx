@@ -9,6 +9,7 @@ import { css } from "@emotion/react";
 import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { H5 } from "../../styles-components/Heading";
+import { CountBlockModel } from "./HomePage";
 
 const override = css`
   display: block;
@@ -20,6 +21,7 @@ interface CountBlockTypes {
   selectedArea: IDType;
   countResource: any;
   applyRoles: any;
+  setStateViewMap:React.Dispatch<boolean>;
 }
 
 interface CountCardTypes {
@@ -170,29 +172,10 @@ const CountCard = ({
 };
 
 
-
-export class CountBlockModel {
-  Exploring: number = 0;
-  Incubator: number = 0;
-  Corporate: number = 0;
-  SIH_Admin: number = 0;
-  Mentor: number = 0;
-  Academia: number = 0;
-  GovernmentBody: number = 0;
-  ConnectToPotentialPartner: number = 0;
-  IndiaMarketEntry: number = 0;
-  Individual: number = 0;
-  ServiceProvider: number = 0;
-  Investor: number = 0;
-  Startup: number = 0;
-  Accelerator: number = 0;
-  maxRange: number = 0;
-}
-
 const CountsBlockComponent = ({
   selectedArea,
   countResource,
-  applyRoles,
+  applyRoles,setStateViewMap
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const [activeCard, setActiveCard] = useState<string>("Startups");
@@ -287,6 +270,7 @@ const CountsBlockComponent = ({
                         id: "",
                         name: "",
                       });
+                      setStateViewMap(false)
                     }}
                     style={{
                       textDecoration: "none",
