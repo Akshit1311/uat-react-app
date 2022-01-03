@@ -7,9 +7,11 @@ background: ${props=> props.background ? props.background : props.theme.bgCards}
 box-shadow: ${props=> props.theme.shadowCards} !important;
 border-radius: 4px;
 color: ${props=> props.theme.colorCards} !important;
-border: ${ props=> props.border && props.theme.showCaseStartUpBorder}
+border: ${ props=> props.border && props.theme.showCaseStartUpBorder};
+@media (max-width:768px){
+    box-shadow: ${(props:any)=> props.noShadow ? '0px 0px black' : props.theme.shadowCards } !important;
+}
 `
-// width: 102%;
 
 export const CountCard = styled.div<any>`
     background: ${props=> props.active ? "#0177FA" : props.theme.bgCards};

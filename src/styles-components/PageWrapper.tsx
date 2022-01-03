@@ -12,8 +12,13 @@ export const PageWrapperContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat !important;
 `;
-export const PageWrapper = styled.div({
-  maxWidth: "1366px",
-  minWidth: "1080px",
-  width: '100%'
-});
+export const PageWrapper = styled.div`
+  max-width: 1366px;
+  min-width: 1080px;
+  width: 100%;
+  @media (max-width: 768px) {
+    max-width: 768px;
+    min-width: 300px;
+    width: 100%;
+  }
+`

@@ -21,7 +21,7 @@ interface CountBlockTypes {
   selectedArea: IDType;
   countResource: any;
   applyRoles: any;
-  setStateViewMap:React.Dispatch<boolean>;
+  setStateViewMap: React.Dispatch<boolean>;
 }
 
 interface CountCardTypes {
@@ -42,24 +42,47 @@ interface CountCardWrapperTypes {
   colorTheme: string;
 }
 
-const CountCardWrapper = styled.div<CountCardWrapperTypes>(
-  {
-    borderRadius: "4px",
-    height: "76px",
-    top: "43px",
-    width: "170px",
-  },
-  (props: any) => {
-    return {
-      backgroundColor: props.active
+const CountCardWrapper = styled.div<CountCardWrapperTypes>`
+  border-radius: 4px;
+  height: 76px;
+  top: 43px;
+  background-color: ${(props: any) =>
+    props.active
+      ? ThemeColorIdentifier(props.colorTheme)
+      : props.theme.bgCards};
+  border: 2px solid ${(props: any) => props.borderColor};
+  color: ${(props: any) => (props.active ? "white" : props.theme.color)};
+  transition: 0.5s color;
+  @media (max-width: 768px) {
+    border: none;
+    background-color: ${(props: any) =>
+      props.active ? "white" : "none"} !important;
+    color: ${(props: any) =>
+      props.active
         ? ThemeColorIdentifier(props.colorTheme)
-        : props.theme.bgCards,
-      border: `2px solid ${props.borderColor}`,
-      color: props.active ? "white" : props.theme.color,
-      transition: "0.5s color",
-    };
+        : "black"} !important;
+      height: calc(76px + 3px)
   }
-);
+`;
+
+// (
+//   {
+//     borderRadius: "4px",
+//     height: "76px",
+//     top: "43px",
+//     // width: "170px",
+//   },
+//   (props: any) => {
+//     return {
+//       backgroundColor: props.active
+//         ? ThemeColorIdentifier(props.colorTheme)
+//         : props.theme.bgCards,
+//       border: `2px solid ${props.borderColor}`,
+//       color: props.active ? "white" : props.theme.color,
+//       transition: "0.5s color",
+//     };
+//   }
+// );
 
 const CountCard = ({
   activeCard,
@@ -77,10 +100,9 @@ const CountCard = ({
   const active = name === activeCard;
 
   useEffect(() => {
-    
     const count = state[accessor ? accessor : name.slice(0, -1)];
-    if(count === 0){
-      setCurrentCount(0)
+    if (count === 0) {
+      setCurrentCount(0);
     }
     if (count && count > currentCount) {
       let interval: any;
@@ -102,10 +124,10 @@ const CountCard = ({
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong")
+        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
-    } else if(count && count <  currentCount) {
+    } else if (count && count < currentCount) {
       let interval: any;
       if (currentCount > count) {
         interval = setInterval(() => {
@@ -113,14 +135,14 @@ const CountCard = ({
             if (prevState === Number(count) || prevState < Number(count)) {
               return count;
             }
-            if((currentCount - count) > 10000){
-              return prevState - 500
+            if (currentCount - count > 10000) {
+              return prevState - 500;
             }
-            if((currentCount - count) > 5000){
-              return prevState - 200
+            if (currentCount - count > 5000) {
+              return prevState - 200;
             }
-            if((currentCount - count) > 1000){
-              return prevState - 100
+            if (currentCount - count > 1000) {
+              return prevState - 100;
             }
             return prevState - 1;
           });
@@ -128,12 +150,13 @@ const CountCard = ({
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong")
+        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
     }
     console.log("End Interval");
   }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
+
   return (
     <>
       <CountCardWrapper
@@ -141,10 +164,9 @@ const CountCard = ({
         onClick={() => handleCardClick(name, acc)}
         active={active}
         borderColor={borderColor}
-        className="col-5 col-md count-single-card p-0"
+        className="col-md count-single-card p-0"
       >
         {" "}
-        {console.log("Count From Children", currentCount)}
         {loading ? (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center">
             <MoonLoader
@@ -160,10 +182,17 @@ const CountCard = ({
         {!loading && (
           <div
             className=" d-flex flex-column h-100 justify-content-between"
-            style={{ padding: "0.83rem" }}
+            style={{ padding: "0.83rem", paddingRight: 0 }}
           >
-            <h4 className="m-0 p-0">{currentCount}</h4>
+            <h4 className="m-0 p-0 count-number">{currentCount}</h4>
             <h6 className="mx-0 mb-0 p-0">{name}</h6>
+            <div
+              className={`count-underline d-block d-sm-none`}
+              style={{
+                visibility: active ? "visible" : "hidden",
+                background: ThemeColorIdentifier(colorTheme),
+              }}
+            ></div>
           </div>
         )}
       </CountCardWrapper>
@@ -171,11 +200,11 @@ const CountCard = ({
   );
 };
 
-
 const CountsBlockComponent = ({
   selectedArea,
   countResource,
-  applyRoles,setStateViewMap
+  applyRoles,
+  setStateViewMap,
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const [activeCard, setActiveCard] = useState<string>("Startups");
@@ -256,7 +285,7 @@ const CountsBlockComponent = ({
           {selectedArea.id !== "india" ? (
             <>
               <div className="ms-3" />
-              <div className="font-bold" style={{ marginTop: "0.1rem", }}>
+              <div className="font-bold" style={{ marginTop: "0.1rem" }}>
                 |
               </div>
               <div className="ms-3" />
@@ -270,7 +299,7 @@ const CountsBlockComponent = ({
                         id: "",
                         name: "",
                       });
-                      setStateViewMap(false)
+                      setStateViewMap(false);
                     }}
                     style={{
                       textDecoration: "none",
@@ -297,7 +326,9 @@ const CountsBlockComponent = ({
           )}
         </div>
       </div>
-      <div className="row count-div">
+      <div
+        className="d-inline-flex count-div horizontal-scroll"
+      >
         <CountCard
           {...resources}
           borderColor="#0177FA"

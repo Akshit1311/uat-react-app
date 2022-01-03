@@ -21,39 +21,10 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import SearchBar from "../AllSearch"
+import ViewInsight from "../ViewInsight";
 
-interface SearchBarTypes {
-  filterState: any[];
-  setSearchBarExpanded: React.Dispatch<boolean>;
-  searchBarExpanded: boolean;
-}
-
-export function SearchBar({
-  searchBarExpanded,
-  setSearchBarExpanded,
-  filterState,
-}: SearchBarTypes) {
-  return (
-    <div className="row search-bar-row">
-      <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
-        <SpanIcon
-          className="btn shadow-none border-0 m-0 pe-1 ps-4 "
-          id="search-addon"
-        >
-          <BiSearchAlt2 size={17.06} />
-        </SpanIcon>
-        <SearchBarInput
-          type="search"
-          className="form-control ps-2 search-bar-left"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-      </SearchBarWrapper>
-    </div>
-  );
-}
 
 const Accordion = MaterialStyled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -118,22 +89,6 @@ const DropDown = styled.button`
   color: ${(props) => props.theme.colorCards} !important;
   padding: 0px !important;
 `;
-const SearchBarWrapper = styled.div`
-  color: ${(props) => props.theme.colorCards} !important;
-  background: ${(props) => props.theme.bgCards} !important;
-  box-shadow: ${(props) => props.theme.shadowCards} !important;
-`;
-
-const SearchBarInput = styled.input`
-  color: ${(props) => props.theme.colorCards} !important;
-  background: ${(props) => props.theme.bgCards} !important;
-`;
-
-const SpanIcon = styled.span`
-  color: ${(props) => props.theme.color};
-  margin-top: 1.4px !important;
-`;
-
 
 const LeftNavComponent = (props: any) => {
   const {
@@ -141,10 +96,13 @@ const LeftNavComponent = (props: any) => {
     selectedArea,
     tagsResources,
     appliedFilters,
-    setAppliedFilters, colorTheme, fetchFilterList, filterState, filterLoading
+    setAppliedFilters,
+    colorTheme,
+    fetchFilterList,
+    filterState,
+    filterLoading,noShadow,
+    insight,search:searchVisible, dateRange, dateRangeState, dateRangeLoading
   } = props;
-
- 
 
   const [expanded, setExpanded] = React.useState<string | false>("");
   const [searchBarExpanded, setSearchBarExpanded] = useState(false);
@@ -330,8 +288,9 @@ const LeftNavComponent = (props: any) => {
       setExpanded(newExpanded ? panel : false);
     };
 
-    const viewInsightUrl = `/view-insight?id=${selectedState[0]? selectedState[0].id: ''}&state=${selectedState[0]? selectedState[0].value : ''}`
-  // window.addEventListener("resize", () => setLeftNavWidth(window.innerWidth));
+  const viewInsightUrl = `/view-insight?id=${
+    selectedState[0] ? selectedState[0].id : ""
+  }&state=${selectedState[0] ? selectedState[0].value : ""}`;
   return (
     <>
       <div
@@ -343,19 +302,19 @@ const LeftNavComponent = (props: any) => {
         }}
       >
         <div className="px-2">
-          {!expanded ? (
+          {!expanded && searchVisible ? (
             <SearchBar
               filterState={filterState}
               searchBarExpanded={searchBarExpanded}
-              setSearchBarExpanded={setSearchBarExpanded}
+              // setSearchBarExpanded={setSearchBarExpanded}
             />
           ) : (
             <></>
           )}
           {!searchBarExpanded ? (
             <>
-              <Card
-                className="row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px"
+              <Card noShadow={noShadow}
+                className={`row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px ${ !searchVisible && 'mt-0'}`}
                 id="flush1"
               >
                 <Accordion
@@ -385,7 +344,8 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"states"} colorTheme={colorTheme}
+                      accessor={"states"}
+                      colorTheme={colorTheme}
                       originalData={filterState.states}
                       loading={filterLoading}
                       handleClick={handleStateClick}
@@ -426,7 +386,8 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"sectors"} colorTheme={colorTheme}
+                      accessor={"sectors"}
+                      colorTheme={colorTheme}
                       originalData={filterState.sectors}
                       loading={filterLoading}
                       selectedItem={selectedSector}
@@ -466,7 +427,8 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"industries"} colorTheme={colorTheme}
+                      accessor={"industries"}
+                      colorTheme={colorTheme}
                       originalData={filterState.industries}
                       loading={filterLoading}
                       selectedItem={selectedIndustry}
@@ -506,7 +468,8 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"stages"} colorTheme={colorTheme}
+                      accessor={"stages"}
+                      colorTheme={colorTheme}
                       originalData={filterState.stages}
                       loading={filterLoading}
                       selectedItem={selectedStages}
@@ -542,7 +505,8 @@ const LeftNavComponent = (props: any) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <DropDownListComponent
-                      accessor={"value"} colorTheme={colorTheme}
+                      accessor={"value"}
+                      colorTheme={colorTheme}
                       originalData={trimBadges(badgesState)}
                       loading={badgesLoading}
                       selectedItem={selectedBadges}
@@ -556,25 +520,53 @@ const LeftNavComponent = (props: any) => {
                     />
                   </AccordionDetails>
                 </Accordion>
+                {
+                  dateRange && (
+                <Accordion
+                  expanded={expanded === "panel6"}
+                  onChange={handleChange("panel6")}
+                >
+                  <AccordionSummary
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <DropDown
+                      className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                      type="button"
+                    >
+                      Date Range
+                    </DropDown>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <DropDownListComponent
+                      accessor={"value"}
+                      colorTheme={colorTheme}
+                      originalData={dateRangeState}
+                      loading={dateRangeLoading}
+                      selectedItem={selectedBadges}
+                      handleClick={handleBadgesClick}
+                      handleApplyClick={onApplyBadges}
+                      noSort={true}
+                      dropDownId={"#collapse6"}
+                      handleClearClick={() => {
+                        setSelectedBadges([]);
+                      }}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+                  )
+                }
               </Card>
             </>
           ) : (
             <></>
           )}
-          <Card className="left-nav-bottom-card row pt-3 pb-0">
-            <h6 className="px-0 card-heading-left-bottom">
-              {" "}
-              VIEW STARTUP ECOSYSTEM INSIGHTS OF INDIA
-            </h6>
-            <span className="sub-heading px-0 mb-2 font-500">
-              You can View Insights of India
-            </span>
-            <div className="btn-view-project mx-0 px-0">
-              <Link to={viewInsightUrl}>
-              <Button colorTheme={colorTheme} className="background-color-theme">View Insights</Button>
-              </Link>
-            </div>
-          </Card>
+          {insight && (
+            <ViewInsight
+              colorTheme={colorTheme}
+              viewInsightUrl={viewInsightUrl}
+            />
+          )}
         </div>
       </div>
     </>

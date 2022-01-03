@@ -68,3 +68,17 @@ export const IconButton = styled.button<any>`
     color: ${(props) => (props.active ? "white" : props.theme.color2)};
   }
 `;
+
+
+export const ThemeButton = styled.button<any>`
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  font-size: ${(props:any)=> props.fontSize || '15px' };
+  position: fixed;
+  bottom: ${(props:any)=> props.bottom};
+  right: 30px;
+  background: ${(props) => props.theme.bgCards};
+  color: ${(props) => props.theme.color};
+  border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme|| '')}
+`;

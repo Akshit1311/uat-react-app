@@ -59,14 +59,12 @@ function ViewChangerComponent({
     setSelectedArea,
     selectedArea,
     getCounts,
-    colorTheme,
+    colorTheme,fetchDateRange, dateRangeState, dateRangeLoading
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
 
-  const [fetchDateRange, dateRangeState, dateRangeLoading] = useQuery(
-    "/static/searchDateRanges"
-  );
+
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
   );

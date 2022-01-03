@@ -20,6 +20,10 @@ import {
 } from "../../styles-components/PageWrapper";
 import { useMutate } from "../../hooks/useMutate";
 import StateView from "./Map/StateView";
+import { ThemeButton as FilterButton } from "../../styles-components/Button";
+import { BiFilter } from "react-icons/bi";
+import MobileFilter from "./LeftNav/MobileFilter";
+import SearchBar from "./AllSearch";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -84,6 +88,9 @@ const HomePage = (props: HomePageTypes) => {
   const [mapMode, setMapMode] = useState<MapVariables.IDType>(
     MapVariables.INDIA
   );
+
+  const [mobileFilterVisible, setMobileFilterVisible] =
+    useState<boolean>(false);
   const [appliedFilters, setAppliedFilters] =
     useState<any>(INITIAL_FILTER_STATE);
 
@@ -118,6 +125,10 @@ const HomePage = (props: HomePageTypes) => {
   const [getCounts, countState, countLoading] = useQuery(
     HomePageApi.countBlockEndPoint
   );
+  const [fetchDateRange, dateRangeState, dateRangeLoading] = useQuery(
+    "/static/searchDateRanges"
+  );
+
   const countWrrapper = (data: any[]) => {
     console.error("FInd Index Data", data);
     const obj = new CountBlockModel();
@@ -183,6 +194,18 @@ const HomePage = (props: HomePageTypes) => {
     setSelectedStateByMap,
     colorTheme: primaryColorTheme,
     tableLoading,
+    fetchDateRange, dateRangeState,dateRangeLoading
+  };
+
+  const FilterProps = {
+    appliedFilters,
+    setAppliedFilters,
+    selectedArea,
+    setSelectedArea,
+    colorTheme: primaryColorTheme,
+    fetchFilterList: fetchDefaultFilterValues,
+    filterState,
+    filterLoading,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -195,27 +218,31 @@ const HomePage = (props: HomePageTypes) => {
       >
         <PageWrapperContainer>
           <PageWrapper>
+            <FilterButton
+              colorTheme={primaryColorTheme}
+              onClick={() => setMobileFilterVisible(true)}
+              bottom={"30px"}
+              fontSize={"30px"}
+            >
+              <BiFilter />
+            </FilterButton>
+            <MobileFilter
+              isVisible={mobileFilterVisible}
+              filterProps={FilterProps}
+              handleToggle={() => setMobileFilterVisible(false)}
+              fetchDateRange={fetchDateRange}
+              dateRangeState={dateRangeState}
+              dateRangeLoading={dateRangeLoading}
+            />
             <div className="row px-0 mx-0">
-              <div
-                className="col-12  px-0 p-0"
-                style={{
-                  flex: "0 0 18%",
-                  width: "18.666667%",
-                  minWidth: "18.675%",
-                }}
-              >
+              <div className="px-0 p-0 col-filter-section">
                 <LeftNavComponent
-                  appliedFilters={appliedFilters}
-                  setAppliedFilters={setAppliedFilters}
-                  selectedArea={selectedArea}
-                  setSelectedArea={setSelectedArea}
-                  colorTheme={primaryColorTheme}
-                  fetchFilterList={fetchDefaultFilterValues}
-                  filterState={filterState}
-                  filterLoading={filterLoading}
+                  {...FilterProps}
+                  insight={true}
+                  search={true}
                 ></LeftNavComponent>
               </div>
-              <div style={{ flex: "62%" }} className="p-0">
+              <div className="col-content-section p-0">
                 <div className="col-12 col-md px-0 mx-0 w-100">
                   <div className="row px-0 mx-0">
                     <CountsBlockComponent
@@ -225,10 +252,15 @@ const HomePage = (props: HomePageTypes) => {
                       setStateViewMap={setStateViewMode}
                     />
                   </div>
+                  <div className="d-block d-sm-none">
+                  <SearchBar
+                    filterState={filterState}
+                    searchBarExpanded={false}
+                  />
+                  </div>
                   <div className="col-12 row px-0 mx-0">
                     <div
-                      className="col-12  p-4 pb-0 pe-0"
-                      style={{ flex: "0 0 auto", width: "61%" }}
+                      className="col-12  p-4 pb-0 pe-0 col-map"
                     >
                       {!stateViewMode && (
                         <MapComponent
@@ -241,102 +273,17 @@ const HomePage = (props: HomePageTypes) => {
                       )}
                     </div>
                     <div
-                      className="col-12 "
-                      style={{
-                        flex: "0 0 auto",
-                        width: "39%",
-                      }}
+                      className="col-12 col-view-changer"
                     >
                       <ViewChangerComponent
                         mapViewResources={mapViewResources}
                         setStartUpPolicyChart={setStartUpPolicyChart}
                         fetchPolicy={fetchPolicy}
                         setStateViewMode={setStateViewMode}
-                        stateViewMode={stateViewMode}
+                        stateViewMode={stateViewMode} 
                       />
                     </div>
-                  </div>
-                </div>
-                <Strip className="row mx-0 strip  align-items-center d-flex">
-                  <span className="m-0 strip-text font-Mont">
-                    <b
-                      className="me-3 strip-bold-text font-Mont"
-                      style={{ marginLeft: "1.5%" }}
-                    >
-                      Please Note :
-                    </b>
-                    The information is based on self declaration by community
-                    members. Startup India dosen't moderate the information
-                    collected.
-                  </span>
-                </Strip>
-                <div className="row d-flex justify-content-center px-0 mx-0">
-                  <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
-                    <Button
-                      colorTheme={primaryColorTheme}
-                      backgroundColor={`${
-                        !startupListActive &&
-                        theme.togglerButton.backgroundInactive
-                      }`}
-                      color={`${
-                        !startupListActive && theme.togglerButton.color
-                      }`}
-                      border={`${!startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
-                        startupListActive && "text-white background-color-theme"
-                      }`}
-                      onClick={toggleStartUp}
-                    >
-                      Startups List
-                    </Button>
-                    <Button
-                      colorTheme={primaryColorTheme}
-                      backgroundColor={`${
-                        startupListActive &&
-                        theme.togglerButton.backgroundInactive
-                      }`}
-                      color={`${
-                        startupListActive && theme.togglerButton.color
-                      }`}
-                      border={`${startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${
-                        !startupListActive &&
-                        "text-white background-color-theme"
-                      }`}
-                      onClick={toggleStartUp}
-                    >
-                      Data Table
-                    </Button>
-                  </ButtonGroup>
-                  <div className="row mx-0 px-0">
-                    {startupListActive && (
-                      <div
-                        style={{
-                          display: startupListActive ? "block" : "none",
-                        }}
-                      >
-                        <StartupsListComponent
-                          appliedFilters={appliedFilters}
-                          selectedCountBlock={selectedCountBlock}
-                          mapViewResource={mapViewResources}
-                        />
-                      </div>
-                    )}
-                    {
-                      <>
-                        <div
-                          style={{
-                            display: !startupListActive ? "block" : "none",
-                          }}
-                        >
-                          <DataTable
-                            fetch={fetchTableData}
-                            state={tableState}
-                            loading={tableLoading}
-                          />
-                        </div>
-                      </>
-                    }
+
                   </div>
                 </div>
               </div>

@@ -12,19 +12,9 @@ import {
   createTheme,
 } from "@mui/material/styles";
 import './scss/componentStyles.scss'
+import { ThemeButton } from "./styles-components/Button"
 
 axios.defaults.baseURL = axiosConfig.baseURL;
-
-const ThemeButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 100px;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: ${(props) => props.theme.bgCards};
-  color: ${(props) => props.theme.color};
-`;
 
 function App() {
   const [theme, setTheme] = useState<any>(PRIMARY_THEME);
@@ -62,7 +52,7 @@ function App() {
             <BrowserRouter>
               <AppNavigator />
             </BrowserRouter>
-            <ThemeButton onClick={themeHandler}>
+            <ThemeButton bottom={'100px'} onClick={themeHandler}>
               <BiLoaderCircle />
             </ThemeButton>
           </ThemeContext.Provider>
