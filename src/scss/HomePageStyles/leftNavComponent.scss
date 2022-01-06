@@ -1,17 +1,6 @@
 .left-side-nav-styles {
     font-family: "Montserrat", sans-serif;
-    .search-bar-row {
-        margin-top: 24px;
-        height: 38px;
-        margin-bottom: 24px;
-        input {
-            border: 0px !important;
-            font-size: 14px;
-            font-weight: 400px;
-            border-radius: 0px;
-            color: black !important;
-        }
-    }
+    
     button {
         font-weight: 500;
         font-size: 14px;
@@ -41,12 +30,7 @@
         border-radius: 3px;
     }
     .dropdown-card,
-    .left-nav-bottom-card {
-        border-radius: 4px;
-        margin-top: 24px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
+    
     .search-bar {
         search-icon {
             background-color: #ffffff !important;
@@ -63,3 +47,4 @@
         margin-top: 0.5rem;
     }
 }
+

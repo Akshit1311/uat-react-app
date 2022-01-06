@@ -20,6 +20,11 @@ const StartUpCardContainer = styled.div`
   max-width: 65%;
   min-width: 65%;
   margin-left: 1.5%;
+  @media (max-width:768px){
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0%;
+  }
 `;
 
 const StartUpCardWrapper = styled.div`
@@ -228,10 +233,10 @@ function StartupsListComponent(props: any) {
   }, [props.appliedFilters]);
 
   return (
-    <div className="mb-5  startup-list-styles d-flex">
+    <div className="mb-5  startup-list-styles d-flex mx-0">
       {/* <div style={{ minWidth: "19.66%" }} /> */}
       <StartUpCardContainer
-        className={`startup-list-card-container p-4 position-relative ${
+        className={`startup-list-card-container p-4 position-relative mx-0 ${
           renderedData.length !== tagsState.length ? "pb-0" : ""
         }`}
       >
@@ -246,7 +251,7 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap justify-content-between h-100">
+        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between h-100">
           {!tagsLoading && !tagsState.length ? (
             <div className="d-flex justify-content-center w-100">
               <p
@@ -277,8 +282,7 @@ function StartupsListComponent(props: any) {
         )}
       </StartUpCardContainer>
       <div
-        style={{ minWidth: "0", width: "35%", marginTop: "6.5rem" }}
-        className="ps-4"
+        className="ps-4 disabled-map"
       >
         <DisabledMap mapViewResource={props.mapViewResource} />
       </div>

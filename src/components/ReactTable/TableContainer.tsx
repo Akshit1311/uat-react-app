@@ -93,8 +93,8 @@ const TableContainer = (props: any) => {
   }
 
   return (
-    <>
-      <table {...getTableProps()} className="w-100">
+    <div className="data-table-overflow-scroll">
+      <table {...getTableProps()} className="w-100" style={{ minWidth: '1200px'}} >
         <thead className="w-100 py-5 ">
           {headerGroups.map((headerGroup) => (
             <TR
@@ -196,7 +196,7 @@ const TableContainer = (props: any) => {
           View More
         </div>
       }
-    </>
+    </div>
   );
 };
 

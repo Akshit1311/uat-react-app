@@ -17,6 +17,8 @@ import { IconButton } from "../../styles-components/Button";
 import { ThemeContext } from "../../config/context";
 import { useQuery } from "../../hooks/useQuery";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import MapViewButtonChangeGroup from './MapViewButtonChangeGroup'
+import { useWindowSize } from "../../hooks/useWindowSize"
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -51,6 +53,7 @@ function ViewChangerComponent({
   setStateViewMode,
   stateViewMode,
 }: ViewChangerComponentsTypes) {
+  const [windowWidth, windowHeight] = useWindowSize()
   const {
     isCircleActive,
     mapMode,
@@ -71,34 +74,6 @@ function ViewChangerComponent({
   const [fetchStartUpCount, countState, countLoading] = useQuery("");
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
-
-  const stateText = (
-    <div className=" px-3" style={{ paddingTop: "2px" }}>
-      <span>State</span>
-    </div>
-  );
-  const districtText = (
-    <div className=" px-3" style={{ paddingTop: "2px" }}>
-      <span>District</span>
-    </div>
-  );
-  const cityText = (
-    <div className=" px-3" style={{ paddingTop: "2px" }}>
-      <span>City</span>
-    </div>
-  );
-
-  const defaultView = () => setMapMode(MapVariables.INDIA);
-
-  const circleView = () => {
-    setIsCircleActive((prevState: boolean) => !prevState);
-  };
-
-  const districtView = () => setMapMode(MapVariables.DISTRICT);
-  const cityView = () => {
-    setMapMode(MapVariables.CITY);
-    circleView();
-  };
 
   const dateRangeChange = async (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -130,11 +105,11 @@ function ViewChangerComponent({
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
     window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`;
   };
-
+  const resourse ={ isCircleActive, colorTheme, mapMode,setMapMode, setIsCircleActive }
   return (
     <div className="view-changer-component-styles">
-      <div className="">
-        <div className="mx-1 col-12 d-flex align-items-center justify-content-between">
+      <div className="row">
+        <div className="mx-1 col-12 align-items-center justify-content-between d-none d-sm-flex">
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
           <SelectBox
             id="dataRangeSelectBox"
@@ -160,88 +135,12 @@ function ViewChangerComponent({
             />
           </button>
         </div>
-        <div className="mx-1 col-12 mt-4">
-          <div className="d-flex justify-content-between">
-            <div>
-              <Tooltip
-                animation="zoom"
-                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                placement="top"
-                overlay={stateText}
-              >
-                <IconButton
-                  colorTheme={colorTheme}
-                  onClick={defaultView}
-                  active={mapMode.id === MapVariables.INDIA.id}
-                  className={`btn-outline btn-icon-handler ${
-                    mapMode.id === MapVariables.INDIA.id ? "bg-active" : ""
-                  }`}
-                >
-                  <IoMapSharp
-                    size={18}
-                    style={{ marginTop: "0px", marginLeft: "-1px" }}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Tooltip
-                animation="zoom"
-                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                placement="top"
-                overlay={cityText}
-              >
-                <IconButton
-                  onClick={cityView}
-                  colorTheme={colorTheme}
-                  active={mapMode.id === MapVariables.CITY.id}
-                  className={`btn btn-icon-handler  dark ${
-                    mapMode.id === MapVariables.CITY.id ? "bg-active" : ""
-                  }`}
-                >
-                  <MdOutlineLocationCity
-                    style={{ marginTop: "-5px", marginLeft: "1px" }}
-                    size={18}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Tooltip
-                animation="zoom"
-                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                placement="top"
-                overlay={districtText}
-              >
-                <IconButton
-                  onClick={districtView}
-                  colorTheme={colorTheme}
-                  active={mapMode.id === MapVariables.DISTRICT.id}
-                  className={`btn btn-icon-handler  ${
-                    mapMode.id === MapVariables.DISTRICT.id ? "bg-active" : ""
-                  }`}
-                >
-                  <GiPeru
-                    style={{ marginTop: "-6px", marginLeft: "-1px" }}
-                    size={18}
-                  />
-                </IconButton>
-              </Tooltip>
-            </div>
-            <div>
-              <IconButton
-                active={isCircleActive}
-                colorTheme={colorTheme}
-                onClick={circleView}
-                className={`btn btn-icon-handler shadow-small ${
-                  isCircleActive ? "bg-active" : ""
-                }`}
-              >
-                <RiDropFill
-                  size={18}
-                  style={{ marginTop: "-5px", marginLeft: "1px" }}
-                />
-              </IconButton>
-            </div>
-          </div>
-        </div>
-        <div className="mx-1 col-12 mt-4 pt-0">
+        {
+          windowWidth > 768 ? (
+            <MapViewButtonChangeGroup {...resourse} />
+          ): (<></>)
+        }
+        <div className="mx-1 col-12 mt-4 pt-0 view-changer-startup-card">
           <Card>
             {/* <div className="select-type-card"> */}
             <h5 className="mb-3 text-bold font-Mont">

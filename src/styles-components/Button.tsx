@@ -80,5 +80,6 @@ export const ThemeButton = styled.button<any>`
   right: 30px;
   background: ${(props) => props.theme.bgCards};
   color: ${(props) => props.theme.color};
-  border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme|| '')}
+  border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme|| '')};
+  z-index: 100;
 `;

@@ -101,7 +101,7 @@ const LeftNavComponent = (props: any) => {
     fetchFilterList,
     filterState,
     filterLoading,noShadow,
-    insight,search:searchVisible, dateRange, dateRangeState, dateRangeLoading
+    insight,search:searchVisible, dateRange, dateRangeState, dateRangeLoading, selectedState, setSelectedState
   } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>("");
@@ -109,7 +109,6 @@ const LeftNavComponent = (props: any) => {
 
   const theme = useContext(ThemeContext);
 
-  const [selectedState, setSelectedState] = useState<any[]>([]);
   const [selectedSector, setSelectedSector] = useState<any[]>([]);
   const [selectedStages, setSelectedStages] = useState<any[]>([]);
   const [selectedIndustry, setSelectedIndustry] = useState<any[]>([]);

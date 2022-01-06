@@ -84,14 +84,16 @@ const GradientBar = ({ maxCountValue }: any) => {
     console.log("End Interval");
   }, [maxCountValue]);
   return (
-    <div className="gradient-bar-map gradient-bar-map d-flex justify-content-between">
+    <div className="gradient-bar-map d-flex justify-content-between">
       <p className="min-gradient-bar">0</p>
       <p className="max-gradient-bar">{currentCount}</p>
     </div>
   );
 };
 
-const MAP_AREA_INDIA = "-200 0 1230 1106";
+const windowWidth = window.innerWidth
+
+const MAP_AREA_INDIA = windowWidth > 768 ? "-200 0 1230 1106" : '-60 0 1000 900';
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
 
@@ -213,8 +215,6 @@ function IndiaMap({
   const responsiveImageHeight = (mapArea: string) => {
     console.log("Height", height);
     const split: string[] = mapArea.split(" ");
-    // -200 0 800 687
-    // if (height > 728 && height < 800) return mapArea;
     if (height > 768) {
       const a: number = 768 - height;
       split[2] = (Number(split[2]) + a).toString();
@@ -281,9 +281,8 @@ function IndiaMap({
             />
           </div>
         ))}
-      {console.log("tableLoading", tableLoading)}
       {!loadingIndiaMap && !tableLoading && (
-        <svg viewBox={getViewBoxArea()} aria-label="Map of India">
+        <svg viewBox={getViewBoxArea()} className="mt-c-5" aria-label="Map of India">
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;

@@ -11,6 +11,7 @@ interface ViewInsight {
 
 export default function ViewInsight(props:any){
     return(
+      <div className="left-side-nav-styles">
         <Card className="left-nav-bottom-card row pt-3 pb-0">
             <h6 className="px-0 card-heading-left-bottom">
               {" "}
@@ -25,5 +26,6 @@ export default function ViewInsight(props:any){
               </Link>
             </div>
           </Card>
+      </div>
     )
 }

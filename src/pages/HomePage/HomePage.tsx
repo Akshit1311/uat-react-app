@@ -24,9 +24,14 @@ import { ThemeButton as FilterButton } from "../../styles-components/Button";
 import { BiFilter } from "react-icons/bi";
 import MobileFilter from "./LeftNav/MobileFilter";
 import SearchBar from "./AllSearch";
+import MapViewChangeButtonGroup from "./MapViewButtonChangeGroup";
+import ViewInsight from "./ViewInsight"
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
+  @media (max-width: 768px){
+    width: 70%;
+  }
 `;
 
 const Strip = styled.div`
@@ -194,7 +199,9 @@ const HomePage = (props: HomePageTypes) => {
     setSelectedStateByMap,
     colorTheme: primaryColorTheme,
     tableLoading,
-    fetchDateRange, dateRangeState,dateRangeLoading
+    fetchDateRange,
+    dateRangeState,
+    dateRangeLoading,
   };
 
   const FilterProps = {
@@ -209,7 +216,11 @@ const HomePage = (props: HomePageTypes) => {
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
+  const [selectedState, setSelectedState] = useState<any[]>([])
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
+  const viewInsightUrl = `/view-insight?id=${
+    selectedState[0] ? selectedState[0].id : ""
+  }&state=${selectedState[0] ? selectedState[0].value : ""}`;
   return (
     <>
       <div
@@ -239,6 +250,7 @@ const HomePage = (props: HomePageTypes) => {
                 <LeftNavComponent
                   {...FilterProps}
                   insight={true}
+                  selectedState={selectedState} setSelectedState={setSelectedState}
                   search={true}
                 ></LeftNavComponent>
               </div>
@@ -252,16 +264,24 @@ const HomePage = (props: HomePageTypes) => {
                       setStateViewMap={setStateViewMode}
                     />
                   </div>
-                  <div className="d-block d-sm-none">
-                  <SearchBar
-                    filterState={filterState}
-                    searchBarExpanded={false}
-                  />
+                  <div className="d-block d-sm-none mb-3">
+                    <SearchBar
+                      filterState={filterState}
+                      searchBarExpanded={false}
+                    />
+                    <div className="px-c-2">
+
+                    <MapViewChangeButtonGroup
+                      isCircleActive={isCircleActive}
+                      colorTheme={primaryColorTheme}
+                      mapMode={mapMode}
+                      setMapMode={setMapMode}
+                      setIsCircleActive={setIsCircleActive}
+                      />
+                      </div>
                   </div>
                   <div className="col-12 row px-0 mx-0">
-                    <div
-                      className="col-12  p-4 pb-0 pe-0 col-map"
-                    >
+                    <div className="col-12 p-c-4 pb-0 pe-0 col-map">
                       {!stateViewMode && (
                         <MapComponent
                           scaleBarVisible={true}
@@ -272,18 +292,100 @@ const HomePage = (props: HomePageTypes) => {
                         <StateView selectedArea={appliedFilters.states[0]} />
                       )}
                     </div>
-                    <div
-                      className="col-12 col-view-changer"
-                    >
+                    <div className="col-12 col-view-changer">
                       <ViewChangerComponent
                         mapViewResources={mapViewResources}
                         setStartUpPolicyChart={setStartUpPolicyChart}
                         fetchPolicy={fetchPolicy}
                         setStateViewMode={setStateViewMode}
-                        stateViewMode={stateViewMode} 
+                        stateViewMode={stateViewMode}
                       />
                     </div>
-
+                  </div>
+                </div>
+                <Strip className="row me-0 strip  align-items-center d-flex">
+                  <span className="m-0 strip-text font-Mont">
+                    <b
+                      className="me-3 strip-bold-text font-Mont"
+                      
+                    >
+                      Please Note :
+                    </b>
+                    The information is based on self declaration by community
+                    members. Startup India dosen't moderate the information
+                    collected.
+                  </span>
+                </Strip>
+                <div className="d-block d-sm-none">
+                <ViewInsight colorTheme={primaryColorTheme} viewInsightUrl={viewInsightUrl} />
+                </div>
+                <div className="row d-flex justify-content-center px-0 mx-0">
+                  <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
+                    <Button
+                      colorTheme={primaryColorTheme}
+                      backgroundColor={`${
+                        !startupListActive &&
+                        theme.togglerButton.backgroundInactive
+                      }`}
+                      color={`${
+                        !startupListActive && theme.togglerButton.color
+                      }`}
+                      border={`${!startupListActive && "0px"}`}
+                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
+                        startupListActive && "text-white background-color-theme"
+                      }`}
+                      onClick={toggleStartUp}
+                    >
+                      Startups List
+                    </Button>
+                    <Button
+                      colorTheme={primaryColorTheme}
+                      backgroundColor={`${
+                        startupListActive &&
+                        theme.togglerButton.backgroundInactive
+                      }`}
+                      color={`${
+                        startupListActive && theme.togglerButton.color
+                      }`}
+                      border={`${startupListActive && "0px"}`}
+                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${
+                        !startupListActive &&
+                        "text-white background-color-theme"
+                      }`}
+                      onClick={toggleStartUp}
+                    >
+                      Data Table
+                    </Button>
+                  </ButtonGroup>
+                  <div className="mx-0 px-0">
+                    {true && (
+                      <div
+                        style={{
+                          display: startupListActive ? "flex" : "none",
+                        }} className="mx-0"
+                      >
+                        <StartupsListComponent
+                          appliedFilters={appliedFilters}
+                          selectedCountBlock={selectedCountBlock}
+                          mapViewResource={mapViewResources}
+                        />
+                     </div>
+                    )}
+                    {
+                      <>
+                        <div
+                          style={{
+                            display: !startupListActive ? "block" : "none",
+                          }}
+                        >
+                          <DataTable
+                            fetch={fetchTableData}
+                            state={tableState}
+                            loading={tableLoading}
+                          />
+                        </div>
+                      </>
+                    }
                   </div>
                 </div>
               </div>
