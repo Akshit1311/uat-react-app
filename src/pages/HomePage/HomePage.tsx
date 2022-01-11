@@ -277,7 +277,7 @@ const HomePage = (props: HomePageTypes) => {
                       filterState={filterState}
                       searchBarExpanded={false}
                     />
-                    <div className="px-c-2">
+                    <div className="px-c-2" >
 
                     <MapViewChangeButtonGroup
                       isCircleActive={isCircleActive}
@@ -289,7 +289,7 @@ const HomePage = (props: HomePageTypes) => {
                       </div>
                   </div>
                   <div className="col-12 row px-0 mx-0">
-                    <div className="col-12 p-c-4 pb-0 pe-0 col-map">
+                    <div className="col-12 p-c-4 pb-0 pe-0 col-map" >
                       {!stateViewMode && (
                         <MapComponent
                           scaleBarVisible={true}

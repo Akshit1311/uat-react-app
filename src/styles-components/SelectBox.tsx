@@ -17,6 +17,12 @@ background-position: right 0.75rem center;
 background-size: 16px 12px;
 background-repeat: no-repeat;
 appearance: none;
+&:focus{
+    border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme)} !important;
+}
+&:active{
+    border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme)} !important;
+}
 `
 // box-shadow: ${props=> props.theme.shadowSelect + ThemeShadowColorIdentifier(props.colorTheme)};
 

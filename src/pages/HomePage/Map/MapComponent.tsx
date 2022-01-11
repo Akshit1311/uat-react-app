@@ -284,8 +284,8 @@ function IndiaMap({
       {!loadingIndiaMap && !tableLoading && (
         <svg
           viewBox={getViewBoxArea()}
-          className="mt-c-5"
-          aria-label="Map of India"
+          className="mt-c-5-2"
+          aria-label="Map of India" style={{ transform: windowWidth > 768 ? '': 'scale(1.15)' }}
         >
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {
