@@ -139,7 +139,7 @@ const TableContainer = (props: any) => {
                 </Cells>
               ))}
             </TR>
-          ))}
+          ))} 
         </thead>
         <div className="mt-3 mb-2" style={{ maxWidth: "21rem" }}>
           <SearchBarComponent

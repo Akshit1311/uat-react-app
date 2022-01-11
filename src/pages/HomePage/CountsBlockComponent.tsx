@@ -61,28 +61,9 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
       props.active
         ? ThemeColorIdentifier(props.colorTheme)
         : "black"} !important;
-      height: calc(76px + 3px)
+    height: 82px;
   }
 `;
-
-// (
-//   {
-//     borderRadius: "4px",
-//     height: "76px",
-//     top: "43px",
-//     // width: "170px",
-//   },
-//   (props: any) => {
-//     return {
-//       backgroundColor: props.active
-//         ? ThemeColorIdentifier(props.colorTheme)
-//         : props.theme.bgCards,
-//       border: `2px solid ${props.borderColor}`,
-//       color: props.active ? "white" : props.theme.color,
-//       transition: "0.5s color",
-//     };
-//   }
-// );
 
 const CountCard = ({
   activeCard,
@@ -185,6 +166,7 @@ const CountCard = ({
             style={{ padding: "0.83rem", paddingRight: 0 }}
           >
             <h4 className="m-0 p-0 count-number">{currentCount}</h4>
+            <div>
             <h6 className="mx-0 mb-0 p-0">{name}</h6>
             <div
               className={`count-underline d-block d-sm-none`}
@@ -193,6 +175,7 @@ const CountCard = ({
                 background: ThemeColorIdentifier(colorTheme),
               }}
             ></div>
+            </div>
           </div>
         )}
       </CountCardWrapper>

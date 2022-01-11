@@ -25,17 +25,16 @@ const MapWrapper = styled.div`
 `;
 
 const GradientBar = ({ maxCountValue }: any) => {
-  const [currentCount, setCurrentCount ] = useState<any>(0)
+  const [currentCount, setCurrentCount] = useState<any>(0);
   useEffect(() => {
-    
     const count = maxCountValue;
     console.log("Count Children Before starting count", count);
-    
+
     if (count && count > currentCount) {
       let interval: any;
       if (currentCount < count) {
         interval = setInterval(() => {
-          setCurrentCount((prevState:any) => {
+          setCurrentCount((prevState: any) => {
             if (prevState === Number(count) || prevState > Number(count)) {
               return count;
             }
@@ -51,25 +50,25 @@ const GradientBar = ({ maxCountValue }: any) => {
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong")
+        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
-    } else if(count && count <  currentCount) {
+    } else if (count && count < currentCount) {
       let interval: any;
       if (currentCount > count) {
         interval = setInterval(() => {
-          setCurrentCount((prevState:any) => {
+          setCurrentCount((prevState: any) => {
             if (prevState === Number(count) || prevState < Number(count)) {
               return count;
             }
-            if((currentCount - count) > 10000){
-              return prevState - 500
+            if (currentCount - count > 10000) {
+              return prevState - 500;
             }
-            if((currentCount - count) > 5000){
-              return prevState - 200
+            if (currentCount - count > 5000) {
+              return prevState - 200;
             }
-            if((currentCount - count) > 1000){
-              return prevState - 100
+            if (currentCount - count > 1000) {
+              return prevState - 100;
             }
             return prevState - 1;
           });
@@ -77,7 +76,7 @@ const GradientBar = ({ maxCountValue }: any) => {
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong")
+        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
     }
@@ -91,9 +90,8 @@ const GradientBar = ({ maxCountValue }: any) => {
   );
 };
 
-const windowWidth = window.innerWidth
+const windowWidth = window.innerWidth;
 
-const MAP_AREA_INDIA = windowWidth > 768 ? "-200 0 1230 1106" : '-60 0 1000 900';
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
 
@@ -121,6 +119,8 @@ function IndiaMap({
     "https://api.startupindiaonline.com/startup/states"
   );
   const [width, height] = useWindowSize();
+  const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-60 0 1000 900";
+  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-70 -70 900 800";
 
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -265,8 +265,8 @@ function IndiaMap({
 
   return (
     <MapWrapper
-        className="m-2 mt-0 pt-0 d-flex justify-content-center"
-        style={{ position: "relative" }}
+      className="m-2 mt-0 pt-0 d-flex justify-content-center"
+      style={{ position: "relative", minHeight: '40vh' }}
     >
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
@@ -282,7 +282,11 @@ function IndiaMap({
           </div>
         ))}
       {!loadingIndiaMap && !tableLoading && (
-        <svg viewBox={getViewBoxArea()} className="mt-c-5" aria-label="Map of India">
+        <svg
+          viewBox={getViewBoxArea()}
+          className="mt-c-5"
+          aria-label="Map of India"
+        >
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
@@ -365,7 +369,7 @@ function IndiaMap({
         <>
           <svg
             style={{ position: "absolute", left: 0 }}
-            viewBox={viewAreaCircle ? viewAreaCircle : "-200 0 1100 1000"}
+            viewBox={viewAreaCircle ? viewAreaCircle : MAP_AREA_BUBBLE}
           >
             <g style={{ transform: "scale(1.2)" }}>
               {stateBubbles.map((bubble: any, index: number) => (

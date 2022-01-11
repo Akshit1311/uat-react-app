@@ -12,6 +12,7 @@ export const TR = styled.tr`
 export const TH = styled.th<any>`
   background: ${(props) => props.theme.bgCards};
   color: ${(props) => props.theme.colorCards};
+  position: relative;
 `;
 
 export const IconSpan = styled.span`

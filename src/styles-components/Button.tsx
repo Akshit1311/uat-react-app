@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {
   ThemeColorIdentifier,
+  ThemeShadowColorIdentifier,
   ThemeShadowIdentifier,
 } from "../helper-function/themeColor";
 
@@ -62,12 +63,15 @@ export const IconButton = styled.button<any>`
     props.active
       ? ThemeColorIdentifier(props.colorTheme)
       : props.theme.iconButtonBackground};
+  box-shadow: 0px 0px 20px ${(props) => ThemeShadowColorIdentifier(props.colorTheme)} !important;
   border: 2px solid ${(props) => ThemeColorIdentifier(props.colorTheme)};
-  box-shadow: ${(props) => ThemeShadowIdentifier(props.colorTheme)} !important;
   &:hover {
     color: ${(props) => (props.active ? "white" : props.theme.color2)};
   }
-`;
+  @media (max-width: 768px){
+    box-shadow: 0px 0px 16px ${(props) => ThemeShadowColorIdentifier(props.colorTheme)} !important;
+  }
+  `;
 
 
 export const ThemeButton = styled.button<any>`

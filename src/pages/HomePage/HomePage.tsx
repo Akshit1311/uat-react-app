@@ -204,6 +204,7 @@ const HomePage = (props: HomePageTypes) => {
     dateRangeLoading,
   };
 
+  const [selectedState, setSelectedState] = useState<any[]>([])
   const FilterProps = {
     appliedFilters,
     setAppliedFilters,
@@ -213,10 +214,10 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList: fetchDefaultFilterValues,
     filterState,
     filterLoading,
+    selectedState,setSelectedState
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
-  const [selectedState, setSelectedState] = useState<any[]>([])
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
   const viewInsightUrl = `/view-insight?id=${
     selectedState[0] ? selectedState[0].id : ""
@@ -250,7 +251,7 @@ const HomePage = (props: HomePageTypes) => {
                 <LeftNavComponent
                   {...FilterProps}
                   insight={true}
-                  selectedState={selectedState} setSelectedState={setSelectedState}
+                  
                   search={true}
                 ></LeftNavComponent>
               </div>
