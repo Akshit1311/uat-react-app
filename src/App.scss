@@ -19,6 +19,7 @@ body {
   padding: 0;
 }
 .search-bar-row {
+  font-family: 'Poppins';
   margin-top: 24px;
   height: 38px;
   margin-bottom: 24px;
@@ -615,6 +616,12 @@ $primary: #0177fa;
   margin-right: 0px !important;
 }
 
+@media only screen and (min-width: 768px){
+  .left-nav-bottom-card{
+    width: 110%;
+  }
+}
+
 @media only screen and (max-width: 768px)  {
   .data-table-overflow-scroll{
     width: 98vw;
@@ -624,8 +631,8 @@ $primary: #0177fa;
     width: 100%;
     overflow: hidden;
     margin-right: 0px !important;
-    padding-left: 1.7rem !important;
-    // padding-right: 1.7rem !important;
+    padding-left: 1.8rem !important;
+    padding-right: 1rem !important;
     width: 103%;
   }
   .disabled-map{

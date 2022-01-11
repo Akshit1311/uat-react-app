@@ -13,6 +13,8 @@ $mobile: 768px;
         cursor: pointer;
         @media (max-width: $mobile){
             padding-left: 0 !important;
+            margin-bottom: -9px;
+            margin-top: -7px;
         }
     }
     .count-single-card {
@@ -27,7 +29,10 @@ $mobile: 768px;
     h6 {
         font-family: "Montserrat", sans-serif;
         font-weight: 500;
-        font-size: calc(14px - (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+        font-size: 14px;
+        @media (max-width:768) {
+            font-size: calc(14px - (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+        }
     }
     .count-box {
         border: 12px solid;

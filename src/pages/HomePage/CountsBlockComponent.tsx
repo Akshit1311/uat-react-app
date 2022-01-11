@@ -10,6 +10,7 @@ import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { H5 } from "../../styles-components/Heading";
 import { CountBlockModel } from "./HomePage";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const override = css`
   display: block;
@@ -56,12 +57,13 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
   @media (max-width: 768px) {
     border: none;
     background-color: ${(props: any) =>
-      props.active ? "white" : "none"} !important;
+      props.active ? "rgba(255,255,255,0)" : "none"} !important;
     color: ${(props: any) =>
       props.active
         ? ThemeColorIdentifier(props.colorTheme)
-        : "black"} !important;
+        : "black" } !important;
     height: 82px;
+    font-weight: ${( props:any )=> props.active ? '600' : '500' };
   }
 `;
 
@@ -76,7 +78,7 @@ const CountCard = ({
   loading,
   colorTheme,
 }: CountCardTypes) => {
-  console.log("CountBlock Child", state);
+  const [ windowWidth, windowHeight ] = useWindowSize();
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
 
@@ -165,7 +167,7 @@ const CountCard = ({
             className=" d-flex flex-column h-100 justify-content-between"
             style={{ padding: "0.83rem", paddingRight: 0 }}
           >
-            <h4 className="m-0 p-0 count-number">{currentCount}</h4>
+            <h4 className="m-0 p-0 count-number" style={{ visibility: windowWidth > 768 || active ? 'visible':'hidden'}}>{currentCount}</h4>
             <div>
             <h6 className="mx-0 mb-0 p-0">{name}</h6>
             <div

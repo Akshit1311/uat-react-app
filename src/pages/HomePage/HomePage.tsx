@@ -25,7 +25,8 @@ import { BiFilter } from "react-icons/bi";
 import MobileFilter from "./LeftNav/MobileFilter";
 import SearchBar from "./AllSearch";
 import MapViewChangeButtonGroup from "./MapViewButtonChangeGroup";
-import ViewInsight from "./ViewInsight"
+import ViewInsight from "./ViewInsight";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -87,6 +88,8 @@ export class CountBlockModel {
 }
 
 const HomePage = (props: HomePageTypes) => {
+  const [windowWidth, windowHeight] = useWindowSize()
+
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
     MapVariables.INDIA
   );
@@ -230,6 +233,8 @@ const HomePage = (props: HomePageTypes) => {
       >
         <PageWrapperContainer>
           <PageWrapper>
+            {
+              windowWidth < 768 ? (
             <FilterButton
               colorTheme={primaryColorTheme}
               onClick={() => setMobileFilterVisible(true)}
@@ -238,6 +243,8 @@ const HomePage = (props: HomePageTypes) => {
             >
               <BiFilter />
             </FilterButton>
+              ) :( <></>)
+            }
             <MobileFilter
               isVisible={mobileFilterVisible}
               filterProps={FilterProps}
@@ -305,13 +312,13 @@ const HomePage = (props: HomePageTypes) => {
                   </div>
                 </div>
                 <Strip className="row me-0 strip  align-items-center d-flex">
-                  <span className="m-0 strip-text font-Mont">
+                  <span className="m-0 px-3 strip-text font-Mont">
                     <b
                       className="me-3 strip-bold-text font-Mont"
                       
                     >
                       Please Note :
-                    </b>
+                    </b>{ windowWidth > 768 ? "" :(<div className="mb-2"></div>)}
                     The information is based on self declaration by community
                     members. Startup India dosen't moderate the information
                     collected.

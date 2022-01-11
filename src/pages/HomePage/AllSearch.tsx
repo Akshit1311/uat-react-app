@@ -19,7 +19,7 @@ export default function SearchBar({
             className="btn shadow-none border-0 m-0 pe-1 ps-4 "
             id="search-addon"
           >
-            <BiSearchAlt2 size={17.06} />
+            <BiSearchAlt2 size={17.06} style={{ marginBottom: '3px' }} />
           </SpanIcon>
           <SearchBarInput
             type="search"

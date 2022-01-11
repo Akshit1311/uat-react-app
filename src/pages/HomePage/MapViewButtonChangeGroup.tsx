@@ -77,7 +77,7 @@ export default function MapViewChangeButtonGroup(props:any){
                   }`}
                 >
                   <MdOutlineLocationCity
-                    style={{ marginTop: "-5px", marginLeft: "1px" }}
+                    style={{ marginTop: "-8px" }}
                     size={18}
                   />
                 </IconButton>
@@ -97,7 +97,7 @@ export default function MapViewChangeButtonGroup(props:any){
                   }`}
                 >
                   <GiPeru
-                    style={{ marginTop: "-6px", marginLeft: "-1px" }}
+                    style={{ marginTop: "-8px", marginLeft: "-1px" }}
                     size={18}
                   />
                 </IconButton>
