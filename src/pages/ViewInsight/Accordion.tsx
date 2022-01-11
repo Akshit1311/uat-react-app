@@ -145,7 +145,7 @@ export default function Accordion({
     <AccordionLocal
       expanded={isExpanded}
       onChange={handleChange(panelName)}
-      className={"px-2 " + getMargin(isExpanded)}
+      className={"px-2 mb-3 " + getMargin(isExpanded)}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
