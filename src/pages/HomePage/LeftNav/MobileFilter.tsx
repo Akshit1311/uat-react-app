@@ -78,6 +78,7 @@ export default function MobileView(props: MobileViewProps) {
           open={props.isVisible}
           onClose={() => props.handleToggle()}
         >
+          {/* <div style={{ position: 'absolute', top: 40, width: '100px', height: '50px', background: 'red' }}></div> */}
           <p className="font-Mont font-16px font-600 pt-4 ps-3 mb-0">FILTERS</p>
           {list("bottom")}
         </Drawer>

@@ -108,7 +108,7 @@ function ViewChangerComponent({
   const resourse ={ isCircleActive, colorTheme, mapMode,setMapMode, setIsCircleActive }
   return (
     <div className="view-changer-component-styles" style={{ marginTop: windowWidth > 768 ? '24px':'0px' }}>
-      <div className="row mx-0 px-0">
+      <div className={`row ${ windowWidth < 768 ? "" : " mx-0 px-0"}`}>
         <div className="mx-1 col-12 align-items-center justify-content-between d-none d-sm-flex">
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
           <SelectBox

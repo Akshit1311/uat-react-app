@@ -91,7 +91,7 @@ export default function ControlledAccordions() {
                 stateName={query.get("state")}
               /> */}
             </div>
-            <div className="col-12 col-sm-3 pt-5  top-view-insight">
+            <div className="col-12 col-sm-3 pt-5  top-view-insight d-none d-sm-block">
               <CountryMap stateId={query.get('id')} />
             </div>
           </div>
