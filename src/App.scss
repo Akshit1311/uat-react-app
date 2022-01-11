@@ -369,13 +369,12 @@ tbody {
 .border-type-1 {
   border-left: 1px solid black;
 }
-
 .border-type-2 {
-  border-left: 1px solid #8a8a8a;
+  border-left: 1px solid rgb(229, 229, 229);
 }
 
 .border-type-3 {
-  border-left: 1px dashed #8a8a8a;
+  border-left: 1px dashed rgb(229, 229, 229);
 }
 
 @mixin viewInsightSections($fontSize, $fontWeight) {
@@ -384,6 +383,9 @@ tbody {
   font-size: $fontSize;
   font-weight: $fontWeight;
   justify-content: space-evenly;
+  box-shadow: 0px 0px 10px rgba(193, 193, 193, 0.25);
+  border-radius: 4px;
+  margin: 0.5rem !important;
   div {
     flex: 1;
     width: 3rem !important;
@@ -402,6 +404,7 @@ tbody {
     }
     span {
       @extend .ps-3;
+      font-weight: 600;
     }
   }
 }
@@ -442,6 +445,7 @@ $primary: #0177fa;
     top: 0;
     z-index: 10;
     background: white;
+
   }
   .scroll-area {
     @include scrollArea;

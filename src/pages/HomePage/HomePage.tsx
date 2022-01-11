@@ -370,7 +370,7 @@ const HomePage = (props: HomePageTypes) => {
                       <div
                         style={{
                           display: startupListActive ? "flex" : "none",
-                        }} className="mx-0"
+                        }} className="mx-0 ms-sm-4 ms-0"
                       >
                         <StartupsListComponent
                           appliedFilters={appliedFilters}
@@ -384,7 +384,7 @@ const HomePage = (props: HomePageTypes) => {
                         <div
                           style={{
                             display: !startupListActive ? "block" : "none",
-                          }}
+                          }} className="mx-0 ms-sm-2 ms-0"
                         >
                           <DataTable
                             fetch={fetchTableData}

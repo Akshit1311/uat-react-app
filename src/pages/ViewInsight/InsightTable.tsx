@@ -27,7 +27,7 @@ export default function InsightTable({
             <StarBorderIcon className="hidden" />
             <span>{title}</span>
           </div>
-          <div className="border-type-1">{stateName}</div>
+          <div className="border-type-2">{stateName}</div>
           <div className="border-type-3">Percentage</div>
           <div className="border-type-2">India</div>
           <div className="border-type-3">Percentage</div>
@@ -45,10 +45,10 @@ export default function InsightTable({
               )}
               <span>{insight.text}</span>
             </div>
-            <div className="border-type-2 text-right">{insight.count}</div>
-            <div className="border-type-3 text-right">{insight.percentage} %</div>
-            <div className="border-type-2 text-right">{insight.indiaTotal}</div>
-            <div className="border-type-3 text-right">
+            <div className="border-type-2 font-500 text-right">{insight.count}</div>
+            <div className="border-type-3 font-500 text-right">{insight.percentage} %</div>
+            <div className="border-type-2 font-500 text-right">{insight.indiaTotal}</div>
+            <div className="border-type-3 font-500 text-right">
               {insight.indiaPercentage} %
             </div>
           </div>

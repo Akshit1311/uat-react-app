@@ -145,17 +145,18 @@ export default function Accordion({
     <AccordionLocal
       expanded={isExpanded}
       onChange={handleChange(panelName)}
-      className={"px-3 " + getMargin(isExpanded)}
+      className={"px-2 " + getMargin(isExpanded)}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1bh-content"
         id="panel1bh-header"
+        style={{ paddingBottom: "-10px" }}
       >
-        <p className="font-Mont font-600 font-14px mb-0">{title}</p>
+        <p className="font-Mont font-600 font-14px mb-0 px-2">{title}</p>
       </AccordionSummary>
 
-      <AccordionDetails className="view-insight-main">
+      <AccordionDetails className="view-insight-main mt-0">
         {type1State.length > 0 && (
           <>
             <InsightTable
@@ -168,7 +169,7 @@ export default function Accordion({
             <div className="mb-3" />
           </>
         )}
-        <div className="mb-3">
+        <div className="mb-3 mx-2">
           <SearchBarComponent
             background={theme.searchBg}
             handleApply={handleSearch}
