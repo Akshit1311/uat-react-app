@@ -11,7 +11,7 @@ export default function StatePolicy({ stateId }: StatePolicyTypes) {
   useEffect(() => {
     return () => fetchPolicy(`/policy/byStateId/${"5f48ce592a9bb065cdf9fb3f"}`);
   }, [stateId]);
-  console.log(policyState);
+  (policyState);
 
   function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -26,8 +26,8 @@ export default function StatePolicy({ stateId }: StatePolicyTypes) {
         if (item[0] == "total" || item[0] == "stateName") return;
         const percentage: any = ((item[1] / total) * 100).toString();
         const fixed = Number.parseFloat(percentage).toFixed(2);
-        console.log(fixed);
-        console.log(item);
+        (fixed);
+        (item);
         const obj = {
           title: capitalizeFirstLetter(item[0]),
           value: Number.parseInt(percentage),
@@ -48,8 +48,8 @@ export default function StatePolicy({ stateId }: StatePolicyTypes) {
         if (item[0] == "total" || item[0] == "stateName") return;
         const percentage: any = ((item[1] / total) * 100).toString();
         const fixed = Number.parseFloat(percentage).toFixed(2);
-        console.log(fixed);
-        console.log(item);
+        (fixed);
+        (item);
         const obj = {
           title: capitalizeFirstLetter(item[0]),
           value: Number.parseInt(percentage),
@@ -69,8 +69,8 @@ export default function StatePolicy({ stateId }: StatePolicyTypes) {
         if (item[0] == "total" || item[0] == "stateName") return;
         const percentage: any = ((item[1] / total) * 100).toString();
         const fixed = Number.parseFloat(percentage).toFixed(2);
-        console.log(fixed);
-        console.log(item);
+        (fixed);
+        (item);
         const obj = {
           title: capitalizeFirstLetter(item[0]),
           value: Number.parseInt(percentage),

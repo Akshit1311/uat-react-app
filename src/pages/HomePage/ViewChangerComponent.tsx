@@ -85,7 +85,6 @@ function ViewChangerComponent({
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
-    console.log(value);
     setSelectedStartupType(value);
     fetchStartUpCount("/startup/startupCount/" + value);
   };

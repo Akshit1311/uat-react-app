@@ -18,8 +18,8 @@ export default function Header({ headerConfig }:HeaderTypes){
                 className={`d-flex flex-row justify-content-between ${theme.dataTable.headerBorder}`}
                 style={{ background: "red" }}
               >
-                 { headerConfig.map((header)=>(
-                     <Cells {...header.cellConfig} fontWeight={true}>
+                 { headerConfig.map((header:any, index:number)=>(
+                     <Cells key={index} {...header.cellConfig} fontWeight={true}>
                          {header.label}
                      </Cells>
                  ))}

@@ -107,7 +107,6 @@ const CountCard = ({
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
     } else if (count && count < currentCount) {
@@ -133,11 +132,9 @@ const CountCard = ({
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
     }
-    console.log("End Interval");
   }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
 
   return (
@@ -155,7 +152,7 @@ const CountCard = ({
             <MoonLoader
               color={active ? "white" : "#0177FA"}
               loading={loading}
-              size={"25"}
+              size={"25px"}
               css={override}
             />
           </div>
@@ -222,7 +219,6 @@ const CountsBlockComponent = ({
       count.Startup = state.statistics.Startup;
       count.GovernmentBody = state.statistics.GovernmentBody;
       count.Investor = state.statistics.Investor;
-      console.log("Counts From Filter", count);
       setStateCounts(count);
     }
   };
@@ -261,50 +257,19 @@ const CountsBlockComponent = ({
     loading: countLoading,
     colorTheme,
   };
-
+  const stateSelected = selectedArea.stateName?.toLowerCase() !== 'india' 
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
-        <div className="d-flex mt-3 px-0">
-          <H5>{selectedArea.stateName}</H5>
-          {selectedArea.id !== "india" ? (
+        <div className="d-flex mt-3 px-0 align-items-baseline">
+          {/* <H5>{selectedArea.stateName}</H5> */}
+          <H5 active={stateSelected} className="mb-3">India</H5> 
+          {stateSelected ? (
             <>
-              <div className="ms-3" />
-              <div className="font-bold" style={{ marginTop: "0.1rem" }}>
-                |
-              </div>
-              <div className="ms-3" />
-              <div className="row mx-0 px-0 m-0 p-0 position-relative w-25 d-flex mt-1">
-                {/* <p className="m-0 p-0">India</p> */}
-                <p className="my-0 p-0 font-600 d-flex font-Mont font-12px mt-0">
-                  <div
-                    onClick={() => {
-                      setSelectedArea({ id: "india", stateName: "India" });
-                      setSelectedStateByMap({
-                        id: "",
-                        name: "",
-                      });
-                      setStateViewMap(false);
-                    }}
-                    style={{
-                      textDecoration: "none",
-                      color: "#0177FA",
-                      cursor: "pointer",
-                      width: "fit-content",
-                    }}
-                    className="d-flex flex-column"
-                  >
-                    <div className="text-theme">{"India"}</div>
-                    <div
-                      className="background-color-theme"
-                      style={{ height: "1px" }}
-                    ></div>
-                  </div>{" "}
-                  <div className="ms-1" style={{ color: theme.color }}>
-                    | Startups {" " + countState.Startup}
-                  </div>
-                </p>
-              </div>
+            <div className="d-flex ms-2 align-items-center">
+              <p className="m-0 p-0 font-12px">{'>'}</p>
+              <p className="p-0 m-0 state-label ms-2">{selectedArea.stateName}</p>
+            </div>
             </>
           ) : (
             <></>

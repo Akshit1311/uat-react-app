@@ -27,7 +27,7 @@ export async function statesDpiit(values: any): Promise<MapType[]> {
   //       newArray.push(newObject);
   //     }
   //   });
-  //   console.log(newArray);
+  //   (newArray);
   //   return newArray;
   // };
   return new Promise(async (resolve, rejects) => {
@@ -40,7 +40,6 @@ export async function statesDpiit(values: any): Promise<MapType[]> {
 
       resolve(response.data);
     } catch (error) {
-      console.log("Data Fetching Error Dpiit", error);
       rejects([])
     }
   });

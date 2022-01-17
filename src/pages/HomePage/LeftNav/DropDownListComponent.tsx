@@ -51,9 +51,9 @@ const DropDownListComponent = (props: any) => {
     if (theme.theme === "light") return "unselected-list-card-light";
   };
 
-  const list: any[] = data.map((dataObj: any) => {
+  const list: any[] = data.map((dataObj: any, index:number) => {
     return (
-      <div
+      <div key={index}
         onClick={() => handleClick(dataObj)}
         className={`list-card me-2 ${
           findSelectedState(dataObj) ? "selected-list-card" : bgUnSelected()
@@ -104,7 +104,7 @@ const DropDownListComponent = (props: any) => {
             <MoonLoader
               color={"#0177FA"}
               loading={loading}
-              size={"25"}
+              size={"25px"}
               css={override}
             />
           </div>

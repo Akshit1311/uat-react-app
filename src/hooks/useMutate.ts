@@ -19,19 +19,17 @@ export function useMutate(apiUrl: string, initialState: any) {
       setState(response.data);
 
       // if (response.data) {
-      //   console.log("Filter", response.data);
+      //   ("Filter", response.data);
       // } else {
       //   setState([]);
       // }
-      // console.log(response.data);
+      // (response.data);
     } catch (error) {
       setState([]);
       setError({ error: true, errorMessage: error });
     } finally {
       setLoading(false);
-
-      console.log(":Loading:",state)
-      // console.log("Filter",state);
+      // ("Filter",state);
     }
   };
   return [fetch, state, loading, error];

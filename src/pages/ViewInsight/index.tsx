@@ -8,23 +8,29 @@ import { H5 } from "../../styles-components/Heading";
 import { useWebQuery } from "../../hooks/useWebQuery";
 import Accordion from "./Accordion";
 import { useQuery } from "../../hooks/useQuery";
-import CountryMap from "./Map"
+import CountryMap from "./Map";
 
 export default function ControlledAccordions() {
   const query = useWebQuery();
   const theme = React.useContext(ThemeContext);
-  
-  const [fetchInsights, insightState] = useQuery("");
-  const [expanded, setExpanded] = React.useState<string | false>(false);
 
-  const localSectors = localStorage.getItem('Sector')
-  const selectedSectors:any[] = JSON.parse( localSectors ? localSectors.toString() : '0' )
-  
-  const localIndustries = localStorage.getItem('Industry')
-  const selectedIndustries:any[] = JSON.parse( localIndustries ? localIndustries.toString() : '0' )
-  
-  const localStages = localStorage.getItem('Stage')
-  const selectedStages:any[] = JSON.parse( localStages ? localStages.toString() : '0' )
+  const [fetchInsights, insightState] = useQuery("");
+  const [expanded, setExpanded] = React.useState<string | false>("panel1");
+
+  const localSectors = localStorage.getItem("Sector");
+  const selectedSectors: any[] = JSON.parse(
+    localSectors ? localSectors.toString() : "0"
+  );
+
+  const localIndustries = localStorage.getItem("Industry");
+  const selectedIndustries: any[] = JSON.parse(
+    localIndustries ? localIndustries.toString() : "0"
+  );
+
+  const localStages = localStorage.getItem("Stage");
+  const selectedStages: any[] = JSON.parse(
+    localStages ? localStages.toString() : "0"
+  );
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -32,10 +38,8 @@ export default function ControlledAccordions() {
     };
 
   React.useEffect(() => {
-    fetchInsights(
-      `/insight/state/${query.get('id')}/2021-01-01/2021-12-12`
-    );
-  }, [query.get('id')]);
+    fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
+  }, [query.get("id")]);
 
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }}>
@@ -60,7 +64,7 @@ export default function ControlledAccordions() {
                 title="Industry"
                 stateName={query.get("state")}
                 data={insightState.industry || []}
-                selectedData={selectedIndustries || [ ]}
+                selectedData={selectedIndustries || []}
               />
 
               <Accordion
@@ -92,7 +96,7 @@ export default function ControlledAccordions() {
               /> */}
             </div>
             <div className="col-12 col-sm-3 pt-5  top-view-insight d-none d-sm-block">
-              <CountryMap stateId={query.get('id')} />
+              <CountryMap stateId={query.get("id")} />
             </div>
           </div>
         </PageWrapper>

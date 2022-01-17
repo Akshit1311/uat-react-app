@@ -45,7 +45,7 @@ function App() {
     require("./scss/theme/lightTheme.scss");
   }, []);
   return (
-    <>
+    <div onScroll={(changeEvent)=> console.log(changeEvent)}>
       <MaterialUiThemeProvider theme={myTheme}>
         <ThemeProvider theme={theme}>
           <ThemeContext.Provider value={theme}>
@@ -58,7 +58,7 @@ function App() {
           </ThemeContext.Provider>
         </ThemeProvider>
       </MaterialUiThemeProvider>
-    </>
+    </div>
   );
 }
 

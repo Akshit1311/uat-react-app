@@ -20,7 +20,7 @@ export default function InsightTable({
   starFill,
 }: InsightTableProps) {
   return (
-    <>
+    <div className='scroll-area-wrapper'>
       <div className="scroll-area">
         <div className="view-insight-header">
           <div>
@@ -54,6 +54,6 @@ export default function InsightTable({
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

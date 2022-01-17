@@ -22,11 +22,10 @@ export default function StateView({ selectedArea }: StateViewProps) {
       <svg viewBox="-50 0 550 550">
         {stateWiseMap
           .filter((state: StateWiseMapType) => {
-            console.log("Loop State Wise", state.id, selectedArea);
             return state.id === selectedArea;
           })
-          .map((state: StateWiseMapType) => (
-            <path stroke="black" strokeWidth={"1"} fill="white" d={state.d} />
+          .map((state: StateWiseMapType, index:number) => (
+            <path stroke="black" strokeWidth={"1"} key={index} fill="white" d={state.d} />
           ))}
       </svg>
     </MapWrapper>

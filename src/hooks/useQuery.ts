@@ -17,18 +17,15 @@ export function useQuery(apiUrl: string) {
         url: url ? url : apiUrl,
       });
       if (response.data) {
-        console.log('Date Range', response.data)
         setState(response.data);
       } else {
         setState([])
       }
-      // console.log(response.data);
     } catch (error) {
       setState([])
       setError({ error: true, errorMessage: error });
     } finally {
       setLoading(false);
-      console.log(state);
     }
   }; 
   return [fetch, state, loading, error, ];

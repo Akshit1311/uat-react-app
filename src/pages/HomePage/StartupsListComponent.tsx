@@ -32,7 +32,7 @@ const StartUpCardWrapper = styled.div`
 `;
 
 function StartUpCard({
-  _id,
+  _id,index,
 
   sectors,
   name: company,
@@ -56,17 +56,17 @@ function StartUpCard({
 
   const tagsLoader = tagsLoading && (
     <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-      <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25"} />
+      <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25px"} />
     </div>
   );
 
   const stagesBadge =
     Array.isArray(stages) && States.length > 0 ? (
-      <div className="d-flex" style={{ marginTop: '9px'}}>
+      <div key={index} className="d-flex" style={{ marginTop: '9px'}}>
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Stage:</p>
         <div className="d-flex align-items-center flex-wrap" style={{ marginLeft: '0.75rem' }}>
-          {stages.slice(0, 6).map((item: string) => (
-            <Badge className="pb-0 d-flex mb-2 me-2 mt-0 ms-0">
+          {stages.slice(0, 6).map((item: string, index:number) => (
+            <Badge className="pb-0 d-flex mb-2 me-2 mt-0 ms-0" key={index}>
               <div className="d-flex flex-wrap">{item}</div>
             </Badge>
           ))}
@@ -84,8 +84,8 @@ function StartUpCard({
       >
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Sector:</p>
         <div className="d-flex flex-wrap ms-2">
-          {sectors.slice(0, 5).map((item: string) => (
-            <Badge
+          {sectors.slice(0, 5).map((item: string, index:number) => (
+            <Badge key={index}
               className="pb-0 d-flex mb-2 me-2 mt-0 ms-0"
               style={{ width: "fit-content" }}
             >
@@ -125,7 +125,6 @@ function StartUpCard({
         if (index == 0) {
           const capitalLetter = title.charAt(0).toUpperCase();
           text = capitalLetter + title.slice(1, title.length).toLowerCase();
-          console.log("Capitabl Letter", text);
         } else {
           const capitalLetter = title.charAt(0).toUpperCase();
           text =
@@ -133,9 +132,7 @@ function StartUpCard({
             " " +
             capitalLetter +
             title.slice(1, title.length).toLowerCase();
-          console.log("Small Letter", text);
         }
-        console.log("Normal Text", text);
       });
       return text;
     } else return "";
@@ -202,8 +199,8 @@ function StartupsListComponent(props: any) {
   const [queryString, setQueryString] = useState<string>("");
 
   const startupList = React.useMemo(() => {
-    return renderedData.map((startUp: any) => (
-      <StartUpCard {...startUp} tagsLoading={tagsLoading} />
+    return renderedData.map((startUp: any, index:number) => (
+      <StartUpCard {...startUp} index={index} tagsLoading={tagsLoading} />
     ));
   }, [renderedData]);
 
@@ -213,7 +210,6 @@ function StartupsListComponent(props: any) {
 
   const onSearch = (changeEvent: any) => {
     const value = changeEvent.target.value;
-    console.log(value);
     setQueryString(value);
   };
 
@@ -277,7 +273,7 @@ function StartupsListComponent(props: any) {
         </div>
         {tagsLoading && (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center position-absolute">
-            <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25"} />
+            <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25px"} />
           </div>
         )}
       </StartUpCardContainer>

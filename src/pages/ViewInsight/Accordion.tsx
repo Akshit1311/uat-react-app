@@ -91,12 +91,12 @@ export default function Accordion({
   };
 
   const handleSearch = () => {
-    if(queryString.length === 0) return divideData();
+    if (queryString.length === 0) return divideData();
 
     const result = divideData().filter((insight: InsightRowType) =>
       insight.text.toLowerCase().includes(queryString.toLowerCase())
     );
-    setType2State(result)
+    setType2State(result);
   };
 
   const onSearch = (event: any) => setQueryString(event.target.value);
@@ -130,12 +130,12 @@ export default function Accordion({
     localStorage.setItem(title.toString(), JSON.stringify(clone));
   };
 
-  const divideData = () =>{
+  const divideData = () => {
     const [type1Data, type2Data]: any[] = _.partition(data, findId);
     setType1State(type1Data);
     setType2State(type2Data);
-    return type2Data
-  }
+    return type2Data;
+  };
 
   React.useEffect(() => {
     divideData();
@@ -153,7 +153,9 @@ export default function Accordion({
         id="panel1bh-header"
         style={{ paddingBottom: "-10px" }}
       >
-        <p className="font-Mont font-600 font-14px mb-0 px-2">{title}</p>
+        <div>
+          <p className="font-Mont font-600 font-14px mb-0 px-2">{title}</p>
+        </div>
       </AccordionSummary>
 
       <AccordionDetails className="view-insight-main mt-0">

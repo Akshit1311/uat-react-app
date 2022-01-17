@@ -138,7 +138,6 @@ const HomePage = (props: HomePageTypes) => {
   );
 
   const countWrrapper = (data: any[]) => {
-    console.error("FInd Index Data", data);
     const obj = new CountBlockModel();
     const findIndex = (countType: string) =>
       data.findIndex((item) => item.id === countType);
@@ -176,6 +175,12 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList(body);
   };
 
+  const changeTheme = (themeInfo:string) =>{
+    setPrimaryColorTheme(themeInfo);
+    const body = window.document.getElementById('viewport');
+    body?.setAttribute('class',themeInfo)
+  }
+
   const countResource = {
     getCounts: fetchDefaultFilterValues,
     countState: countWrrapper(filterState.counts),
@@ -184,7 +189,7 @@ const HomePage = (props: HomePageTypes) => {
     tableState,
     selectedStateByMap,
     setSelectedStateByMap,
-    setPrimaryColorTheme,
+    setPrimaryColorTheme:changeTheme,
     colorTheme: primaryColorTheme,
   };
 
@@ -225,6 +230,7 @@ const HomePage = (props: HomePageTypes) => {
   const viewInsightUrl = `/view-insight?id=${
     selectedState[0] ? selectedState[0].id : ""
   }&state=${selectedState[0] ? selectedState[0].value : ""}`;
+
   return (
     <>
       <div

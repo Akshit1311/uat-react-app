@@ -412,8 +412,10 @@ tbody {
 @mixin scrollArea {
   max-height: 40vh;
   overflow-y: auto;
+  min-width: 800px;
   &::-webkit-scrollbar {
     width: 5px;
+    display: none;
   }
 
   /* Track */
@@ -439,6 +441,10 @@ $primary: #0177fa;
 .view-insight-main {
   @extend .font-Mont;
   @extend .position-relative;
+  // overflow-x: scroll;
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
   .view-insight-header {
     @include viewInsightSections(14px, 600);
     position: sticky;
@@ -447,8 +453,15 @@ $primary: #0177fa;
     background: white;
 
   }
-  .scroll-area {
-    @include scrollArea;
+  .scroll-area-wrapper{
+    width: 100%;
+    overflow-x: auto;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    .scroll-area {
+      @include scrollArea;
+    }
   }
   .view-insight-body {
     @include viewInsightSections(12px, 500);
@@ -490,6 +503,7 @@ $primary: #0177fa;
 @mixin middleSectionAlignment($width){
   flex: 0 0 auto; width: $width;
 }
+
 .col-map{
   @include middleSectionAlignment(61%);
 }
@@ -507,92 +521,51 @@ $primary: #0177fa;
   @extend .border-radius-top;
 }
 
-.theme-1 {
+@mixin themeMatcher($color) {
   .background-color-theme {
-    background-color: #0177fa !important;
-    border-color: #0177fa !important;
+    background-color: $color !important;
+    border-color: $color !important;
   }
   .text-theme {
-    color: #0177fa !important;
+    color: $color !important;
   }
   .gradient-bar-map {
-    background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
+    background: linear-gradient(270deg, $color 0%, #ecf5ff 100%);
   }
+  .rc-tooltip-inner{
+    border: 2px solid $color !important;
+  }
+  .rc-tooltip-arrow{
+    border-top-color: $color !important; 
+  }
+}
+
+.theme-1 {
+  @include themeMatcher(#0177fa);
 }
 
 .theme-2 {
-  .background-color-theme {
-    background-color: #ed8e00 !important;
-    border-color: #ed8e00 !important;
-  }
-  .gradient-bar-map {
-    background: linear-gradient(270deg, #0177fa 0%, #ecf5ff 100%);
-  }
+  @include themeMatcher(#ed8e00);
 }
 
 .theme-3 {
-  .background-color-theme {
-    background-color: #ed8e00 !important;
-    border-color: #ed8e00 !important;
-  }
-  .text-theme {
-    color: #ed8e00 !important;
-  }
-  .gradient-bar-map {
-    background: linear-gradient(270deg, #ed8e00 0%, #ecf5ff 100%);
-  }
+  @include themeMatcher(#ed8e00);
 }
 
 .theme-4 {
-  .background-color-theme {
-    background-color: #7838e0 !important;
-    border-color: #7838e0 !important;
-  }
-  .text-theme {
-    color: #7838e0 !important;
-  }
-  .gradient-bar-map {
-    background: linear-gradient(270deg, #7838e0 0%, #ecf5ff 100%);
-  }
+  @include themeMatcher(#7838e0);
 }
 
 .theme-5 {
-  .background-color-theme {
-    background-color: #bdaa00 !important;
-    border-color: #bdaa00 !important;
-  }
-  .text-theme {
-    color: #bdaa00 !important;
-  }
-  .gradient-bar-map {
-    background: linear-gradient(270deg, #bdaa00 0%, #ecf5ff 100%);
-  }
+  @include themeMatcher(#bdaa00);
 }
 
 .theme-6 {
-  .background-color-theme {
-    background-color: #cb3535 !important;
-    border-color: #cb3535 !important;
-  }
-  .text-theme {
-    color: #cb3535 !important;
-  }
-  .gradient-bar-map {
-    background: linear-gradient(270deg, #cb3535 0%, #ecf5ff 100%);
-  }
+  @include themeMatcher(#cb3535);
 }
 
 .theme-7 {
-  .background-color-theme {
-    background-color: #00ad11 !important;
-    border-color: #00ad11 !important;
-  }
-  .text-theme {
-    color: #00ad11 !important;
-  }
-  .gradient-bar-map {
-    background: linear-gradient(270deg, #00ad11 0%, #ecf5ff 100%);
-  }
+  @include themeMatcher(#00ad11);
 }
 
 .p-c-4{
@@ -610,7 +583,6 @@ $primary: #0177fa;
   width: 33%;
   margin-top: 6.5rem;
 }
-
 
 .left-nav-bottom-card {
   border-radius: 4px;
@@ -670,8 +642,8 @@ $primary: #0177fa;
     margin-top: 3.8rem !important;
   }
   .px-c-2{
-    padding-right: calc(1px + 1vw) !important;
-    padding-left: calc(5px + 1vw) !important;
+    padding-right: calc(3px + 1vw) !important;
+    padding-left: calc(7px + 1vw) !important;
   }
   .view-changer-startup-card{
     margin-left: 0px !important;
@@ -679,4 +651,8 @@ $primary: #0177fa;
     width: 100% !important;
     padding: 0px !important;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }

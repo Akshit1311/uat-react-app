@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { ThemeContext } from ".././../../config/context";
 import { useQuery } from "../../../hooks/useQuery";
 import MoonLoader from "react-spinners/MoonLoader";
-import { DistrictType, District } from "./districts";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 import { StateCircles } from "./StateCircle";
@@ -28,7 +27,6 @@ const GradientBar = ({ maxCountValue }: any) => {
   const [currentCount, setCurrentCount] = useState<any>(0);
   useEffect(() => {
     const count = maxCountValue;
-    console.log("Count Children Before starting count", count);
 
     if (count && count > currentCount) {
       let interval: any;
@@ -50,7 +48,6 @@ const GradientBar = ({ maxCountValue }: any) => {
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
     } else if (count && count < currentCount) {
@@ -76,11 +73,9 @@ const GradientBar = ({ maxCountValue }: any) => {
       } else if (currentCount === count) {
         clearInterval(interval);
       } else {
-        console.log("SOmeethig Went Wrong");
       }
       return () => clearInterval(interval);
     }
-    console.log("End Interval");
   }, [maxCountValue]);
   return (
     <div className="gradient-bar-map d-flex justify-content-between">
@@ -204,7 +199,6 @@ function IndiaMap({
     }
     setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
-    console.log("Selected State", state);
     setSelectedStateByMap(state);
   };
 
@@ -213,13 +207,12 @@ function IndiaMap({
   };
 
   const responsiveImageHeight = (mapArea: string) => {
-    console.log("Height", height);
     const split: string[] = mapArea.split(" ");
     if (height > 768) {
       const a: number = 768 - height;
       split[2] = (Number(split[2]) + a).toString();
       split[3] = (Number(split[3]) + a).toString();
-      console.log(split.toString().replaceAll(",", " "));
+      split.toString().replaceAll(",", " ");
       return split.toString().replaceAll(",", " ");
     }
     if (height < 768) {
@@ -228,7 +221,7 @@ function IndiaMap({
       split[3] = (Number(split[3]) - a).toString();
       if (Number(split[2]) < 800) split[2] = "800";
       if (Number(split[3]) < 687) split[3] = "687";
-      console.log(split.toString().replaceAll(",", " "));
+      split.toString().replaceAll(",", " ");
       return split.toString().replaceAll(",", " ");
     }
   };
@@ -266,22 +259,12 @@ function IndiaMap({
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
-      style={{ position: "relative", maxWidth: '100vw', overflow: "hidden", }}
+      style={{ position: "relative", maxWidth: "99vw", overflow: "hidden" }}
     >
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      {loadingIndiaMap ||
-        (tableLoading && (
-          <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
-            <MoonLoader
-              color={"#0177FA"}
-              loading={loadingIndiaMap || tableLoading}
-              size={"25"}
-            />
-          </div>
-        ))}
-      {!loadingIndiaMap && !tableLoading && (
+      {loadingIndiaMap === false && tableLoading === false ? (
         <svg
           viewBox={getViewBoxArea()}
           className="mt-c-5-2"
@@ -291,7 +274,7 @@ function IndiaMap({
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <Tooltip
+                <Tooltip key={index}
                   placement="top"
                   animation="zoom"
                   arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -329,7 +312,7 @@ function IndiaMap({
             })}
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
-              <Tooltip
+              <Tooltip key={index}
                 placement="top"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 overlay={
@@ -364,6 +347,10 @@ function IndiaMap({
               />
             ))}
         </svg>
+      ) : (
+        <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
+          <MoonLoader color={"#0177FA"} loading={true} size={"25px"} />
+        </div>
       )}
       {!loadingIndiaMap && isCircleActive && (
         <>
@@ -373,7 +360,7 @@ function IndiaMap({
           >
             <g style={{ transform: "scale(1.2)" }}>
               {stateBubbles.map((bubble: any, index: number) => (
-                <circle
+                <circle key={index}
                   transform={bubble.transform}
                   fill-opacity="0.05"
                   pointer-events="all"
