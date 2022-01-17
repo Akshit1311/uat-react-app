@@ -119,7 +119,7 @@ function IndiaMap({
     "https://api.startupindiaonline.com/startup/states"
   );
   const [width, height] = useWindowSize();
-  const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-60 0 1000 900";
+  const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-15 0 900 850";
   const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-70 -70 900 800";
 
   const [activeStates, setActiveStates] = useState<MapType[]>([]);
@@ -266,7 +266,7 @@ function IndiaMap({
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
-      style={{ position: "relative", minHeight: '40vh' }}
+      style={{ position: "relative", maxWidth: '100vw', overflow: "hidden", }}
     >
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
@@ -285,7 +285,7 @@ function IndiaMap({
         <svg
           viewBox={getViewBoxArea()}
           className="mt-c-5-2"
-          aria-label="Map of India" style={{ transform: windowWidth > 768 ? '': 'scale(1.15)' }}
+          aria-label="Map of India"
         >
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {

@@ -241,7 +241,7 @@ const HomePage = (props: HomePageTypes) => {
               bottom={"30px"}
               fontSize={"30px"}
             >
-              <BiFilter style={{ marginBottom: '0px' }} />
+              <BiFilter className="mb-2" />
             </FilterButton>
               ) :( <></>)
             }
