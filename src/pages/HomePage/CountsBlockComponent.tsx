@@ -57,7 +57,7 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
   @media (max-width: 768px) {
     border: none;
     background-color: ${(props: any) =>
-      props.active ? "rgba(255,255,255,0)" : "none"} !important;
+      props.active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0)"} !important;
     color: ${(props: any) =>
       props.active
         ? ThemeColorIdentifier(props.colorTheme)

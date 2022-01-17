@@ -41,7 +41,7 @@ export default function MapViewChangeButtonGroup(props:any){
     return(
         <div className={`mx-1 col-12 mt-4 `}>
           <div className={`d-flex justify-content-between `}>
-            <div>
+            <div className="d-flex">
               <Tooltip
                 animation="zoom"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -77,7 +77,7 @@ export default function MapViewChangeButtonGroup(props:any){
                   }`}
                 >
                   <MdOutlineLocationCity
-                    style={{ marginTop: "-8px" }}
+                    // style={{ marginTop: "-8px" }}
                     size={18}
                   />
                 </IconButton>
@@ -97,7 +97,7 @@ export default function MapViewChangeButtonGroup(props:any){
                   }`}
                 >
                   <GiPeru
-                    style={{ marginTop: "-8px", marginLeft: "-1px" }}
+                    // style={{ marginTop: "-8px", marginLeft: "-1px" }}
                     size={18}
                   />
                 </IconButton>
@@ -114,7 +114,7 @@ export default function MapViewChangeButtonGroup(props:any){
               >
                 <RiDropFill
                   size={18}
-                  style={{ marginTop: "-5px", marginLeft: "1px" }}
+                  // style={{ marginTop: "-5px", marginLeft: "1px" }}
                 />
               </IconButton>
             </div>

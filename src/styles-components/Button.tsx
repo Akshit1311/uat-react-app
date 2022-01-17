@@ -65,6 +65,9 @@ export const IconButton = styled.button<any>`
       : props.theme.iconButtonBackground};
   box-shadow: 0px 0px 20px ${(props) => ThemeShadowColorIdentifier(props.colorTheme)} !important;
   border: 2px solid ${(props) => ThemeColorIdentifier(props.colorTheme)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
     color: ${(props) => (props.active ? "white" : props.theme.color2)};
   }
