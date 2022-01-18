@@ -9,10 +9,12 @@ import { useWebQuery } from "../../hooks/useWebQuery";
 import Accordion from "./Accordion";
 import { useQuery } from "../../hooks/useQuery";
 import CountryMap from "./Map";
+import { useHistory } from "react-router-dom";
 
 export default function ControlledAccordions() {
   const query = useWebQuery();
   const theme = React.useContext(ThemeContext);
+  const history = useHistory();
 
   const [fetchInsights, insightState] = useQuery("");
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
@@ -41,6 +43,7 @@ export default function ControlledAccordions() {
     fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
   }, [query.get("id")]);
 
+  const backUrl:string = `/?id=${query.get('id')}&state=${query.get('state')}`
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }}>
       <PageWrapperContainer>
@@ -51,7 +54,7 @@ export default function ControlledAccordions() {
             </H5>
             <p className="font-Mont font-600 font-12px mt-1">
               <span className="opacity-50">{"IndiaMap/ "}</span>
-              <span className="opacity-50">{query.get("state")}/ </span>
+              <span className="clickable-text" onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
               <span>View Insight</span>
             </p>
           </div>

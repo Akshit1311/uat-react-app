@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import MapComponent from "./Map/MapComponent";
@@ -27,10 +27,11 @@ import SearchBar from "./AllSearch";
 import MapViewChangeButtonGroup from "./MapViewButtonChangeGroup";
 import ViewInsight from "./ViewInsight";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useWebQuery } from "../../hooks/useWebQuery";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     width: 70%;
   }
 `;
@@ -88,7 +89,7 @@ export class CountBlockModel {
 }
 
 const HomePage = (props: HomePageTypes) => {
-  const [windowWidth, windowHeight] = useWindowSize()
+  const [windowWidth, windowHeight] = useWindowSize();
 
   const [selectedArea, setSelectedArea] = useState<MapVariables.IDType>(
     MapVariables.INDIA
@@ -175,11 +176,11 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList(body);
   };
 
-  const changeTheme = (themeInfo:string) =>{
+  const changeTheme = (themeInfo: string) => {
     setPrimaryColorTheme(themeInfo);
-    const body = window.document.getElementById('viewport');
-    body?.setAttribute('class',themeInfo)
-  }
+    const body = window.document.getElementById("viewport");
+    body?.setAttribute("class", themeInfo);
+  };
 
   const countResource = {
     getCounts: fetchDefaultFilterValues,
@@ -189,7 +190,7 @@ const HomePage = (props: HomePageTypes) => {
     tableState,
     selectedStateByMap,
     setSelectedStateByMap,
-    setPrimaryColorTheme:changeTheme,
+    setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
   };
 
@@ -212,7 +213,7 @@ const HomePage = (props: HomePageTypes) => {
     dateRangeLoading,
   };
 
-  const [selectedState, setSelectedState] = useState<any[]>([])
+  const [selectedState, setSelectedState] = useState<any[]>([]);
   const FilterProps = {
     appliedFilters,
     setAppliedFilters,
@@ -222,7 +223,8 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList: fetchDefaultFilterValues,
     filterState,
     filterLoading,
-    selectedState,setSelectedState
+    selectedState,
+    setSelectedState,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -230,27 +232,41 @@ const HomePage = (props: HomePageTypes) => {
   const viewInsightUrl = `/view-insight?id=${
     selectedState[0] ? selectedState[0].id : ""
   }&state=${selectedState[0] ? selectedState[0].value : ""}`;
-
+  const query = useWebQuery();
+  
+  useEffect(()=>{
+    const stateName = query.get('state');
+    const stateId = query.get('id');
+    if(stateName && stateName?.length && stateId && stateId?.length){
+      setSelectedArea({ id: stateId !== null ? stateId : '' , stateName: stateName ? stateName : '' });
+      setSelectedStateByMap({ id: stateId !== null ? stateId : '' , name: stateName ? stateName : '' });
+    }
+  },[query.get('state'),query.get('id')])
+  
   return (
     <>
       <div
         className={`border-bottom home-component-styles mx-0 px-0 ${primaryColorTheme}`}
-        style={{ marginTop: NAVBAR_HEIGHT }}
-      >
+        style={{
+          marginTop: NAVBAR_HEIGHT,
+          // height: `calc(100vh - ${NAVBAR_HEIGHT})`,
+          // overflowY: "auto",
+        }}
+      > 
         <PageWrapperContainer>
           <PageWrapper>
-            {
-              windowWidth < 768 ? (
-            <FilterButton
-              colorTheme={primaryColorTheme}
-              onClick={() => setMobileFilterVisible(true)}
-              bottom={"30px"}
-              fontSize={"30px"}
-            >
-              <BiFilter className="mb-2" />
-            </FilterButton>
-              ) :( <></>)
-            }
+            {windowWidth < 768 ? (
+              <FilterButton
+                colorTheme={primaryColorTheme}
+                onClick={() => setMobileFilterVisible(true)}
+                bottom={"30px"}
+                fontSize={"30px"}
+              >
+                <BiFilter className="mb-2" />
+              </FilterButton>
+            ) : (
+              <></>
+            )}
             <MobileFilter
               isVisible={mobileFilterVisible}
               filterProps={FilterProps}
@@ -264,7 +280,6 @@ const HomePage = (props: HomePageTypes) => {
                 <LeftNavComponent
                   {...FilterProps}
                   insight={true}
-                  
                   search={true}
                 ></LeftNavComponent>
               </div>
@@ -283,19 +298,18 @@ const HomePage = (props: HomePageTypes) => {
                       filterState={filterState}
                       searchBarExpanded={false}
                     />
-                    <div className="px-c-2" >
-
-                    <MapViewChangeButtonGroup
-                      isCircleActive={isCircleActive}
-                      colorTheme={primaryColorTheme}
-                      mapMode={mapMode}
-                      setMapMode={setMapMode}
-                      setIsCircleActive={setIsCircleActive}
+                    <div className="px-c-2">
+                      <MapViewChangeButtonGroup
+                        isCircleActive={isCircleActive}
+                        colorTheme={primaryColorTheme}
+                        mapMode={mapMode}
+                        setMapMode={setMapMode}
+                        setIsCircleActive={setIsCircleActive}
                       />
-                      </div>
+                    </div>
                   </div>
                   <div className="col-12 row px-0 mx-0">
-                    <div className="col-12 p-c-4 pb-0 pe-0 col-map" >
+                    <div className="col-12 p-c-4 pb-0 pe-0 col-map">
                       {!stateViewMode && (
                         <MapComponent
                           scaleBarVisible={true}
@@ -319,19 +333,20 @@ const HomePage = (props: HomePageTypes) => {
                 </div>
                 <Strip className="row me-0 strip  align-items-center d-flex">
                   <span className="m-0 px-3 strip-text font-Mont">
-                    <b
-                      className="me-3 strip-bold-text font-Mont"
-                      
-                    >
+                    <b className="me-3 strip-bold-text font-Mont">
                       Please Note :
-                    </b>{ windowWidth > 768 ? "" :(<div className="mb-2"></div>)}
+                    </b>
+                    {windowWidth > 768 ? "" : <div className="mb-2"></div>}
                     The information is based on self declaration by community
                     members. Startup India dosen't moderate the information
                     collected.
                   </span>
                 </Strip>
                 <div className="d-block d-sm-none">
-                <ViewInsight colorTheme={primaryColorTheme} viewInsightUrl={viewInsightUrl} />
+                  <ViewInsight
+                    colorTheme={primaryColorTheme}
+                    viewInsightUrl={viewInsightUrl}
+                  />
                 </div>
                 <div className="row d-flex justify-content-center px-0 mx-0">
                   <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
@@ -376,21 +391,23 @@ const HomePage = (props: HomePageTypes) => {
                       <div
                         style={{
                           display: startupListActive ? "flex" : "none",
-                        }} className="mx-0 ms-sm-4 ms-0"
+                        }}
+                        className="mx-0 ms-sm-4 ms-0"
                       >
                         <StartupsListComponent
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
                           mapViewResource={mapViewResources}
                         />
-                     </div>
+                      </div>
                     )}
                     {
                       <>
                         <div
                           style={{
                             display: !startupListActive ? "block" : "none",
-                          }} className="mx-0 ms-sm-2 ms-0"
+                          }}
+                          className="mx-0 ms-sm-2 ms-0"
                         >
                           <DataTable
                             fetch={fetchTableData}

@@ -7,6 +7,7 @@ export const H5 = styled.h5<any>`
   text-decoration: ${props=> props.active ? 'underline' : 'none' };
   text-underline-offset: 2px;
   transition: 0.5s;
+  cursor: ${(props:any)=> props.active ? 'pointer' : ''};
   @media (max-width: 768px){
     color: rgba(0,0,0, 0.7);
   }

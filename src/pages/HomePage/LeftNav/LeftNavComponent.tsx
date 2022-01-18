@@ -21,7 +21,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import SearchBar from "../AllSearch"
 import ViewInsight from "../ViewInsight";
 
@@ -101,13 +101,14 @@ const LeftNavComponent = (props: any) => {
     fetchFilterList,
     filterState,
     filterLoading,noShadow,
-    insight,search:searchVisible, dateRange, dateRangeState, dateRangeLoading, selectedState, setSelectedState
+    insight,search:searchVisible, dateRange, dateRangeState, dateRangeLoading, selectedState, setSelectedState, handleToggle
   } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>("");
   const [searchBarExpanded, setSearchBarExpanded] = useState(false);
 
   const theme = useContext(ThemeContext);
+  const history = useHistory();
 
   const [selectedSector, setSelectedSector] = useState<any[]>([]);
   const [selectedStages, setSelectedStages] = useState<any[]>([]);
@@ -130,6 +131,12 @@ const LeftNavComponent = (props: any) => {
     }
     setSelectedState([state]);
   };
+  const closeModal = () =>{
+    if(handleToggle){
+      handleToggle()
+    }
+  }
+
   const onApplyState = () => {
     const stateIdsForAPiRequest = new Array();
     selectedState.forEach((state: any) => stateIdsForAPiRequest.push(state.id));
@@ -144,6 +151,8 @@ const LeftNavComponent = (props: any) => {
     };
     setSelectedArea(area);
     setExpanded(false);
+    history.push(`/?id=${area.id}&state=${area.stateName}`)
+    closeModal();
   };
 
   const handleSectorClick = (sectorObj: any) => {
@@ -171,7 +180,10 @@ const LeftNavComponent = (props: any) => {
       sectors: sectorIdsForAPiRequest,
     }));
     setExpanded(false);
+    closeModal();
   };
+
+
 
   const handleStagesClick = (stage: any) => {
     const stagesIndex = findSelectedIndex(selectedStages, stage);
@@ -198,6 +210,7 @@ const LeftNavComponent = (props: any) => {
       stages: stagesIdsForApiRequest,
     }));
     setExpanded(false);
+    closeModal();
   };
 
   const handleIndustryClick = (industry: any) => {
@@ -225,6 +238,7 @@ const LeftNavComponent = (props: any) => {
       industries: stagesIdsForApiRequest,
     }));
     setExpanded(false);
+    closeModal();
   };
 
   const handleBadgesClick = (badges: any) => {
@@ -252,6 +266,7 @@ const LeftNavComponent = (props: any) => {
       badges: badgesIdsForApiRequest,
     }));
     setExpanded(false);
+    closeModal();
   };
 
   const trimBadges = (badges: any[]) => {

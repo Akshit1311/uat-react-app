@@ -19,20 +19,20 @@ body {
   padding: 0;
 }
 .search-bar-row {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   margin-top: 24px;
   height: 38px;
   margin-bottom: 24px;
   input {
-      border: 0px !important;
-      font-size: 14px;
-      font-weight: 400px;
-      border-radius: 0px;
-      color: black !important;
+    border: 0px !important;
+    font-size: 14px;
+    font-weight: 400px;
+    border-radius: 0px;
+    color: black !important;
   }
-  @media (max-width:768px){
+  @media (max-width: 768px) {
     margin: calc(10px + 1vw) !important;
-    margin-top:0px !important;
+    margin-top: 0px !important;
   }
 }
 
@@ -92,10 +92,10 @@ body {
   overflow: hidden;
 }
 
-.horizontal-scroll{
+.horizontal-scroll {
   overflow-x: auto;
   width: 100%;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     overflow: hidden;
   }
 }
@@ -451,12 +451,11 @@ $primary: #0177fa;
     top: 0;
     z-index: 10;
     background: white;
-
   }
-  .scroll-area-wrapper{
+  .scroll-area-wrapper {
     width: 100%;
     overflow-x: auto;
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
       display: none;
     }
     .scroll-area {
@@ -490,34 +489,36 @@ $primary: #0177fa;
   right: 0px;
 }
 
-.col-filter-section{
+.col-filter-section {
   flex: 0 0 18%;
   width: 18.666667%;
   min-width: 18.675%;
 }
 
-.col-content-section{
+.col-content-section {
   flex: 62%;
 }
 
-@mixin middleSectionAlignment($width){
-  flex: 0 0 auto; width: $width;
+@mixin middleSectionAlignment($width) {
+  flex: 0 0 auto;
+  width: $width;
 }
 
-.col-map{
+.col-map {
   @include middleSectionAlignment(61%);
 }
 
-.col-view-changer{
+.col-view-changer {
   @include middleSectionAlignment(39%);
 }
 
-.border-radius-top{
+.border-radius-top {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
 }
-.MuiDrawer-paperAnchorBottom{
+
+.MuiDrawer-paperAnchorBottom {
   @extend .border-radius-top;
 }
 
@@ -532,12 +533,16 @@ $primary: #0177fa;
   .gradient-bar-map {
     background: linear-gradient(270deg, $color 0%, #ecf5ff 100%);
   }
-  .rc-tooltip-inner{
+  .rc-tooltip-inner {
     border: 2px solid $color !important;
   }
-  .rc-tooltip-arrow{
-    border-top-color: $color !important; 
+  .rc-tooltip-arrow {
+    border-top-color: $color !important;
   }
+  // .selected-list-card {
+  //   color: #feffff !important;
+  //   background-color: $color !important;
+  // }
 }
 
 .theme-1 {
@@ -568,20 +573,29 @@ $primary: #0177fa;
   @include themeMatcher(#00ad11);
 }
 
-.p-c-4{
+.p-c-4 {
   @extend .p-4;
 }
-.mt-c-5{
+.mt-c-5 {
   @extend .mt-0;
 }
-.px-c-2{
+.px-c-2 {
   padding-right: auto;
   padding-left: auto;
 }
-.disabled-map{
+.disabled-map {
   min-width: 0;
   width: 33%;
-  margin-top: 6.5rem;
+  // margin-top: 6.5rem;
+}
+
+.sticky-disabled-map{
+  position: sticky;
+  top: 110px;
+}
+
+.h-40{
+  height: 10vh !important;
 }
 
 .left-nav-bottom-card {
@@ -591,19 +605,24 @@ $primary: #0177fa;
   padding-right: 16px !important;
   margin-right: 0px !important;
 }
-
-@media only screen and (min-width: 768px){
-  .left-nav-bottom-card{
+.clickable-text{
+  cursor: pointer;
+  text-decoration: underline;
+  color: $primary;
+  text-underline-offset: 2px;
+}
+@media only screen and (min-width: 768px) {
+  .left-nav-bottom-card {
     width: 110%;
   }
 }
 
-@media only screen and (max-width: 768px)  {
-  .data-table-overflow-scroll{
+@media only screen and (max-width: 768px) {
+  .data-table-overflow-scroll {
     width: 98vw;
     overflow: scroll;
   }
-  .left-nav-bottom-card{
+  .left-nav-bottom-card {
     width: 100%;
     overflow: hidden;
     margin-right: 0px !important;
@@ -611,41 +630,41 @@ $primary: #0177fa;
     padding-right: 1rem !important;
     width: 103%;
   }
-  .disabled-map{
+  .disabled-map {
     width: 0%;
     display: none;
   }
-  .col-content-section{
+  .col-content-section {
     flex: 100%;
     width: 100%;
   }
-  .col-filter-section{
+  .col-filter-section {
     display: none;
   }
-  .col-map{
+  .col-map {
     @include middleSectionAlignment(100%);
   }
-  .col-view-changer{
+  .col-view-changer {
     @include middleSectionAlignment(100%);
   }
-  .gradient-bar-map{
+  .gradient-bar-map {
     right: 0.5rem;
   }
-  .p-c-4{
+  .p-c-4 {
     padding: 0.5rem !important;
     padding-right: 0px !important;
   }
-  .mt-c-5{
+  .mt-c-5 {
     margin-top: 1.5rem !important;
   }
-  .mt-c-5-2{
+  .mt-c-5-2 {
     margin-top: 3.8rem !important;
   }
-  .px-c-2{
+  .px-c-2 {
     padding-right: calc(3px + 1vw) !important;
     padding-left: calc(7px + 1vw) !important;
   }
-  .view-changer-startup-card{
+  .view-changer-startup-card {
     margin-left: 0px !important;
     margin-right: 0px !important;
     width: 100% !important;

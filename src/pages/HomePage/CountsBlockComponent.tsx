@@ -11,6 +11,7 @@ import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { H5 } from "../../styles-components/Heading";
 import { CountBlockModel } from "./HomePage";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useHistory } from "react-router-dom";
 
 const override = css`
   display: block;
@@ -61,9 +62,9 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
     color: ${(props: any) =>
       props.active
         ? ThemeColorIdentifier(props.colorTheme)
-        : "black" } !important;
+        : "black"} !important;
     height: 82px;
-    font-weight: ${( props:any )=> props.active ? '600' : '500' };
+    font-weight: ${(props: any) => (props.active ? "600" : "500")};
   }
 `;
 
@@ -78,7 +79,7 @@ const CountCard = ({
   loading,
   colorTheme,
 }: CountCardTypes) => {
-  const [ windowWidth, windowHeight ] = useWindowSize();
+  const [windowWidth, windowHeight] = useWindowSize();
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
 
@@ -164,16 +165,23 @@ const CountCard = ({
             className=" d-flex flex-column h-100 justify-content-between"
             style={{ padding: "0.83rem", paddingRight: 0 }}
           >
-            <h4 className="m-0 p-0 count-number" style={{ visibility: windowWidth > 768 || active ? 'visible':'hidden'}}>{currentCount}</h4>
-            <div>
-            <h6 className="mx-0 mb-0 p-0">{name}</h6>
-            <div
-              className={`count-underline d-block d-sm-none`}
+            <h4
+              className="m-0 p-0 count-number"
               style={{
-                visibility: active ? "visible" : "hidden",
-                background: ThemeColorIdentifier(colorTheme),
+                visibility: windowWidth > 768 || active ? "visible" : "hidden",
               }}
-            ></div>
+            >
+              {currentCount}
+            </h4>
+            <div>
+              <h6 className="mx-0 mb-0 p-0">{name}</h6>
+              <div
+                className={`count-underline d-block d-sm-none`}
+                style={{
+                  visibility: active ? "visible" : "hidden",
+                  background: ThemeColorIdentifier(colorTheme),
+                }}
+              ></div>
             </div>
           </div>
         )}
@@ -189,6 +197,7 @@ const CountsBlockComponent = ({
   setStateViewMap,
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
+  const history = useHistory();
   const [activeCard, setActiveCard] = useState<string>("Startups");
   const {
     getCounts,
@@ -257,28 +266,43 @@ const CountsBlockComponent = ({
     loading: countLoading,
     colorTheme,
   };
-  const stateSelected = selectedArea.stateName?.toLowerCase() !== 'india' 
+  const stateSelected = selectedArea.stateName?.toLowerCase() !== "india";
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
         <div className="d-flex mt-3 px-0 align-items-baseline">
           {/* <H5>{selectedArea.stateName}</H5> */}
-          <H5 active={stateSelected} className="mb-3">India</H5> 
+          <H5
+            active={stateSelected}
+            onClick={() => {
+              if (!stateSelected) return;
+              setSelectedArea({ id: "india", stateName: "India" });
+              setSelectedStateByMap({
+                id: "",
+                name: "",
+              });
+              setStateViewMap(false);
+              history.push('/')
+            }}
+            className="mb-3"
+          >
+            India
+          </H5>
           {stateSelected ? (
             <>
-            <div className="d-flex ms-2 align-items-center">
-              <p className="m-0 p-0 font-12px">{'>'}</p>
-              <p className="p-0 m-0 state-label ms-2">{selectedArea.stateName}</p>
-            </div>
+              <div className="d-flex ms-2 align-items-center">
+                <p className="m-0 p-0 font-12px">{">"}</p>
+                <p className="p-0 m-0 state-label ms-2">
+                  {selectedArea.stateName}
+                </p>
+              </div>
             </>
           ) : (
             <></>
           )}
         </div>
       </div>
-      <div
-        className="d-inline-flex count-div horizontal-scroll"
-      >
+      <div className="d-inline-flex count-div horizontal-scroll">
         <CountCard
           {...resources}
           borderColor="#0177FA"

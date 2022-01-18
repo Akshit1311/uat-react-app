@@ -62,6 +62,7 @@ export default function MobileView(props: MobileViewProps) {
         downIconAlignment
         dateRange={true}
         noShadow={true}
+        handleToggle={props.handleToggle}
       />
     </Box>
   );

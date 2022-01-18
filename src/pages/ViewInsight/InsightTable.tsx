@@ -3,6 +3,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { InsightRowType } from "./Accordion";
 import _ from "lodash";
 import StarIcon from "@mui/icons-material/Star";
+import MoonLoader from "react-spinners/MoonLoader";
 
 interface InsightTableProps {
   stateName: string | null;

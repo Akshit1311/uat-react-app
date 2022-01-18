@@ -11,6 +11,8 @@ import { useWindowSize } from "../../../hooks/useWindowSize";
 import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 import { StateCircles } from "./StateCircle";
 import { StateBorders } from "./StartupIndiaMap";
+import { useWebQuery } from "../../../hooks/useWebQuery"
+import { useHistory } from "react-router-dom"
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -117,12 +119,25 @@ function IndiaMap({
   const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-15 0 900 850";
   const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-70 -70 900 800";
 
-  const [activeStates, setActiveStates] = useState<MapType[]>([]);
+  const [activeStates, setActiveStates] = useState<any[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
   const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
   const [districtsBoarder, setDistrictsBoarder] = useState<any>([]);
 
   const [stateBubbles, setStateBubbles] = useState<any[]>(StateCircles);
+
+  const query = useWebQuery();
+  const history = useHistory();
+  
+  useEffect(()=>{
+    const stateName = query.get('state');
+    const stateId = query.get('id');
+    
+    const activeState = StateBorders.find((item)=> item.id === stateId )
+    console.log("FInd", activeState)
+    if(activeState) setActiveStates([activeState])
+    else setActiveStates([])
+  },[query.get('state'),query.get('id')])
   // const [maxValue, setMaxValue] = useState<number>(0)
 
   const stateValidator = (array: any, accessor: string, value: string) => {
@@ -200,6 +215,7 @@ function IndiaMap({
     setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
     setSelectedStateByMap(state);
+    history.push(`/?id=${state.id}&state=${state.name}`)
   };
 
   const populateDistrictsBoarders = () => {

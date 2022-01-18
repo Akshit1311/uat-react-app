@@ -20,7 +20,7 @@ const StartUpCardContainer = styled.div`
   max-width: 65%;
   min-width: 65%;
   margin-left: 1.5%;
-  @media (max-width:768px){
+  @media (max-width: 768px) {
     width: 100%;
     max-width: 100%;
     margin-left: 0%;
@@ -32,7 +32,8 @@ const StartUpCardWrapper = styled.div`
 `;
 
 function StartUpCard({
-  _id,index,
+  _id,
+  index,
 
   sectors,
   name: company,
@@ -62,10 +63,13 @@ function StartUpCard({
 
   const stagesBadge =
     Array.isArray(stages) && States.length > 0 ? (
-      <div key={index} className="d-flex" style={{ marginTop: '9px'}}>
+      <div key={index} className="d-flex" style={{ marginTop: "9px" }}>
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Stage:</p>
-        <div className="d-flex align-items-center flex-wrap" style={{ marginLeft: '0.75rem' }}>
-          {stages.slice(0, 6).map((item: string, index:number) => (
+        <div
+          className="d-flex align-items-center flex-wrap"
+          style={{ marginLeft: "0.75rem" }}
+        >
+          {stages.slice(0, 6).map((item: string, index: number) => (
             <Badge className="pb-0 d-flex mb-2 me-2 mt-0 ms-0" key={index}>
               <div className="d-flex flex-wrap">{item}</div>
             </Badge>
@@ -79,13 +83,14 @@ function StartUpCard({
   const sectorBadge =
     Array.isArray(sectors) && sectors.length ? (
       <div
-        className="d-flex" 
-        style={{ maxHeight: "53px", overflow: "hidden",marginTop: '7px' }}
+        className="d-flex"
+        style={{ maxHeight: "53px", overflow: "hidden", marginTop: "7px" }}
       >
         <p className="font-Mont font-600 font-14px m-0 p-0 ">Sector:</p>
         <div className="d-flex flex-wrap ms-2">
-          {sectors.slice(0, 5).map((item: string, index:number) => (
-            <Badge key={index}
+          {sectors.slice(0, 5).map((item: string, index: number) => (
+            <Badge
+              key={index}
               className="pb-0 d-flex mb-2 me-2 mt-0 ms-0"
               style={{ width: "fit-content" }}
             >
@@ -106,7 +111,7 @@ function StartUpCard({
     );
 
   const taxExempted = form80IacStatus ? (
-    <div style={{ marginTop: '17px' }}>
+    <div style={{ marginTop: "17px" }}>
       <Badge className="mt-2">Tax Exempted</Badge>
     </div>
   ) : (
@@ -161,7 +166,9 @@ function StartUpCard({
         {tagsLoader}
         {!tagsLoading && (
           <div
-            className={`p-2 px-0 py-0 d-flex flex-column justify-content-between h-100 ms-0 ${form80IacStatus ? "" : "pb-0"}`}
+            className={`p-2 px-0 py-0 d-flex flex-column justify-content-between h-100 ms-0 ${
+              form80IacStatus ? "" : "pb-0"
+            }`}
           >
             {form80IacStatus ||
             (stages && stages.length) ||
@@ -176,9 +183,7 @@ function StartUpCard({
             ) : (
               <></>
             )}
-            <div
-              className={`m-1 d-flex flex-row align-items-center mt-6`}
-            >
+            <div className={`m-1 d-flex flex-row align-items-center mt-6`}>
               <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
               <h6 className="ms-1 my-0 py-0  start-up-location w-100">
                 {city + ", " + state}
@@ -199,7 +204,7 @@ function StartupsListComponent(props: any) {
   const [queryString, setQueryString] = useState<string>("");
 
   const startupList = React.useMemo(() => {
-    return renderedData.map((startUp: any, index:number) => (
+    return renderedData.map((startUp: any, index: number) => (
       <StartUpCard {...startUp} index={index} tagsLoading={tagsLoading} />
     ));
   }, [renderedData]);
@@ -277,9 +282,7 @@ function StartupsListComponent(props: any) {
           </div>
         )}
       </StartUpCardContainer>
-      <div
-        className="ps-4 disabled-map"
-      >
+      <div className="ps-4 disabled-map">
         <DisabledMap mapViewResource={props.mapViewResource} />
       </div>
     </div>
