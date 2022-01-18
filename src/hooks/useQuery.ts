@@ -7,7 +7,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export function useQuery(apiUrl: string) {
   const [state, setState] = useState<any>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>(ERROR_INITIAL_STATE);
 
   const fetch = async (url: string) => {

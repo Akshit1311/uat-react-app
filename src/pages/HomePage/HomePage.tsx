@@ -185,7 +185,7 @@ const HomePage = (props: HomePageTypes) => {
   const countResource = {
     getCounts: fetchDefaultFilterValues,
     countState: countWrrapper(filterState.counts),
-    countLoading,
+    countLoading:tableLoading,
     setSelectedArea,
     tableState,
     selectedStateByMap,
