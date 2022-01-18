@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ThemeColorIdentifier } from "../helper-function/themeColor";
 
 export const H5 = styled.h5<any>`
   color: ${(props:any)=> props.active ? '#0177FA' : props.theme.color};

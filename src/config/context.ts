@@ -35,7 +35,8 @@ export const PRIMARY_THEME = {
     searchBg:"#ffffff",
     headerBorder: 'light-data-table-header',
     inputClass:"bg-white",
-    dashedBorder: "black"
+    dashedBorder: "black",
+    textColor: 'black'
   },
   togglerButton:{
     backgroundInactive:"white",
@@ -88,7 +89,8 @@ export const DARK_THEME = {
     searchBg:'rgba(31, 30, 44, 1)',
     headerBorder: 'dark-data-table-header',
     inputClass:"",
-    dashedBorder:"white"
+    dashedBorder:"white",
+    textColor: 'white'
   },
   togglerButton:{
     backgroundInactive:"rgba(31, 30, 44, 1)",

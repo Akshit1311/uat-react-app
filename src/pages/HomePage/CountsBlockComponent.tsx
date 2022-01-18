@@ -82,6 +82,7 @@ const CountCard = ({
   const [windowWidth, windowHeight] = useWindowSize();
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     const count = state[accessor ? accessor : name.slice(0, -1)];
@@ -152,7 +153,7 @@ const CountCard = ({
           <div className="w-100 h-100 d-flex justify-content-center align-items-center">
             <MoonLoader
               color={active ? "white" : "#0177FA"}
-              loading={loading}
+              loading={true}
               size={"25px"}
               css={override}
             />
@@ -168,13 +169,14 @@ const CountCard = ({
             <h4
               className="m-0 p-0 count-number"
               style={{
+                color: theme.color,
                 visibility: windowWidth > 768 || active ? "visible" : "hidden",
-              }}
+              }} 
             >
               {currentCount}
             </h4>
             <div>
-              <h6 className="mx-0 mb-0 p-0">{name}</h6>
+              <h6 style={{ color: !active? theme.color : '' }} className="mx-0 mb-0 p-0">{name}</h6>
               <div
                 className={`count-underline d-block d-sm-none`}
                 style={{
@@ -284,15 +286,15 @@ const CountsBlockComponent = ({
               setStateViewMap(false);
               history.push('/')
             }}
-            className="mb-3"
+            className={`mb-3 ${stateSelected ? 'text-theme' : ''}`}
           >
             India
           </H5>
           {stateSelected ? (
             <>
               <div className="d-flex ms-2 align-items-center">
-                <p className="m-0 p-0 font-12px">{">"}</p>
-                <p className="p-0 m-0 state-label ms-2">
+                <p style={{ color: theme.color }} className="m-0 p-0 font-12px">{">"}</p>
+                <p style={{ color: theme.color }} className="p-0 m-0 state-label ms-2">
                   {selectedArea.stateName}
                 </p>
               </div>

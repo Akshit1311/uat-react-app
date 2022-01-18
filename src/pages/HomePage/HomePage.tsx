@@ -241,6 +241,10 @@ const HomePage = (props: HomePageTypes) => {
       setSelectedArea({ id: stateId !== null ? stateId : '' , stateName: stateName ? stateName : '' });
       setSelectedStateByMap({ id: stateId !== null ? stateId : '' , name: stateName ? stateName : '' });
     }
+    const queryCountBlock = query.get('count')
+    // if(queryCountBlock){
+    //   setSelectedCountBlock(queryCountBlock)
+    // } else setSelectedCountBlock('Startup')
   },[query.get('state'),query.get('id')])
   
   return (
@@ -280,7 +284,7 @@ const HomePage = (props: HomePageTypes) => {
                 <LeftNavComponent
                   {...FilterProps}
                   insight={true}
-                  search={true}
+                  search={true} handleToggle={false}
                 ></LeftNavComponent>
               </div>
               <div className="col-content-section p-0">

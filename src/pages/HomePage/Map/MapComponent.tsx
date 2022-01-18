@@ -117,7 +117,7 @@ function IndiaMap({
   );
   const [width, height] = useWindowSize();
   const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-15 0 900 850";
-  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-70 -70 900 800";
+  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-30 -10 800 800";
 
   const [activeStates, setActiveStates] = useState<any[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -372,6 +372,7 @@ function IndiaMap({
         <>
           <svg
             style={{ position: "absolute", left: 0 }}
+            className="mt-c-5-2"
             viewBox={viewAreaCircle ? viewAreaCircle : MAP_AREA_BUBBLE}
           >
             <g style={{ transform: "scale(1.2)" }}>

@@ -40,7 +40,7 @@ const Cells = ({
           className="my-0 p-0 d-flex align-items-center font-mont-data-table pe-3"
           style={{
             marginLeft: "0.8rem",
-            color: "black",
+            color: theme.dataTable.textColor,
             fontWeight: fontWeight ? 700 : 500,
           }}
         >

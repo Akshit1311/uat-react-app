@@ -53,8 +53,8 @@ export default function ControlledAccordions() {
               View Insights of {query.get("state")}
             </H5>
             <p className="font-Mont font-600 font-12px mt-1">
-              <span className="opacity-50">{"IndiaMap/ "}</span>
-              <span className="clickable-text" onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
+              <span className="opacity-50">{"IndiaMap / "}</span>
+              <span className="opacity-50" onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
               <span>View Insight</span>
             </p>
           </div>
