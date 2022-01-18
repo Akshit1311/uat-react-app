@@ -182,6 +182,9 @@ const HomePage = (props: HomePageTypes) => {
     body?.setAttribute("class", themeInfo);
   };
 
+  useEffect(()=>{
+    changeTheme('theme-1')
+  },[])
   const countResource = {
     getCounts: fetchDefaultFilterValues,
     countState: countWrrapper(filterState.counts),

@@ -544,7 +544,10 @@ $primary: #0177fa;
     color: white;
   }
 }
-
+// .selected-list-card{
+//   background:  #0177fa;
+//   color: white;
+// }
 .theme-1 {
   @include themeMatcher(#0177fa);
 }
