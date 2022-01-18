@@ -539,6 +539,10 @@ $primary: #0177fa;
   .rc-tooltip-arrow {
     border-top-color: $color !important;
   }
+  .selected-list-card{
+    background: $color;
+    color: white;
+  }
 }
 
 .theme-1 {

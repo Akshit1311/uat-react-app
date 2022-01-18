@@ -169,7 +169,7 @@ const CountCard = ({
             <h4
               className="m-0 p-0 count-number"
               style={{
-                color: theme.color,
+                color: !active ? theme.color: "",
                 visibility: windowWidth > 768 || active ? "visible" : "hidden",
               }} 
             >
