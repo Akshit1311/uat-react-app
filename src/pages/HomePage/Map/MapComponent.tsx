@@ -11,8 +11,8 @@ import { useWindowSize } from "../../../hooks/useWindowSize";
 import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 import { StateCircles } from "./StateCircle";
 import { StateBorders } from "./StartupIndiaMap";
-import { useWebQuery } from "../../../hooks/useWebQuery"
-import { useHistory } from "react-router-dom"
+import { useWebQuery } from "../../../hooks/useWebQuery";
+import { useHistory } from "react-router-dom";
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -87,8 +87,6 @@ const GradientBar = ({ maxCountValue }: any) => {
   );
 };
 
-const windowWidth = window.innerWidth;
-
 const MAP_AREA_DISTRICTS = "0 0 620 614";
 const ID = "id";
 
@@ -117,7 +115,7 @@ function IndiaMap({
   );
   const [width, height] = useWindowSize();
   const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-15 0 900 850";
-  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-30 -10 800 800";
+  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-30 0 800 800";
 
   const [activeStates, setActiveStates] = useState<any[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -128,16 +126,15 @@ function IndiaMap({
 
   const query = useWebQuery();
   const history = useHistory();
-  
-  useEffect(()=>{
-    const stateName = query.get('state');
-    const stateId = query.get('id');
-    
-    const activeState = StateBorders.find((item)=> item.id === stateId )
-    console.log("FInd", activeState)
-    if(activeState) setActiveStates([activeState])
-    else setActiveStates([])
-  },[query.get('state'),query.get('id')])
+
+  useEffect(() => {
+    const stateName = query.get("state");
+    const stateId = query.get("id");
+
+    const activeState = StateBorders.find((item) => item.id === stateId);
+    if (activeState) setActiveStates([activeState]);
+    else setActiveStates([]);
+  }, [query.get("state"), query.get("id")]);
   // const [maxValue, setMaxValue] = useState<number>(0)
 
   const stateValidator = (array: any, accessor: string, value: string) => {
@@ -166,7 +163,17 @@ function IndiaMap({
     if (findStateIndex !== -1) {
       const stateValue = tableState.data[findStateIndex].statistics[accessor];
       const opacity = (stateValue / maxValue) * 100;
-      return opacity;
+      if (
+        opacity === 0 &&
+        accessor[0] !== ["Startup"][0] &&
+        accessor[0] !== ["Incubator"][0]
+      ) {
+        return opacity;
+      } else if (opacity < 20 && opacity > 0) {
+        return opacity + 5;
+      } else {
+        return opacity;
+      }
     }
     return 0;
   };
@@ -215,7 +222,7 @@ function IndiaMap({
     setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
     setSelectedStateByMap(state);
-    history.push(`/?id=${state.id}&state=${state.name}`)
+    history.push(`/?id=${state.id}&state=${state.name}`);
   };
 
   const populateDistrictsBoarders = () => {
@@ -280,6 +287,13 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
+      {/* {isCircleActive && scaleBarVisible && (
+        <div
+          className="position-absolute"
+          style={{ top: "4%", right: "32%", zIndex: 10000 }}
+        >
+        </div>
+      )} */}
       {loadingIndiaMap === false && tableLoading === false ? (
         <svg
           viewBox={getViewBoxArea()}
@@ -290,7 +304,8 @@ function IndiaMap({
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <Tooltip key={index}
+                <Tooltip
+                  key={index}
                   placement="top"
                   animation="zoom"
                   arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -328,7 +343,8 @@ function IndiaMap({
             })}
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
-              <Tooltip key={index}
+              <Tooltip
+                key={index}
                 placement="top"
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                 overlay={
@@ -365,7 +381,11 @@ function IndiaMap({
         </svg>
       ) : (
         <div className="w-100 h-100 d-flex justify-content-center align-items-center h-65">
-          <MoonLoader color={"#0177FA"} loading={true} size={"25px"} />
+          <MoonLoader
+            color={ThemeColorIdentifier(colorTheme)}
+            loading={true}
+            size={"25px"}
+          />
         </div>
       )}
       {!loadingIndiaMap && isCircleActive && (
@@ -377,14 +397,16 @@ function IndiaMap({
           >
             <g style={{ transform: "scale(1.2)" }}>
               {stateBubbles.map((bubble: any, index: number) => (
-                <circle key={index}
+                <circle
+                  key={index}
                   transform={bubble.transform}
                   fill-opacity="0.05"
-                  pointer-events="all"
+                  pointerEvents="all"
                   style={{ cursor: "pointer" }}
                   fill={ThemeColorIdentifier(colorTheme)}
                   stroke={ThemeColorIdentifier(colorTheme)}
                   strokeWidth="1.4"
+                  // r={5}
                   r={bubbleRadiusWraper(
                     tableState && tableState.data
                       ? getGradientColor(
@@ -401,10 +423,58 @@ function IndiaMap({
             </g>
             {scaleBarVisible && (
               <g style={{ transform: "scale(1.2)" }}>
+                <text
+                  x={width > 768 ? "36.3%" : "50%"}
+                  y={"8%"}
+                  stroke="#00000"
+                  stroke-width="2px"
+                  dy=".3em"
+                  text-anchor="middle"
+                  className="font-Mont"
+                  alignment-baseline="bottom"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold"
+                  }}
+                >
+                   {Number.parseInt(((maxCountValue / 100) * 50).toString())}
+                </text>
+                <text
+                  x={width > 768 ? "36.4%" : "50%"}
+                  y="13%"
+                  stroke="#00000"
+                  stroke-width="2px"
+                  dy=".3em"
+                  text-anchor="middle"
+                  alignment-baseline="bottom"
+                  className="font-Mont"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold"
+                  }}
+                >
+                   {Number.parseInt(((maxCountValue / 100) * 75).toString())}
+                </text>
+                <text
+                   x={width > 768 ? "36.4%" : "50%"}
+                  y="17.5%"
+                  stroke="#00000"
+                  stroke-width="2px"
+                  dy=".3em"
+                  text-anchor="middle"
+                  alignment-baseline="bottom"
+                  className="font-Mont"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold"
+                  }}
+                >
+                   {maxCountValue}
+                </text>
                 <circle
                   transform={"translate(400,47)"}
                   fill-opacity="0.25"
-                  pointer-events="all"
+                  pointerEvents="all"
                   style={{ cursor: "pointer" }}
                   fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
@@ -416,7 +486,7 @@ function IndiaMap({
                 <circle
                   transform={"translate(400,66)"}
                   fill-opacity="0.25"
-                  pointer-events="all"
+                  pointerEvents="all"
                   style={{ cursor: "pointer" }}
                   fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
@@ -428,7 +498,7 @@ function IndiaMap({
                 <circle
                   transform={"translate(400,85)"}
                   fill-opacity="0.25"
-                  pointer-events="all"
+                  pointerEvents="all"
                   style={{ cursor: "pointer" }}
                   fill="none"
                   stroke={ThemeColorIdentifier(colorTheme)}
@@ -440,7 +510,7 @@ function IndiaMap({
               </g>
             )}
           </svg>
-          {scaleBarVisible ? (
+          {/* {scaleBarVisible ? (
             <div style={{ position: "absolute" }}>
               <p
                 className="max-gradient-bar p-0 m-0"
@@ -475,11 +545,10 @@ function IndiaMap({
               >
                 {maxCountValue}
               </p>
-              {/* </div> */}
             </div>
           ) : (
             <></>
-          )}
+          )} */}
         </>
       )}
     </MapWrapper>

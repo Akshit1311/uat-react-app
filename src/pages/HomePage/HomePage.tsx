@@ -13,7 +13,6 @@ import HomePageApi from "../../config/homepageApis.json";
 import { NAVBAR_HEIGHT } from "../../config/context";
 import { ThemeContext } from "../../config/context";
 import DataTable from "./DataTable";
-import StatePolicy from "./Charts/StatePolicy";
 import {
   PageWrapper,
   PageWrapperContainer,

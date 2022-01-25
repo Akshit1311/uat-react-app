@@ -61,8 +61,8 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
       props.active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0)"} !important;
     color: ${(props: any) =>
       props.active
-        ? ThemeColorIdentifier(props.colorTheme)
-        : "black"} !important;
+        ? props.theme.color
+        : ""} !important;
     height: 82px;
     font-weight: ${(props: any) => (props.active ? "600" : "500")};
   }
@@ -276,6 +276,7 @@ const CountsBlockComponent = ({
           {/* <H5>{selectedArea.stateName}</H5> */}
           <H5
             active={stateSelected}
+            colorTheme={colorTheme}
             onClick={() => {
               if (!stateSelected) return;
               setSelectedArea({ id: "india", stateName: "India" });

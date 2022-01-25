@@ -10,6 +10,7 @@ import { useMutate } from "../../hooks/useMutate";
 import UserDefault from "../../assets/unknown.png";
 import MoonLoader from "react-spinners/MoonLoader";
 import { States } from "./Map/states";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const StartUpCardContainer = styled.div`
   background: ${(props) => props.theme.bgCards};
@@ -34,7 +35,6 @@ const StartUpCardWrapper = styled.div`
 function StartUpCard({
   _id,
   index,
-
   sectors,
   name: company,
   city,
@@ -198,6 +198,7 @@ function StartUpCard({
 
 function StartupsListComponent(props: any) {
   const theme = useContext(ThemeContext);
+  const [windowWidth, windowHeight] = useWindowSize();
   const [fetchTags, tagsState, tagsLoading] = useMutate("/startup/filter", []);
   const [renderedData, setRenderedData] = useState<any[]>([]);
 
@@ -234,8 +235,7 @@ function StartupsListComponent(props: any) {
   }, [props.appliedFilters]);
 
   return (
-    <div className="mb-5  startup-list-styles d-flex mx-0">
-      {/* <div style={{ minWidth: "19.66%" }} /> */}
+    <div className="mb-5 startup-list-styles d-flex mx-0 w-100 h-100" >
       <StartUpCardContainer
         className={`startup-list-card-container p-4 position-relative mx-0 ${
           renderedData.length !== tagsState.length ? "pb-0" : ""

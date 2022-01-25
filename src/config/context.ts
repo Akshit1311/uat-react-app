@@ -59,7 +59,8 @@ export const PRIMARY_THEME = {
     searchBorder: "black"
   },
   iconButtonBackground:"white",
-  color2:"black"
+  color2:"black",
+  headingColor: "rgba(0,0,0, 0.7)",
 };
 
 export const DARK_THEME = {
@@ -114,7 +115,8 @@ export const DARK_THEME = {
   },
   iconButtonBackground:"rgba(38, 40, 58, 1)",
   color2: 'white',
-  bgCard: 'rgba(31, 30, 44, 1)'
+  bgCard: 'rgba(31, 30, 44, 1)',
+  headingColor: "white",
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);
