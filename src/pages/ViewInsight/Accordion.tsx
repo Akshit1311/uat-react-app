@@ -146,7 +146,11 @@ export default function Accordion({
       <AccordionLocal
         expanded={isExpanded}
         onChange={handleChange(panelName)}
-        className={"px-2 " + getMargin(isExpanded)}
+        className={
+          "px-2 " +
+          getMargin(isExpanded) +
+          (type1State.length === 0 ? " mb-3" : " 0")
+        }
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -190,20 +194,33 @@ export default function Accordion({
         </AccordionDetails>
       </AccordionLocal>
 
-      {type1State.length > 0 && !isExpanded &&  (
-        <div className="">
-          <div className="view-insight-main mt-0">
-            <>
-              <InsightTable
-                data={type1State}
-                stateName={stateName}
-                title={title}
-                starFill={true}
-                handleClickStar={onSelectedItemClick}
-              />
-              <div className="mb-3" />
-            </>
-          </div>
+      {type1State.length > 0 && !isExpanded && (
+        <div className="mb-3 mt-0 position-relative">
+          <div style={{ 
+            position: 'absolute',
+            top: '-10px',
+            background: 'white',
+            height: '10px', zIndex: 100, width: '100%'
+           }}></div>
+          <AccordionLocal
+            expanded={true}
+            className={"px-2 pb-2 pt-0 mb-0 " + getMargin(isExpanded)}
+          >
+            <AccordionDetails>
+              <div className="view-insight-main mt-0">
+                <>
+                  <InsightTable
+                    data={type1State}
+                    stateName={stateName}
+                    title={title}
+                    starFill={true}
+                    handleClickStar={onSelectedItemClick}
+                  />
+                  {/* <div className="mb-3" /> */}
+                </>
+              </div>
+            </AccordionDetails>
+          </AccordionLocal>
         </div>
       )}
     </>

@@ -544,10 +544,17 @@ $primary: #0177fa;
     color: white;
   }
 }
-// .selected-list-card{
-//   background:  #0177fa;
-//   color: white;
-// }
+
+.always-visible-view-insight {
+  position: relative;
+  top: -10px;
+  .css-a2qymh-MuiPaper-root-MuiAccordion-root{
+    box-shadow:  0px 0px 10px rgb(193 193 193 / 25%)
+  }
+}
+
+
+
 .theme-1 {
   @include themeMatcher(#0177fa);
 }

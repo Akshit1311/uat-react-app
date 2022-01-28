@@ -11,6 +11,7 @@ import UserDefault from "../../assets/unknown.png";
 import MoonLoader from "react-spinners/MoonLoader";
 import { States } from "./Map/states";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 
 const StartUpCardContainer = styled.div`
   background: ${(props) => props.theme.bgCards};
@@ -42,7 +43,7 @@ function StartUpCard({
   stages,
   form80IacStatus,
   tagsLoading,
-  logo,
+  logo, colorTheme
 }: any) {
   function htmlDecode(input: any) {
     var doc = new DOMParser().parseFromString(input, "text/html");
@@ -57,7 +58,7 @@ function StartUpCard({
 
   const tagsLoader = tagsLoading && (
     <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-      <MoonLoader color={"#0177FA"} loading={tagsLoading} size={"25px"} />
+      <MoonLoader color={ThemeColorIdentifier(colorTheme)} loading={tagsLoading} size={"25px"} />
     </div>
   );
 
@@ -206,7 +207,7 @@ function StartupsListComponent(props: any) {
 
   const startupList = React.useMemo(() => {
     return renderedData.map((startUp: any, index: number) => (
-      <StartUpCard {...startUp} index={index} tagsLoading={tagsLoading} />
+      <StartUpCard {...startUp} index={index} tagsLoading={tagsLoading} colorTheme={props.colorTheme} />
     ));
   }, [renderedData]);
 

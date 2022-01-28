@@ -140,19 +140,17 @@ const CountCard = ({
   }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
 
   return (
-    <>
       <CountCardWrapper
         colorTheme={colorTheme}
         onClick={() => handleCardClick(name, acc)}
         active={active}
         borderColor={borderColor}
-        className="col-md count-single-card p-0"
+        className={`col-md count-single-card p-0`}
       >
-        {" "}
         {loading ? (
-          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center" style={{ minWidth: '50px' }}>
             <MoonLoader
-              color={active ? "white" : "#0177FA"}
+              color={active ? "white" : ThemeColorIdentifier(colorTheme)}
               loading={true}
               size={"25px"}
               css={override}
@@ -176,7 +174,7 @@ const CountCard = ({
               {currentCount}
             </h4>
             <div>
-              <h6 style={{ color: !active? theme.color : '' }} className="mx-0 mb-0 p-0">{name}</h6>
+              <h6 style={{ color: !active? theme.color : windowWidth < 768 ? ThemeColorIdentifier(colorTheme) : '' }} className="mx-0 mb-0 p-0">{name}</h6>
               <div
                 className={`count-underline d-block d-sm-none`}
                 style={{
@@ -188,7 +186,6 @@ const CountCard = ({
           </div>
         )}
       </CountCardWrapper>
-    </>
   );
 };
 

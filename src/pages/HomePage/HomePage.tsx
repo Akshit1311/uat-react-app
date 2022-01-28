@@ -255,8 +255,6 @@ const HomePage = (props: HomePageTypes) => {
         className={`border-bottom home-component-styles mx-0 px-0 ${primaryColorTheme}`}
         style={{
           marginTop: NAVBAR_HEIGHT,
-          // height: `calc(100vh - ${NAVBAR_HEIGHT})`,
-          // overflowY: "auto",
         }}
       > 
         <PageWrapperContainer>
@@ -291,7 +289,12 @@ const HomePage = (props: HomePageTypes) => {
               </div>
               <div className="col-content-section p-0">
                 <div className="col-12 col-md px-0 mx-0 w-100">
-                  <div className="row px-0 mx-0">
+                  { windowWidth < 768 && ( <div style={{
+                    height: '125px'
+                  }}>
+
+                  </div>)}
+                  <div className="row px-0 mx-0" style={windowWidth < 768 ? { position: "fixed", top: '70px', background: '#fafbff', zIndex: 1000 } : {}}>
                     <CountsBlockComponent
                       countResource={countResource}
                       selectedArea={selectedArea}
