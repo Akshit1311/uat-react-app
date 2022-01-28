@@ -142,51 +142,70 @@ export default function Accordion({
   }, [data, selectedData]);
 
   return (
-    <AccordionLocal
-      expanded={isExpanded}
-      onChange={handleChange(panelName)}
-      className={"px-2 mb-3 " + getMargin(isExpanded)}
-    >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1bh-content"
-        id="panel1bh-header"
-        style={{ paddingBottom: "-10px" }}
+    <>
+      <AccordionLocal
+        expanded={isExpanded}
+        onChange={handleChange(panelName)}
+        className={"px-2 " + getMargin(isExpanded)}
       >
-        <div>
-          <p className="font-Mont font-600 font-14px mb-0 px-2">{title}</p>
-        </div>
-      </AccordionSummary>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+          style={{ paddingBottom: "-10px" }}
+        >
+          <div>
+            <p className="font-Mont font-600 font-14px mb-0 px-2">{title}</p>
+          </div>
+        </AccordionSummary>
 
-      <AccordionDetails className="view-insight-main mt-0">
-        {type1State.length > 0 && (
-          <>
-            <InsightTable
-              data={type1State}
-              stateName={stateName}
-              title={title}
-              starFill={true}
-              handleClickStar={onSelectedItemClick}
+        <AccordionDetails className="view-insight-main mt-0">
+          {type1State.length > 0 && (
+            <>
+              <InsightTable
+                data={type1State}
+                stateName={stateName}
+                title={title}
+                starFill={true}
+                handleClickStar={onSelectedItemClick}
+              />
+              <div className="mb-3" />
+            </>
+          )}
+          <div className="mb-3 mx-2">
+            <SearchBarComponent
+              background={theme.searchBg}
+              handleApply={handleSearch}
+              value={queryString}
+              onChange={onSearch}
             />
-            <div className="mb-3" />
-          </>
-        )}
-        <div className="mb-3 mx-2">
-          <SearchBarComponent
-            background={theme.searchBg}
-            handleApply={handleSearch}
-            value={queryString}
-            onChange={onSearch}
+          </div>
+          <InsightTable
+            data={type2State}
+            stateName={stateName}
+            title={title}
+            handleClickStar={onUnselectedItemClick}
           />
+          <div className="mb-2" />
+        </AccordionDetails>
+      </AccordionLocal>
+
+      {type1State.length > 0 && !isExpanded &&  (
+        <div className="">
+          <div className="view-insight-main mt-0">
+            <>
+              <InsightTable
+                data={type1State}
+                stateName={stateName}
+                title={title}
+                starFill={true}
+                handleClickStar={onSelectedItemClick}
+              />
+              <div className="mb-3" />
+            </>
+          </div>
         </div>
-        <InsightTable
-          data={type2State}
-          stateName={stateName}
-          title={title}
-          handleClickStar={onUnselectedItemClick}
-        />
-        <div className="mb-2" />
-      </AccordionDetails>
-    </AccordionLocal>
+      )}
+    </>
   );
 }
