@@ -114,7 +114,7 @@ function IndiaMap({
     "https://api.startupindiaonline.com/startup/states"
   );
   const [width, height] = useWindowSize();
-  const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1106" : "-15 0 900 850";
+  const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1006" : "-15 0 900 950";
   const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-30 0 800 800";
 
   const [activeStates, setActiveStates] = useState<any[]>([]);
@@ -287,19 +287,44 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      {/* {isCircleActive && scaleBarVisible && (
-        <div
-          className="position-absolute"
-          style={{ top: "4%", right: "32%", zIndex: 10000 }}
-        >
-        </div>
-      )} */}
       {loadingIndiaMap === false && tableLoading === false ? (
         <svg
           viewBox={getViewBoxArea()}
           className="mt-c-5-2"
           aria-label="Map of India"
         >
+          <g style={{ transform: "scale(1)" }}>
+            <Tooltip
+              placement="top"
+              animation="zoom"
+              arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+              overlay={
+                <p style={{ paddingTop: "1px" }} className="px-2">
+                  {"Lakshadweep"}
+                </p>
+              }
+            >
+              <circle
+                onClick={() =>
+                  handleStateClick({
+                    name: "Lakshadweep",
+                    text: "Lakshadweep",
+                    id: "5f48ce592a9bb065cdf9fb2f",
+                  })
+                }
+                transform={"translate(150,800)"}
+                fill-opacity="0.00"
+                pointerEvents="all"
+                style={{ cursor: "pointer" }}
+                fill={ThemeColorIdentifier(colorTheme)}
+                stroke={"red"}
+                strokeOpacity={"0"}
+                strokeWidth="1.4"
+                r={65}
+              ></circle>
+            </Tooltip>
+          </g>
+
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
@@ -341,6 +366,7 @@ function IndiaMap({
                 </Tooltip>
               );
             })}
+
           {mapMode.id === MapVariables.CITY.id &&
             indiaMap.map((state: any, index: number) => (
               <Tooltip
@@ -425,7 +451,7 @@ function IndiaMap({
               <g style={{ transform: "scale(1.2)" }}>
                 <text
                   x={width > 768 ? "36.3%" : "50%"}
-                  y={"8%"}
+                  y={width < 768 ? "8%" : '6.5%'}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"
@@ -434,14 +460,30 @@ function IndiaMap({
                   alignment-baseline="bottom"
                   style={{
                     fontSize: "16px",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
                   }}
                 >
-                   {Number.parseInt(((maxCountValue / 100) * 50).toString())}
+                  {Number.parseInt(((maxCountValue / 100) * 50).toString())}
+                </text>
+                <text
+                  x={ width > 768 ? "36.4%" : "50%"}
+                  y={ width < 768 ? "13%" : '10.5%'}
+                  stroke="#00000"
+                  stroke-width="2px"
+                  dy=".3em"
+                  text-anchor="middle"
+                  alignment-baseline="bottom"
+                  className="font-Mont"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {Number.parseInt(((maxCountValue / 100) * 75).toString())}
                 </text>
                 <text
                   x={width > 768 ? "36.4%" : "50%"}
-                  y="13%"
+                  y={ width < 768 ? "17.5%" : '14.5%'}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"
@@ -450,26 +492,10 @@ function IndiaMap({
                   className="font-Mont"
                   style={{
                     fontSize: "16px",
-                    fontWeight: "bold"
+                    fontWeight: "bold",
                   }}
                 >
-                   {Number.parseInt(((maxCountValue / 100) * 75).toString())}
-                </text>
-                <text
-                   x={width > 768 ? "36.4%" : "50%"}
-                  y="17.5%"
-                  stroke="#00000"
-                  stroke-width="2px"
-                  dy=".3em"
-                  text-anchor="middle"
-                  alignment-baseline="bottom"
-                  className="font-Mont"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "bold"
-                  }}
-                >
-                   {maxCountValue}
+                  {maxCountValue}
                 </text>
                 <circle
                   transform={"translate(400,47)"}

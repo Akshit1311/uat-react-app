@@ -145,10 +145,10 @@ const CountCard = ({
         onClick={() => handleCardClick(name, acc)}
         active={active}
         borderColor={borderColor}
-        className={`col-md count-single-card p-0`}
+        className={`col-md count-single-card p-0 w-100`}
       >
         {loading ? (
-          <div className="w-100 h-100 d-flex justify-content-center align-items-center" style={{ minWidth: '50px' }}>
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
             <MoonLoader
               color={active ? "white" : ThemeColorIdentifier(colorTheme)}
               loading={true}

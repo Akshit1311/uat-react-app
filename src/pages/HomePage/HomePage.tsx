@@ -181,13 +181,13 @@ const HomePage = (props: HomePageTypes) => {
     body?.setAttribute("class", themeInfo);
   };
 
-  useEffect(()=>{
-    changeTheme('theme-1')
-  },[])
+  useEffect(() => {
+    changeTheme("theme-1");
+  }, []);
   const countResource = {
     getCounts: fetchDefaultFilterValues,
     countState: countWrrapper(filterState.counts),
-    countLoading:tableLoading,
+    countLoading: tableLoading,
     setSelectedArea,
     tableState,
     selectedStateByMap,
@@ -235,20 +235,26 @@ const HomePage = (props: HomePageTypes) => {
     selectedState[0] ? selectedState[0].id : ""
   }&state=${selectedState[0] ? selectedState[0].value : ""}`;
   const query = useWebQuery();
-  
-  useEffect(()=>{
-    const stateName = query.get('state');
-    const stateId = query.get('id');
-    if(stateName && stateName?.length && stateId && stateId?.length){
-      setSelectedArea({ id: stateId !== null ? stateId : '' , stateName: stateName ? stateName : '' });
-      setSelectedStateByMap({ id: stateId !== null ? stateId : '' , name: stateName ? stateName : '' });
+
+  useEffect(() => {
+    const stateName = query.get("state");
+    const stateId = query.get("id");
+    if (stateName && stateName?.length && stateId && stateId?.length) {
+      setSelectedArea({
+        id: stateId !== null ? stateId : "",
+        stateName: stateName ? stateName : "",
+      });
+      setSelectedStateByMap({
+        id: stateId !== null ? stateId : "",
+        name: stateName ? stateName : "",
+      });
     }
-    const queryCountBlock = query.get('count')
+    const queryCountBlock = query.get("count");
     // if(queryCountBlock){
     //   setSelectedCountBlock(queryCountBlock)
     // } else setSelectedCountBlock('Startup')
-  },[query.get('state'),query.get('id')])
-  
+  }, [query.get("state"), query.get("id")]);
+
   return (
     <>
       <div
@@ -256,7 +262,7 @@ const HomePage = (props: HomePageTypes) => {
         style={{
           marginTop: NAVBAR_HEIGHT,
         }}
-      > 
+      >
         <PageWrapperContainer>
           <PageWrapper>
             {windowWidth < 768 ? (
@@ -284,17 +290,32 @@ const HomePage = (props: HomePageTypes) => {
                 <LeftNavComponent
                   {...FilterProps}
                   insight={true}
-                  search={true} handleToggle={false}
+                  search={true}
+                  handleToggle={false}
                 ></LeftNavComponent>
               </div>
               <div className="col-content-section p-0">
                 <div className="col-12 col-md px-0 mx-0 w-100">
-                  { windowWidth < 768 && ( <div style={{
-                    height: '125px'
-                  }}>
-
-                  </div>)}
-                  <div className="row px-0 mx-0" style={windowWidth < 768 ? { position: "fixed", top: '70px', background: '#fafbff', zIndex: 1000 } : {}}>
+                  {windowWidth < 768 && (
+                    <div
+                      style={{
+                        height: "125px",
+                      }}
+                    ></div>
+                  )}
+                  <div
+                    className="row px-0 mx-0 w-100"
+                    style={
+                      windowWidth < 768
+                        ? {
+                            position: "fixed",
+                            top: "70px",
+                            background: theme.bgColorStart,
+                            zIndex: 1000,
+                          }
+                        : {}
+                    }
+                  >
                     <CountsBlockComponent
                       countResource={countResource}
                       selectedArea={selectedArea}
