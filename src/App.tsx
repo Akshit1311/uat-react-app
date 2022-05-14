@@ -13,26 +13,35 @@ import {
 } from "@mui/material/styles";
 import './scss/componentStyles.scss'
 import { ThemeButton } from "./styles-components/Button"
+import { Provider as ReduxProvider } from "react-redux"
+import { store } from "./store/store";
+import { useSelector, useDispatch } from 'react-redux'
+import { ConfigState } from "./store/config";
+import useLocalStorage from 'use-local-storage'
 
 axios.defaults.baseURL = axiosConfig.baseURL;
 
 function App() {
   const [theme, setTheme] = useState<any>(PRIMARY_THEME);
   const [themeNumber, setThemeNumber] = useState<number>(1);
+  // const [themeName, setThemeName] = useState('light');
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [themeName, setThemeName] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+
   const themeHandler = () => {
     const currentThemeNumber = themeNumber;
 
     if (currentThemeNumber === 1) {
       setTheme(DARK_THEME);
       setThemeNumber(0);
-      require("./scss/theme/darkTheme.scss");
+      setThemeName('light')
       return;
     }
 
     if (currentThemeNumber === 0) {
       setTheme(PRIMARY_THEME);
       setThemeNumber(1);
-      require("./scss/theme/lightTheme.scss");
+      setThemeName('dark')
       return;
     }
   };
@@ -45,7 +54,7 @@ function App() {
     require("./scss/theme/lightTheme.scss");
   }, []);
   return (
-    <div onScroll={(changeEvent)=> console.log(changeEvent)}>
+    <div onScroll={(changeEvent) => console.log(changeEvent)} data-theme={themeName}>
       <MaterialUiThemeProvider theme={myTheme}>
         <ThemeProvider theme={theme}>
           <ThemeContext.Provider value={theme}>
@@ -60,6 +69,27 @@ function App() {
       </MaterialUiThemeProvider>
     </div>
   );
+}
+
+function Config() {
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+  
+  const switchTheme = () =>{
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme)
+  }
+
+  return (
+    <>
+    <div data-theme={theme}>
+      <button onClick={switchTheme}>Switch</button>
+      <div className="square">
+        <h1>Hello</h1>
+      </div>
+    </div>
+    </>
+  )
 }
 
 export default App;

@@ -84,7 +84,7 @@ body {
   font-size: 12px !important;
 }
 .font-Mont {
-  font-family: "Montserrat";
+  font-family: "Montserrat" !important;
 }
 .radius-5 {
   border-radius: 5px !important;
@@ -683,4 +683,22 @@ $primary: #0177fa;
 
 html {
   scroll-behavior: smooth;
+}
+.btn-icon-handler {
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 47px;
+  height: 36px;
+  margin-right: 12px;
+}
+
+.city-tooltip .rc-tooltip-inner {
+  height: 29px;
+  padding-right: 32px !important;
+  opacity: 1 !important;
+}
+
+.rc-tooltip {
+  font-weight: 500;
+  font-size: 14px !important;
 }

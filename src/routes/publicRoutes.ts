@@ -1,4 +1,4 @@
-import HomePage from "../pages/HomePage/HomePage";
+import HomePage from "../pages/HomePage";
 import { RouteType } from "./types"
 import Accordion from "../components/Accordiontest";
 import ViewInsight from "../pages/ViewInsight"

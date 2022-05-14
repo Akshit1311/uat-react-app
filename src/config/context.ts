@@ -61,6 +61,12 @@ export const PRIMARY_THEME = {
   iconButtonBackground:"white",
   color2:"black",
   headingColor: "rgba(0,0,0, 0.7)",
+
+  tooltip:{
+    background: "white",
+    text: "black",
+    border: "#0177FA"
+  }
 };
 
 export const DARK_THEME = {
@@ -117,6 +123,11 @@ export const DARK_THEME = {
   color2: 'white',
   bgCard: 'rgba(31, 30, 44, 1)',
   headingColor: "white",
+  tooltip:{
+    background: "black",
+    text: "white",
+    border: "#0177FA"
+  }
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

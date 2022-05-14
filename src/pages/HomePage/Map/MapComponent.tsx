@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { MapType } from "./states";
-import Tooltip from "rc-tooltip";
 import * as MapVariables from "./variables";
 import { Districts2 } from "./districtsBoarders";
 import styled from "styled-components";
@@ -13,6 +12,7 @@ import { StateCircles } from "./StateCircle";
 import { StateBorders } from "./StartupIndiaMap";
 import { useWebQuery } from "../../../hooks/useWebQuery";
 import { useHistory } from "react-router-dom";
+import { Tooltip as MuiToolTip } from "@mui/material"
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -294,16 +294,29 @@ function IndiaMap({
           aria-label="Map of India"
         >
           <g style={{ transform: "scale(1)" }}>
-            <Tooltip
-              placement="top"
-              animation="zoom"
-              arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-              overlay={
-                <p style={{ paddingTop: "1px" }} className="px-2">
-                  {"Lakshadweep"}
-                </p>
+
+            <MuiToolTip placement="top" title={'Lakshadweep'} followCursor arrow componentsProps={{
+              tooltip: {
+                sx: {
+                  fontSize: "15px",
+                  background: theme.tooltip.background,
+                  border: `2px solid ${theme.tooltip.border}`,
+                  borderRadius: "8px",
+                  color: theme.tooltip.text,
+                  cursor: "grab",
+                },
+              },
+              arrow: {
+                sx: {
+                  color: theme.tooltip.background,
+                  "&::before": {
+                    border: `2px solid ${theme.tooltip.border}`,
+                    backgroundColor: "#fff",
+                    boxSizing: "border-box"
+                  },
+                }
               }
-            >
+            }}>
               <circle
                 onClick={() =>
                   handleStateClick({
@@ -322,24 +335,35 @@ function IndiaMap({
                 strokeWidth="1.4"
                 r={65}
               ></circle>
-            </Tooltip>
+            </MuiToolTip>
           </g>
 
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <Tooltip
-                  key={index}
-                  placement="top"
-                  animation="zoom"
-                  arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                  overlay={
-                    <p style={{ paddingTop: "1px" }} className="px-2">
-                      {state.name || index}
-                    </p>
+                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={{
+                  tooltip: {
+                    sx: {
+                      fontSize: "15px",
+                      background: theme.tooltip.background,
+                      border: `2px solid ${theme.tooltip.border}`,
+                      borderRadius: "8px",
+                      color: theme.tooltip.text,
+                      cursor: "grab",
+                    },
+                  },
+                  arrow: {
+                    sx: {
+                      color: theme.tooltip.background,
+                      "&::before": {
+                        border: `2px solid ${theme.tooltip.border}`,
+                        backgroundColor: "#fff",
+                        boxSizing: "border-box"
+                      },
+                    }
                   }
-                >
+                }}>
                   <path
                     opacity={state.opacity}
                     strokeLinejoin={state.strokeLinejoin}
@@ -352,10 +376,10 @@ function IndiaMap({
                       !isCircleActive
                         ? tableState && tableState.data
                           ? getGradientColor(
-                              state.id,
-                              appliedFilters.roles,
-                              maxCountValue
-                            ) + "%"
+                            state.id,
+                            appliedFilters.roles,
+                            maxCountValue
+                          ) + "%"
                           : "1"
                         : "0"
                     }
@@ -363,35 +387,63 @@ function IndiaMap({
                     stroke={fillStrokeColor(state.id)}
                     strokeWidth={fillStroke(state.id)}
                   />
-                </Tooltip>
+                </MuiToolTip>
               );
             })}
 
           {mapMode.id === MapVariables.CITY.id &&
-            indiaMap.map((state: any, index: number) => (
-              <Tooltip
-                key={index}
-                placement="top"
-                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                overlay={
-                  <p style={{ paddingTop: "1px" }} className="px-2">
-                    {state.text}
-                  </p>
-                }
-              >
-                <path
-                  onMouseEnter={(e) => handleMouseEnter(state, e)}
-                  onMouseLeave={handleStateMouseLeave}
-                  onClick={(e) => handleStateClick(state)}
-                  key={index}
-                  d={state.d}
-                  id={state.id}
-                  fill={fillStates(state.id)}
-                  stroke={fillStrokeColor(state.id)}
-                  strokeWidth={fillStroke(state.id)}
-                />
-              </Tooltip>
-            ))}
+            StateBorders.map((state: any, index: number) => {
+              state.text = state.name;
+              return (
+                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={{
+                  tooltip: {
+                    sx: {
+                      fontSize: "15px",
+                      background: theme.tooltip.background,
+                      border: `2px solid ${theme.tooltip.border}`,
+                      borderRadius: "8px",
+                      color: theme.tooltip.text,
+                      cursor: "grab",
+                    },
+                  },
+                  arrow: {
+                    sx: {
+                      color: theme.tooltip.background,
+                      "&::before": {
+                        border: `2px solid ${theme.tooltip.border}`,
+                        backgroundColor: "#fff",
+                        boxSizing: "border-box"
+                      },
+                    }
+                  }
+                }}>
+                  <path
+                    opacity={state.opacity}
+                    strokeLinejoin={state.strokeLinejoin}
+                    transform={state.transform}
+                    d={state.d}
+                    onMouseEnter={(e) => handleMouseEnter(state, e)}
+                    onMouseLeave={handleStateMouseLeave}
+                    // onClick={(e) => handleStateClick(state)}
+                    fillOpacity={
+                      !isCircleActive
+                        ? tableState && tableState.data
+                          ? getGradientColor(
+                            state.id,
+                            appliedFilters.roles,
+                            maxCountValue
+                          ) + "%"
+                          : "1"
+                        : "0"
+                    }
+                    fill={ThemeColorIdentifier(colorTheme)}
+                    stroke={fillStrokeColor(state.id)}
+                    strokeWidth={fillStroke(state.id)}
+                  />
+                </MuiToolTip>
+              );
+            })}
+
 
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any, index: number) => (
@@ -436,10 +488,10 @@ function IndiaMap({
                   r={bubbleRadiusWraper(
                     tableState && tableState.data
                       ? getGradientColor(
-                          bubble.id,
-                          appliedFilters.roles,
-                          maxCountValue
-                        )
+                        bubble.id,
+                        appliedFilters.roles,
+                        maxCountValue
+                      )
                       : 1
                   )}
                 >
@@ -466,8 +518,8 @@ function IndiaMap({
                   {Number.parseInt(((maxCountValue / 100) * 50).toString())}
                 </text>
                 <text
-                  x={ width > 768 ? "36.4%" : "50%"}
-                  y={ width < 768 ? "13%" : '10.5%'}
+                  x={width > 768 ? "36.4%" : "50%"}
+                  y={width < 768 ? "13%" : '10.5%'}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"
@@ -483,7 +535,7 @@ function IndiaMap({
                 </text>
                 <text
                   x={width > 768 ? "36.4%" : "50%"}
-                  y={ width < 768 ? "17.5%" : '14.5%'}
+                  y={width < 768 ? "17.5%" : '14.5%'}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"

@@ -92,7 +92,7 @@ const DropDownListComponent = (props: any) => {
             type="text"
             value={searchQuery}
             onChange={onSearch}
-            className={`ms-0 form-control me-3 border-0 shadow-none f-400`}
+            className={`ms-0 form-control me-3 border-0 shadow-none f-400 font-Mont`}
             placeholder="Search"
           />
         </div>

@@ -9,7 +9,7 @@ import { css } from "@emotion/react";
 import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { H5 } from "../../styles-components/Heading";
-import { CountBlockModel } from "./HomePage";
+import { CountBlockModel } from ".";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useHistory } from "react-router-dom";
 
