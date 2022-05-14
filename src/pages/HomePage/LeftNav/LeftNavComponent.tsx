@@ -1,18 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import DropDownListComponent from "./DropDownListComponent";
 import "../../../scss/HomePageStyles/leftNavComponent.scss";
-import { BiSearchAlt2 } from "react-icons/bi";
-import { FiChevronDown } from "react-icons/fi";
-import { Button } from "../../../styles-components/Button";
 import { RoundedBadge } from "../../../styles-components/Badge";
 import HomePageApi from "../../../config/homepageApis.json";
 import { useQuery } from "../../../hooks/useQuery";
-import { MapVariablesArray as IndiaStates } from "../Map/variables";
 import * as MapVariables from "../Map/variables";
 import { Card } from "../../../styles-components/Cards";
 import styled from "styled-components";
 import { ThemeContext } from "../../../config/context";
-import { useMutate } from "../../../hooks/useMutate";
 import * as React from "react";
 import { styled as MaterialStyled } from "@mui/material/styles";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -21,7 +16,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import SearchBar from "../AllSearch"
 import ViewInsight from "../ViewInsight";
 
