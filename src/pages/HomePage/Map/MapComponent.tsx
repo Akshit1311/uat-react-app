@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { MapType } from "./states";
 import * as MapVariables from "./variables";
-import { Districts2 } from "./districtsBoarders";
+import { DistrictBoarder, Districts2 } from "./districtsBoarders";
 import styled from "styled-components";
 import { ThemeContext } from ".././../../config/context";
 import { useQuery } from "../../../hooks/useQuery";
@@ -19,6 +19,23 @@ interface IndiaMapTypes {
   viewAreaMap?: string;
   scaleBarVisible: boolean;
   viewAreaCircle?: string;
+}
+
+function DistrictPath({ district, componentProps, theme }: any) {
+  const [isToolTipVisible, setToolTipVisible]= useState<boolean>(false)
+  return (
+    // <MuiToolTip placement="top" title={district.title} open={isToolTipVisible} arrow componentsProps={componentProps}>
+      <path
+        onMouseEnter={() => setToolTipVisible(true)}
+        onMouseLeave={() => setToolTipVisible(false)}
+        d={district.d}
+        id={district.title}
+        fill={"none"}
+        stroke={theme.map.mapBorder}
+        strokeWidth={"0.5"}
+      />
+    // </MuiToolTip>
+  )
 }
 
 const MapWrapper = styled.div`
@@ -226,13 +243,26 @@ function IndiaMap({
   };
 
   const populateDistrictsBoarders = () => {
+    // const newArray: any[] = [];
+
+    // const findDistrict = (title: string) => newArray.findIndex((i) =>
+    //   i.title == title
+    // )
+    // DistrictBoarder.forEach((district) => {
+    //   if (district.title) {
+    //     const index = findDistrict(district.title)
+    //     console.log("title", index)
+    //     if (index === -1) newArray.push(district)
+    //   }
+    // })
+    // console.log("Distrct Length ", DistrictBoarder.length, newArray.length)
     setDistrictsBoarder(Districts2);
   };
 
   const responsiveImageHeight = (mapArea: string) => {
     const split: string[] = mapArea.split(" ");
     if (height > 768) {
-      const a: number = 768 - height;
+      const a: number = 850 - height;
       split[2] = (Number(split[2]) + a).toString();
       split[3] = (Number(split[3]) + a).toString();
       split.toString().replaceAll(",", " ");
@@ -288,6 +318,7 @@ function IndiaMap({
         borderRadius: "5px",
         color: theme.tooltip.text,
         cursor: "grab",
+        zIndex: 10000
       },
     },
     arrow: {
@@ -328,7 +359,7 @@ function IndiaMap({
                   })
                 }
                 transform={"translate(150,800)"}
-                fill-opacity="0.00"
+                fillOpacity="0.00"
                 pointerEvents="all"
                 style={{ cursor: "pointer" }}
                 fill={ThemeColorIdentifier(colorTheme)}
@@ -407,14 +438,7 @@ function IndiaMap({
 
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any, index: number) => (
-              <path
-                key={index}
-                d={district.d}
-                id={district.title}
-                fill={"none"}
-                stroke={theme.map.mapBorder}
-                strokeWidth={"0.5"}
-              />
+              <DistrictPath theme={theme} district={district} componentProps={componentProps} />
             ))}
         </svg>
       ) : (
@@ -473,6 +497,7 @@ function IndiaMap({
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
+                    fill: theme.color
                   }}
                 >
                   {Number.parseInt(((maxCountValue / 100) * 50).toString())}
@@ -489,6 +514,7 @@ function IndiaMap({
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
+                    fill: theme.color
                   }}
                 >
                   {Number.parseInt(((maxCountValue / 100) * 75).toString())}
@@ -505,6 +531,7 @@ function IndiaMap({
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
+                    fill: theme.color
                   }}
                 >
                   {maxCountValue}
