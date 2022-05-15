@@ -279,6 +279,29 @@ function IndiaMap({
     return radius;
   };
 
+  const componentProps = {
+    tooltip: {
+      sx: {
+        fontSize: "15px",
+        background: theme.tooltip.background,
+        border: `2px solid ${theme.tooltip.border}`,
+        borderRadius: "5px",
+        color: theme.tooltip.text,
+        cursor: "grab",
+      },
+    },
+    arrow: {
+      sx: {
+        color: theme.tooltip.background,
+        "&::before": {
+          border: `2px solid ${theme.tooltip.border}`,
+          backgroundColor: "#fff",
+          boxSizing: "border-box"
+        },
+      }
+    }
+  }
+
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
@@ -295,28 +318,7 @@ function IndiaMap({
         >
           <g style={{ transform: "scale(1)" }}>
 
-            <MuiToolTip placement="top" title={'Lakshadweep'} followCursor arrow componentsProps={{
-              tooltip: {
-                sx: {
-                  fontSize: "15px",
-                  background: theme.tooltip.background,
-                  border: `2px solid ${theme.tooltip.border}`,
-                  borderRadius: "8px",
-                  color: theme.tooltip.text,
-                  cursor: "grab",
-                },
-              },
-              arrow: {
-                sx: {
-                  color: theme.tooltip.background,
-                  "&::before": {
-                    border: `2px solid ${theme.tooltip.border}`,
-                    backgroundColor: "#fff",
-                    boxSizing: "border-box"
-                  },
-                }
-              }
-            }}>
+            <MuiToolTip placement="top" title={'Lakshadweep'} followCursor arrow componentsProps={componentProps}>
               <circle
                 onClick={() =>
                   handleStateClick({
@@ -342,28 +344,7 @@ function IndiaMap({
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={{
-                  tooltip: {
-                    sx: {
-                      fontSize: "15px",
-                      background: theme.tooltip.background,
-                      border: `2px solid ${theme.tooltip.border}`,
-                      borderRadius: "8px",
-                      color: theme.tooltip.text,
-                      cursor: "grab",
-                    },
-                  },
-                  arrow: {
-                    sx: {
-                      color: theme.tooltip.background,
-                      "&::before": {
-                        border: `2px solid ${theme.tooltip.border}`,
-                        backgroundColor: "#fff",
-                        boxSizing: "border-box"
-                      },
-                    }
-                  }
-                }}>
+                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={componentProps}>
                   <path
                     opacity={state.opacity}
                     strokeLinejoin={state.strokeLinejoin}
@@ -395,28 +376,7 @@ function IndiaMap({
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={{
-                  tooltip: {
-                    sx: {
-                      fontSize: "15px",
-                      background: theme.tooltip.background,
-                      border: `2px solid ${theme.tooltip.border}`,
-                      borderRadius: "8px",
-                      color: theme.tooltip.text,
-                      cursor: "grab",
-                    },
-                  },
-                  arrow: {
-                    sx: {
-                      color: theme.tooltip.background,
-                      "&::before": {
-                        border: `2px solid ${theme.tooltip.border}`,
-                        backgroundColor: "#fff",
-                        boxSizing: "border-box"
-                      },
-                    }
-                  }
-                }}>
+                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={componentProps}>
                   <path
                     opacity={state.opacity}
                     strokeLinejoin={state.strokeLinejoin}

@@ -3,8 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { IoMapSharp } from "react-icons/io5";
 import { RiDropFill } from "react-icons/ri";
 import { MdOutlineLocationCity } from "react-icons/md";
-import { GiPeru } from "react-icons/gi";
-import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap_white.css";
 import * as MapVariables from "./Map/variables";
 import moment from "moment";
