@@ -66,6 +66,10 @@ export const PRIMARY_THEME = {
     background: "white",
     text: "black",
     border: "#0177FA"
+  },
+  tooltipViewInsight:{
+    background: "#C4C4C4",
+    color: "black"
   }
 };
 
@@ -127,6 +131,10 @@ export const DARK_THEME = {
     background: "black",
     text: "white",
     border: "#0177FA"
+  },
+  tooltipViewInsight:{
+    background: "#93949D",
+    color: "white"
   }
 };
 

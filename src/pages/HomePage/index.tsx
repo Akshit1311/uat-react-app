@@ -240,8 +240,9 @@ const HomePage = (props: HomePageTypes) => {
 
   const [startupListActive, setStartupListActive] = useState(true);
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
-  const viewInsightUrl = `/view-insight?id=${selectedState[0] ? selectedState[0].id : "India"
-    }&state=${selectedState[0] ? selectedState[0].value : "India"}`;
+
+  const viewInsightUrl = `/view-insight?id=${selectedState[0] ? selectedState[0].id : ""
+    }&state=${selectedState[0] ? selectedState[0].value : ""}`;
   const query = useWebQuery();
 
   useEffect(() => {
