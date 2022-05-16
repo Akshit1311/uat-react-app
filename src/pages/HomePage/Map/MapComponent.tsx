@@ -12,7 +12,8 @@ import { StateCircles } from "./StateCircle";
 import { StateBorders } from "./StartupIndiaMap";
 import { useWebQuery } from "../../../hooks/useWebQuery";
 import { useHistory } from "react-router-dom";
-import { Tooltip as MuiToolTip } from "@mui/material"
+import { ThemeProvider, Tooltip as MuiToolTip } from "@mui/material"
+import { darkTheme } from "../../../config/tooltipTheme";
 
 interface IndiaMapTypes {
   mapViewResource: any;
@@ -327,7 +328,7 @@ function IndiaMap({
         color: theme.tooltip.background,
         "&::before": {
           border: `2px solid ${theme.tooltip.border}`,
-          backgroundColor: "#fff",
+          backgroundColor: theme.tooltip.background,
           boxSizing: "border-box"
         },
       }
@@ -335,6 +336,8 @@ function IndiaMap({
   }
 
   return (
+
+
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative", maxWidth: "99vw", overflow: "hidden" }}
@@ -618,6 +621,7 @@ function IndiaMap({
         </>
       )}
     </MapWrapper>
+
   );
 }
 

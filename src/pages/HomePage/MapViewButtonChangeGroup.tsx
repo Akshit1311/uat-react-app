@@ -55,7 +55,7 @@ export default function MapViewChangeButtonGroup(props: any) {
     color: theme.tooltip.background,
     "&::before": {
       border: `2px solid ${theme.tooltip.border}`,
-      backgroundColor: "#fff",
+      backgroundColor: theme.tooltip.background,
       boxSizing: "border-box"
     },
   }
