@@ -27,6 +27,7 @@ import MapViewChangeButtonGroup from "./MapViewButtonChangeGroup";
 import ViewInsight from "./ViewInsight";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useWebQuery } from "../../hooks/useWebQuery";
+import axios from "axios";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -108,6 +109,8 @@ const HomePage = (props: HomePageTypes) => {
     id: "",
     name: "",
   });
+  const [countState, setCountState] = useState<any>(new CountBlockModel())
+
   const [fetchTableData, tableState, tableLoading] = useQuery(
     "/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
   );
@@ -130,9 +133,9 @@ const HomePage = (props: HomePageTypes) => {
 
   const theme = useContext(ThemeContext);
 
-  const [getCounts, countState, countLoading] = useQuery(
-    HomePageApi.countBlockEndPoint
-  );
+  // const [getCounts, countState, countLoading] = useQuery(
+  //   HomePageApi.countBlockEndPoint
+  // );
   const [fetchDateRange, dateRangeState, dateRangeLoading] = useQuery(
     "/static/searchDateRanges"
   );
@@ -175,6 +178,12 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList(body);
   };
 
+  
+
+  // useEffect(() => {
+  //   fetchCounts();
+  // }, [appliedFilters])
+
   const changeTheme = (themeInfo: string) => {
     setPrimaryColorTheme(themeInfo);
     const body = window.document.getElementById("viewport");
@@ -186,7 +195,6 @@ const HomePage = (props: HomePageTypes) => {
   }, []);
   const countResource = {
     getCounts: fetchDefaultFilterValues,
-    countState: countWrrapper(filterState.counts),
     countLoading: tableLoading,
     setSelectedArea,
     tableState,
@@ -194,6 +202,7 @@ const HomePage = (props: HomePageTypes) => {
     setSelectedStateByMap,
     setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
+    appliedFilters
   };
 
   const mapViewResources = {
@@ -231,9 +240,8 @@ const HomePage = (props: HomePageTypes) => {
 
   const [startupListActive, setStartupListActive] = useState(true);
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
-  const viewInsightUrl = `/view-insight?id=${
-    selectedState[0] ? selectedState[0].id : "India"
-  }&state=${selectedState[0] ? selectedState[0].value : "India"}`;
+  const viewInsightUrl = `/view-insight?id=${selectedState[0] ? selectedState[0].id : "India"
+    }&state=${selectedState[0] ? selectedState[0].value : "India"}`;
   const query = useWebQuery();
 
   useEffect(() => {
@@ -308,11 +316,11 @@ const HomePage = (props: HomePageTypes) => {
                     style={
                       windowWidth < 768
                         ? {
-                            position: "fixed",
-                            top: "70px",
-                            background: theme.bgColorStart,
-                            zIndex: 1000,
-                          }
+                          position: "fixed",
+                          top: "70px",
+                          background: theme.bgColorStart,
+                          zIndex: 1000,
+                        }
                         : {}
                     }
                   >
@@ -383,35 +391,29 @@ const HomePage = (props: HomePageTypes) => {
                   <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
                     <Button
                       colorTheme={primaryColorTheme}
-                      backgroundColor={`${
-                        !startupListActive &&
+                      backgroundColor={`${!startupListActive &&
                         theme.togglerButton.backgroundInactive
-                      }`}
-                      color={`${
-                        !startupListActive && theme.togglerButton.color
-                      }`}
+                        }`}
+                      color={`${!startupListActive && theme.togglerButton.color
+                        }`}
                       border={`${!startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
-                        startupListActive && "text-white background-color-theme"
-                      }`}
+                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${startupListActive && "text-white background-color-theme"
+                        }`}
                       onClick={toggleStartUp}
                     >
                       Startups List
                     </Button>
                     <Button
                       colorTheme={primaryColorTheme}
-                      backgroundColor={`${
-                        startupListActive &&
+                      backgroundColor={`${startupListActive &&
                         theme.togglerButton.backgroundInactive
-                      }`}
-                      color={`${
-                        startupListActive && theme.togglerButton.color
-                      }`}
+                        }`}
+                      color={`${startupListActive && theme.togglerButton.color
+                        }`}
                       border={`${startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${
-                        !startupListActive &&
+                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${!startupListActive &&
                         "text-white background-color-theme"
-                      }`}
+                        }`}
                       onClick={toggleStartUp}
                     >
                       Data Table

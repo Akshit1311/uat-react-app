@@ -262,9 +262,10 @@ function IndiaMap({
   const responsiveImageHeight = (mapArea: string) => {
     const split: string[] = mapArea.split(" ");
     if (height > 768) {
-      const a: number = 850 - height;
+      const a: number = 930 - height;
+      split[0] = Number('-100').toString();
       split[2] = (Number(split[2]) + a).toString();
-      split[3] = (Number(split[3]) + a).toString();
+      split[3] = (Number(split[3]) + a - 50).toString();
       split.toString().replaceAll(",", " ");
       return split.toString().replaceAll(",", " ");
     }

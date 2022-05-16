@@ -12,6 +12,7 @@ import { H5 } from "../../styles-components/Heading";
 import { CountBlockModel } from ".";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const override = css`
   display: block;
@@ -58,11 +59,11 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
   @media (max-width: 768px) {
     border: none;
     background-color: ${(props: any) =>
-      props.active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0)"} !important;
+    props.active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0)"} !important;
     color: ${(props: any) =>
-      props.active
-        ? props.theme.color
-        : ""} !important;
+    props.active
+      ? props.theme.color
+      : ""} !important;
     height: 82px;
     font-weight: ${(props: any) => (props.active ? "600" : "500")};
   }
@@ -137,55 +138,57 @@ const CountCard = ({
       }
       return () => clearInterval(interval);
     }
+
+    console.log(state[accessor ? accessor : name.slice(0, -1)])
   }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
 
   return (
-      <CountCardWrapper
-        colorTheme={colorTheme}
-        onClick={() => handleCardClick(name, acc)}
-        active={active}
-        borderColor={borderColor}
-        className={`col-md count-single-card p-0 w-100`}
-      >
-        {loading ? (
-          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-            <MoonLoader
-              color={active ? "white" : ThemeColorIdentifier(colorTheme)}
-              loading={true}
-              size={"25px"}
-              css={override}
-            />
-          </div>
-        ) : (
-          <></>
-        )}
-        {!loading && (
-          <div
-            className=" d-flex flex-column h-100 justify-content-between"
-            style={{ padding: "0.83rem", paddingRight: 0 }}
+    <CountCardWrapper
+      colorTheme={colorTheme}
+      onClick={() => handleCardClick(name, acc)}
+      active={active}
+      borderColor={borderColor}
+      className={`col-md count-single-card p-0 w-100`}
+    >
+      {loading ? (
+        <div className="w-100 h-100 d-flex justify-content-center align-items-center">
+          <MoonLoader
+            color={active ? "white" : ThemeColorIdentifier(colorTheme)}
+            loading={true}
+            size={"25px"}
+            css={override}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+      {!loading && (
+        <div
+          className=" d-flex flex-column h-100 justify-content-between"
+          style={{ padding: "0.83rem", paddingRight: 0 }}
+        >
+          <h4
+            className="m-0 p-0 count-number"
+            style={{
+              color: !active ? theme.color : "",
+              visibility: windowWidth > 768 || active ? "visible" : "hidden",
+            }}
           >
-            <h4
-              className="m-0 p-0 count-number"
+            {currentCount}
+          </h4>
+          <div>
+            <h6 style={{ color: !active ? theme.color : windowWidth < 768 ? ThemeColorIdentifier(colorTheme) : '' }} className="mx-0 mb-0 p-0">{name}</h6>
+            <div
+              className={`count-underline d-block d-sm-none`}
               style={{
-                color: !active ? theme.color: "",
-                visibility: windowWidth > 768 || active ? "visible" : "hidden",
-              }} 
-            >
-              {currentCount}
-            </h4>
-            <div>
-              <h6 style={{ color: !active? theme.color : windowWidth < 768 ? ThemeColorIdentifier(colorTheme) : '' }} className="mx-0 mb-0 p-0">{name}</h6>
-              <div
-                className={`count-underline d-block d-sm-none`}
-                style={{
-                  visibility: active ? "visible" : "hidden",
-                  background: ThemeColorIdentifier(colorTheme),
-                }}
-              ></div>
-            </div>
+                visibility: active ? "visible" : "hidden",
+                background: ThemeColorIdentifier(colorTheme),
+              }}
+            ></div>
           </div>
-        )}
-      </CountCardWrapper>
+        </div>
+      )}
+    </CountCardWrapper>
   );
 };
 
@@ -201,23 +204,72 @@ const CountsBlockComponent = ({
   const {
     getCounts,
     colorTheme,
-    countState,
+    // countState,
     countLoading,
     setPrimaryColorTheme,
     setSelectedArea,
     tableState,
     selectedStateByMap,
     setSelectedStateByMap,
+    appliedFilters
   } = countResource;
-
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
+  console.log("STate Counts ----------------", stateCounts)
+
+  const fetchCounts = async () => {
+    console.log("Fetch Count Called", {
+      ...appliedFilters, "roles": [
+        "Startup",
+        "Mentor",
+        "Investor",
+        "GovernmentBody",
+        "Incubator",
+        "Accelerator"
+      ]
+    })
+    try {
+      const { data } = await axios.post('startup/v2/filter', {
+        ...appliedFilters, "roles": [
+          "Startup",
+          "Mentor",
+          "Investor",
+          "GovernmentBody",
+          "Incubator",
+          "Accelerator"
+        ]
+      });
+      console.log("STate Countes ------------", data.counts)
+      interface KeyValuePair {
+        id: string;
+        value: string;
+      }
+
+
+      const getCountsById = (id: string) => data.counts.find((i: KeyValuePair) => i.id === id)
+
+      const count = new CountBlockModel();
+      count.Incubator = getCountsById('Incubator') ? getCountsById('Incubator').value : 0;
+      count.Mentor = getCountsById('Mentor') ? getCountsById('Mentor').value : 0;
+      count.Accelerator = getCountsById('Accelerator') ? getCountsById('Accelerator').value : 0;
+      count.Startup = getCountsById('Startup') ? getCountsById('Startup').value : 0;
+      count.GovernmentBody = getCountsById('GovernmentBody') ? getCountsById('GovernmentBody').value : 0;
+      count.Investor = getCountsById('Investor') ? getCountsById('Investor').value : 0;
+      // console.log(count)
+      setStateCounts(count)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  console.log(stateCounts)
+
 
   const filterStateCounts = () => {
     const state = tableState.data
       ? tableState.data.find(
-          (item: any) =>
-            item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
-        )
+        (item: any) =>
+          item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
+      )
       : undefined;
     if (state) {
       const count = new CountBlockModel();
@@ -231,13 +283,13 @@ const CountsBlockComponent = ({
     }
   };
 
-  useEffect(() => {
-    filterStateCounts();
-  }, [selectedStateByMap, tableState]);
+  // useEffect(() => {
+  //   filterStateCounts();
+  // }, [selectedStateByMap, tableState]);
 
   useEffect(() => {
-    getCounts();
-  }, []);
+    fetchCounts();
+  }, [appliedFilters]);
 
   const getThemeName = (name: string) => {
     const value = name.toLowerCase();
@@ -258,10 +310,7 @@ const CountsBlockComponent = ({
   const resources = {
     activeCard,
     handleCardClick,
-    state:
-      selectedStateByMap.name && selectedStateByMap.name.length
-        ? stateCounts
-        : countState,
+    state: stateCounts,
     loading: countLoading,
     colorTheme,
   };
