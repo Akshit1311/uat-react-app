@@ -4,6 +4,7 @@ import { InsightRowType } from "./Accordion";
 import _ from "lodash";
 import StarIcon from "@mui/icons-material/Star";
 import MoonLoader from "react-spinners/MoonLoader";
+import { AiFillInfoCircle } from "react-icons/ai"
 
 interface InsightTableProps {
   stateName: string | null;
@@ -28,9 +29,19 @@ export default function InsightTable({
             <StarBorderIcon className="hidden" />
             <span>{title}</span>
           </div>
-          <div className="border-type-2">{stateName}</div>
-          <div className="border-type-3">Percentage</div>
-          <div className="border-type-2">India</div>
+          {
+            stateName !== "India" ? (
+              <>
+                <div className="border-type-2">{stateName}</div>
+                <div className="border-type-3">Percentage</div>
+                <div className="border-type-2">India</div>
+              </>
+            ) : (
+              <>
+                <div className="border-type-2">Total</div>
+              </>
+            )
+          }
           <div className="border-type-3">Percentage</div>
         </div>
         {data.map((insight: InsightRowType) => (
@@ -46,9 +57,19 @@ export default function InsightTable({
               )}
               <span>{insight.text}</span>
             </div>
-            <div className="border-type-2 font-500 text-right">{insight.count}</div>
-            <div className="border-type-3 font-500 text-right">{insight.percentage} %</div>
-            <div className="border-type-2 font-500 text-right">{insight.indiaTotal}</div>
+            {
+              stateName !== 'India' ? (
+                <>
+                  <div className="border-type-2 font-500 text-right">{insight.count}</div>
+                  <div className="border-type-3 font-500 text-right">{insight.percentage} % <AiFillInfoCircle /></div>
+                  <div className="border-type-2 font-500 text-right">{insight.indiaTotal}</div>
+                </>
+              ) : (
+                <>
+
+                </>
+              )
+            }
             <div className="border-type-3 font-500 text-right">
               {insight.indiaPercentage} %
             </div>

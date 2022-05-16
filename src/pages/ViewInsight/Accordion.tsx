@@ -140,7 +140,6 @@ export default function Accordion({
   React.useEffect(() => {
     divideData();
   }, [data, selectedData]);
-
   return (
     <>
       <AccordionLocal
