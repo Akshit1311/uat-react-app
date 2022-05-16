@@ -45,17 +45,17 @@ export default function ControlledAccordions() {
 
   const backUrl:string = `/?id=${query.get('id')}&state=${query.get('state')}`
   return (
-    <div style={{ marginTop: NAVBAR_HEIGHT }}>
-      <PageWrapperContainer>
-        <PageWrapper className="p-4">
+    <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
+      <PageWrapperContainer className="h-100">
+        <PageWrapper className="p-4 h-100">
           <div className="mb-4">
             <H5 className="text-uppercase font-Mont font-18px mb-0">
               View Insights of {query.get("state")}
             </H5>
             <p className="font-Mont font-600 font-12px mt-1">
-              <span style={{ color: 'rgba(0,0,0,0.5)'}} onClick={()=> history.push('/')}>{"IndiaMap / "}</span>
-              <span style={{ color: 'rgba(0,0,0,0.5)'}} onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
-              <span>View Insight</span>
+              <span style={{ color: theme.viewInsightColor}} onClick={()=> history.push('/')}>{"IndiaMap / "}</span>
+              <span style={{ color: theme.viewInsightColor }} onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
+              <span style={{ color: theme.color }}>View Insight</span>
             </p>
           </div>
           <div className="row">

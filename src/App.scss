@@ -449,7 +449,6 @@ $primary: #0177fa;
     position: sticky;
     top: 0;
     z-index: 10;
-    background: white;
   }
   .scroll-area-wrapper {
     width: 100%;
@@ -475,7 +474,6 @@ $primary: #0177fa;
       }
     }
     .icon-hover-unselected {
-      color: black;
       &:hover {
         color: $primary;
         transition: 0.3s ease-in;

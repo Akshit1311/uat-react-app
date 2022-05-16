@@ -70,7 +70,8 @@ export const PRIMARY_THEME = {
   tooltipViewInsight:{
     background: "#C4C4C4",
     color: "black"
-  }
+  },
+  viewInsightColor: "rgba(0,0,0,0.5)"
 };
 
 export const DARK_THEME = {
@@ -135,7 +136,8 @@ export const DARK_THEME = {
   tooltipViewInsight:{
     background: "#93949D",
     color: "white"
-  }
+  },
+  viewInsightColor: "rgba(255,255,255,0.5)"
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

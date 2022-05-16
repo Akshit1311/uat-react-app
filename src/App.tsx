@@ -54,7 +54,7 @@ function App() {
     require("./scss/theme/lightTheme.scss");
   }, []);
   return (
-    <div onScroll={(changeEvent) => console.log(changeEvent)} data-theme={themeName}>
+    <div onScroll={(changeEvent) => console.log(changeEvent)} data-theme={themeName} style={{ height: "100vh" }}>
       <MaterialUiThemeProvider theme={myTheme}>
         <ThemeProvider theme={theme}>
           <ThemeContext.Provider value={theme}>
@@ -82,7 +82,7 @@ function Config() {
 
   return (
     <>
-    <div data-theme={theme}>
+    <div data-theme={theme} style={{ height: "100vh"}}>
       <button onClick={switchTheme}>Switch</button>
       <div className="square">
         <h1>Hello</h1>
