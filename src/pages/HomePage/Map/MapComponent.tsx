@@ -13,7 +13,6 @@ import { StateBorders } from "./StartupIndiaMap";
 import { useWebQuery } from "../../../hooks/useWebQuery";
 import { useHistory } from "react-router-dom";
 import { ThemeProvider, Tooltip as MuiToolTip } from "@mui/material"
-import { darkTheme } from "../../../config/tooltipTheme";
 
 interface IndiaMapTypes {
   mapViewResource: any;
