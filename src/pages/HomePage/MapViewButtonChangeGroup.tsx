@@ -9,6 +9,7 @@ import { IconButton } from "../../styles-components/Button";
 import * as MapVariables from "./Map/variables";
 import { Tooltip as MuiToolTip } from "@mui/material"
 import { ThemeContext } from "../../config/context";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 
 
 
@@ -45,7 +46,7 @@ export default function MapViewChangeButtonGroup(props: any) {
   const TOOLTIP_SX = {
     fontSize: "15px",
     background: theme.tooltip.background,
-    border: `2px solid ${theme.tooltip.border}`,
+    border: `2px solid ${ThemeColorIdentifier(colorTheme)}`,
     borderRadius: '5px',
     color: theme.tooltip.text,
     padding: "0.1rem",
@@ -54,7 +55,7 @@ export default function MapViewChangeButtonGroup(props: any) {
   const ARROW_SX = {
     color: theme.tooltip.background,
     "&::before": {
-      border: `2px solid ${theme.tooltip.border}`,
+      border: `2px solid ${ThemeColorIdentifier(colorTheme)}`,
       backgroundColor: theme.tooltip.background,
       boxSizing: "border-box"
     },

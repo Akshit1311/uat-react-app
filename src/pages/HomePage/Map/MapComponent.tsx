@@ -136,7 +136,6 @@ function IndiaMap({
 
   const [activeStates, setActiveStates] = useState<any[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
-  const [districtWiseCircle, setDistrictWiseCircle] = useState<any[]>([]);
   const [districtsBoarder, setDistrictsBoarder] = useState<any>([]);
 
   const [stateBubbles, setStateBubbles] = useState<any[]>(StateCircles);
@@ -315,7 +314,7 @@ function IndiaMap({
       sx: {
         fontSize: "15px",
         background: theme.tooltip.background,
-        border: `2px solid ${theme.tooltip.border}`,
+        border: `2px solid ${ThemeColorIdentifier( colorTheme )}`,
         borderRadius: "5px",
         color: theme.tooltip.text,
         cursor: "grab",
@@ -326,7 +325,7 @@ function IndiaMap({
       sx: {
         color: theme.tooltip.background,
         "&::before": {
-          border: `2px solid ${theme.tooltip.border}`,
+          border: `2px solid ${ThemeColorIdentifier( colorTheme )}`,
           backgroundColor: theme.tooltip.background,
           boxSizing: "border-box"
         },
