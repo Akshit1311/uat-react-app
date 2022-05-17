@@ -17,6 +17,7 @@ import { useQuery } from "../../hooks/useQuery";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import MapViewButtonChangeGroup from './MapViewButtonChangeGroup'
 import { useWindowSize } from "../../hooks/useWindowSize"
+import axios from "axios";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -60,11 +61,13 @@ function ViewChangerComponent({
     setSelectedArea,
     selectedArea,
     getCounts,
-    colorTheme,fetchDateRange, dateRangeState, dateRangeLoading
+    colorTheme,fetchDateRange, dateRangeState, dateRangeLoading, appliedFilters
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
 
+  const [newCount, setNewCount] = useState<number>(0);
+  const [selectedStartTypeIndex, setSelectedStartupTypeIndex] = useState<number>(0)
 
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
@@ -72,19 +75,29 @@ function ViewChangerComponent({
   const [fetchStartUpCount, countState, countLoading] = useQuery("");
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
+  const [selectedDateRange, setSelectedDateRange] = useState<string>("")
 
   const dateRangeChange = async (changeEvent: any) => {
     const value = changeEvent.target.value;
     if (value === "none") {
       return getCounts();
     }
+
+    console.log("Date Range", value);
     getCounts(value);
+    fetchCount(value)
+    setSelectedDateRange(value);
   };
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
     setSelectedStartupType(value);
     fetchStartUpCount("/startup/startupCount/" + value);
+    setSelectedStartupTypeIndex(value);
+    
+    if(!appliedFilters.states[0]){
+      fetchInitialCount(value);
+    } 
   };
 
   const getThemeDropDownImage = () => {
@@ -95,8 +108,40 @@ function ViewChangerComponent({
   useEffect(() => {
     fetchDateRange();
     fetchStartUpTypes();
-    fetchStartUpCount("/startup/startupCount/0");
+    fetchInitialCount(0);
   }, []);
+
+  const fetchInitialCount = async (startupType:number) => {
+    try{
+      const { data } = await axios.get("/startup/startupCount/" + startupType);
+      setNewCount(data);
+    } catch(error){
+
+    }
+  }
+
+  const fetchCount = async (dateRange:string) => {
+    try{
+      console.log("APplied STtae Filter", appliedFilters.states[0])
+      const mainUrl = `/startup/startupCount/state/id/${appliedFilters.states[0]}/${selectedStartTypeIndex}/${dateRange}`;
+      
+      console.log("Main Url", mainUrl);
+      const { data } = await axios.get(mainUrl);
+      console.log("Right COunt", data);
+      setNewCount(data);
+    } catch(error){
+
+    }
+  }
+
+  useEffect(()=>{
+    if(appliedFilters.states[0]){
+      const value = "2022-01-01/2022-06-01"
+      fetchCount(value)
+    }  else {
+      fetchInitialCount(selectedStartTypeIndex)
+    }
+  },[appliedFilters.states, selectedStartTypeIndex, ])
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
@@ -163,11 +208,11 @@ function ViewChangerComponent({
               className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
               border={true}
             >
-              <h3 className="p-0 m-0">{countState}</h3>
+              <h3 className="p-0 m-0">{newCount}</h3>
               <span className="selected-startups">
-                {startUpTypes[selectedStartUpType]
+                {startUpTypes[selectedStartUpType] && startUpTypes[selectedStartUpType].text && startUpTypes[selectedStartUpType].text.length > 0
                   ? startUpTypes[selectedStartUpType].text
-                  : ""}
+                  :  0 }
               </span>
             </Card>
             {selectedArea.id !== "india" && (
