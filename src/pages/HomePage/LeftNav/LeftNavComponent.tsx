@@ -178,7 +178,10 @@ const LeftNavComponent = (props: any) => {
     closeModal();
   };
 
-
+  const onSectorClear = () =>{
+    setSelectedSector([]);
+    setAppliedFilters((prev:any)=> ({ ...prev, sectors: [] }))
+  }
 
   const handleStagesClick = (stage: any) => {
     const stagesIndex = findSelectedIndex(selectedStages, stage);
@@ -235,6 +238,11 @@ const LeftNavComponent = (props: any) => {
     setExpanded(false);
     closeModal();
   };
+  
+  const onIndustryClear = () =>{
+    setSelectedIndustry([]);
+    setAppliedFilters((prev:any)=> ({ ...prev, industries: [] }))
+  }
 
   const handleBadgesClick = (badges: any) => {
     const badgesIndex = findSelectedIndex(selectedBadges, badges);
@@ -263,6 +271,11 @@ const LeftNavComponent = (props: any) => {
     setExpanded(false);
     closeModal();
   };
+
+  const onClearBadges = () =>{
+    setSelectedBadges([]);
+    setAppliedFilters((prev:any)=> ({ ...prev, badges: [] }))
+  }
 
   const trimBadges = (badges: any[]) => {
     const newBadgesList = new Array();
@@ -403,9 +416,7 @@ const LeftNavComponent = (props: any) => {
                       handleClick={handleSectorClick}
                       handleApplyClick={onApplySector}
                       dropDownId={"#collapse2"}
-                      handleClearClick={() => {
-                        setSelectedSector([]);
-                      }}
+                      handleClearClick={onSectorClear}
                     />
                   </AccordionDetails>
                 </Accordion>
@@ -444,9 +455,7 @@ const LeftNavComponent = (props: any) => {
                       handleClick={handleIndustryClick}
                       handleApplyClick={onApplyIndustry}
                       dropDownId={"#collapse3"}
-                      handleClearClick={() => {
-                        setSelectedIndustry([]);
-                      }}
+                      handleClearClick={onIndustryClear}
                     />
                   </AccordionDetails>
                 </Accordion>
@@ -557,9 +566,7 @@ const LeftNavComponent = (props: any) => {
                       handleApplyClick={onApplyBadges}
                       noSort={true}
                       dropDownId={"#collapse6"}
-                      handleClearClick={() => {
-                        setSelectedBadges([]);
-                      }}
+                      handleClearClick={onClearBadges}
                     />
                   </AccordionDetails>
                 </Accordion>

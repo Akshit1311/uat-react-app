@@ -28,6 +28,8 @@ import ViewInsight from "./ViewInsight";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useWebQuery } from "../../hooks/useWebQuery";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setColorTheme } from "../../store/config";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -183,9 +185,10 @@ const HomePage = (props: HomePageTypes) => {
   // useEffect(() => {
   //   fetchCounts();
   // }, [appliedFilters])
-
+  const dispatch = useDispatch();
   const changeTheme = (themeInfo: string) => {
     setPrimaryColorTheme(themeInfo);
+    dispatch(setColorTheme(themeInfo));
     const body = window.document.getElementById("viewport");
     body?.setAttribute("class", themeInfo);
   };

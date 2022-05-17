@@ -261,10 +261,10 @@ function IndiaMap({
   const responsiveImageHeight = (mapArea: string) => {
     const split: string[] = mapArea.split(" ");
     if (height > 768) {
-      const a: number = 930 - height;
-      split[0] = Number('-100').toString();
+      const a: number = 980 - height;
+      split[0] = Number('-120').toString();
       split[2] = (Number(split[2]) + a).toString();
-      split[3] = (Number(split[3]) + a - 50).toString();
+      split[3] = (Number(split[3]) + a - 90).toString();
       split.toString().replaceAll(",", " ");
       return split.toString().replaceAll(",", " ");
     }
@@ -365,7 +365,6 @@ function IndiaMap({
                 pointerEvents="all"
                 style={{ cursor: "pointer" }}
                 fill={ThemeColorIdentifier(colorTheme)}
-                stroke={"red"}
                 strokeOpacity={"0"}
                 strokeWidth="1.4"
                 r={65}

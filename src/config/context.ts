@@ -129,7 +129,7 @@ export const DARK_THEME = {
   bgCard: 'rgba(31, 30, 44, 1)',
   headingColor: "white",
   tooltip:{
-    background: "black",
+    background: "rgba(37,40,58,1)",
     text: "white",
     border: "#0177FA"
   },

@@ -81,6 +81,7 @@ const DropDownListComponent = (props: any) => {
     );
     setData(sort);
   }, [originalData.length, loading]);
+  
   return (
     <div className="drop-down-list-component">
       <SearchWrapper className={`state-search-bar me-3`} style={{ marginTop: '6px' }}>

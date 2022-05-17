@@ -55,18 +55,20 @@ function App() {
   }, []);
   return (
     <div onScroll={(changeEvent) => console.log(changeEvent)} data-theme={themeName} style={{ height: "100vh" }}>
-      <MaterialUiThemeProvider theme={myTheme}>
-        <ThemeProvider theme={theme}>
-          <ThemeContext.Provider value={theme}>
-            <BrowserRouter>
-              <AppNavigator />
-            </BrowserRouter>
-            <ThemeButton bottom={'100px'} onClick={themeHandler}>
-              <BiLoaderCircle />
-            </ThemeButton>
-          </ThemeContext.Provider>
-        </ThemeProvider>
-      </MaterialUiThemeProvider>
+      <ReduxProvider store={store}>
+        <MaterialUiThemeProvider theme={myTheme}>
+          <ThemeProvider theme={theme}>
+            <ThemeContext.Provider value={theme}>
+              <BrowserRouter>
+                <AppNavigator />
+              </BrowserRouter>
+              <ThemeButton bottom={'100px'} onClick={themeHandler}>
+                <BiLoaderCircle />
+              </ThemeButton>
+            </ThemeContext.Provider>
+          </ThemeProvider>
+        </MaterialUiThemeProvider>
+      </ReduxProvider>
     </div>
   );
 }
@@ -74,20 +76,20 @@ function App() {
 function Config() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
-  
-  const switchTheme = () =>{
+
+  const switchTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme)
   }
 
   return (
     <>
-    <div data-theme={theme} style={{ height: "100vh"}}>
-      <button onClick={switchTheme}>Switch</button>
-      <div className="square">
-        <h1>Hello</h1>
+      <div data-theme={theme} style={{ height: "100vh" }}>
+        <button onClick={switchTheme}>Switch</button>
+        <div className="square">
+          <h1>Hello</h1>
+        </div>
       </div>
-    </div>
     </>
   )
 }
