@@ -35,24 +35,32 @@ const Badges = styled.div<any>(
   }
 );
 
+function NoDataMessage() {
+  return (
+    <div className="d-flex flex-column justify-content-center align-items-center text-muted opacity-5 h-100">
+      No Result Found.
+    </div>
+  );
+}
+
 const ScrollableDiv = styled.div({
   width: "100%",
   overflowX: "scroll",
   overflowY: "hidden",
   cursor: "pointer",
   "&::-webkit-scrollbar": {
-    height: '5px',
-    display: 'none'
+    height: "5px",
+    display: "none",
   },
   "&::-webkit-scrollbar-track": {
-  boxShadow: "inset 0 0 0px grey",
-    borderRadius: '10px',
-    height: '45px',
+    boxShadow: "inset 0 0 0px grey",
+    borderRadius: "10px",
+    height: "45px",
   },
   "&::-webkit-scrollbar-thumb": {
-    background: '#c4c4c4',
-    borderRadius: '7px'
-  }
+    background: "#c4c4c4",
+    borderRadius: "7px",
+  },
 });
 
 const Hr = styled.div({
@@ -87,24 +95,25 @@ const VeriticallyScrollableDiv = styled.div({
   overflowY: "scroll",
   overflowX: "hidden",
   "&::-webkit-scrollbar": {
-    width: '5px',
-    display: 'none'
+    width: "5px",
+    display: "none",
   },
   "&::-webkit-scrollbar-track": {
-  boxShadow: "inset 0 0 0px grey",
-    borderRadius: '10px',
-    height: '45px',
+    boxShadow: "inset 0 0 0px grey",
+    borderRadius: "10px",
+    height: "45px",
   },
   "&::-webkit-scrollbar-thumb": {
-    background: '#c4c4c4',
-    borderRadius: '7px'
-  }
-})
+    background: "#c4c4c4",
+    borderRadius: "7px",
+  },
+});
 
 export default function SearchBar({
   searchBarExpanded,
   filterState,
-  colorTheme,setSearchBarExpanded
+  colorTheme,
+  setSearchBarExpanded,
 }: SearchBarTypes) {
   const [searchText, setSearchText] = React.useState<string>("");
   const [activeFilterType, setActiveFilterType] = React.useState<string>(
@@ -112,11 +121,11 @@ export default function SearchBar({
   );
   const [allTypeDisplayLimit, setAllTypeDisplayLimit] = React.useState(3);
 
-  const handleSearchTextChange = (changeEvent:any) =>{
-    const value = changeEvent.target.value
+  const handleSearchTextChange = (changeEvent: any) => {
+    const value = changeEvent.target.value;
     setSearchBarExpanded(value.length > 0);
-    setSearchText(value)
-  }
+    setSearchText(value);
+  };
 
   const states = filterState.states
     .filter(
@@ -196,11 +205,15 @@ export default function SearchBar({
       ) : (
         <></>
       )}
+      {searchBarExpanded ? (
+        <div className="px-2">
           <Hr />
+        </div>
+      ) : (
+        <></>
+      )}
       {searchBarExpanded && activeFilterType === TYPES[0] ? (
         <div className="px-3">
-      
-
           <div className="pt-3 bg-white">
             {states.map((i: any) => (
               <Selector label={i.value} type="State" key={i.id} />
@@ -226,6 +239,7 @@ export default function SearchBar({
 
       {searchBarExpanded && activeFilterType === "Sectors" ? (
         <VeriticallyScrollableDiv className="pt-3 bg-white">
+          {sectors.length === 0 ? <NoDataMessage /> : <></>}
           {sectors.map((i: any) => (
             <Selector label={i.value} type="Sector" key={i.id} />
           ))}
@@ -236,6 +250,7 @@ export default function SearchBar({
 
       {searchBarExpanded && activeFilterType === "States" ? (
         <VeriticallyScrollableDiv className="pt-3 bg-white">
+          {states.length === 0 ? <NoDataMessage /> : <></>}
           {states.map((i: any) => (
             <Selector label={i.value} type="State" key={i.id} />
           ))}
@@ -246,6 +261,7 @@ export default function SearchBar({
 
       {searchBarExpanded && activeFilterType === "Industries" ? (
         <VeriticallyScrollableDiv className="pt-3 bg-white">
+          {industries.length === 0 ? <NoDataMessage /> : <></>}
           {industries.map((i: any) => (
             <Selector label={i.value} type="Industry" key={i.id} />
           ))}
@@ -255,6 +271,7 @@ export default function SearchBar({
       )}
       {searchBarExpanded && activeFilterType === "Stages" ? (
         <VeriticallyScrollableDiv className="pt-3 bg-white">
+          {stages.length === 0 ? <NoDataMessage /> : <></>}
           {stages.map((i: any) => (
             <Selector label={i.value} type="Stage" key={i.id} />
           ))}

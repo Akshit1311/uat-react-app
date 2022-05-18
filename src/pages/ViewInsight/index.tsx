@@ -53,8 +53,8 @@ export default function ControlledAccordions() {
               View Insights of {query.get("state")}
             </H5>
             <p className="font-Mont font-600 font-12px mt-1">
-              <span style={{ color: theme.viewInsightColor}} onClick={()=> history.push('/')}>{"IndiaMap / "}</span>
-              <span style={{ color: theme.viewInsightColor }} onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
+              <span style={{ color: theme.viewInsightColor}} className="cursor-pointer" onClick={()=> history.push('/')}>{"IndiaMap / "}</span>
+              <span style={{ color: theme.viewInsightColor }} className="cursor-pointer" onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
               <span style={{ color: theme.color }}>View Insight</span>
             </p>
           </div>

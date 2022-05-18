@@ -383,45 +383,6 @@ const LeftNavComponent = (props: any) => {
                   </AccordionDetails>
                 </Accordion>
                 <Accordion
-                  expanded={expanded === "panel2"}
-                  onChange={handleChange("panel2")}
-                >
-                  <AccordionSummary
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <DropDown
-                      className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
-                      type="button"
-                    >
-                      Sector
-                      {appliedFilters.sectors.length !== 0 && (
-                        <RoundedBadge className="ms-auto me-3 background-color-theme">
-                          {appliedFilters.sectors.length}
-                        </RoundedBadge>
-                      )}
-                      {
-                        <span className="count-text ms-auto">
-                          {filterState.sectors.length}
-                        </span>
-                      }
-                    </DropDown>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <DropDownListComponent
-                      accessor={"sectors"}
-                      colorTheme={colorTheme}
-                      originalData={filterState.sectors}
-                      loading={filterLoading}
-                      selectedItem={selectedSector}
-                      handleClick={handleSectorClick}
-                      handleApplyClick={onApplySector}
-                      dropDownId={"#collapse2"}
-                      handleClearClick={onSectorClear}
-                    />
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
                   expanded={expanded === "panel3"}
                   onChange={handleChange("panel3")}
                 >
@@ -460,6 +421,47 @@ const LeftNavComponent = (props: any) => {
                     />
                   </AccordionDetails>
                 </Accordion>
+                
+                <Accordion
+                  expanded={expanded === "panel2"}
+                  onChange={handleChange("panel2")}
+                >
+                  <AccordionSummary
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <DropDown
+                      className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                      type="button"
+                    >
+                      Sector
+                      {appliedFilters.sectors.length !== 0 && (
+                        <RoundedBadge className="ms-auto me-3 background-color-theme">
+                          {appliedFilters.sectors.length}
+                        </RoundedBadge>
+                      )}
+                      {
+                        <span className="count-text ms-auto">
+                          {filterState.sectors.length}
+                        </span>
+                      }
+                    </DropDown>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <DropDownListComponent
+                      accessor={"sectors"}
+                      colorTheme={colorTheme}
+                      originalData={filterState.sectors}
+                      loading={filterLoading}
+                      selectedItem={selectedSector}
+                      handleClick={handleSectorClick}
+                      handleApplyClick={onApplySector}
+                      dropDownId={"#collapse2"}
+                      handleClearClick={onSectorClear}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+                
                 <Accordion
                   expanded={expanded === "panel4"}
                   onChange={handleChange("panel4")}

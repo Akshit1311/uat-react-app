@@ -619,6 +619,10 @@ $primary: #0177fa;
   color: $primary;
   text-underline-offset: 2px;
 }
+.cursor-pointer{
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 768px) {
   .left-nav-bottom-card {
     width: 110%;
