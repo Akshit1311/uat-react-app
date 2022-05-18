@@ -18,6 +18,7 @@ import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import MapViewButtonChangeGroup from './MapViewButtonChangeGroup'
 import { useWindowSize } from "../../hooks/useWindowSize"
 import axios from "axios";
+import { useWebQuery } from "../../hooks/useWebQuery";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -61,10 +62,12 @@ function ViewChangerComponent({
     setSelectedArea,
     selectedArea,
     getCounts,
-    colorTheme,fetchDateRange, dateRangeState, dateRangeLoading, appliedFilters
+    colorTheme, fetchDateRange, dateRangeState, dateRangeLoading, appliedFilters
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
+  const today = "2015-01-01" + '/' + moment(new Date()).format("YYYY-MM-DD");
+  const query = useWebQuery();
 
   const [newCount, setNewCount] = useState<number>(0);
   const [selectedStartTypeIndex, setSelectedStartupTypeIndex] = useState<number>(0)
@@ -94,10 +97,10 @@ function ViewChangerComponent({
     setSelectedStartupType(value);
     fetchStartUpCount("/startup/startupCount/" + value);
     setSelectedStartupTypeIndex(value);
-    
-    if(!appliedFilters.states[0]){
+
+    if (!appliedFilters.states[0]) {
       fetchInitialCount(value);
-    } 
+    }
   };
 
   const getThemeDropDownImage = () => {
@@ -111,46 +114,42 @@ function ViewChangerComponent({
     fetchInitialCount(0);
   }, []);
 
-  const fetchInitialCount = async (startupType:number) => {
-    try{
+  const fetchInitialCount = async (startupType: number) => {
+    try {
       const { data } = await axios.get("/startup/startupCount/" + startupType);
       setNewCount(data);
-    } catch(error){
+    } catch (error) {
 
     }
   }
 
-  const fetchCount = async (dateRange:string) => {
-    try{
-      console.log("APplied STtae Filter", appliedFilters.states[0])
-      const mainUrl = `/startup/startupCount/state/id/${appliedFilters.states[0]}/${selectedStartTypeIndex}/${dateRange}`;
-      
-      console.log("Main Url", mainUrl);
+  const fetchCount = async (dateRange: string) => {
+    try {
+      const mainUrl = `/startup/startupCount/state/id/${query.get('id')}/${selectedStartTypeIndex}/${dateRange}`;
       const { data } = await axios.get(mainUrl);
-      console.log("Right COunt", data);
       setNewCount(data);
-    } catch(error){
+    } catch (error) {
 
     }
   }
 
-  useEffect(()=>{
-    if(appliedFilters.states[0]){
-      const value = "2022-01-01/2022-06-01"
-      fetchCount(value)
-    }  else {
+  useEffect(() => {
+    if (query.get('id')) {
+      fetchCount(today)
+    } else {
       fetchInitialCount(selectedStartTypeIndex)
     }
-  },[appliedFilters.states, selectedStartTypeIndex, ])
+  }, [appliedFilters.states, selectedStartTypeIndex, query.get('id')])
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
     window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`;
   };
-  const resourse ={ isCircleActive, colorTheme, mapMode,setMapMode, setIsCircleActive }
+
+  const resourse = { isCircleActive, colorTheme, mapMode, setMapMode, setIsCircleActive }
   return (
-    <div className="view-changer-component-styles" style={{ marginTop: windowWidth > 768 ? '24px':'0px' }}>
-      <div className={`row ${ windowWidth < 768 ? "" : " mx-0 px-0"}`}>
+    <div className="view-changer-component-styles" style={{ marginTop: windowWidth > 768 ? '24px' : '0px' }}>
+      <div className={`row ${windowWidth < 768 ? "" : " mx-0 px-0"}`}>
         <div className="mx-1 col-12 align-items-center justify-content-between d-none d-sm-flex">
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
           <SelectBox
@@ -162,7 +161,7 @@ function ViewChangerComponent({
             }}
             onChange={dateRangeChange}
           >
-            <option value="none">All </option>
+            <option value={ today }>All </option>
             {dateRangeState.map((item: any) => (
               <option value={item.from + "/" + item.to}> {item.text} </option>
             ))}
@@ -180,7 +179,7 @@ function ViewChangerComponent({
         {
           windowWidth > 768 ? (
             <MapViewButtonChangeGroup {...resourse} />
-          ): (<></>)
+          ) : (<></>)
         }
         <div className="mx-1 col-12 mt-4 pt-0 view-changer-startup-card">
           <Card>
@@ -212,7 +211,7 @@ function ViewChangerComponent({
               <span className="selected-startups">
                 {startUpTypes[selectedStartUpType] && startUpTypes[selectedStartUpType].text && startUpTypes[selectedStartUpType].text.length > 0
                   ? startUpTypes[selectedStartUpType].text
-                  :  0 }
+                  : 0}
               </span>
             </Card>
             {selectedArea.id !== "india" && (
@@ -221,7 +220,7 @@ function ViewChangerComponent({
                   colorTheme={colorTheme}
                   shadow={true}
                   onClick={() => redirectToStatePolicy()}
-                  className={`btn btn-radius w-100 mt-4 ${ stateViewMode ? 'mb-0': ''}`}
+                  className={`btn btn-radius w-100 mt-4 ${stateViewMode ? 'mb-0' : ''}`}
                 >
                   {VIEW_STATE_STARTUP_POLICY}
                 </ViewMoreButton>
