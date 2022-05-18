@@ -46,12 +46,11 @@ export default function InsightTable({
   return (
     <div className='scroll-area-wrapper'>
       <div className="scroll-area">
-        <div className="view-insight-header">
+        <div className="view-insight-header bg-white">
           <div>
             <StarBorderIcon className="hidden" />
             <span>{title}</span>
           </div>
-          {console.log("STateName", stateName,)}
           {
             stateName != "" || stateName ? (
               <>

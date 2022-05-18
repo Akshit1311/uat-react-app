@@ -20,7 +20,6 @@ body {
 }
 .search-bar-row {
   margin-top: 24px;
-  height: 38px;
   margin-bottom: 24px;
   input {
     border: 0px !important;
@@ -550,7 +549,9 @@ $primary: #0177fa;
   }
 }
 
-
+.opacity-5{
+  opacity: 0.5;
+}
 
 .theme-1 {
   @include themeMatcher(#0177fa);

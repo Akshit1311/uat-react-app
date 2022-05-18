@@ -336,10 +336,11 @@ const HomePage = (props: HomePageTypes) => {
                     />
                   </div>
                   <div className="d-block d-sm-none mb-3">
-                    <SearchBar
+                    {/* <SearchBar
+                      colorTheme={primaryColorTheme}
                       filterState={filterState}
                       searchBarExpanded={false}
-                    />
+                    /> */}
                     <div className="px-c-2">
                       <MapViewChangeButtonGroup
                         isCircleActive={isCircleActive}

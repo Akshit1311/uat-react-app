@@ -95,12 +95,12 @@ const LeftNavComponent = (props: any) => {
     colorTheme,
     fetchFilterList,
     filterState,
-    filterLoading,noShadow,
-    insight,search:searchVisible, dateRange, dateRangeState, dateRangeLoading, selectedState, setSelectedState, handleToggle
+    filterLoading, noShadow,
+    insight, search: searchVisible, dateRange, dateRangeState, dateRangeLoading, selectedState, setSelectedState, handleToggle
   } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>("");
-  const [searchBarExpanded, setSearchBarExpanded] = useState(false);
+  const [searchBarExpanded, setSearchBarExpanded] = useState<boolean>(false);
 
   const theme = useContext(ThemeContext);
   const history = useHistory();
@@ -126,8 +126,9 @@ const LeftNavComponent = (props: any) => {
     }
     setSelectedState([state]);
   };
-  const closeModal = () =>{
-    if(handleToggle){
+
+  const closeModal = () => {
+    if (handleToggle) {
       handleToggle()
     }
   }
@@ -178,9 +179,9 @@ const LeftNavComponent = (props: any) => {
     closeModal();
   };
 
-  const onSectorClear = () =>{
+  const onSectorClear = () => {
     setSelectedSector([]);
-    setAppliedFilters((prev:any)=> ({ ...prev, sectors: [] }))
+    setAppliedFilters((prev: any) => ({ ...prev, sectors: [] }))
   }
 
   const handleStagesClick = (stage: any) => {
@@ -238,10 +239,10 @@ const LeftNavComponent = (props: any) => {
     setExpanded(false);
     closeModal();
   };
-  
-  const onIndustryClear = () =>{
+
+  const onIndustryClear = () => {
     setSelectedIndustry([]);
-    setAppliedFilters((prev:any)=> ({ ...prev, industries: [] }))
+    setAppliedFilters((prev: any) => ({ ...prev, industries: [] }))
   }
 
   const handleBadgesClick = (badges: any) => {
@@ -272,9 +273,9 @@ const LeftNavComponent = (props: any) => {
     closeModal();
   };
 
-  const onClearBadges = () =>{
+  const onClearBadges = () => {
     setSelectedBadges([]);
-    setAppliedFilters((prev:any)=> ({ ...prev, badges: [] }))
+    setAppliedFilters((prev: any) => ({ ...prev, badges: [] }))
   }
 
   const trimBadges = (badges: any[]) => {
@@ -310,9 +311,8 @@ const LeftNavComponent = (props: any) => {
       setExpanded(newExpanded ? panel : false);
     };
 
-  const viewInsightUrl = `/view-insight?id=${
-    selectedState[0] ? selectedState[0].id : ""
-  }&state=${selectedState[0] ? selectedState[0].value : ""}`;
+  const viewInsightUrl = `/view-insight?id=${selectedState[0] ? selectedState[0].id : ""
+    }&state=${selectedState[0] ? selectedState[0].value : ""}`;
   return (
     <>
       <div
@@ -328,7 +328,8 @@ const LeftNavComponent = (props: any) => {
             <SearchBar
               filterState={filterState}
               searchBarExpanded={searchBarExpanded}
-              // setSearchBarExpanded={setSearchBarExpanded}
+              colorTheme={colorTheme}
+              setSearchBarExpanded={setSearchBarExpanded}
             />
           ) : (
             <></>
@@ -336,7 +337,7 @@ const LeftNavComponent = (props: any) => {
           {!searchBarExpanded ? (
             <>
               <Card noShadow={noShadow}
-                className={`row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px ${ !searchVisible && 'mt-0'}`}
+                className={`row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px ${!searchVisible && 'mt-0'}`}
                 id="flush1"
               >
                 <Accordion
@@ -540,42 +541,43 @@ const LeftNavComponent = (props: any) => {
                 </Accordion>
                 {
                   dateRange && (
-                <Accordion
-                  expanded={expanded === "panel6"}
-                  onChange={handleChange("panel6")}
-                >
-                  <AccordionSummary
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                  >
-                    <DropDown
-                      className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
-                      type="button"
+                    <Accordion
+                      expanded={expanded === "panel6"}
+                      onChange={handleChange("panel6")}
                     >
-                      Date Range
-                    </DropDown>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <DropDownListComponent
-                      accessor={"value"}
-                      colorTheme={colorTheme}
-                      originalData={dateRangeState}
-                      loading={dateRangeLoading}
-                      selectedItem={selectedBadges}
-                      handleClick={handleBadgesClick}
-                      handleApplyClick={onApplyBadges}
-                      noSort={true}
-                      dropDownId={"#collapse6"}
-                      handleClearClick={onClearBadges}
-                    />
-                  </AccordionDetails>
-                </Accordion>
+                      <AccordionSummary
+                        aria-controls="panel1d-content"
+                        id="panel1d-header"
+                      >
+                        <DropDown
+                          className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                          type="button"
+                        >
+                          Date Range
+                        </DropDown>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <DropDownListComponent
+                          accessor={"value"}
+                          colorTheme={colorTheme}
+                          originalData={dateRangeState}
+                          loading={dateRangeLoading}
+                          selectedItem={selectedBadges}
+                          handleClick={handleBadgesClick}
+                          handleApplyClick={onApplyBadges}
+                          noSort={true}
+                          dropDownId={"#collapse6"}
+                          handleClearClick={onClearBadges}
+                        />
+                      </AccordionDetails>
+                    </Accordion>
                   )
                 }
               </Card>
             </>
           ) : (
-            <></>
+            <>
+            </>
           )}
           {insight && (
             <ViewInsight
