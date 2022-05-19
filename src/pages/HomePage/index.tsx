@@ -30,6 +30,7 @@ import { useWebQuery } from "../../hooks/useWebQuery";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setColorTheme } from "../../store/config";
+import moment from "moment";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -113,8 +114,9 @@ const HomePage = (props: HomePageTypes) => {
   });
   const [countState, setCountState] = useState<any>(new CountBlockModel())
 
+  const currentDate = moment(new Date()).format('YYYY-MM-DD')
   const [fetchTableData, tableState, tableLoading] = useQuery(
-    "/data/statistics/country/5f02e38c6f3de87babe20cd2/2021-01-01/2021-12-01"
+    "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/2015-01-01/" + currentDate
   );
   const [fetchFilterList, filterState, filterLoading] = useMutate(
     "/startup/filter/v2/defaults",

@@ -204,15 +204,17 @@ function ViewChangerComponent({
             </div>
             <Card
               background={theme.bgCard4}
-              className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1"
+              className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1 justify-content-center"
+              style={{ height: "60px"}}
               border={true}
             >
-              <h3 className="p-0 m-0">{newCount}</h3>
-              <span className="selected-startups">
-                {startUpTypes[selectedStartUpType] && startUpTypes[selectedStartUpType].text && startUpTypes[selectedStartUpType].text.length > 0
-                  ? startUpTypes[selectedStartUpType].text
-                  : 0}
-              </span>
+              {
+                newCount > 0? (
+                  <h3 className="p-0 m-0 text-center">{newCount }</h3>
+                ) : ( 
+                  <p className="text-muted m-0 p-0 font-500">{"Data Not Available."}</p>
+                )
+              }
             </Card>
             {selectedArea.id !== "india" && (
               <>
