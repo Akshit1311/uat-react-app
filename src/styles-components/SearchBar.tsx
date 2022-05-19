@@ -7,7 +7,7 @@ export const SearchBarWrapper = styled.div`
 `;
 
 export const SearchBarInput = styled.input`
-  color: ${(props) => props.theme.colorCards} !important;
+  color: ${(props) => props.theme.sideSearch.color} !important;
   background: ${(props) => props.theme.bgCards} !important;
 `;
 

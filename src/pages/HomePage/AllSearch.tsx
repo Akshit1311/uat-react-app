@@ -5,7 +5,7 @@ import {
   SearchBarInput,
 } from "../../styles-components/SearchBar";
 import { BiSearchAlt2 } from "react-icons/bi";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { Actions, current } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
@@ -31,17 +31,18 @@ const Badges = styled.div<any>(
   (props) => {
     return {
       transition: "All 0.3s",
-      color: props.active ? "white" : "balck",
+      color: props.active ? "white" : props.themeColor,
       background: props.active
         ? ThemeColorIdentifier(props.colorTheme)
-        : "white",
+        : props.theme,
     };
   }
 );
 
 function NoDataMessage() {
+  const theme = React.useContext(ThemeContext)
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center text-muted opacity-5 h-100">
+    <div className="d-flex flex-column justify-content-center align-items-center text-muted opacity-5 h-100" style={{ color: theme.sideSearch.color }}>
       No Result Found.
     </div>
   );
@@ -84,10 +85,12 @@ interface SelectorType {
 }
 
 function Selector({ label, type, obj, onClick, active }: SelectorType) {
-  const activeId = active.findIndex((i)=> i === obj.id)
+  const activeId = active.findIndex((i)=> i === obj.id);
+  const theme = React.useContext(ThemeContext)
   return (
     <div
       onClick={() => onClick(obj)}
+      style={{ color: theme.sideSearch.color }}
       className={`d-flex justify-content-between ${activeId !== -1 ? 'text-primary': ""}`}
     >
       <p className="font-500">{label}</p>
@@ -221,11 +224,11 @@ export default function SearchBar({
     else setAllTypeDisplayLimit(filterState[name.toLowerCase()].length);
     setActiveFilterType(name);
   };
-
+  const theme = React.useContext(ThemeContext)
   return (
     <div
-      className="row search-bar-row bg-white"
-      style={{ boxShadow: "0px 0px 10px rgb(193 193 193 / 25%)" }}
+      className="row search-bar-row"
+      style={{ boxShadow: "0px 0px 10px rgb(193 193 193 / 25%)", background: theme.sideSearch.background }}
     >
       <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
         <SpanIcon
@@ -237,7 +240,7 @@ export default function SearchBar({
         <SearchBarInput
           type="search"
           value={searchText}
-          className="form-control ps-2 search-bar-left"
+          className="form-control ps-2"
           placeholder="Search"
           aria-label="Search"
           aria-describedby="search-addon"
@@ -245,9 +248,11 @@ export default function SearchBar({
         />
       </SearchBarWrapper>
       {searchBarExpanded ? (
-        <ScrollableDiv className="bg-white d-inline-flex p-3">
+        <ScrollableDiv className="d-inline-flex p-3"  style={{ background: theme.sideSearch.background}}>
           {TYPES.map((name) => (
             <Badges
+            theme={theme.sideSearch.background}
+            themeColor={theme.sideSearch.color}
               colorTheme={colorTheme}
               onClick={() => handleTabClick(name)}
               active={activeFilterType === name}
@@ -267,8 +272,8 @@ export default function SearchBar({
         <></>
       )}
       {searchBarExpanded && activeFilterType === TYPES[0] ? (
-        <div className="px-3">
-          <div className="pt-3 bg-white">
+        <VeriticallyScrollableDiv className="px-3" style={{ background: theme.sideSearch.background}}>
+          <div className="pt-3" style={{ background: theme.sideSearch.background}}>
             {states.map((i: any) => (
               <Selector
                 obj={i}
@@ -282,7 +287,7 @@ export default function SearchBar({
           </div>
 
           <Hr />
-          <div className="pt-3 bg-white">
+          <div className="pt-3" style={{ background: theme.sideSearch.background}}>
             {sectors.map((i: any) => (
               <Selector
                 obj={i}
@@ -295,7 +300,7 @@ export default function SearchBar({
             ))}
           </div>
           <Hr />
-          <div className="pt-3 bg-white">
+          <div  className="pt-3" style={{ background: theme.sideSearch.background}}>
             {industries.map((i: any) => (
               <Selector
                 obj={i}
@@ -307,13 +312,13 @@ export default function SearchBar({
               />
             ))}
           </div>
-        </div>
+        </VeriticallyScrollableDiv>
       ) : (
         <></>
       )}
 
       {searchBarExpanded && activeFilterType === "Sectors" ? (
-        <VeriticallyScrollableDiv className="pt-3 bg-white">
+        <VeriticallyScrollableDiv className="pt-3" >
           {sectors.length === 0 ? <NoDataMessage /> : <></>}
           {sectors.map((i: any) => (
             <Selector
@@ -331,7 +336,7 @@ export default function SearchBar({
       )}
 
       {searchBarExpanded && activeFilterType === "States" ? (
-        <VeriticallyScrollableDiv className="pt-3 bg-white">
+        <VeriticallyScrollableDiv className="pt-3" style={{ background: theme.sideSearch.background}}>
           {states.length === 0 ? <NoDataMessage /> : <></>}
           {states.map((i: any) => (
             <Selector
@@ -349,7 +354,7 @@ export default function SearchBar({
       )}
 
       {searchBarExpanded && activeFilterType === "Industries" ? (
-        <VeriticallyScrollableDiv className="pt-3 bg-white">
+        <VeriticallyScrollableDiv className="pt-3" style={{ background: theme.sideSearch.background}}>
           {industries.length === 0 ? <NoDataMessage /> : <></>}
           {industries.map((i: any) => (
             <Selector
@@ -366,7 +371,7 @@ export default function SearchBar({
         <></>
       )}
       {searchBarExpanded && activeFilterType === "Stages" ? (
-        <VeriticallyScrollableDiv className="pt-3 bg-white">
+        <VeriticallyScrollableDiv className="pt-3" style={{ background: theme.sideSearch.background}}>
           {stages.length === 0 ? <NoDataMessage /> : <></>}
           {stages.map((i: any) => (
             <Selector

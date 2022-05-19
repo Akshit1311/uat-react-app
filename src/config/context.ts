@@ -71,7 +71,11 @@ export const PRIMARY_THEME = {
     background: "#C4C4C4",
     color: "black"
   },
-  viewInsightColor: "rgba(0,0,0,0.5)"
+  viewInsightColor: "rgba(0,0,0,0.5)",
+  sideSearch:{
+    background: "white",
+    color: "black"
+  }
 };
 
 export const DARK_THEME = {
@@ -137,7 +141,11 @@ export const DARK_THEME = {
     background: "#93949D",
     color: "white"
   },
-  viewInsightColor: "rgba(255,255,255,0.5)"
+  viewInsightColor: "rgba(255,255,255,0.5)",
+  sideSearch:{
+    background: "rgba(37,40,58,1)",
+    color: "white"
+  }
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);
