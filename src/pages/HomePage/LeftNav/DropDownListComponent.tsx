@@ -35,7 +35,8 @@ const DropDownListComponent = (props: any) => {
     loading,
     handleClearClick,
     dropDownId,
-    noSort, colorTheme
+    noSort,
+    colorTheme,
   } = props;
 
   const theme = useContext(ThemeContext);
@@ -51,9 +52,10 @@ const DropDownListComponent = (props: any) => {
     if (theme.theme === "light") return "unselected-list-card-light";
   };
 
-  const list: any[] = data.map((dataObj: any, index:number) => {
+  const list: any[] = data.map((dataObj: any, index: number) => {
     return (
-      <div key={index}
+      <div
+        key={index}
         onClick={() => handleClick(dataObj)}
         className={`list-card me-2 ${
           findSelectedState(dataObj) ? "selected-list-card" : bgUnSelected()
@@ -76,8 +78,8 @@ const DropDownListComponent = (props: any) => {
   };
 
   useEffect(() => {
-    if(noSort){
-      setData(originalData)
+    if (noSort) {
+      setData(originalData);
     } else {
       const sort = originalData.sort((a: any, b: any) =>
         a.value.localeCompare(b.value)
@@ -85,10 +87,13 @@ const DropDownListComponent = (props: any) => {
       setData(sort);
     }
   }, [originalData.length, loading]);
-  
+
   return (
     <div className="drop-down-list-component">
-      <SearchWrapper className={`state-search-bar me-3`} style={{ marginTop: '6px' }}>
+      <SearchWrapper
+        className={`state-search-bar me-3`}
+        style={{ marginTop: "6px" }}
+      >
         <div className="d-flex">
           <span className="btn my-0 me-0 pe-0" style={{ color: theme.color }}>
             <GoSearch />
@@ -137,7 +142,8 @@ const DropDownListComponent = (props: any) => {
         {/* {data.length && !loading ?  : ""} */}
       </div>
       <div className="my-3 mt-2 d-flex justify-content-between me-3">
-        <Button colorTheme={colorTheme}
+        <Button
+          colorTheme={colorTheme}
           border={`2px solid ${theme.dropDown.cancelBorder}`}
           backgroundColor={theme.dropDown.cancel}
           color={theme.dropDown.cancelColor}
@@ -146,7 +152,8 @@ const DropDownListComponent = (props: any) => {
         >
           Clear
         </Button>
-        <Button colorTheme={colorTheme}
+        <Button
+          colorTheme={colorTheme}
           data-bs-toggle="collapse"
           data-bs-target={dropDownId.toString()}
           marginLeft={"12px"}
