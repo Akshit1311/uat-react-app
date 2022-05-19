@@ -111,7 +111,8 @@ interface KeyValuePair {
 }
 
 const VeriticallyScrollableDiv = styled.div({
-  height: "400px",
+  minHeight: "100px",
+  maxHeight: "400px",
   overflowY: "scroll",
   overflowX: "hidden",
   "&::-webkit-scrollbar": {

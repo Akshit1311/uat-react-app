@@ -564,6 +564,7 @@ const LeftNavComponent = (props: any) => {
                       colorTheme={colorTheme}
                       originalData={trimBadges(badgesState)}
                       loading={false}
+                      height={'200px'}
                       selectedItem={selectedBadges}
                       handleClick={handleBadgesClick}
                       handleApplyClick={onApplyBadges}
@@ -600,7 +601,7 @@ const LeftNavComponent = (props: any) => {
                         selectedItem={selectedBadges}
                         handleClick={handleBadgesClick}
                         handleApplyClick={onApplyBadges}
-                        noSort={true}
+                        noSort={false}
                         dropDownId={"#collapse6"}
                         handleClearClick={onClearBadges}
                       />

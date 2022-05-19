@@ -76,10 +76,14 @@ const DropDownListComponent = (props: any) => {
   };
 
   useEffect(() => {
-    const sort = originalData.sort((a: any, b: any) =>
-      a.value.localeCompare(b.value)
-    );
-    setData(sort);
+    if(noSort){
+      setData(originalData)
+    } else {
+      const sort = originalData.sort((a: any, b: any) =>
+        a.value.localeCompare(b.value)
+      );
+      setData(sort);
+    }
   }, [originalData.length, loading]);
   
   return (
