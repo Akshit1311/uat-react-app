@@ -17,9 +17,8 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useHistory } from "react-router-dom";
-import SearchBar from "../AllSearch"
+import SearchBar from "../AllSearch";
 import ViewInsight from "../ViewInsight";
-
 
 const Accordion = MaterialStyled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -95,8 +94,16 @@ const LeftNavComponent = (props: any) => {
     colorTheme,
     fetchFilterList,
     filterState,
-    filterLoading, noShadow,
-    insight, search: searchVisible, dateRange, dateRangeState, dateRangeLoading, selectedState, setSelectedState, handleToggle
+    filterLoading,
+    noShadow,
+    insight,
+    search: searchVisible,
+    dateRange,
+    dateRangeState,
+    dateRangeLoading,
+    selectedState,
+    setSelectedState,
+    handleToggle,
   } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>("");
@@ -124,14 +131,15 @@ const LeftNavComponent = (props: any) => {
     if (stateIndex !== -1) {
       return setSelectedState([]);
     }
+    console.log("Selected State12", state);
     setSelectedState([state]);
   };
 
   const closeModal = () => {
     if (handleToggle) {
-      handleToggle()
+      handleToggle();
     }
-  }
+  };
 
   const onApplyState = () => {
     const stateIdsForAPiRequest = new Array();
@@ -147,24 +155,31 @@ const LeftNavComponent = (props: any) => {
     };
     setSelectedArea(area);
     setExpanded(false);
-    history.push(`/?id=${area.id}&state=${area.stateName}`)
+    history.push(`/?id=${area.id}&state=${area.stateName}`);
     closeModal();
   };
 
   const handleSectorClick = (sectorObj: any) => {
     const sectorIndex = findSelectedIndex(selectedSector, sectorObj);
+    let sectors: any[] = [];
     if (sectorIndex !== -1) {
-      return setSelectedSector((prevState: any) => {
+      setSelectedSector((prevState: any) => {
         const newSectors = [...prevState];
         newSectors.splice(sectorIndex, 1);
+        sectors = newSectors;
         return newSectors;
       });
+      return sectors;
     }
-    return setSelectedSector((prevState: any) => {
+    setSelectedSector((prevState: any) => {
       const newSectors = [...prevState, sectorObj];
+      sectors = newSectors;
       return newSectors;
     });
+
+    return sectors;
   };
+
   const onApplySector = () => {
     const sectorIdsForAPiRequest = new Array();
     selectedSector.forEach((sector: any) =>
@@ -181,8 +196,8 @@ const LeftNavComponent = (props: any) => {
 
   const onSectorClear = () => {
     setSelectedSector([]);
-    setAppliedFilters((prev: any) => ({ ...prev, sectors: [] }))
-  }
+    setAppliedFilters((prev: any) => ({ ...prev, sectors: [] }));
+  };
 
   const handleStagesClick = (stage: any) => {
     const stagesIndex = findSelectedIndex(selectedStages, stage);
@@ -242,8 +257,8 @@ const LeftNavComponent = (props: any) => {
 
   const onIndustryClear = () => {
     setSelectedIndustry([]);
-    setAppliedFilters((prev: any) => ({ ...prev, industries: [] }))
-  }
+    setAppliedFilters((prev: any) => ({ ...prev, industries: [] }));
+  };
 
   const handleBadgesClick = (badges: any) => {
     const badgesIndex = findSelectedIndex(selectedBadges, badges);
@@ -275,8 +290,8 @@ const LeftNavComponent = (props: any) => {
 
   const onClearBadges = () => {
     setSelectedBadges([]);
-    setAppliedFilters((prev: any) => ({ ...prev, badges: [] }))
-  }
+    setAppliedFilters((prev: any) => ({ ...prev, badges: [] }));
+  };
 
   const trimBadges = (badges: any[]) => {
     const newBadgesList = new Array();
@@ -311,8 +326,22 @@ const LeftNavComponent = (props: any) => {
       setExpanded(newExpanded ? panel : false);
     };
 
-  const viewInsightUrl = `/view-insight?id=${selectedState[0] ? selectedState[0].id : ""
-    }&state=${selectedState[0] ? selectedState[0].value : ""}`;
+  const viewInsightUrl = `/view-insight?id=${
+    selectedState[0] ? selectedState[0].id : ""
+  }&state=${selectedState[0] ? selectedState[0].value : ""}`;
+  const actions = {
+    handleStateClick,
+    closeModal,
+    onApplyState,
+    handleSectorClick,
+    onApplySector,
+    handleStagesClick,
+    onApplyStages,
+    handleIndustryClick,
+    onApplyIndustry,
+    setAppliedFilters,
+    appliedFilters
+  };
   return (
     <>
       <div
@@ -327,6 +356,7 @@ const LeftNavComponent = (props: any) => {
           {!expanded && searchVisible ? (
             <SearchBar
               filterState={filterState}
+              actions={actions}
               searchBarExpanded={searchBarExpanded}
               colorTheme={colorTheme}
               setSearchBarExpanded={setSearchBarExpanded}
@@ -336,8 +366,11 @@ const LeftNavComponent = (props: any) => {
           )}
           {!searchBarExpanded ? (
             <>
-              <Card noShadow={noShadow}
-                className={`row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px ${!searchVisible && 'mt-0'}`}
+              <Card
+                noShadow={noShadow}
+                className={`row mb-3 ps-2 pe-0 py-0 bg-white pb-2 dropdown-card p-16px ${
+                  !searchVisible && "mt-0"
+                }`}
                 id="flush1"
               >
                 <Accordion
@@ -421,7 +454,7 @@ const LeftNavComponent = (props: any) => {
                     />
                   </AccordionDetails>
                 </Accordion>
-                
+
                 <Accordion
                   expanded={expanded === "panel2"}
                   onChange={handleChange("panel2")}
@@ -461,7 +494,7 @@ const LeftNavComponent = (props: any) => {
                     />
                   </AccordionDetails>
                 </Accordion>
-                
+
                 <Accordion
                   expanded={expanded === "panel4"}
                   onChange={handleChange("panel4")}
@@ -541,45 +574,42 @@ const LeftNavComponent = (props: any) => {
                     />
                   </AccordionDetails>
                 </Accordion>
-                {
-                  dateRange && (
-                    <Accordion
-                      expanded={expanded === "panel6"}
-                      onChange={handleChange("panel6")}
+                {dateRange && (
+                  <Accordion
+                    expanded={expanded === "panel6"}
+                    onChange={handleChange("panel6")}
+                  >
+                    <AccordionSummary
+                      aria-controls="panel1d-content"
+                      id="panel1d-header"
                     >
-                      <AccordionSummary
-                        aria-controls="panel1d-content"
-                        id="panel1d-header"
+                      <DropDown
+                        className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
+                        type="button"
                       >
-                        <DropDown
-                          className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
-                          type="button"
-                        >
-                          Date Range
-                        </DropDown>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <DropDownListComponent
-                          accessor={"value"}
-                          colorTheme={colorTheme}
-                          originalData={dateRangeState}
-                          loading={dateRangeLoading}
-                          selectedItem={selectedBadges}
-                          handleClick={handleBadgesClick}
-                          handleApplyClick={onApplyBadges}
-                          noSort={true}
-                          dropDownId={"#collapse6"}
-                          handleClearClick={onClearBadges}
-                        />
-                      </AccordionDetails>
-                    </Accordion>
-                  )
-                }
+                        Date Range
+                      </DropDown>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <DropDownListComponent
+                        accessor={"value"}
+                        colorTheme={colorTheme}
+                        originalData={dateRangeState}
+                        loading={dateRangeLoading}
+                        selectedItem={selectedBadges}
+                        handleClick={handleBadgesClick}
+                        handleApplyClick={onApplyBadges}
+                        noSort={true}
+                        dropDownId={"#collapse6"}
+                        handleClearClick={onClearBadges}
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                )}
               </Card>
             </>
           ) : (
-            <>
-            </>
+            <></>
           )}
           {insight && (
             <ViewInsight

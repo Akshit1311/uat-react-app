@@ -7,12 +7,16 @@ import {
 import { BiSearchAlt2 } from "react-icons/bi";
 import styled from "styled-components";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import { Actions, current } from "@reduxjs/toolkit";
+import { useHistory } from "react-router-dom";
+import { arrayBuffer } from "stream/consumers";
 
 export interface SearchBarTypes {
   filterState: any;
   setSearchBarExpanded: any;
   colorTheme: string;
   searchBarExpanded: boolean;
+  actions: any;
 }
 
 const Badges = styled.div<any>(
@@ -74,11 +78,18 @@ const TYPES = ["All", "Sectors", "States", "Industries", "Stages"];
 interface SelectorType {
   label: string;
   type: string;
+  onClick?: any;
+  obj: any;
+  active:any[]
 }
 
-function Selector({ label, type }: SelectorType) {
+function Selector({ label, type, obj, onClick, active }: SelectorType) {
+  const activeId = active.findIndex((i)=> i === obj.id)
   return (
-    <div className="d-flex justify-content-between">
+    <div
+      onClick={() => onClick(obj)}
+      className={`d-flex justify-content-between ${activeId !== -1 ? 'text-primary': ""}`}
+    >
       <p className="font-500">{label}</p>
       <p className="opacity-5">{type.toUpperCase()}</p>
     </div>
@@ -111,15 +122,58 @@ const VeriticallyScrollableDiv = styled.div({
 
 export default function SearchBar({
   searchBarExpanded,
+  actions,
   filterState,
   colorTheme,
   setSearchBarExpanded,
 }: SearchBarTypes) {
+  const {
+    handleSectorClick,
+    onApplySector,
+    handleStagesClick,
+    onApplyStages,
+    handleIndustryClick,
+    onApplyIndustry,
+    setAppliedFilters,
+    appliedFilters
+  } = actions;
   const [searchText, setSearchText] = React.useState<string>("");
   const [activeFilterType, setActiveFilterType] = React.useState<string>(
     TYPES[0]
   );
+  const history = useHistory();
   const [allTypeDisplayLimit, setAllTypeDisplayLimit] = React.useState(3);
+
+  const applyState = (state: any) =>
+    history.push(`/?id=${state.id}&state=${state.value}`);
+
+  const applyStages = (stage: any) => setAppliedFilters((prev: any) => {
+    const currentStages = [...prev.stages];
+    const index = findIndex(currentStages, stage.id);
+    if (index === -1) currentStages.push(stage.id);
+    else currentStages.splice(index, 1);
+    return { ...prev, sectors: currentStages };
+  });
+
+  const findIndex = (array: any[], id: string) =>
+    array.findIndex((i: any) => i === id);
+
+  const applySector = (sector: any) =>
+    setAppliedFilters((prev: any) => {
+      const currentSectors = [...prev.sectors];
+      const index = findIndex(currentSectors, sector.id);
+      if (index === -1) currentSectors.push(sector.id);
+      else currentSectors.splice(index, 1);
+      return { ...prev, sectors: currentSectors };
+    });
+
+  const applyIndustry = (industry: any) => setAppliedFilters((prev: any) => {
+    const currentIndustries = [...prev.industries];
+    const index = findIndex(currentIndustries, industry.id);
+    if (index === -1) currentIndustries.push(industry.id);
+    else currentIndustries.splice(index, 1);
+    return { ...prev, industries: currentIndustries };
+  });
 
   const handleSearchTextChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -216,20 +270,41 @@ export default function SearchBar({
         <div className="px-3">
           <div className="pt-3 bg-white">
             {states.map((i: any) => (
-              <Selector label={i.value} type="State" key={i.id} />
+              <Selector
+                obj={i}
+                label={i.value}
+                active={appliedFilters.states}
+                onClick={applyState}
+                type="State"
+                key={i.id}
+              />
             ))}
           </div>
 
           <Hr />
           <div className="pt-3 bg-white">
             {sectors.map((i: any) => (
-              <Selector label={i.value} type="Sectors" key={i.id} />
+              <Selector
+                obj={i}
+                label={i.value}
+                active={appliedFilters.sectors}
+                onClick={applySector}
+                type="Sectors"
+                key={i.id}
+              />
             ))}
           </div>
           <Hr />
           <div className="pt-3 bg-white">
             {industries.map((i: any) => (
-              <Selector label={i.value} type="Industries" key={i.id} />
+              <Selector
+                obj={i}
+                label={i.value}
+                active={appliedFilters.industries}
+                onClick={applyIndustry}
+                type="Industries"
+                key={i.id}
+              />
             ))}
           </div>
         </div>
@@ -241,7 +316,14 @@ export default function SearchBar({
         <VeriticallyScrollableDiv className="pt-3 bg-white">
           {sectors.length === 0 ? <NoDataMessage /> : <></>}
           {sectors.map((i: any) => (
-            <Selector label={i.value} type="Sector" key={i.id} />
+            <Selector
+              obj={i}
+              label={i.value}
+              active={appliedFilters.sectors}
+              onClick={applySector}
+              type="Sector"
+              key={i.id}
+            />
           ))}
         </VeriticallyScrollableDiv>
       ) : (
@@ -252,7 +334,14 @@ export default function SearchBar({
         <VeriticallyScrollableDiv className="pt-3 bg-white">
           {states.length === 0 ? <NoDataMessage /> : <></>}
           {states.map((i: any) => (
-            <Selector label={i.value} type="State" key={i.id} />
+            <Selector
+              obj={i}
+              active={appliedFilters.states}
+              onClick={applyState}
+              label={i.value}
+              type="State"
+              key={i.id}
+            />
           ))}
         </VeriticallyScrollableDiv>
       ) : (
@@ -263,7 +352,14 @@ export default function SearchBar({
         <VeriticallyScrollableDiv className="pt-3 bg-white">
           {industries.length === 0 ? <NoDataMessage /> : <></>}
           {industries.map((i: any) => (
-            <Selector label={i.value} type="Industry" key={i.id} />
+            <Selector
+              obj={i}
+              label={i.value}
+              type="Industry"
+              active={appliedFilters.industries}
+              onClick={applyIndustry}
+              key={i.id}
+            />
           ))}
         </VeriticallyScrollableDiv>
       ) : (
@@ -273,7 +369,14 @@ export default function SearchBar({
         <VeriticallyScrollableDiv className="pt-3 bg-white">
           {stages.length === 0 ? <NoDataMessage /> : <></>}
           {stages.map((i: any) => (
-            <Selector label={i.value} type="Stage" key={i.id} />
+            <Selector
+              obj={i}
+              label={i.value}
+              onClick={applyStages}
+              type="Stage"
+              active={appliedFilters.stages}
+              key={i.id}
+            />
           ))}
         </VeriticallyScrollableDiv>
       ) : (
