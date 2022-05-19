@@ -88,6 +88,15 @@ body {
   border-radius: 5px !important;
   overflow: hidden;
 }
+.font-700{
+  font-weight: 700;
+}
+
+.transition{
+  transition: all 0.3s;
+}
+
+
 
 .horizontal-scroll {
   overflow-x: auto;
@@ -372,6 +381,13 @@ tbody {
 
 .border-type-3 {
   border-left: 1px dashed rgb(229, 229, 229);
+}
+
+.text-hover{
+  &:hover{
+    font-weight: 600 !important;
+    transition: all 0.3s;
+  }
 }
 
 @mixin viewInsightSections($fontSize, $fontWeight) {

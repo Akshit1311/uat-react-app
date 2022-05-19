@@ -27,6 +27,7 @@ const Badges = styled.div<any>(
     fontFamily: "Poppins",
     fontWeight: "600",
     transition: "All 0.3s",
+    fontSize: "12px",
   },
   (props) => {
     return {
@@ -40,9 +41,12 @@ const Badges = styled.div<any>(
 );
 
 function NoDataMessage() {
-  const theme = React.useContext(ThemeContext)
+  const theme = React.useContext(ThemeContext);
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center text-muted opacity-5 h-100" style={{ color: theme.sideSearch.color }}>
+    <div
+      className="d-flex flex-column justify-content-center align-items-center text-muted opacity-5 h-100 transition"
+      style={{ color: theme.sideSearch.color }}
+    >
       No Result Found.
     </div>
   );
@@ -81,20 +85,22 @@ interface SelectorType {
   type: string;
   onClick?: any;
   obj: any;
-  active:any[]
+  active: any[];
 }
 
 function Selector({ label, type, obj, onClick, active }: SelectorType) {
-  const activeId = active.findIndex((i)=> i === obj.id);
-  const theme = React.useContext(ThemeContext)
+  const activeId = active.findIndex((i) => i === obj.id);
+  const theme = React.useContext(ThemeContext);
   return (
     <div
       onClick={() => onClick(obj)}
       style={{ color: theme.sideSearch.color }}
-      className={`d-flex justify-content-between ${activeId !== -1 ? 'text-primary': ""}`}
+      className={`d-flex justify-content-between transition text-hover ${
+        activeId !== -1 ? "text-primary" : ""
+      }`}
     >
-      <p className="font-500">{label}</p>
-      <p className="opacity-5">{type.toUpperCase()}</p>
+      <p className="font-500 font-14px transition text-hover">{label}</p>
+      <p className="opacity-5 font-14px">{type.toUpperCase()}</p>
     </div>
   );
 }
@@ -138,25 +144,27 @@ export default function SearchBar({
     handleIndustryClick,
     onApplyIndustry,
     setAppliedFilters,
-    appliedFilters
+    appliedFilters,
   } = actions;
   const [searchText, setSearchText] = React.useState<string>("");
   const [activeFilterType, setActiveFilterType] = React.useState<string>(
     TYPES[0]
   );
   const history = useHistory();
+  const theme = React.useContext(ThemeContext);
   const [allTypeDisplayLimit, setAllTypeDisplayLimit] = React.useState(3);
 
   const applyState = (state: any) =>
     history.push(`/?id=${state.id}&state=${state.value}`);
 
-  const applyStages = (stage: any) => setAppliedFilters((prev: any) => {
-    const currentStages = [...prev.stages];
-    const index = findIndex(currentStages, stage.id);
-    if (index === -1) currentStages.push(stage.id);
-    else currentStages.splice(index, 1);
-    return { ...prev, stages: currentStages };
-  });
+  const applyStages = (stage: any) =>
+    setAppliedFilters((prev: any) => {
+      const currentStages = [...prev.stages];
+      const index = findIndex(currentStages, stage.id);
+      if (index === -1) currentStages.push(stage.id);
+      else currentStages.splice(index, 1);
+      return { ...prev, stages: currentStages };
+    });
 
   const findIndex = (array: any[], id: string) =>
     array.findIndex((i: any) => i === id);
@@ -170,13 +178,14 @@ export default function SearchBar({
       return { ...prev, sectors: currentSectors };
     });
 
-  const applyIndustry = (industry: any) => setAppliedFilters((prev: any) => {
-    const currentIndustries = [...prev.industries];
-    const index = findIndex(currentIndustries, industry.id);
-    if (index === -1) currentIndustries.push(industry.id);
-    else currentIndustries.splice(index, 1);
-    return { ...prev, industries: currentIndustries };
-  });
+  const applyIndustry = (industry: any) =>
+    setAppliedFilters((prev: any) => {
+      const currentIndustries = [...prev.industries];
+      const index = findIndex(currentIndustries, industry.id);
+      if (index === -1) currentIndustries.push(industry.id);
+      else currentIndustries.splice(index, 1);
+      return { ...prev, industries: currentIndustries };
+    });
 
   const handleSearchTextChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -224,11 +233,15 @@ export default function SearchBar({
     else setAllTypeDisplayLimit(filterState[name.toLowerCase()].length);
     setActiveFilterType(name);
   };
-  const theme = React.useContext(ThemeContext)
+
+  const showMoreData = () => setAllTypeDisplayLimit((prev) => prev + 3);
   return (
     <div
       className="row search-bar-row"
-      style={{ boxShadow: "0px 0px 10px rgb(193 193 193 / 25%)", background: theme.sideSearch.background }}
+      style={{
+        boxShadow: "0px 0px 10px rgb(193 193 193 / 25%)",
+        background: theme.sideSearch.background,
+      }}
     >
       <SearchBarWrapper className="rounded h-100 d-flex mx-0 px-0 search-bar">
         <SpanIcon
@@ -248,11 +261,14 @@ export default function SearchBar({
         />
       </SearchBarWrapper>
       {searchBarExpanded ? (
-        <ScrollableDiv className="d-inline-flex p-3"  style={{ background: theme.sideSearch.background}}>
+        <ScrollableDiv
+          className="d-inline-flex p-3 py-2"
+          style={{ background: theme.sideSearch.background }}
+        >
           {TYPES.map((name) => (
             <Badges
-            theme={theme.sideSearch.background}
-            themeColor={theme.sideSearch.color}
+              theme={theme.sideSearch.background}
+              themeColor={theme.sideSearch.color}
               colorTheme={colorTheme}
               onClick={() => handleTabClick(name)}
               active={activeFilterType === name}
@@ -265,15 +281,21 @@ export default function SearchBar({
         <></>
       )}
       {searchBarExpanded ? (
-        <div className="px-2">
+        <div className="px-3">
           <Hr />
         </div>
       ) : (
         <></>
       )}
       {searchBarExpanded && activeFilterType === TYPES[0] ? (
-        <VeriticallyScrollableDiv className="px-3" style={{ background: theme.sideSearch.background}}>
-          <div className="pt-3" style={{ background: theme.sideSearch.background}}>
+        <VeriticallyScrollableDiv
+          className="px-3"
+          style={{ background: theme.sideSearch.background }}
+        >
+          <div
+            className="pt-3"
+            style={{ background: theme.sideSearch.background }}
+          >
             {states.map((i: any) => (
               <Selector
                 obj={i}
@@ -286,8 +308,11 @@ export default function SearchBar({
             ))}
           </div>
 
-          <Hr />
-          <div className="pt-3" style={{ background: theme.sideSearch.background}}>
+          {states.length === 0 ? <></> : <Hr />}
+          <div
+            className="pt-3"
+            style={{ background: theme.sideSearch.background }}
+          >
             {sectors.map((i: any) => (
               <Selector
                 obj={i}
@@ -299,8 +324,11 @@ export default function SearchBar({
               />
             ))}
           </div>
-          <Hr />
-          <div  className="pt-3" style={{ background: theme.sideSearch.background}}>
+          {sectors.length === 0 ? <></> : <Hr />}
+          <div
+            className="pt-3"
+            style={{ background: theme.sideSearch.background }}
+          >
             {industries.map((i: any) => (
               <Selector
                 obj={i}
@@ -312,13 +340,23 @@ export default function SearchBar({
               />
             ))}
           </div>
+          {states.length > allTypeDisplayLimit || sectors.length > allTypeDisplayLimit || industries.length > allTypeDisplayLimit ? (
+            <p
+              className="text-primary cursor-pointer text-center font-600 font-12px font-Mont"
+              onClick={showMoreData}
+            >
+              View More
+            </p>
+          ) : (
+            <></>
+          )}
         </VeriticallyScrollableDiv>
       ) : (
         <></>
       )}
 
       {searchBarExpanded && activeFilterType === "Sectors" ? (
-        <VeriticallyScrollableDiv className="pt-3" >
+        <VeriticallyScrollableDiv className="pt-3 px-3">
           {sectors.length === 0 ? <NoDataMessage /> : <></>}
           {sectors.map((i: any) => (
             <Selector
@@ -326,7 +364,7 @@ export default function SearchBar({
               label={i.value}
               active={appliedFilters.sectors}
               onClick={applySector}
-              type="Sector"
+              type=""
               key={i.id}
             />
           ))}
@@ -336,7 +374,10 @@ export default function SearchBar({
       )}
 
       {searchBarExpanded && activeFilterType === "States" ? (
-        <VeriticallyScrollableDiv className="pt-3" style={{ background: theme.sideSearch.background}}>
+        <VeriticallyScrollableDiv
+          className="pt-3 px-3"
+          style={{ background: theme.sideSearch.background }}
+        >
           {states.length === 0 ? <NoDataMessage /> : <></>}
           {states.map((i: any) => (
             <Selector
@@ -344,7 +385,7 @@ export default function SearchBar({
               active={appliedFilters.states}
               onClick={applyState}
               label={i.value}
-              type="State"
+              type=""
               key={i.id}
             />
           ))}
@@ -354,13 +395,16 @@ export default function SearchBar({
       )}
 
       {searchBarExpanded && activeFilterType === "Industries" ? (
-        <VeriticallyScrollableDiv className="pt-3" style={{ background: theme.sideSearch.background}}>
+        <VeriticallyScrollableDiv
+          className="pt-3 px-3"
+          style={{ background: theme.sideSearch.background }}
+        >
           {industries.length === 0 ? <NoDataMessage /> : <></>}
           {industries.map((i: any) => (
             <Selector
               obj={i}
               label={i.value}
-              type="Industry"
+              type=""
               active={appliedFilters.industries}
               onClick={applyIndustry}
               key={i.id}
@@ -371,14 +415,17 @@ export default function SearchBar({
         <></>
       )}
       {searchBarExpanded && activeFilterType === "Stages" ? (
-        <VeriticallyScrollableDiv className="pt-3" style={{ background: theme.sideSearch.background}}>
+        <VeriticallyScrollableDiv
+          className="pt-3 px-3"
+          style={{ background: theme.sideSearch.background }}
+        >
           {stages.length === 0 ? <NoDataMessage /> : <></>}
           {stages.map((i: any) => (
             <Selector
               obj={i}
               label={i.value}
               onClick={applyStages}
-              type="Stage"
+              type=""
               active={appliedFilters.stages}
               key={i.id}
             />

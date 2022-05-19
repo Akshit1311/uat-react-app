@@ -43,7 +43,7 @@ export default function ControlledAccordions() {
     fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
   }, [query.get("id")]);
 
-  const backUrl:string = `/?id=${query.get('id')}&state=${query.get('state')}`
+  const backUrl: string = `/?id=${query.get("id")}&state=${query.get("state")}`;
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
       <PageWrapperContainer className="h-100">
@@ -53,8 +53,27 @@ export default function ControlledAccordions() {
               View Insights of {query.get("state")}
             </H5>
             <p className="font-Mont font-600 font-12px mt-1">
-              <span style={{ color: theme.viewInsightColor}} className="cursor-pointer" onClick={()=> history.push('/')}>{"IndiaMap / "}</span>
-              <span style={{ color: theme.viewInsightColor }} className="cursor-pointer" onClick={()=> history.push(backUrl)}>{query.get("state")}</span><span className="opacity-50"> / </span>
+              <span
+                style={{ color: theme.viewInsightColor }}
+                className="cursor-pointer"
+                onClick={() => history.push("/")}
+              >
+                {"IndiaMap / "}
+              </span>
+              <span
+                style={{ color: theme.viewInsightColor }}
+                className="cursor-pointer"
+                onClick={() => history.push(backUrl)}
+              >
+                {query.get("state")}
+              </span>
+              <span
+                style={{ color: theme.viewInsightColor }}
+                // className="opacity-50"
+              >
+                {" "}
+                /{" "}
+              </span>
               <span style={{ color: theme.color }}>View Insight</span>
             </p>
           </div>

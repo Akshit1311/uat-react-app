@@ -270,7 +270,7 @@ const LeftNavComponent = (props: any) => {
       });
     }
     return setSelectedBadges((prevState: any) => {
-      const newsBadges = [...prevState, badges];
+      const newsBadges = [badges];
       return newsBadges;
     });
   };
@@ -298,11 +298,12 @@ const LeftNavComponent = (props: any) => {
     badges.forEach((badge: any) =>
       newBadgesList.push({ id: badge.id, value: badge.title })
     );
-    return newBadgesList;
+    console.log("Badges", badges);
+    return [{ id: 'true', value: "Yes" }, { id: 'false', value: "No" }];
   };
 
   useEffect(() => {
-    fetchBadges();
+    // fetchBadges();
     fetchFilterList();
   }, []);
 
@@ -553,7 +554,7 @@ const LeftNavComponent = (props: any) => {
                         </RoundedBadge>
                       )}
                       <span className="count-text ms-auto">
-                        {badgesState.length}
+                        {2}
                       </span>
                     </DropDown>
                   </AccordionSummary>
@@ -562,7 +563,7 @@ const LeftNavComponent = (props: any) => {
                       accessor={"value"}
                       colorTheme={colorTheme}
                       originalData={trimBadges(badgesState)}
-                      loading={badgesLoading}
+                      loading={false}
                       selectedItem={selectedBadges}
                       handleClick={handleBadgesClick}
                       handleApplyClick={onApplyBadges}
