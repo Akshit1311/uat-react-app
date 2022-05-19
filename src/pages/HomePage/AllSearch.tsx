@@ -152,7 +152,7 @@ export default function SearchBar({
     const index = findIndex(currentStages, stage.id);
     if (index === -1) currentStages.push(stage.id);
     else currentStages.splice(index, 1);
-    return { ...prev, sectors: currentStages };
+    return { ...prev, stages: currentStages };
   });
 
   const findIndex = (array: any[], id: string) =>
