@@ -18,6 +18,7 @@ import { store } from "./store/store";
 import { useSelector, useDispatch } from 'react-redux'
 import { ConfigState } from "./store/config";
 import useLocalStorage from 'use-local-storage'
+import { MdDarkMode } from "react-icons/md";
 
 axios.defaults.baseURL = axiosConfig.baseURL;
 
@@ -63,7 +64,7 @@ function App() {
                 <AppNavigator />
               </BrowserRouter>
               <ThemeButton bottom={'100px'} onClick={themeHandler}>
-                <BiLoaderCircle />
+                <MdDarkMode style={{ marginBottom: "4px", marginLeft: "3px"}} />
               </ThemeButton>
             </ThemeContext.Provider>
           </ThemeProvider>

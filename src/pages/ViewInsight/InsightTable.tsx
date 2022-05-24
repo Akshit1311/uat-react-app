@@ -46,7 +46,7 @@ export default function InsightTable({
   return (
     <div className='scroll-area-wrapper'>
       <div className="scroll-area">
-        <div className="view-insight-header">
+        <div className="view-insight-header" style={{ background: theme.accordionHeader  }}>
           <div>
             <StarBorderIcon className="hidden" />
             <span>{title}</span>
@@ -83,23 +83,27 @@ export default function InsightTable({
               )}
               <span>{insight.text}</span>
             </div>
-
+                {
+                  console.log('StateName', stateName)
+                }
             {
-              stateName !== "" || !stateName ? (
+              typeof stateName === 'string' && stateName.length > 0 ? (
                 <>
                   <div className="border-type-2 font-500 text-right">{insight.count}</div>
                   <div className="border-type-3 font-500 text-right">{insight.percentage} %</div>
                   <div className="border-type-2 font-500 text-right">{insight.indiaTotal}</div>
+                  <div className="border-type-3 font-500 text-right">
+                    {insight.indiaPercentage} %
+                  </div>
                 </>
               ) : (
                 <>
-
+                  <div className="border-type-2 font-500 text-right">{insight.count}</div>
+                  <div className="border-type-3 font-500 text-right">{insight.percentage} %</div>
                 </>
+              
               )
             }
-            <div className="border-type-3 font-500 text-right">
-              {insight.indiaPercentage} %
-            </div>
           </div>
         ))}
       </div>

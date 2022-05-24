@@ -89,4 +89,5 @@ export const ThemeButton = styled.button<any>`
   color: ${(props) => props.theme.color};
   border: 2px solid ${(props:any)=> ThemeColorIdentifier(props.colorTheme|| '')};
   z-index: 100;
+  font-size: 25px;
 `;

@@ -75,7 +75,8 @@ export const PRIMARY_THEME = {
   sideSearch:{
     background: "white",
     color: "black"
-  }
+  },
+  accordionHeader: "white"
 };
 
 export const DARK_THEME = {
@@ -145,7 +146,8 @@ export const DARK_THEME = {
   sideSearch:{
     background: "rgba(37,40,58,1)",
     color: "white"
-  }
+  },
+  accordionHeader:"#26283A"
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);

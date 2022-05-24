@@ -155,7 +155,7 @@ export default function Accordion({
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
-          style={{ paddingBottom: "-10px" }}
+          style={{ paddingBottom: "-10px", background: theme.accordionHeader }}
         >
           <div>
             <p className="font-Mont font-600 font-14px mb-0 px-2">{title}</p>

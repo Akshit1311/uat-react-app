@@ -31,6 +31,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setColorTheme } from "../../store/config";
 import moment from "moment";
+import StateViewDataTable from "./StateViewDataTable";
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -182,7 +183,7 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList(body);
   };
 
-  
+
 
   // useEffect(() => {
   //   fetchCounts();
@@ -445,15 +446,19 @@ const HomePage = (props: HomePageTypes) => {
                       <>
                         <div
                           style={{
-                            display: !startupListActive ? "block" : "none",
+                            display: !startupListActive ? "block" : "none", transition: "all 0.3s"
                           }}
                           className="mx-0 ms-sm-2 ms-0"
                         >
-                          <DataTable
-                            fetch={fetchTableData}
-                            state={tableState}
-                            loading={tableLoading}
-                          />
+                          {stateViewMode ? (
+                            <StateViewDataTable selectedArea={appliedFilters.states[0]} />
+                          ) : (
+                            <DataTable
+                              fetch={fetchTableData}
+                              state={tableState}
+                              loading={tableLoading}
+                            />
+                          )}
                         </div>
                       </>
                     }

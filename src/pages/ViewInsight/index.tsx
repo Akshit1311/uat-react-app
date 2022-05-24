@@ -40,7 +40,13 @@ export default function ControlledAccordions() {
     };
 
   React.useEffect(() => {
-    fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
+    const id = query.get('id');
+    console.log("Id", id, typeof id);
+    if(typeof id === 'string' && id.length === 0){
+      fetchInsights(`/insight/country/india/2015-01-01/2022-06-24`);
+    } else {
+      fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
+    }
   }, [query.get("id")]);
 
   const backUrl: string = `/?id=${query.get("id")}&state=${query.get("state")}`;
@@ -65,7 +71,7 @@ export default function ControlledAccordions() {
                 className="cursor-pointer"
                 onClick={() => history.push(backUrl)}
               >
-                {query.get("state")}
+                {query.get("state")?.length === 0  ? "India" : query.get("state")}
               </span>
               <span
                 style={{ color: theme.viewInsightColor }}
