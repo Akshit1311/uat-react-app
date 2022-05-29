@@ -26,6 +26,7 @@ interface ViewChangerComponentsTypes {
   fetchPolicy: any;
   setStateViewMode: React.Dispatch<boolean>;
   stateViewMode: boolean;
+  fetchDistrict: any;
 }
 
 const DARK_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
@@ -52,6 +53,7 @@ function ViewChangerComponent({
   fetchPolicy,
   setStateViewMode,
   stateViewMode,
+  fetchDistrict
 }: ViewChangerComponentsTypes) {
   const [windowWidth, windowHeight] = useWindowSize()
   const {
@@ -232,6 +234,7 @@ function ViewChangerComponent({
                     shadow={false}
                     onClick={() => {
                       setStateViewMode(true);
+                      fetchDistrict();
                     }}
                     className="btn background-color-theme btn-radius w-100 text-white mb-0"
                   >

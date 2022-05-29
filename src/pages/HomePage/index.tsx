@@ -74,6 +74,12 @@ const INITIAL_FILTER_STATE = {
   registrationTo: "",
 };
 
+const INITIAL_DISTRICT_STATISTICS = {
+  "from": "2015-01-10",
+  "to": "2022-01-01",
+  "data": []
+}
+
 export class CountBlockModel {
   Exploring: number = 0;
   Incubator: number = 0;
@@ -123,6 +129,9 @@ const HomePage = (props: HomePageTypes) => {
     "/startup/filter/v2/defaults",
     INITIAL_FILTER_STATE2
   );
+
+  const [fetchDistrict, districtStatistics, districtStatisticsLoading] = useMutate(`data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`, INITIAL_DISTRICT_STATISTICS)
+  console.log("Distrct Statics", districtStatistics);
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
 
@@ -363,7 +372,7 @@ const HomePage = (props: HomePageTypes) => {
                         />
                       )}
                       {stateViewMode && (
-                        <StateView selectedArea={appliedFilters.states[0]} />
+                        <StateView selectedArea={appliedFilters.states[0]} colorTheme={primaryColorTheme} />
                       )}
                     </div>
                     <div className="col-12 col-view-changer">
@@ -373,6 +382,7 @@ const HomePage = (props: HomePageTypes) => {
                         fetchPolicy={fetchPolicy}
                         setStateViewMode={setStateViewMode}
                         stateViewMode={stateViewMode}
+                        fetchDistrict={fetchDistrict}
                       />
                     </div>
                   </div>
