@@ -75,10 +75,10 @@ const INITIAL_FILTER_STATE = {
 };
 
 const INITIAL_DISTRICT_STATISTICS = {
-  "from": "2015-01-10",
-  "to": "2022-01-01",
-  "data": []
-}
+  from: "2015-01-10",
+  to: "2022-01-01",
+  data: [],
+};
 
 export class CountBlockModel {
   Exploring: number = 0;
@@ -119,19 +119,28 @@ const HomePage = (props: HomePageTypes) => {
     id: "",
     name: "",
   });
-  const [countState, setCountState] = useState<any>(new CountBlockModel())
+  const [countState, setCountState] = useState<any>(new CountBlockModel());
 
-  const currentDate = moment(new Date()).format('YYYY-MM-DD')
+  const currentDate = moment(new Date()).format("YYYY-MM-DD");
   const [fetchTableData, tableState, tableLoading] = useQuery(
-    "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/2015-01-01/" + currentDate
+    "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/2015-01-01/" +
+      currentDate
   );
   const [fetchFilterList, filterState, filterLoading] = useMutate(
     "/startup/filter/v2/defaults",
     INITIAL_FILTER_STATE2
   );
 
-  const [fetchDistrict, districtStatistics, districtStatisticsLoading] = useMutate(`data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`, INITIAL_DISTRICT_STATISTICS)
-  console.log("Distrct Statics", districtStatistics);
+  const [startupType, setStartupType] = useState<string>("Startup");
+  const [fetchDistrict, districtStatistics, districtStatisticsLoading] =
+    useQuery(
+      `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`
+    );
+  console.log(
+    "Distrct Statics",
+    districtStatistics,
+    `data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`
+  );
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
 
@@ -192,8 +201,6 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList(body);
   };
 
-
-
   // useEffect(() => {
   //   fetchCounts();
   // }, [appliedFilters])
@@ -217,7 +224,7 @@ const HomePage = (props: HomePageTypes) => {
     setSelectedStateByMap,
     setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
-    appliedFilters
+    appliedFilters,
   };
 
   const mapViewResources = {
@@ -256,8 +263,9 @@ const HomePage = (props: HomePageTypes) => {
   const [startupListActive, setStartupListActive] = useState(true);
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
 
-  const viewInsightUrl = `/view-insight?id=${selectedState[0] ? selectedState[0].id : ""
-    }&state=${selectedState[0] ? selectedState[0].value : ""}`;
+  const viewInsightUrl = `/view-insight?id=${
+    selectedState[0] ? selectedState[0].id : ""
+  }&state=${selectedState[0] ? selectedState[0].value : ""}`;
   const query = useWebQuery();
 
   useEffect(() => {
@@ -332,11 +340,11 @@ const HomePage = (props: HomePageTypes) => {
                     style={
                       windowWidth < 768
                         ? {
-                          position: "fixed",
-                          top: "70px",
-                          background: theme.bgColorStart,
-                          zIndex: 1000,
-                        }
+                            position: "fixed",
+                            top: "70px",
+                            background: theme.bgColorStart,
+                            zIndex: 1000,
+                          }
                         : {}
                     }
                   >
@@ -372,7 +380,12 @@ const HomePage = (props: HomePageTypes) => {
                         />
                       )}
                       {stateViewMode && (
-                        <StateView selectedArea={appliedFilters.states[0]} colorTheme={primaryColorTheme} />
+                        <StateView
+                          selectedArea={appliedFilters.states[0]}
+                          colorTheme={primaryColorTheme}
+                          startupType={startupType}
+                          data={districtStatistics}
+                        />
                       )}
                     </div>
                     <div className="col-12 col-view-changer">
@@ -383,6 +396,7 @@ const HomePage = (props: HomePageTypes) => {
                         setStateViewMode={setStateViewMode}
                         stateViewMode={stateViewMode}
                         fetchDistrict={fetchDistrict}
+                        setStartupType={setStartupType}
                       />
                     </div>
                   </div>
@@ -409,29 +423,35 @@ const HomePage = (props: HomePageTypes) => {
                   <ButtonGroup className="btn-group text-center col-md-3 button-togglers">
                     <Button
                       colorTheme={primaryColorTheme}
-                      backgroundColor={`${!startupListActive &&
+                      backgroundColor={`${
+                        !startupListActive &&
                         theme.togglerButton.backgroundInactive
-                        }`}
-                      color={`${!startupListActive && theme.togglerButton.color
-                        }`}
+                      }`}
+                      color={`${
+                        !startupListActive && theme.togglerButton.color
+                      }`}
                       border={`${!startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${startupListActive && "text-white background-color-theme"
-                        }`}
+                      className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
+                        startupListActive && "text-white background-color-theme"
+                      }`}
                       onClick={toggleStartUp}
                     >
                       Startups List
                     </Button>
                     <Button
                       colorTheme={primaryColorTheme}
-                      backgroundColor={`${startupListActive &&
+                      backgroundColor={`${
+                        startupListActive &&
                         theme.togglerButton.backgroundInactive
-                        }`}
-                      color={`${startupListActive && theme.togglerButton.color
-                        }`}
+                      }`}
+                      color={`${
+                        startupListActive && theme.togglerButton.color
+                      }`}
                       border={`${startupListActive && "0px"}`}
-                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${!startupListActive &&
+                      className={`font-500 font-family-Mont shadow-none  px-3 border-0 ${
+                        !startupListActive &&
                         "text-white background-color-theme"
-                        }`}
+                      }`}
                       onClick={toggleStartUp}
                     >
                       Data Table
@@ -456,12 +476,18 @@ const HomePage = (props: HomePageTypes) => {
                       <>
                         <div
                           style={{
-                            display: !startupListActive ? "block" : "none", transition: "all 0.3s"
+                            display: !startupListActive ? "block" : "none",
+                            transition: "all 0.3s",
                           }}
                           className="mx-0 ms-sm-2 ms-0"
                         >
                           {stateViewMode ? (
-                            <StateViewDataTable selectedArea={appliedFilters.states[0]} />
+                            <StateViewDataTable
+                              selectedArea={appliedFilters.states[0]}
+                              fetch={fetchDistrict}
+                              data={districtStatistics.data}
+                              startupType={startupType}
+                            />
                           ) : (
                             <DataTable
                               fetch={fetchTableData}

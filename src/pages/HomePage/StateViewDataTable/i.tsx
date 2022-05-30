@@ -89,8 +89,8 @@ const TableContainer = (props: any) => {
   function getHeaderCellClass(index: number) {
     if (index === 0 && mentorsTable) return "header-cell-state-2";
     if (index === 0 && !mentorsTable) return "header-cell-state w-50";
-    if (index !== 0 && mentorsTable) return "header-cell-2";
-    if (index !== 0 && !mentorsTable) return "header-cell";
+    if (index !== 0 && mentorsTable) return "header-cell-2 w-50";
+    if (index !== 0 && !mentorsTable) return "header-cell w-50";
   }
 
   return (
