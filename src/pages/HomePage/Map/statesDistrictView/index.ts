@@ -18,6 +18,23 @@ import PuduCheery from "./puducherry.json";
 import Punjab from "./punjab.json";
 import Tripura from "./tripura.json";
 import Uttarakhand from "./uttarakhand.json";
+import AndraPradesh from "./andhrapradesh.json";
+import AndmanNichobarIsland from "./andmanAndNichobar.json";
+import ArunachalPradesh from "./arunachalPradesh.json";
+import Assam from "./assam.json";
+import Bihar from "./bihar.json";
+import Chattisgarh from "./chattisgarh.json";
+import Gujrat from "./gujarat.json";
+import Haryana from "./haryana.json";
+import JammuKashmir from "./jammuAndKashmir.json";
+import Lakshdweep from "./lakshdweep.json";
+import MadhyaPradesh from "./madhyaPradesh.json";
+import Orisha from "./orisha.json";
+import Sikkim from "./sikkim.json";
+import Telengana from "./telangana.json";
+import UttarPradesh from "./uttarpradesh.json";
+import WestBengal from "./westBengal.json";
+
 export interface DistrictBorderType {
   name: string;
   d: string;
@@ -30,25 +47,106 @@ export interface StateWiseMapViewType {
   text?: string;
 }
 
-export const StatesDistrictView = [
+export const StatesDistrictView: StateWiseMapViewType[] = [
+  {
+    id: "5f48ce592a9bb065cdf9fb40",
+    name: "West Bengal",
+    text: "West Bengal",
+    path: [...WestBengal],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb3c",
+    name: "Telangana",
+    text: "Telangana",
+    path: [...Telengana],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb3a",
+    name: "Sikkim",
+    text: "Sikkim",
+    path: [...Sikkim],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb30",
+    name: "Madhya Pradesh",
+    text: "Madhya Pradesh",
+    path: [...MadhyaPradesh],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb2f",
+    name: "Lakshadweep",
+    text: "Lakshadweep",
+    path: [...Lakshdweep],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb2b",
+    name: "Jammu and Kashmir",
+    text: "Jammu and Kashmir",
+    path: [...JammuKashmir],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb29",
+    name: "Haryana",
+    text: "Haryana",
+    path: [...Haryana],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb28",
+    name: "Gujarat",
+    text: "Gujarat",
+    path: [...Gujrat],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb25",
+    name: "Chhattisgarh",
+    text: "Chhattisgarh",
+    path: [...Chattisgarh],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb23",
+    name: "Bihar",
+    text: "Bihar",
+    path: [...Bihar],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb22",
+    name: "Assam",
+    text: "Assam",
+    path: [...Assam],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb21",
+    name: "Arunachal Pradesh",
+    text: "Arunachal Pradesh",
+    path: [...ArunachalPradesh],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb1f",
+    name: "Andaman and Nicobar Islands",
+    text: "Andaman and Nicobar Islands",
+    path: [...AndmanNichobarIsland],
+  },
+  {
+    id: "5f48ce592a9bb065cdf9fb20",
+    name: "Andhra Pradesh",
+    text: "Andhra Pradesh",
+    path: [...AndraPradesh],
+  },
   {
     id: "5f48ce592a9bb065cdf9fb35",
     name: "Nagaland",
-
     text: "Nagaland",
     path: [...NagaLand],
   },
-  {
-    id: "5f48ce592a9bb065cdf9fb34",
-    name: "Mizoram",
-
-    text: "Mizoram",
-    path: [...Mizoram],
-  },
+  // {
+  //   id: "5f48ce592a9bb065cdf9fb34",
+  //   name: "Mizoram",
+  //   text: "Mizoram",
+  //   path: [...Mizoram],
+  // },
   {
     id: "5f48ce592a9bb065cdf9fb33",
     name: "Meghalaya",
-
     text: "Meghalaya",
     path: [...Meghalaya],
   },
@@ -151,7 +249,7 @@ export const StatesDistrictView = [
     name: "Uttar Pradesh",
     id: "5f48ce592a9bb065cdf9fb3f",
     text: "Uttar Pradesh",
-    path: [],
+    path: [...UttarPradesh],
   },
   {
     name: "Ladakh",
@@ -168,7 +266,7 @@ export const StatesDistrictView = [
   {
     id: "5f48ce592a9bb065cdf9fb36",
     name: "Odisha",
-    path: [],
+    path: [...Orisha],
     text: "Odisha",
   },
   {

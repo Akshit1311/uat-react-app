@@ -26,15 +26,15 @@ export default function Table(props: any) {
         accessor: "district",
       },
       {
-        Header: String(props.startupType.text),
-        accessor: "statistics." + String(StartupTypesKeys[props.startupType.text]),
+        Header:   props.startupType.text || "All Startup",
+        accessor: "statistics." + String(StartupTypesKeys[props.startupType.text] ? StartupTypesKeys[props.startupType.text] : "Startup"),
       },
     ],
     []
   );
   console.log("Statustucisjdkasda", props.startupType);
   return (
-    <div className="col-4">
+    <div className="col-4 mx-0 px-2">
       <TableContainer
         columns={columns2}
         bodyData={props.data || []}
