@@ -58,9 +58,10 @@ const DropDownListComponent = (props: any) => {
       <div
         key={index}
         onClick={() => handleClick(dataObj)}
+        id={dataObj.id}
         className={`list-card me-2 ${
           findSelectedState(dataObj) ? "selected-list-card" : bgUnSelected()
-        } ${tempSelectedItem === index ? 'list-card-color' : '' }`}
+        } ${tempSelectedItem === index ? "list-card-color" : ""}`}
       >
         <h5 className="m-0 p-0">{dataObj["value"]}</h5>
       </div>
@@ -89,19 +90,41 @@ const DropDownListComponent = (props: any) => {
     }
   }, [originalData.length, loading]);
 
-  const onKeyUp = (e:any) =>{
+  const onKeyUp = (e: any) => {
     const keyCode = e.keyCode;
-    console.log("ENter key Code", keyCode)
-    if(keyCode === 40){
-      setTempSelectedItem(prev=> prev === data.length -1 ? 0 : prev + 1)
-    } 
-    if(keyCode === 38){
-      setTempSelectedItem(prev=> prev === 0 ? data.length -1 : prev - 1)
+
+    console.log("ENter key Code", keyCode);
+    if (keyCode === 40) {
+
+      setTempSelectedItem((prev) => {
+        document
+          .getElementById(data[prev === data.length - 1 ? 0 : prev + 1]?.id)
+          ?.scrollIntoView({ behavior: "smooth" });
+        return prev === data.length - 1 ? 0 : prev + 1;
+      });
     }
-    if(keyCode === 13){
-      handleClick(data[tempSelectedItem])
+    if (keyCode === 38) {
+      setTempSelectedItem((prev) => {
+        document
+        .getElementById(data[prev === 0 ? data.length - 1 : prev - 1]?.id)
+        ?.scrollIntoView({ behavior: "smooth" });
+        return (prev === 0 ? data.length - 1 : prev - 1)
+      }
+      
+      );
     }
-  }
+    if (keyCode === 13) {
+      handleClick(data[tempSelectedItem]);
+    }
+  };
+
+  const scrollFunction = () => console.log("Hello");
+
+  useEffect(() => {
+    window.onscroll = function () {
+      scrollFunction();
+    };
+  }, []);
 
   return (
     <div className="drop-down-list-component">
