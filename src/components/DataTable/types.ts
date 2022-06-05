@@ -22,6 +22,7 @@ export interface SearchTypes {
   inputClass?: string;
   onChange: any;
   value:string;
+  placeholder?: string;
 }
 
 interface HeaderConfig {

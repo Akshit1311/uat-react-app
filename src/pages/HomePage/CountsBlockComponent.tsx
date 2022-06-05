@@ -25,6 +25,8 @@ interface CountBlockTypes {
   countResource: any;
   applyRoles: any;
   setStateViewMap: React.Dispatch<boolean>;
+  activeCard: string;
+  setActiveCard: any;
 }
 
 interface CountCardTypes {
@@ -59,11 +61,9 @@ const CountCardWrapper = styled.div<CountCardWrapperTypes>`
   @media (max-width: 768px) {
     border: none;
     background-color: ${(props: any) =>
-    props.active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0)"} !important;
+      props.active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0)"} !important;
     color: ${(props: any) =>
-    props.active
-      ? props.theme.color
-      : ""} !important;
+      props.active ? props.theme.color : ""} !important;
     height: 82px;
     font-weight: ${(props: any) => (props.active ? "600" : "500")};
   }
@@ -139,7 +139,7 @@ const CountCard = ({
       return () => clearInterval(interval);
     }
 
-    console.log(state[accessor ? accessor : name.slice(0, -1)])
+    console.log(state[accessor ? accessor : name.slice(0, -1)]);
   }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
 
   return (
@@ -177,7 +177,18 @@ const CountCard = ({
             {currentCount}
           </h4>
           <div>
-            <h6 style={{ color: !active ? theme.color : windowWidth < 768 ? ThemeColorIdentifier(colorTheme) : '' }} className="mx-0 mb-0 p-0">{name}</h6>
+            <h6
+              style={{
+                color: !active
+                  ? theme.color
+                  : windowWidth < 768
+                  ? ThemeColorIdentifier(colorTheme)
+                  : "",
+              }}
+              className="mx-0 mb-0 p-0"
+            >
+              {name}
+            </h6>
             <div
               className={`count-underline d-block d-sm-none`}
               style={{
@@ -192,15 +203,22 @@ const CountCard = ({
   );
 };
 
+interface KeyValuePair {
+  id: string;
+  value: string;
+}
+
 const CountsBlockComponent = ({
   selectedArea,
   countResource,
   applyRoles,
   setStateViewMap,
+  activeCard,
+  setActiveCard,
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const history = useHistory();
-  const [activeCard, setActiveCard] = useState<string>("Startups");
+
   const {
     getCounts,
     colorTheme,
@@ -211,65 +229,60 @@ const CountsBlockComponent = ({
     tableState,
     selectedStateByMap,
     setSelectedStateByMap,
-    appliedFilters
+    appliedFilters,
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
-  console.log("STate Counts ----------------", stateCounts)
 
   const fetchCounts = async () => {
-    console.log("Fetch Count Called", {
-      ...appliedFilters, "roles": [
-        "Startup",
-        "Mentor",
-        "Investor",
-        "GovernmentBody",
-        "Incubator",
-        "Accelerator"
-      ]
-    })
     try {
-      const { data } = await axios.post('startup/v2/filter', {
-        ...appliedFilters, "roles": [
+      const { data } = await axios.post("startup/v2/filter", {
+        ...appliedFilters,
+        roles: [
           "Startup",
           "Mentor",
           "Investor",
           "GovernmentBody",
           "Incubator",
-          "Accelerator"
-        ]
+          "Accelerator",
+        ],
       });
-      console.log("STate Countes ------------", data.counts)
-      interface KeyValuePair {
-        id: string;
-        value: string;
-      }
-
-
-      const getCountsById = (id: string) => data.counts.find((i: KeyValuePair) => i.id === id)
+      const getCountsById = (id: string) =>
+        data.counts.find((i: KeyValuePair) => i.id === id);
 
       const count = new CountBlockModel();
-      count.Incubator = getCountsById('Incubator') ? getCountsById('Incubator').value : 0;
-      count.Mentor = getCountsById('Mentor') ? getCountsById('Mentor').value : 0;
-      count.Accelerator = getCountsById('Accelerator') ? getCountsById('Accelerator').value : 0;
-      count.Startup = getCountsById('Startup') ? getCountsById('Startup').value : 0;
-      count.GovernmentBody = getCountsById('GovernmentBody') ? getCountsById('GovernmentBody').value : 0;
-      count.Investor = getCountsById('Investor') ? getCountsById('Investor').value : 0;
+      count.Incubator = getCountsById("Incubator")
+        ? getCountsById("Incubator").value
+        : 0;
+      count.Mentor = getCountsById("Mentor")
+        ? getCountsById("Mentor").value
+        : 0;
+      count.Accelerator = getCountsById("Accelerator")
+        ? getCountsById("Accelerator").value
+        : 0;
+      count.Startup = getCountsById("Startup")
+        ? getCountsById("Startup").value
+        : 0;
+      count.GovernmentBody = getCountsById("GovernmentBody")
+        ? getCountsById("GovernmentBody").value
+        : 0;
+      count.Investor = getCountsById("Investor")
+        ? getCountsById("Investor").value
+        : 0;
       // console.log(count)
-      setStateCounts(count)
+      setStateCounts(count);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  console.log(stateCounts)
-
+  console.log(stateCounts);
 
   const filterStateCounts = () => {
     const state = tableState.data
       ? tableState.data.find(
-        (item: any) =>
-          item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
-      )
+          (item: any) =>
+            item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
+        )
       : undefined;
     if (state) {
       const count = new CountBlockModel();
@@ -331,17 +344,22 @@ const CountsBlockComponent = ({
                 name: "",
               });
               setStateViewMap(false);
-              history.push('/')
+              history.push("/");
             }}
-            className={`mb-3 ${stateSelected ? 'text-theme' : ''}`}
+            className={`mb-3 ${stateSelected ? "text-theme" : ""}`}
           >
             India
           </H5>
           {stateSelected ? (
             <>
               <div className="d-flex ms-2 align-items-center">
-                <p style={{ color: theme.color }} className="m-0 p-0 font-12px">{">"}</p>
-                <p style={{ color: theme.color }} className="p-0 m-0 state-label ms-2">
+                <p style={{ color: theme.color }} className="m-0 p-0 font-12px">
+                  {">"}
+                </p>
+                <p
+                  style={{ color: theme.color }}
+                  className="p-0 m-0 state-label ms-2"
+                >
                   {selectedArea.stateName}
                 </p>
               </div>

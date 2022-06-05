@@ -108,6 +108,8 @@ const HomePage = (props: HomePageTypes) => {
     MapVariables.INDIA
   );
 
+  const [activeCard, setActiveCard] = useState<string>("Startups");
+
   const [mobileFilterVisible, setMobileFilterVisible] =
     useState<boolean>(false);
   const [appliedFilters, setAppliedFilters] =
@@ -244,6 +246,9 @@ const HomePage = (props: HomePageTypes) => {
     fetchDateRange,
     dateRangeState,
     dateRangeLoading,
+    setStateViewMode,
+    fetchDistrict,
+    activeCard,
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -353,6 +358,7 @@ const HomePage = (props: HomePageTypes) => {
                       selectedArea={selectedArea}
                       applyRoles={applyRoles}
                       setStateViewMap={setStateViewMode}
+                      activeCard={activeCard} setActiveCard={setActiveCard}
                     />
                   </div>
                   <div className="d-block d-sm-none mb-3">
@@ -382,6 +388,7 @@ const HomePage = (props: HomePageTypes) => {
                       {stateViewMode && (
                         <StateView
                           selectedArea={appliedFilters.states[0]}
+                          setStateViewMode={setStateViewMode}
                           colorTheme={primaryColorTheme}
                           startupType={startupType}
                           data={districtStatistics}

@@ -123,6 +123,8 @@ function IndiaMap({
     tableState,
     appliedFilters,
     tableLoading,
+    setStateViewMode,
+    fetchDistrict,
   } = mapViewResource;
 
   const theme = useContext(ThemeContext);
@@ -385,6 +387,10 @@ function IndiaMap({
                     onMouseEnter={(e) => handleMouseEnter(state, e)}
                     onMouseLeave={handleStateMouseLeave}
                     onClick={(e) => handleStateClick(state)}
+                    onDoubleClick={()=> {
+                      setStateViewMode(true);
+                      fetchDistrict();
+                    }}
                     fillOpacity={
                       !isCircleActive
                         ? tableState && tableState.data

@@ -51,6 +51,7 @@ export interface StateViewProps {
   colorTheme: any;
   startupType: any;
   data: StatisticsDataMainObj;
+  setStateViewMode: any;
 }
 
 const MapWrapper = styled.div`
@@ -62,6 +63,7 @@ export default function StateView({
   colorTheme,
   startupType,
   data,
+  setStateViewMode
 }: StateViewProps) {
   const theme = useContext(ThemeContext);
   const componentProps = {
@@ -171,7 +173,7 @@ export default function StateView({
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative" }}
     >
-      <svg viewBox="-50 0 550 550">
+      <svg viewBox="-50 0 550 550" onDoubleClick={()=> setStateViewMode(false)}>
         {/* {
           Maharashtra.map((district, index:number)=>(
             <MuiToolTip placement="top" title={district.name} followCursor arrow componentsProps={componentProps}>

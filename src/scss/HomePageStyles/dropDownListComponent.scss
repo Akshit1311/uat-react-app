@@ -1,61 +1,66 @@
 .drop-down-list-component {
-    margin-right: -0.75rem;
-    .state-container {
-        overflow-y: scroll;
-        max-height: 268px;
-    }
-    h5 {
-        font-family: "Poppins", sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 150%;
-    }
-    
-    .list-card {
-        // background: #f8f8f8;
-        border-radius: 4px;
-        margin-bottom: 12px;
-        padding: 12px 12px 11px 12px;
-        cursor: pointer;
-        &:active {
-            color: #feffff;
-            background-color: #0177fa;
-        }
-    }
-    .state-search-bar {
-        border: 1.5px solid black;
-        border-radius: 4px;
-        padding: 0px 8px 0px 12px;
-        margin-bottom: 12px;
-    }
-    .btn {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 150%;
-    }
-    .f-400 {
-        font-family: "Poppins", sans-serif;
-        font-size: 14px;
-        color: black;
-    }
-    //Custom Scroll Bar
-    /* width */
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
+  margin-right: -0.75rem;
+  .state-container {
+    overflow-y: scroll;
+    max-height: 268px;
+  }
+  h5 {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+  }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 0px grey;
-        border-radius: 10px;
-        height: 45px;
+  .list-card {
+    // background: #f8f8f8;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    padding: 12px 12px 11px 12px;
+    cursor: pointer;
+    &:active {
+      color: #feffff;
+      background-color: #0177fa;
     }
+  }
+  .list-card-color {
+    color: #feffff;
+    background-color: #0177fa !important;
+    transition: all 0.3s;
+  }
+  .state-search-bar {
+    border: 1.5px solid black;
+    border-radius: 4px;
+    padding: 0px 8px 0px 12px;
+    margin-bottom: 12px;
+  }
+  .btn {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+  }
+  .f-400 {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: black;
+  }
+  //Custom Scroll Bar
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #c4c4c4;
-        border-radius: 7px;
-    }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 0px grey;
+    border-radius: 10px;
+    height: 45px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 7px;
+  }
 }

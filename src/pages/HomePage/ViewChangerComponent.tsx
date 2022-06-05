@@ -65,7 +65,7 @@ function ViewChangerComponent({
     setSelectedArea,
     selectedArea,
     getCounts,
-    colorTheme, fetchDateRange, dateRangeState, dateRangeLoading, appliedFilters
+    colorTheme, fetchDateRange, dateRangeState, dateRangeLoading, appliedFilters, activeCard
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
@@ -152,7 +152,8 @@ function ViewChangerComponent({
     window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`;
   };
 
-  const resourse = { isCircleActive, colorTheme, mapMode, setMapMode, setIsCircleActive }
+  const resourse = { isCircleActive, colorTheme, mapMode, setMapMode, setIsCircleActive, activeCard };
+ 
   return (
     <div className="view-changer-component-styles" style={{ marginTop: windowWidth > 768 ? '24px' : '0px' }}>
       <div className={`row ${windowWidth < 768 ? "" : " mx-0 px-0"}`}>
@@ -228,11 +229,11 @@ function ViewChangerComponent({
                   colorTheme={colorTheme}
                   shadow={true}
                   onClick={() => redirectToStatePolicy()}
-                  className={`btn btn-radius w-100 mt-4 ${stateViewMode ? 'mb-0' : ''}`}
+                  className={`btn btn-radius w-100 mt-4 ${stateViewMode || activeCard !== 'Startups'? 'mb-0' : ''}`}
                 >
                   {VIEW_STATE_STARTUP_POLICY}
                 </ViewMoreButton>
-                {!stateViewMode && (
+                {!stateViewMode && activeCard === 'Startups' && (
                   <ViewMoreButton
                     colorTheme={colorTheme}
                     shadow={false}

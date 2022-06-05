@@ -43,6 +43,7 @@ const DropDownListComponent = (props: any) => {
 
   const [data, setData] = useState<any>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [tempSelectedItem, setTempSelectedItem] = useState<number>(-1);
 
   const findSelectedState = (dataObj: any) =>
     selectedItem.find((item: any) => item.id === dataObj.id);
@@ -59,7 +60,7 @@ const DropDownListComponent = (props: any) => {
         onClick={() => handleClick(dataObj)}
         className={`list-card me-2 ${
           findSelectedState(dataObj) ? "selected-list-card" : bgUnSelected()
-        }`}
+        } ${tempSelectedItem === index ? 'list-card-color' : '' }`}
       >
         <h5 className="m-0 p-0">{dataObj["value"]}</h5>
       </div>
@@ -88,6 +89,20 @@ const DropDownListComponent = (props: any) => {
     }
   }, [originalData.length, loading]);
 
+  const onKeyUp = (e:any) =>{
+    const keyCode = e.keyCode;
+    console.log("ENter key Code", keyCode)
+    if(keyCode === 40){
+      setTempSelectedItem(prev=> prev === data.length -1 ? 0 : prev + 1)
+    } 
+    if(keyCode === 38){
+      setTempSelectedItem(prev=> prev === 0 ? data.length -1 : prev - 1)
+    }
+    if(keyCode === 13){
+      handleClick(data[tempSelectedItem])
+    }
+  }
+
   return (
     <div className="drop-down-list-component">
       <SearchWrapper
@@ -102,6 +117,7 @@ const DropDownListComponent = (props: any) => {
             type="text"
             value={searchQuery}
             onChange={onSearch}
+            onKeyUp={onKeyUp}
             className={`ms-0 form-control me-3 border-0 shadow-none f-400 font-Mont`}
             placeholder="Search"
           />

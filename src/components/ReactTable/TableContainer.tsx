@@ -58,7 +58,9 @@ const TableContainer = (props: any) => {
   const onSearch = (query: string) => {
     const value = query;
     const list = memorisedValue.filter((item) =>
-      item.text.toLowerCase().includes(value.toLowerCase())
+      item.text && typeof item.text === "string"
+        ? item.text.toLowerCase().includes(value.toLowerCase())
+        : false
     );
     setSearchQuery(value);
     setRenderedData(list);
@@ -94,7 +96,11 @@ const TableContainer = (props: any) => {
 
   return (
     <div className="data-table-overflow-scroll">
-      <table {...getTableProps()} className="w-100" style={{ minWidth: '900px'}} >
+      <table
+        {...getTableProps()}
+        className="w-100"
+        style={{ minWidth: "900px" }}
+      >
         <thead className="w-100 py-5 ">
           {headerGroups.map((headerGroup) => (
             <TR
@@ -108,16 +114,17 @@ const TableContainer = (props: any) => {
                   {...column.getHeaderProps()}
                   borderWidth={index === 0 ? "0px" : "1px"}
                   fontWeight={true}
-                  borderColor="#e5e5e5" 
+                  borderColor="#e5e5e5"
                   borderHeight="48px"
                 >
                   <div
                     {...column.getSortByToggleProps()}
                     className="d-flex align-items-center w-100"
-                    
                   >
                     <div>
-                      {index === 0 || column.render('Header').toLowerCase() === 'seed fund startups'
+                      {index === 0 ||
+                      column.render("Header").toLowerCase() ===
+                        "seed fund startups"
                         ? column.render("Header")
                         : column
                             .render("Header")
@@ -139,7 +146,7 @@ const TableContainer = (props: any) => {
                 </Cells>
               ))}
             </TR>
-          ))} 
+          ))}
         </thead>
         <div className="mt-3 mb-2" style={{ maxWidth: "21rem" }}>
           <SearchBarComponent
@@ -147,6 +154,7 @@ const TableContainer = (props: any) => {
             borderRadius="4px"
             onChange={onSearch}
             value={searchQuery}
+            placeholder={'Search By State'}
             placeholderClass={`search-bar-placeholder-data-table ${theme.dataTable.inputClass}`}
             inputClass={`${theme.dataTable.searchBorderClass} radius-5 me-3`}
           />
