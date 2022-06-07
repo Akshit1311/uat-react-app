@@ -12,8 +12,39 @@ import { StateCircles } from "./StateCircle";
 import { StateBorders } from "./StartupIndiaMap";
 import { useWebQuery } from "../../../hooks/useWebQuery";
 import { useHistory } from "react-router-dom";
-import { ThemeProvider, Tooltip as MuiToolTip } from "@mui/material"
+import { ThemeProvider, Tooltip as MuiToolTip } from "@mui/material";
+import axios from "axios";
 
+interface StatisticsDataCount {
+  Exploring: number;
+  Incubator: number;
+  Corporate: number;
+  SIH_Admin: number;
+  Mentor: number;
+  Academia: number;
+  GovernmentBody: number;
+  ConnectToPotentialPartner: number;
+  IndiaMarketEntry: number;
+  Individual: number;
+  ServiceProvider: number;
+  Investor: number;
+  Startup: number;
+  Accelerator: number;
+  DpiitCertified: number;
+  TaxExempted: number;
+  WomenLed: number;
+  FFS: number;
+  PatentStartup: number;
+  SeedFundStartup: number;
+  ShowcasedStartups: number;
+}
+interface StatisticsData {
+  districtId: string;
+  district: string;
+  stateId: string;
+  state: string;
+  statistics: StatisticsDataCount;
+}
 interface IndiaMapTypes {
   mapViewResource: any;
   viewAreaMap?: string;
@@ -21,21 +52,29 @@ interface IndiaMapTypes {
   viewAreaCircle?: string;
 }
 
-function DistrictPath({ district, componentProps, theme }: any) {
-  const [isToolTipVisible, setToolTipVisible]= useState<boolean>(false)
+function DistrictPath({ district, componentProps, theme, getColorOpacity }: any) {
+  const [isToolTipVisible, setToolTipVisible] = useState<boolean>(false);
+  // console.log("GRadientLevel", getColorOpacity(district.title))
   return (
-    // <MuiToolTip placement="top" title={district.title} open={isToolTipVisible} arrow componentsProps={componentProps}>
+    <MuiToolTip
+      placement="top"
+      title={district.title}
+      // open={isToolTipVisible}
+      arrow
+      componentsProps={componentProps}
+    >
       <path
         onMouseEnter={() => setToolTipVisible(true)}
         onMouseLeave={() => setToolTipVisible(false)}
         d={district.d}
         id={district.title}
-        fill={"none"}
+        // fillOpacity={getColorOpacity(district.title)}
+        fill={"white"}
         stroke={theme.map.mapBorder}
-        strokeWidth={"0.5"}
+        strokeWidth={isToolTipVisible ? "3" : "0.5"}
       />
-    // </MuiToolTip>
-  )
+    </MuiToolTip>
+  );
 }
 
 const MapWrapper = styled.div`
@@ -128,6 +167,7 @@ function IndiaMap({
   } = mapViewResource;
 
   const theme = useContext(ThemeContext);
+  const [allIndiaDistrictData, setAllIndiaDistrictData] = useState([]);
 
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
     "https://api.startupindiaonline.com/startup/states"
@@ -257,14 +297,14 @@ function IndiaMap({
     //   }
     // })
     // console.log("Distrct Length ", DistrictBoarder.length, newArray.length)
-    setDistrictsBoarder(Districts2);
+    setDistrictsBoarder(DistrictBoarder);
   };
 
   const responsiveImageHeight = (mapArea: string) => {
     const split: string[] = mapArea.split(" ");
     if (height > 768) {
       const a: number = 980 - height;
-      split[0] = Number('-120').toString();
+      split[0] = Number("-120").toString();
       split[2] = (Number(split[2]) + a).toString();
       split[3] = (Number(split[3]) + a - 90).toString();
       split.toString().replaceAll(",", " ");
@@ -316,28 +356,103 @@ function IndiaMap({
       sx: {
         fontSize: "15px",
         background: theme.tooltip.background,
-        border: `2px solid ${ThemeColorIdentifier( colorTheme )}`,
+        border: `2px solid ${ThemeColorIdentifier(colorTheme)}`,
         borderRadius: "5px",
         color: theme.tooltip.text,
         cursor: "grab",
-        zIndex: 10000
+        zIndex: 10000,
       },
     },
     arrow: {
       sx: {
         color: theme.tooltip.background,
         "&::before": {
-          border: `2px solid ${ThemeColorIdentifier( colorTheme )}`,
+          border: `2px solid ${ThemeColorIdentifier(colorTheme)}`,
           backgroundColor: theme.tooltip.background,
-          boxSizing: "border-box"
+          boxSizing: "border-box",
         },
-      }
+      },
+    },
+  };
+
+  const getAllIndiaDistrictData = async (dateRange?: string) => {
+    try {
+      const url: string =
+        "data/v2/statistics/allDistricts/" +  "2015-01-01/2022-01-01";
+      const { data } = await axios.get(url);
+      console.log('AllDistrctApi',data);
+      setAllIndiaDistrictData(data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // setLoading()
+      // setAllIndiaDistrictData()
     }
-  }
+  };
+
+  useEffect(() => {
+    getAllIndiaDistrictData();
+  }, []);
+
+  const findMaximumValue = () => {
+    let max = 0;
+    console.log("COuntValues2312312321", allIndiaDistrictData);
+    if (Array.isArray(allIndiaDistrictData)) {
+      allIndiaDistrictData.forEach((district: any) => {
+        const value = district.statistics["Startup"];
+        if (!value) {
+          const case1Value = district.statistics.Startup;
+          max = case1Value > max ? case1Value : max;
+        } else {
+          console.log("COuntValues2312312321", value);
+          max = value > max ? value : max;
+        }
+      });
+    }
+    console.log("Max Value Gradient", max);
+    return max;
+  };
+
+  const getStatistics = (districtName: string) => {
+    if (Array.isArray(allIndiaDistrictData)) {
+      return allIndiaDistrictData.find((district: StatisticsData) => {
+        if (!district.district || !districtName) return;
+        return district.district.toLowerCase() == districtName.toLowerCase();
+      });
+    }
+
+    return null;
+  };
+
+  const getColorOpacity = (districtName: string) => {
+    const maxValue = findMaximumValue();
+    const statistics: any = getStatistics(districtName);
+    console.log("MaxValueSTatistics", maxValue, statistics);
+    if (statistics && maxValue) {
+      const startupTypeLocal: string =
+         "Startup";
+      
+      if (
+        Number(statistics.statistics[startupTypeLocal])
+      ) {
+        return 0;
+      }
+      const val = "Startup"
+      const colorLevel: number =
+        Number(statistics.statistics[val]) /
+        maxValue;
+      console.log("ColorLevel", colorLevel);
+      // return 1
+      return (colorLevel);
+    }
+    return 0;
+  };
+
+  useEffect(()=>{
+    findMaximumValue()
+  },[allIndiaDistrictData])
 
   return (
-
-
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative", maxWidth: "99vw", overflow: "hidden" }}
@@ -345,15 +460,25 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      {loadingIndiaMap === false && tableLoading === false ? (
+      {loadingIndiaMap === false &&
+      tableLoading === false ? (
         <svg
-          viewBox={getViewBoxArea()}
+          viewBox={
+            mapMode.id === MapVariables.DISTRICT.id
+              ? "-160 130 1579 1283"
+              : getViewBoxArea()
+          }
           className="mt-c-5-2"
           aria-label="Map of India"
         >
           <g style={{ transform: "scale(1)" }}>
-
-            <MuiToolTip placement="top" title={'Lakshadweep'} followCursor arrow componentsProps={componentProps}>
+            <MuiToolTip
+              placement="top"
+              title={"Lakshadweep"}
+              followCursor
+              arrow
+              componentsProps={componentProps}
+            >
               <circle
                 onClick={() =>
                   handleStateClick({
@@ -378,7 +503,13 @@ function IndiaMap({
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={componentProps}>
+                <MuiToolTip
+                  placement="top"
+                  title={state.name}
+                  followCursor
+                  arrow
+                  componentsProps={componentProps}
+                >
                   <path
                     opacity={state.opacity}
                     strokeLinejoin={state.strokeLinejoin}
@@ -387,7 +518,7 @@ function IndiaMap({
                     onMouseEnter={(e) => handleMouseEnter(state, e)}
                     onMouseLeave={handleStateMouseLeave}
                     onClick={(e) => handleStateClick(state)}
-                    onDoubleClick={()=> {
+                    onDoubleClick={() => {
                       setStateViewMode(true);
                       fetchDistrict();
                     }}
@@ -395,10 +526,10 @@ function IndiaMap({
                       !isCircleActive
                         ? tableState && tableState.data
                           ? getGradientColor(
-                            state.id,
-                            appliedFilters.roles,
-                            maxCountValue
-                          ) + "%"
+                              state.id,
+                              appliedFilters.roles,
+                              maxCountValue
+                            ) + "%"
                           : "1"
                         : "0"
                     }
@@ -414,7 +545,13 @@ function IndiaMap({
             StateBorders.map((state: any, index: number) => {
               state.text = state.name;
               return (
-                <MuiToolTip placement="top" title={state.name} followCursor arrow componentsProps={componentProps}>
+                <MuiToolTip
+                  placement="top"
+                  title={state.name}
+                  followCursor
+                  arrow
+                  componentsProps={componentProps}
+                >
                   <path
                     opacity={state.opacity}
                     strokeLinejoin={state.strokeLinejoin}
@@ -427,10 +564,10 @@ function IndiaMap({
                       !isCircleActive
                         ? tableState && tableState.data
                           ? getGradientColor(
-                            state.id,
-                            appliedFilters.roles,
-                            maxCountValue
-                          ) + "%"
+                              state.id,
+                              appliedFilters.roles,
+                              maxCountValue
+                            ) + "%"
                           : "1"
                         : "0"
                     }
@@ -442,10 +579,14 @@ function IndiaMap({
               );
             })}
 
-
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any, index: number) => (
-              <DistrictPath theme={theme} district={district} componentProps={componentProps} />
+              <DistrictPath
+                theme={theme}
+                district={district}
+                componentProps={componentProps}
+                getColorOpacity={getColorOpacity}
+              />
             ))}
         </svg>
       ) : (
@@ -479,10 +620,10 @@ function IndiaMap({
                   r={bubbleRadiusWraper(
                     tableState && tableState.data
                       ? getGradientColor(
-                        bubble.id,
-                        appliedFilters.roles,
-                        maxCountValue
-                      )
+                          bubble.id,
+                          appliedFilters.roles,
+                          maxCountValue
+                        )
                       : 1
                   )}
                 >
@@ -494,7 +635,7 @@ function IndiaMap({
               <g style={{ transform: "scale(1.2)" }}>
                 <text
                   x={width > 768 ? "36.3%" : "50%"}
-                  y={width < 768 ? "8%" : '6.5%'}
+                  y={width < 768 ? "8%" : "6.5%"}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"
@@ -504,14 +645,14 @@ function IndiaMap({
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
-                    fill: theme.color
+                    fill: theme.color,
                   }}
                 >
                   {Number.parseInt(((maxCountValue / 100) * 50).toString())}
                 </text>
                 <text
                   x={width > 768 ? "36.4%" : "50%"}
-                  y={width < 768 ? "13%" : '10.5%'}
+                  y={width < 768 ? "13%" : "10.5%"}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"
@@ -521,14 +662,14 @@ function IndiaMap({
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
-                    fill: theme.color
+                    fill: theme.color,
                   }}
                 >
                   {Number.parseInt(((maxCountValue / 100) * 75).toString())}
                 </text>
                 <text
                   x={width > 768 ? "36.4%" : "50%"}
-                  y={width < 768 ? "17.5%" : '14.5%'}
+                  y={width < 768 ? "17.5%" : "14.5%"}
                   stroke="#00000"
                   stroke-width="2px"
                   dy=".3em"
@@ -538,7 +679,7 @@ function IndiaMap({
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
-                    fill: theme.color
+                    fill: theme.color,
                   }}
                 >
                   {maxCountValue}
@@ -624,7 +765,6 @@ function IndiaMap({
         </>
       )}
     </MapWrapper>
-
   );
 }
 
