@@ -554,6 +554,13 @@ $primary: #0177fa;
     background: $color;
     color: white;
   }
+  .border-color-theme{
+    border: 2px solid $color !important;
+  }
+}
+
+.border-radius-4px{
+  border-radius: 4px !important;
 }
 
 .always-visible-view-insight {

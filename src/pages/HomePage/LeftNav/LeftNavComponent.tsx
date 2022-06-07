@@ -20,6 +20,15 @@ import { useHistory } from "react-router-dom";
 import SearchBar from "../AllSearch";
 import ViewInsight from "../ViewInsight";
 
+const ResetButton = styled.button({
+  background: "white",
+  display: "flex",
+  justifyContent: "center",
+  height: "37px",
+  width: "100%",
+  alignItems: "center",
+});
+
 const Accordion = MaterialStyled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -299,7 +308,10 @@ const LeftNavComponent = (props: any) => {
       newBadgesList.push({ id: badge.id, value: badge.title })
     );
     console.log("Badges", badges);
-    return [{ id: 'true', value: "Yes" }, { id: 'false', value: "No" }];
+    return [
+      { id: "true", value: "Yes" },
+      { id: "false", value: "No" },
+    ];
   };
 
   useEffect(() => {
@@ -341,8 +353,23 @@ const LeftNavComponent = (props: any) => {
     handleIndustryClick,
     onApplyIndustry,
     setAppliedFilters,
-    appliedFilters
+    appliedFilters,
   };
+
+  const onApplyResetFilter = () =>
+    setAppliedFilters((prev: any) => ({
+      ...prev,
+      industries: [],
+      sectors: [],
+      states: [],
+      stages: [],
+    }));
+
+  const isResetFilterVisible =
+    appliedFilters.states.length > 0 ||
+    appliedFilters.sectors.length > 0 ||
+    appliedFilters.industries.length > 0 ||
+    appliedFilters.stages.length > 0;
   return (
     <>
       <div
@@ -538,6 +565,7 @@ const LeftNavComponent = (props: any) => {
                 <Accordion
                   expanded={expanded === "panel5"}
                   onChange={handleChange("panel5")}
+                  className="border-0"
                 >
                   <AccordionSummary
                     aria-controls="panel1d-content"
@@ -553,9 +581,7 @@ const LeftNavComponent = (props: any) => {
                           {appliedFilters.badges.length}
                         </RoundedBadge>
                       )}
-                      <span className="count-text ms-auto">
-                        {2}
-                      </span>
+                      <span className="count-text ms-auto">{2}</span>
                     </DropDown>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -564,7 +590,7 @@ const LeftNavComponent = (props: any) => {
                       colorTheme={colorTheme}
                       originalData={trimBadges(badgesState)}
                       loading={false}
-                      height={'200px'}
+                      height={"200px"}
                       selectedItem={selectedBadges}
                       handleClick={handleBadgesClick}
                       handleApplyClick={onApplyBadges}
@@ -607,6 +633,16 @@ const LeftNavComponent = (props: any) => {
                       />
                     </AccordionDetails>
                   </Accordion>
+                )}
+                {isResetFilterVisible ? (
+                  <ResetButton
+                    onClick={onApplyResetFilter}
+                    className="border-color-theme border-radius-4px mt-2 mb-3"
+                  >
+                    Reset All Filter
+                  </ResetButton>
+                ) : (
+                  <></>
                 )}
               </Card>
             </>

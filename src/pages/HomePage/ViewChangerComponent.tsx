@@ -15,8 +15,8 @@ import { IconButton } from "../../styles-components/Button";
 import { ThemeContext } from "../../config/context";
 import { useQuery } from "../../hooks/useQuery";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
-import MapViewButtonChangeGroup from './MapViewButtonChangeGroup'
-import { useWindowSize } from "../../hooks/useWindowSize"
+import MapViewButtonChangeGroup from "./MapViewButtonChangeGroup";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import axios from "axios";
 import { useWebQuery } from "../../hooks/useWebQuery";
 
@@ -48,15 +48,19 @@ const ViewMoreButton = styled.button<any>`
 const VIEW_MORE = "View more about ";
 const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
 
+const DATA_TABLE_API = "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/";
+const DISTRICT_API = `/data/v2/statistics/state/`
+
 function ViewChangerComponent({
   mapViewResources,
   setStartUpPolicyChart,
   fetchPolicy,
   setStateViewMode,
   stateViewMode,
-  fetchDistrict, setStartupType
+  fetchDistrict,
+  setStartupType,
 }: ViewChangerComponentsTypes) {
-  const [windowWidth, windowHeight] = useWindowSize()
+  const [windowWidth, windowHeight] = useWindowSize();
   const {
     isCircleActive,
     mapMode,
@@ -65,15 +69,23 @@ function ViewChangerComponent({
     setSelectedArea,
     selectedArea,
     getCounts,
-    colorTheme, fetchDateRange, dateRangeState, dateRangeLoading, appliedFilters, activeCard
+    colorTheme,
+    fetchDateRange,
+    dateRangeState,
+    dateRangeLoading,
+    appliedFilters,
+    activeCard,
+    fetchTableData,
+    
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
-  const today = "2015-01-01" + '/' + moment(new Date()).format("YYYY-MM-DD");
+  const today = "2015-01-01" + "/" + moment(new Date()).format("YYYY-MM-DD");
   const query = useWebQuery();
 
   const [newCount, setNewCount] = useState<number>(0);
-  const [selectedStartTypeIndex, setSelectedStartupTypeIndex] = useState<number>(0)
+  const [selectedStartTypeIndex, setSelectedStartupTypeIndex] =
+    useState<number>(0);
 
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
@@ -81,7 +93,7 @@ function ViewChangerComponent({
   const [fetchStartUpCount, countState, countLoading] = useQuery("");
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
-  const [selectedDateRange, setSelectedDateRange] = useState<string>("")
+  const [selectedDateRange, setSelectedDateRange] = useState<string>("");
 
   const dateRangeChange = async (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -89,10 +101,14 @@ function ViewChangerComponent({
       return getCounts();
     }
 
-    console.log("Date Range", value);
+    console.log("Date Range", value, DATA_TABLE_API + value);
+    fetchTableData(DATA_TABLE_API + value);
     getCounts(value);
-    fetchCount(value)
+    fetchCount(value);
     setSelectedDateRange(value);
+    if(appliedFilters.states[0]){
+      fetchDistrict( DISTRICT_API + appliedFilters.states[0] + '/' + value);
+    }
   };
 
   const startTypeChange = (changeEvent: any) => {
@@ -100,8 +116,8 @@ function ViewChangerComponent({
     setSelectedStartupType(value);
     fetchStartUpCount("/startup/startupCount/" + value);
     setSelectedStartupTypeIndex(value);
-    
-    console.log("startUpTypes", startUpTypes)
+
+    console.log("startUpTypes", startUpTypes);
     setStartupType(startUpTypes[value]);
 
     if (!appliedFilters.states[0]) {
@@ -124,38 +140,46 @@ function ViewChangerComponent({
     try {
       const { data } = await axios.get("/startup/startupCount/" + startupType);
       setNewCount(data);
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 
   const fetchCount = async (dateRange: string) => {
     try {
-      const mainUrl = `/startup/startupCount/state/id/${query.get('id')}/${selectedStartTypeIndex}/${dateRange}`;
+      const mainUrl = `/startup/startupCount/state/id/${query.get(
+        "id"
+      )}/${selectedStartTypeIndex}/${dateRange}`;
       const { data } = await axios.get(mainUrl);
       setNewCount(data);
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
-    if (query.get('id')) {
-      fetchCount(today)
+    if (query.get("id")) {
+      fetchCount(today);
     } else {
-      fetchInitialCount(selectedStartTypeIndex)
+      fetchInitialCount(selectedStartTypeIndex);
     }
-  }, [appliedFilters.states, selectedStartTypeIndex, query.get('id')])
+  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
     window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`;
   };
 
-  const resourse = { isCircleActive, colorTheme, mapMode, setMapMode, setIsCircleActive, activeCard };
- 
+  const resourse = {
+    isCircleActive,
+    colorTheme,
+    mapMode,
+    setMapMode,
+    setIsCircleActive,
+    activeCard,
+  };
+
   return (
-    <div className="view-changer-component-styles" style={{ marginTop: windowWidth > 768 ? '24px' : '0px' }}>
+    <div
+      className="view-changer-component-styles"
+      style={{ marginTop: windowWidth > 768 ? "24px" : "0px" }}
+    >
       <div className={`row ${windowWidth < 768 ? "" : " mx-0 px-0"}`}>
         <div className="mx-1 col-12 align-items-center justify-content-between d-none d-sm-flex">
           <SelectBoxLabel className="p-0 m-0">Date Range</SelectBoxLabel>
@@ -168,7 +192,7 @@ function ViewChangerComponent({
             }}
             onChange={dateRangeChange}
           >
-            <option value={ today }>All </option>
+            <option value={today}>All </option>
             {dateRangeState.map((item: any) => (
               <option value={item.from + "/" + item.to}> {item.text} </option>
             ))}
@@ -183,11 +207,7 @@ function ViewChangerComponent({
             />
           </button>
         </div>
-        {
-          windowWidth > 768 ? (
-            <MapViewButtonChangeGroup {...resourse} />
-          ) : (<></>)
-        }
+        {windowWidth > 768 ? <MapViewButtonChangeGroup {...resourse} /> : <></>}
         <div className="mx-1 col-12 mt-4 pt-0 view-changer-startup-card">
           <Card>
             {/* <div className="select-type-card"> */}
@@ -212,16 +232,16 @@ function ViewChangerComponent({
             <Card
               background={theme.bgCard4}
               className="d-flex flex-row align-items-center px-3 py-3 my-0 mb-1 justify-content-center"
-              style={{ height: "60px"}}
+              style={{ height: "60px" }}
               border={true}
             >
-              {
-                newCount > 0? (
-                  <h3 className="p-0 m-0 text-center">{newCount }</h3>
-                ) : ( 
-                  <p className="text-muted m-0 p-0 font-500">{"Data Not Available."}</p>
-                )
-              }
+              {newCount > 0 ? (
+                <h3 className="p-0 m-0 text-center">{newCount}</h3>
+              ) : (
+                <p className="text-muted m-0 p-0 font-500">
+                  {"Data Not Available."}
+                </p>
+              )}
             </Card>
             {selectedArea.id !== "india" && (
               <>
@@ -229,11 +249,13 @@ function ViewChangerComponent({
                   colorTheme={colorTheme}
                   shadow={true}
                   onClick={() => redirectToStatePolicy()}
-                  className={`btn btn-radius w-100 mt-4 ${stateViewMode || activeCard !== 'Startups'? 'mb-0' : ''}`}
+                  className={`btn btn-radius w-100 mt-4 ${
+                    stateViewMode || activeCard !== "Startups" ? "mb-0" : ""
+                  }`}
                 >
                   {VIEW_STATE_STARTUP_POLICY}
                 </ViewMoreButton>
-                {!stateViewMode && activeCard === 'Startups' && (
+                {!stateViewMode && activeCard === "Startups" && (
                   <ViewMoreButton
                     colorTheme={colorTheme}
                     shadow={false}

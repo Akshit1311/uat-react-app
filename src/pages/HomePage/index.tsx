@@ -138,11 +138,6 @@ const HomePage = (props: HomePageTypes) => {
     useQuery(
       `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`
     );
-  console.log(
-    "Distrct Statics",
-    districtStatistics,
-    `data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`
-  );
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
 
@@ -249,6 +244,7 @@ const HomePage = (props: HomePageTypes) => {
     setStateViewMode,
     fetchDistrict,
     activeCard,
+    fetchTableData
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
