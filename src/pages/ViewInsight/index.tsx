@@ -41,7 +41,6 @@ export default function ControlledAccordions() {
 
   React.useEffect(() => {
     const id = query.get('id');
-    console.log("Id", id, typeof id);
     if(typeof id === 'string' && id.length === 0){
       fetchInsights(`/insight/country/india/2015-01-01/2022-06-24`);
     } else {

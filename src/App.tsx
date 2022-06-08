@@ -55,7 +55,7 @@ function App() {
     require("./scss/theme/lightTheme.scss");
   }, []);
   return (
-    <div onScroll={(changeEvent) => console.log(changeEvent)} data-theme={themeName} style={{ height: "100vh" }}>
+    <div data-theme={themeName} style={{ height: "100vh" }}>
       <ReduxProvider store={store}>
         <MaterialUiThemeProvider theme={myTheme}>
           <ThemeProvider theme={theme}>

@@ -140,7 +140,6 @@ const LeftNavComponent = (props: any) => {
     if (stateIndex !== -1) {
       return setSelectedState([]);
     }
-    console.log("Selected State12", state);
     setSelectedState([state]);
   };
 
@@ -307,7 +306,6 @@ const LeftNavComponent = (props: any) => {
     badges.forEach((badge: any) =>
       newBadgesList.push({ id: badge.id, value: badge.title })
     );
-    console.log("Badges", badges);
     return [
       { id: "true", value: "Yes" },
       { id: "false", value: "No" },
@@ -356,7 +354,7 @@ const LeftNavComponent = (props: any) => {
     appliedFilters,
   };
 
-  const onApplyResetFilter = () =>
+  const onApplyResetFilter = () =>{
     setAppliedFilters((prev: any) => ({
       ...prev,
       industries: [],
@@ -364,6 +362,8 @@ const LeftNavComponent = (props: any) => {
       states: [],
       stages: [],
     }));
+    
+  }
 
   const isResetFilterVisible =
     appliedFilters.states.length > 0 ||

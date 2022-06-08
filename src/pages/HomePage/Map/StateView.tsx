@@ -92,7 +92,6 @@ export default function StateView({
 
   const findMaximumValue = () => {
     let max = 0;
-    console.log("COuntValues2312312321", data);
     if (Array.isArray(data.data)) {
       data.data.forEach((district: any) => {
         const value =
@@ -105,13 +104,11 @@ export default function StateView({
           const case1Value = district.statistics.Startup;
           max = case1Value > max ? case1Value : max;
         } else {
-          console.log("COuntValues2312312321", value);
           max = value > max ? value : max;
         }
       });
     }
     return max;
-    console.log("Max Value Gradient", max);
   };
 
   const getStatistics = (districtName: string) => {
@@ -133,21 +130,9 @@ export default function StateView({
   const getColorOpacity = (districtName: string) => {
     const maxValue = findMaximumValue();
     const statistics: any = getStatistics(districtName);
-    console.log("MaxValueSTatistics", maxValue, statistics);
     if (statistics && maxValue) {
       const startupTypeLocal: string =
         typeof startupType === "object" ? startupType.text : "Startup";
-      console.log(
-        "startupType",
-        startupType,
-        maxValue,
-        Number(
-          statistics.statistics[StartupTypesKeys[startupTypeLocal] ? StartupTypesKeys[startupTypeLocal] : "Startup"]
-        ),
-        statistics.district,
-        startupTypeLocal,
-        StartupTypesKeys[startupTypeLocal]
-      );
       if (
         Number(statistics.statistics[StartupTypesKeys[startupTypeLocal]]) === 0
       ) {
@@ -157,16 +142,10 @@ export default function StateView({
       const colorLevel: number =
         Number(statistics.statistics[val]) /
         maxValue;
-      console.log("ColorLevel", colorLevel);
-      // return 1
       return roundOff(colorLevel);
     }
     return 0;
   };
-
-  // useEffect(() => {
-  //   findMaximumValue();
-  // }, [data, startupType]);
 
   return (
     <MapWrapper
@@ -174,13 +153,6 @@ export default function StateView({
       style={{ position: "relative" }}
     >
       <svg viewBox="-50 0 550 550" onDoubleClick={()=> setStateViewMode(false)}>
-        {/* {
-          Maharashtra.map((district, index:number)=>(
-            <MuiToolTip placement="top" title={district.name} followCursor arrow componentsProps={componentProps}>
-            <path stroke="black" strokeWidth={"1"} key={index} fill="white" d={district.d} />
-            </MuiToolTip>
-          ))
-        } */}
         {StatesDistrictView.filter((state: any) => {
           return state.id === selectedArea;
         }).map((state: any, index: number) =>

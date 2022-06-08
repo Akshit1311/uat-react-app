@@ -93,7 +93,6 @@ const DropDownListComponent = (props: any) => {
   const onKeyUp = (e: any) => {
     const keyCode = e.keyCode;
 
-    console.log("ENter key Code", keyCode);
     if (keyCode === 40) {
 
       setTempSelectedItem((prev) => {
@@ -117,14 +116,6 @@ const DropDownListComponent = (props: any) => {
       handleClick(data[tempSelectedItem]);
     }
   };
-
-  const scrollFunction = () => console.log("Hello");
-
-  useEffect(() => {
-    window.onscroll = function () {
-      scrollFunction();
-    };
-  }, []);
 
   return (
     <div className="drop-down-list-component">

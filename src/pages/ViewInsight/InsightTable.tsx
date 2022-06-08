@@ -83,9 +83,6 @@ export default function InsightTable({
               )}
               <span>{insight.text}</span>
             </div>
-                {
-                  console.log('StateName', stateName)
-                }
             {
               typeof stateName === 'string' && stateName.length > 0 ? (
                 <>

@@ -12,7 +12,6 @@ interface ViewInsight {
 export default function ViewInsight(props: any) {
   const history = useHistory();
   const url = props.selectedState && props.selectedState[0] ? props.viewInsightUrl : `view-insight?id=${'India'}&state=${'India'}`;
-  console.log("Selected State VIew Insight", url)
   const navigate= (url:string) => history.push(props.viewInsightUrl)
   return (
     <div className="left-side-nav-styles">

@@ -138,8 +138,6 @@ const CountCard = ({
       }
       return () => clearInterval(interval);
     }
-
-    console.log(state[accessor ? accessor : name.slice(0, -1)]);
   }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
 
   return (
@@ -268,14 +266,11 @@ const CountsBlockComponent = ({
       count.Investor = getCountsById("Investor")
         ? getCountsById("Investor").value
         : 0;
-      // console.log(count)
       setStateCounts(count);
     } catch (error) {
-      console.log(error);
     }
   };
 
-  console.log(stateCounts);
 
   const filterStateCounts = () => {
     const state = tableState.data

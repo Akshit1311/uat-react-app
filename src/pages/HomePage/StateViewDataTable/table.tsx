@@ -32,7 +32,6 @@ export default function Table(props: any) {
     ],
     []
   );
-  console.log("Statustucisjdkasda", props.startupType);
   return (
     <div className="col-4 mx-0 px-2">
       <TableContainer

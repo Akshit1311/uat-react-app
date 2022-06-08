@@ -101,7 +101,6 @@ function ViewChangerComponent({
       return getCounts();
     }
 
-    console.log("Date Range", value, DATA_TABLE_API + value);
     fetchTableData(DATA_TABLE_API + value);
     getCounts(value);
     fetchCount(value);
@@ -117,7 +116,6 @@ function ViewChangerComponent({
     fetchStartUpCount("/startup/startupCount/" + value);
     setSelectedStartupTypeIndex(value);
 
-    console.log("startUpTypes", startUpTypes);
     setStartupType(startUpTypes[value]);
 
     if (!appliedFilters.states[0]) {
