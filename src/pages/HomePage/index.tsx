@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import CountsBlockComponent from "./CountsBlockComponent";
 import LeftNavComponent from "./LeftNav/LeftNavComponent";
 import MapComponent from "./Map/MapComponent";
@@ -50,8 +50,8 @@ const Strip = styled.div`
 const INITIAL_FILTER_STATE2 = {
   industries: [],
   sectors: [],
-  states: [],
   stages: [],
+  states: [],
   badges: [],
   counts: [],
   registrationFrom: "",
@@ -129,10 +129,37 @@ const HomePage = (props: HomePageTypes) => {
   const [countState, setCountState] = useState<any>(new CountBlockModel());
 
   const currentDate = moment(new Date()).format("YYYY-MM-DD");
-  const [fetchTableData, tableState, tableLoading] = useQuery(
+  const [fetchTableData, statisticsData, tableLoading] = useMutate(
     "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/2015-01-01/" +
-      currentDate
+      currentDate,
+    {
+      from: "2015-01-01",
+      to: "2022-01-02",
+      data: [],
+    }
   );
+
+  const addIdNameText = (data: any) => {
+    data = data.data.map((i: any) => {
+      i.name = i.state ? i.state : "";
+      i.text = i.state ? i.state : "";
+      i.id = i.stateId ? i.stateId : "";
+      return i;
+    });
+    return data;
+  };
+  // const tableState = addIdNameText(statisticsData);
+  
+  const tableState = useMemo(()=>{
+    const result = statisticsData.data.map((i: any) => {
+      i.name = i.state ? i.state : "";
+      i.text = i.state ? i.state : "";
+      i.id = i.stateId ? i.stateId : "";
+      return i;
+    });
+    return result;
+  },[statisticsData]);
+
   const [fetchFilterList, filterState, filterLoading] = useMutate(
     "/startup/filter/v2/defaults",
     INITIAL_FILTER_STATE2
@@ -384,7 +411,7 @@ const HomePage = (props: HomePageTypes) => {
                   </div>
                   <div className="col-12 row px-0 mx-0">
                     <div className="col-12 p-c-4 pb-0 pe-0 col-map">
-                      {!stateViewMode && (
+                      {!stateViewMode && statisticsData.data && (
                         <MapComponent
                           scaleBarVisible={true}
                           startupType={startupType}
@@ -506,6 +533,7 @@ const HomePage = (props: HomePageTypes) => {
                             <DataTable
                               fetch={fetchTableData}
                               state={tableState}
+                              appliedFilters={appliedFilters}
                               loading={tableLoading}
                             />
                           )}

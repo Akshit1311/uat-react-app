@@ -27,7 +27,7 @@ const mentorsLoop: any[] = [
 function DataTableComponent(props: any) {
   const theme = useContext(ThemeContext);
 
-  const { fetch, state, loading } = props
+  const { fetch, state, loading, appliedFilters } = props
 
   const columns = useMemo(
     () => [
@@ -97,8 +97,16 @@ function DataTableComponent(props: any) {
   );
 
   useEffect(() => {
-    fetch();
-  }, []);
+    fetch( 
+      {
+        ...appliedFilters,
+        states: undefined,
+        badges: undefined,
+        counts: undefined,
+        registrationFrom: undefined,
+        registrationTo: undefined,
+      });
+  }, [appliedFilters]);
   return (
     <div className="ms-3 mt-3">
       <TableContainer
