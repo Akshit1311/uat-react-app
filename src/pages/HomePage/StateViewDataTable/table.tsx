@@ -25,6 +25,7 @@ export default function Table(props: any) {
         columns={columns2}
         bodyData={props.data || []}
         loop={loop}
+        searchObj={props.searchObj}
         search={props.search}
         mentorsTable={false}
       />

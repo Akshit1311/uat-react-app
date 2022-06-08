@@ -12,20 +12,59 @@ interface StateViewDataTableTypes {
 
 export default function StateViewDataTable(props: StateViewDataTableTypes) {
   const [data, setData] = useState<any[]>([]);
-  useEffect(() => {
+  const [originalData, setOriginalData] = useState<any[]>([]);
+  const [searchText, setSearchText] = useState<string>("");
+
+  const createChunk = (data: any[]) => {
+    const chunk = _.chunk(data, Math.floor(data.length / 3));
+    if (chunk[3]) chunk[0] = chunk[0].concat(chunk[3]);
+    return chunk;
+  };
+
+  const splitData = () => {
     if (props.data && props.data.length) {
-      setData(_.chunk(props.data, Math.floor(props.data.length / 3)));
+      setOriginalData(props.data);
+      setData(createChunk(props.data));
     } else {
       props.fetch();
     }
+  };
+
+  const handleSearch = (value: string) => {
+    if (value.length === 0) return setData(createChunk(originalData));
+    const result = originalData.filter((obj) => {
+      if (obj.district && value)
+        return obj.district.toLowerCase().includes(value.toLowerCase());
+    });
+    if (result.length < 3) setData([result, [], []]);
+    else setData(createChunk(result));
+  };
+
+  useEffect(() => {
+    splitData();
   }, [props.data]);
-  console.log("STartupType", props.startupType)
+  console.log("STartupType", props.startupType);
   return (
     <div className="ms-3">
       <div className="w-100 row">
-        <Table search={true} data={data[0]} startupType={props.startupType} />
-        <Table search={false} data={data[1]} startupType={props.startupType} />
-        <Table search={false} data={data[2]} startupType={props.startupType} />
+        <Table
+          search={true}
+          data={data[0]}
+          searchObj={[searchText, handleSearch]}
+          startupType={props.startupType}
+        />
+        <Table
+          search={false}
+          data={data[1]}
+          searchObj={[searchText, handleSearch]}
+          startupType={props.startupType}
+        />
+        <Table
+          search={false}
+          data={data[2]}
+          searchObj={[searchText, handleSearch]}
+          startupType={props.startupType}
+        />
         {/* <Table />
             <Table /> */}
       </div>

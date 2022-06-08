@@ -15,12 +15,12 @@ interface ReactTableType {
 
 const TableContainer = (props: any) => {
   const { columns, bodyData, noOfItemsToRender, loop, mentorsTable } = props;
+  const [searchQuery, setSearchQuery] = props.searchObj;
+
   const [originalData, setOriginalData] = useState<any[]>([]);
   const [renderedData, setRenderedData] = useState<any>([]);
 
   const [noOfItemsRender, setNoOfItemRender] = useState<number>(6);
-
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const theme = useContext(ThemeContext);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -32,38 +32,29 @@ const TableContainer = (props: any) => {
       useSortBy
     );
 
-  const calculate = () => {
-    const newObj: any = new Object();
-    loop.forEach((item: string) => {
-      let sum = 0;
-      originalData.forEach((dataValue: any) => {
-        sum += Number(dataValue.statistics[item]);
-      });
-      newObj[item] = sum;
-    });
-    const clone = [...originalData];
-    clone.push({
-      id: "Some other",
-      isUnionTerritory: false,
-      name: "Total",
-      text: "Total",
-      statistics: newObj,
-    });
-    return clone;
-  };
+  // const calculate = () => {
+  //   const newObj: any = new Object();
+  //   loop.forEach((item: string) => {
+  //     let sum = 0;
+  //     originalData.forEach((dataValue: any) => {
+  //       sum += Number(dataValue.statistics[item]);
+  //     });
+  //     newObj[item] = sum;
+  //   });
+  //   const clone = [...originalData];
+  //   clone.push({
+  //     id: "Some other",
+  //     isUnionTerritory: false,
+  //     name: "Total",
+  //     text: "Total",
+  //     statistics: newObj,
+  //   });
+  //   return clone;
+  // };
 
   const memorisedValue = React.useMemo(() => {
-    return calculate();
+    return originalData
   }, [originalData]);
-
-  const onSearch = (query: string) => {
-    const value = query;
-    const list = memorisedValue.filter((item) =>
-      item.text.toLowerCase().includes(value.toLowerCase())
-    );
-    setSearchQuery(value);
-    setRenderedData(list);
-  };
 
   const handleViewMore = () => {
     const calculated = noOfItemsRender + 8;
@@ -147,7 +138,7 @@ const TableContainer = (props: any) => {
           <SearchBarComponent
             background={theme.dataTable.searchBg}
             borderRadius="4px"
-            onChange={onSearch}
+            onChange={setSearchQuery}
             value={searchQuery}
             placeholderClass={`search-bar-placeholder-data-table ${theme.dataTable.inputClass}`}
             inputClass={`${theme.dataTable.searchBorderClass} radius-5 me-3`}
