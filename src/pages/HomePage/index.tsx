@@ -129,7 +129,7 @@ const HomePage = (props: HomePageTypes) => {
   const [countState, setCountState] = useState<any>(new CountBlockModel());
 
   const currentDate = moment(new Date()).format("YYYY-MM-DD");
-  const [fetchTableData, statisticsData, tableLoading] = useMutate(
+  const [fetchTableData, tableState, tableLoading] = useMutate(
     "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/2015-01-01/" +
       currentDate,
     {
@@ -149,16 +149,16 @@ const HomePage = (props: HomePageTypes) => {
     return data;
   };
   // const tableState = addIdNameText(statisticsData);
-  
-  const tableState = useMemo(()=>{
-    const result = statisticsData.data.map((i: any) => {
-      i.name = i.state ? i.state : "";
-      i.text = i.state ? i.state : "";
-      i.id = i.stateId ? i.stateId : "";
-      return i;
-    });
-    return result;
-  },[statisticsData]);
+
+  // const tableState = useMemo(()=>{
+  //   const result = statisticsData.data.map((i: any) => {
+  //     i.name = i.state ? i.state : "";
+  //     i.text = i.state ? i.state : "";
+  //     i.id = i.stateId ? i.stateId : "";
+  //     return i;
+  //   });
+  //   return result;
+  // },[statisticsData]);
 
   const [fetchFilterList, filterState, filterLoading] = useMutate(
     "/startup/filter/v2/defaults",
@@ -411,7 +411,7 @@ const HomePage = (props: HomePageTypes) => {
                   </div>
                   <div className="col-12 row px-0 mx-0">
                     <div className="col-12 p-c-4 pb-0 pe-0 col-map">
-                      {!stateViewMode && statisticsData.data && (
+                      {!stateViewMode && (
                         <MapComponent
                           scaleBarVisible={true}
                           startupType={startupType}
