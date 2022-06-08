@@ -27,10 +27,10 @@ export default function Table(props: any) {
       },
       {
         Header:   props.startupType.text || "All Startup",
-        accessor: "statistics." + String(StartupTypesKeys[props.startupType.text] ? StartupTypesKeys[props.startupType.text] : "Startup"),
+        accessor: "statistics." + StartupTypesKeys[props.startupType.text],
       },
     ],
-    []
+    [props.startupType]
   );
   return (
     <div className="col-4 mx-0 px-2">

@@ -19,6 +19,7 @@ import MapViewButtonChangeGroup from "./MapViewButtonChangeGroup";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import axios from "axios";
 import { useWebQuery } from "../../hooks/useWebQuery";
+import { StartupType } from "./index";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -27,7 +28,7 @@ interface ViewChangerComponentsTypes {
   setStateViewMode: React.Dispatch<boolean>;
   stateViewMode: boolean;
   fetchDistrict: any;
-  setStartupType: React.Dispatch<string>;
+  setStartupType: React.Dispatch<StartupType>;
 }
 
 const DARK_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;

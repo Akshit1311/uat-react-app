@@ -80,6 +80,11 @@ const INITIAL_DISTRICT_STATISTICS = {
   data: [],
 };
 
+export interface StartupType {
+  index: string;
+  text: string;
+}
+
 export class CountBlockModel {
   Exploring: number = 0;
   Incubator: number = 0;
@@ -133,7 +138,7 @@ const HomePage = (props: HomePageTypes) => {
     INITIAL_FILTER_STATE2
   );
 
-  const [startupType, setStartupType] = useState<string>("Startup");
+  const [startupType, setStartupType] = useState<StartupType>({ index: "0", text: "All Startups" });
   const [fetchDistrict, districtStatistics, districtStatisticsLoading] =
     useQuery(
       `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`

@@ -63,7 +63,7 @@ export default function StateView({
   colorTheme,
   startupType,
   data,
-  setStateViewMode
+  setStateViewMode,
 }: StateViewProps) {
   const theme = useContext(ThemeContext);
   const componentProps = {
@@ -93,15 +93,11 @@ export default function StateView({
   const findMaximumValue = () => {
     let max = 0;
     if (Array.isArray(data.data)) {
+      console.log(data.data);
       data.data.forEach((district: any) => {
-        const value =
-          district.statistics[
-            StartupTypesKeys[
-              typeof startupType === "object" ? startupType.text : "Startup"
-            ]
-          ];
+        const value = district.statistics[StartupTypesKeys[startupType.text]];
         if (!value) {
-          const case1Value = district.statistics.Startup;
+          const case1Value = district.statistics[StartupTypesKeys[startupType.text]];
           max = case1Value > max ? case1Value : max;
         } else {
           max = value > max ? value : max;
@@ -123,25 +119,25 @@ export default function StateView({
   };
 
   const roundOff = (value: number) => {
-    if (value < 0.3) return value + 0.1;
+    if (value < 0.9) return value + 0.1;
     else return value;
   };
 
   const getColorOpacity = (districtName: string) => {
     const maxValue = findMaximumValue();
+    console.log("MaxValue", startupType.text, maxValue);
     const statistics: any = getStatistics(districtName);
     if (statistics && maxValue) {
-      const startupTypeLocal: string =
-        typeof startupType === "object" ? startupType.text : "Startup";
+      const startupTypeLocal: string = startupType.text;
       if (
         Number(statistics.statistics[StartupTypesKeys[startupTypeLocal]]) === 0
       ) {
         return 0;
       }
-      const val = StartupTypesKeys[startupTypeLocal] ? StartupTypesKeys[startupTypeLocal] : "Startup"
-      const colorLevel: number =
-        Number(statistics.statistics[val]) /
-        maxValue;
+      const val = StartupTypesKeys[startupTypeLocal]
+        ? StartupTypesKeys[startupTypeLocal]
+        : "Startup";
+      const colorLevel: number = Number(statistics.statistics[val]) / maxValue;
       return roundOff(colorLevel);
     }
     return 0;
@@ -152,13 +148,17 @@ export default function StateView({
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative" }}
     >
-      <svg viewBox="-50 0 550 550" onDoubleClick={()=> setStateViewMode(false)}>
+      <svg
+        viewBox="-50 0 550 550"
+        onDoubleClick={() => setStateViewMode(false)}
+      >
         {StatesDistrictView.filter((state: any) => {
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => (
             <MuiToolTip
-              placement="top" key={district.name}
+              placement="top"
+              key={district.name}
               title={district.name}
               followCursor
               arrow

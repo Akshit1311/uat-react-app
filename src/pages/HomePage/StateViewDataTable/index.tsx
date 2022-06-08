@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Table from "./table";
 import _ from "lodash";
+import { StartupType } from "../index";
 
 interface StateViewDataTableTypes {
   selectedArea: string | undefined | null;
   data: any[];
   fetch: any;
-  startupType: string;
+  startupType: StartupType;
 }
 
 export default function StateViewDataTable(props: StateViewDataTableTypes) {
@@ -18,6 +19,7 @@ export default function StateViewDataTable(props: StateViewDataTableTypes) {
       props.fetch();
     }
   }, [props.data]);
+  console.log("STartupType", props.startupType)
   return (
     <div className="ms-3">
       <div className="w-100 row">
