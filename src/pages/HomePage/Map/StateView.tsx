@@ -8,7 +8,7 @@ import {
   StatesDistrictView,
   StateWiseMapViewType,
 } from "./statesDistrictView";
-import { StartupTypesKeys } from "../StateViewDataTable/table";
+import { StartupTypesKeys } from "../../../config/Constants";
 
 interface StatisticsDataCount {
   Exploring: number;

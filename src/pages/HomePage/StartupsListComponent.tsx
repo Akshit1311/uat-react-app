@@ -43,7 +43,7 @@ function StartUpCard({
   stages,
   form80IacStatus,
   tagsLoading,
-  logo, colorTheme
+  logo, colorTheme,
 }: any) {
   function htmlDecode(input: any) {
     var doc = new DOMParser().parseFromString(input, "text/html");
@@ -284,7 +284,7 @@ function StartupsListComponent(props: any) {
         )}
       </StartUpCardContainer>
       <div className="ps-4 disabled-map">
-        <DisabledMap mapViewResource={props.mapViewResource} />
+        <DisabledMap startupType={props.startupType} mapViewResource={props.mapViewResource} />
       </div>
     </div>
   );

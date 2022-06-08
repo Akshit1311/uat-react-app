@@ -138,7 +138,10 @@ const HomePage = (props: HomePageTypes) => {
     INITIAL_FILTER_STATE2
   );
 
-  const [startupType, setStartupType] = useState<StartupType>({ index: "0", text: "All Startups" });
+  const [startupType, setStartupType] = useState<StartupType>({
+    index: "0",
+    text: "All Startups",
+  });
   const [fetchDistrict, districtStatistics, districtStatisticsLoading] =
     useQuery(
       `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`
@@ -249,7 +252,7 @@ const HomePage = (props: HomePageTypes) => {
     setStateViewMode,
     fetchDistrict,
     activeCard,
-    fetchTableData
+    fetchTableData,
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -359,7 +362,8 @@ const HomePage = (props: HomePageTypes) => {
                       selectedArea={selectedArea}
                       applyRoles={applyRoles}
                       setStateViewMap={setStateViewMode}
-                      activeCard={activeCard} setActiveCard={setActiveCard}
+                      activeCard={activeCard}
+                      setActiveCard={setActiveCard}
                     />
                   </div>
                   <div className="d-block d-sm-none mb-3">
@@ -383,6 +387,7 @@ const HomePage = (props: HomePageTypes) => {
                       {!stateViewMode && (
                         <MapComponent
                           scaleBarVisible={true}
+                          startupType={startupType}
                           mapViewResource={mapViewResources}
                         />
                       )}
@@ -474,6 +479,7 @@ const HomePage = (props: HomePageTypes) => {
                         className="mx-0 ms-sm-4 ms-0"
                       >
                         <StartupsListComponent
+                          startupType={startupType}
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
                           mapViewResource={mapViewResources}

@@ -14,6 +14,8 @@ import { useWebQuery } from "../../../hooks/useWebQuery";
 import { useHistory } from "react-router-dom";
 import { Tooltip as MuiToolTip } from "@mui/material";
 import axios from "axios";
+import { StartupType } from "..";
+import { StartupTypesKeys } from "../../../config/Constants";
 
 interface StatisticsDataCount {
   Exploring: number;
@@ -50,13 +52,10 @@ interface IndiaMapTypes {
   viewAreaMap?: string;
   scaleBarVisible: boolean;
   viewAreaCircle?: string;
+  startupType: StartupType;
 }
 
-function DistrictPath({
-  district,
-  componentProps,
-  theme,
-}: any) {
+function DistrictPath({ district, componentProps, theme }: any) {
   const [isToolTipVisible, setToolTipVisible] = useState<boolean>(false);
   return (
     <MuiToolTip
@@ -153,6 +152,7 @@ function IndiaMap({
   viewAreaMap,
   viewAreaCircle,
   scaleBarVisible,
+  startupType,
 }: IndiaMapTypes) {
   const {
     setSelectedStateByMap,
@@ -202,7 +202,13 @@ function IndiaMap({
   const findMaxValue = (array: any[], accessor: string) => {
     const newList = [...array];
     const n: any[] = [];
-    newList.forEach((a: any) => n.push(a.statistics[accessor]));
+    console.log("Gradient Data", array);
+    if (accessor[0] == "Startup") {
+      const key = StartupTypesKeys[startupType.text];
+      newList.forEach((a: any) => n.push(a.statistics[key]));
+    } else {
+      newList.forEach((a: any) => n.push(a.statistics[accessor]));
+    }
     const max = Math.max(...n);
     if (newList.length > 0) return max;
     else return 0;
@@ -219,7 +225,15 @@ function IndiaMap({
   ) => {
     const findStateIndex = findCountTypeValue(stateId);
     if (findStateIndex !== -1) {
-      const stateValue = tableState.data[findStateIndex].statistics[accessor];
+      console.log("Accessor", accessor);
+      let stateValue: any;
+      if (accessor[0] == "Startup") {
+        const key = StartupTypesKeys[startupType.text];
+        stateValue = tableState.data[findStateIndex].statistics[key];
+      } else {
+        stateValue = tableState.data[findStateIndex].statistics[accessor];
+      }
+
       const opacity = (stateValue / maxValue) * 100;
       if (
         opacity === 0 &&
@@ -243,8 +257,6 @@ function IndiaMap({
     const selected = stateValidator(hoverStates, ID, stateId);
     if (selected !== -1) return true;
   };
-
-
 
   const fillStroke = (stateId: string) => {
     if (fillHover(stateId)) return 2;
@@ -308,7 +320,6 @@ function IndiaMap({
     if (mapMode.id === MapVariables.CITY.id)
       return viewAreaMap ? viewAreaMap : MAP_AREA_INDIA;
   };
-
 
   useEffect(() => {
     fetchIndiaMap();
@@ -506,7 +517,8 @@ function IndiaMap({
             StateBorders.map((state: any) => {
               state.text = state.name;
               return (
-                <MuiToolTip key={state.id}
+                <MuiToolTip
+                  key={state.id}
                   placement="top"
                   title={state.name}
                   followCursor
@@ -543,7 +555,8 @@ function IndiaMap({
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any) => (
               <DistrictPath
-                theme={theme} key={district.districtId}
+                theme={theme}
+                key={district.districtId}
                 district={district}
                 componentProps={componentProps}
                 getColorOpacity={getColorOpacity}
