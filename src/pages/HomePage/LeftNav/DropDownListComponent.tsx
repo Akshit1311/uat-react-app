@@ -1,13 +1,12 @@
+import { css } from "@emotion/react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
+import MoonLoader from "react-spinners/MoonLoader";
+import styled from "styled-components";
+import { ThemeContext } from "../../../config/context";
+import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 import "../../../scss/HomePageStyles/dropDownListComponent.scss";
 import { Button } from "../../../styles-components/Button";
-import MoonLoader from "react-spinners/MoonLoader";
-import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
-import React, { useContext } from "react";
-import { ThemeContext } from "../../../config/context";
-import styled from "styled-components";
-import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 
 const override = css`
   display: block;
@@ -53,10 +52,10 @@ const DropDownListComponent = (props: any) => {
     if (theme.theme === "light") return "unselected-list-card-light";
   };
 
-  const list: any[] = data.map((dataObj: any, index: number) => {
+  const list: any[] = data.map((dataObj: any, index:number) => {
     return (
       <div
-        key={index}
+        key={dataObj.id}
         onClick={() => handleClick(dataObj)}
         id={dataObj.id}
         className={`list-card me-2 ${

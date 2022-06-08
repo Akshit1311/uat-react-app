@@ -158,7 +158,7 @@ export default function StateView({
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => (
             <MuiToolTip
-              placement="top"
+              placement="top" key={district.name}
               title={district.name}
               followCursor
               arrow
@@ -168,7 +168,6 @@ export default function StateView({
                 stroke="black"
                 fill={ThemeColorIdentifier(colorTheme)}
                 strokeWidth={"1"}
-                key={index}
                 fillOpacity={getColorOpacity(district.name)}
                 d={district.d}
               />

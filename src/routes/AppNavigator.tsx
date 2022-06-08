@@ -1,11 +1,11 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
 import { map } from "lodash";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import HeaderComponent from "../components/HeaderComponent";
+import { privateRoutes } from "./privateRoutes";
 import ProtectedRoute from "./ProtectedRoutes";
 import { publicRoutes } from "./publicRoutes";
-import { privateRoutes } from "./privateRoutes";
 import { RouteType } from "./types";
-import HeaderComponent from "../components/HeaderComponent";
 
 interface AppNavigatorTypes {}
 
@@ -14,11 +14,11 @@ export default function AppNavigator(props: AppNavigatorTypes) {
     <>
       <HeaderComponent></HeaderComponent>
       <Switch>
-        {map(publicRoutes, (publicRoute: RouteType) => (
-          <Route exact {...publicRoute} />
+        {map(publicRoutes, (publicRoute: RouteType, index:number) => (
+          <Route exact {...publicRoute} key={index} />
         ))}
-        {map(privateRoutes, (privateRoute: RouteType) => (
-          <ProtectedRoute exact {...privateRoute} />
+        {map(privateRoutes, (privateRoute: RouteType, index: number) => (
+          <ProtectedRoute exact {...privateRoute} key={index} />
         ))}
       </Switch>
     </>

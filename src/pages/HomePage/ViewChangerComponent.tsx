@@ -192,7 +192,7 @@ function ViewChangerComponent({
           >
             <option value={today}>All </option>
             {dateRangeState.map((item: any) => (
-              <option value={item.from + "/" + item.to}> {item.text} </option>
+              <option key={item.from +'/' + item.to} value={item.from + "/" + item.to}> {item.text} </option>
             ))}
           </SelectBox>
           <button
@@ -223,7 +223,7 @@ function ViewChangerComponent({
                 onChange={startTypeChange}
               >
                 {startUpTypes.map((item: any) => (
-                  <option value={item.index}>{item.text}</option>
+                  <option key={item.index} value={item.index}>{item.text}</option>
                 ))}
               </SelectBox>
             </div>

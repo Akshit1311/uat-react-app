@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ThemeContext } from "../../config/context";
-import { useTable, useSortBy } from "react-table";
-import Cells from "../DataTable/Cells";
-import { TR } from "../DataTable/styled";
-import SearchBarComponent from "../DataTable/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import React, { useContext, useEffect, useState } from "react";
+import { useSortBy, useTable } from "react-table";
+import { ThemeContext } from "../../config/context";
+import Cells from "../DataTable/Cells";
+import SearchBarComponent from "../DataTable/Search";
+import { TR } from "../DataTable/styled";
 
 interface ReactTableType {
   columns: any[];
@@ -102,7 +102,7 @@ const TableContainer = (props: any) => {
         style={{ minWidth: "900px" }}
       >
         <thead className="w-100 py-5 ">
-          {headerGroups.map((headerGroup) => (
+          {headerGroups.map((headerGroup, index) => (
             <TR
               {...headerGroup.getHeaderGroupProps()}
               className={`d-flex flex-row justify-content-between ${theme.dataTable.headerBorder}`}
@@ -115,6 +115,7 @@ const TableContainer = (props: any) => {
                   borderWidth={index === 0 ? "0px" : "1px"}
                   fontWeight={true}
                   borderColor="#e5e5e5"
+                  key={index}
                   borderHeight="48px"
                 >
                   <div
@@ -175,6 +176,7 @@ const TableContainer = (props: any) => {
                         maxWidth="auto"
                         cellClass={getHeaderCellClass(index)}
                         borderHeight="2.5rem"
+                        key={index}
                         borderWidth={index !== 0 ? "1px" : "0px"}
                         fontWeight={index === 0}
                         borderColor="#e5e5e5"

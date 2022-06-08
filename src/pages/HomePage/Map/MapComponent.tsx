@@ -506,7 +506,7 @@ function IndiaMap({
             StateBorders.map((state: any) => {
               state.text = state.name;
               return (
-                <MuiToolTip
+                <MuiToolTip key={state.id}
                   placement="top"
                   title={state.name}
                   followCursor
@@ -543,7 +543,7 @@ function IndiaMap({
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any) => (
               <DistrictPath
-                theme={theme}
+                theme={theme} key={district.districtId}
                 district={district}
                 componentProps={componentProps}
                 getColorOpacity={getColorOpacity}
@@ -569,7 +569,7 @@ function IndiaMap({
             <g style={{ transform: "scale(1.2)" }}>
               {stateBubbles.map((bubble: any, index: number) => (
                 <circle
-                  key={index}
+                  key={bubble.id}
                   transform={bubble.transform}
                   fill-opacity="0.05"
                   pointerEvents="all"
