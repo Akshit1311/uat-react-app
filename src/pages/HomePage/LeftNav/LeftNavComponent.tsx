@@ -21,12 +21,16 @@ import SearchBar from "../AllSearch";
 import ViewInsight from "../ViewInsight";
 
 const ResetButton = styled.button({
-  background: "white",
   display: "flex",
   justifyContent: "center",
   height: "37px",
   width: "100%",
   alignItems: "center",
+  fontFamily: "Montserrat"
+},(props:any)=>{
+  return {
+    background: props.theme.resetButton,
+  }
 });
 
 const Accordion = MaterialStyled((props: AccordionProps) => (
@@ -362,7 +366,7 @@ const LeftNavComponent = (props: any) => {
       states: [],
       stages: [],
     }));
-    
+    history.push("/");
   }
 
   const isResetFilterVisible =
@@ -637,7 +641,7 @@ const LeftNavComponent = (props: any) => {
                 {isResetFilterVisible ? (
                   <ResetButton
                     onClick={onApplyResetFilter}
-                    className="border-color-theme border-radius-4px mt-2 mb-3"
+                    className="border-color-theme border-radius-4px mt-2 mb-3 text-theme"
                   >
                     Reset All Filter
                   </ResetButton>

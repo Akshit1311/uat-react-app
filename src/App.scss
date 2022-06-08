@@ -557,6 +557,11 @@ $primary: #0177fa;
   .border-color-theme{
     border: 2px solid $color !important;
   }
+  .list-card-color{
+    background: $color !important; 
+    color: white;
+    transition: all 0.3s;
+  }
 }
 
 .border-radius-4px{

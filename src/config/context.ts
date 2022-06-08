@@ -76,7 +76,8 @@ export const PRIMARY_THEME = {
     background: "white",
     color: "black"
   },
-  accordionHeader: "white"
+  accordionHeader: "white",
+  resetButton: "white",
 };
 
 export const DARK_THEME = {
@@ -147,7 +148,8 @@ export const DARK_THEME = {
     background: "rgba(37,40,58,1)",
     color: "white"
   },
-  accordionHeader:"#26283A"
+  accordionHeader:"#26283A",
+  resetButton: "rgba(37,40,58,1)",
 };
 
 export const ThemeContext = React.createContext(PRIMARY_THEME);
