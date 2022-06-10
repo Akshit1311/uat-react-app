@@ -4,7 +4,8 @@ export const StartupTypesKeys:any = {
     "Showcased Startups": "ShowcasedStartups",
     "Seed funded Startups": "SeedFundStartup",
     "Fund of Funds Scheme Startups": "FFS",
-    "Seed fund scheme": "Startup",
+    
+    "Seed fund scheme": "SeedFundStartup",
     "Patented Startups": "PatentStartup",
     "Women owned recognized startups": "WomenLed",
     "Current leading Sector": "Startup",
