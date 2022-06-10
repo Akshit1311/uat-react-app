@@ -421,10 +421,6 @@ function IndiaMap({
     return 0;
   };
 
-  useEffect(() => {
-    findMaximumValue();
-  }, [allIndiaDistrictData]);
-
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
