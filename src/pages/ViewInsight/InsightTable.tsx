@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { InsightRowType } from "./Accordion";
-import _ from "lodash";
 import StarIcon from "@mui/icons-material/Star";
-import MoonLoader from "react-spinners/MoonLoader";
-import { AiFillInfoCircle } from "react-icons/ai";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { Tooltip } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import { AiFillInfoCircle } from "react-icons/ai";
 import { ThemeContext } from "../../config/context";
+import { InsightRowType } from "./Accordion";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 interface InsightTableProps {
   stateName: string | null;
@@ -24,6 +24,41 @@ enum SortKeys {
   INDIA_PERCENTAGE = "indiaPercentage",
 }
 
+interface SortIconsType {
+  sortMode: number;
+  sortKey: SortKeys;
+  primaryKey: string;
+}
+
+function SortIcons({ sortMode, sortKey, primaryKey }: SortIconsType) {
+  return (
+    <>
+      {sortMode === 1 && sortKey === primaryKey ? (
+        <span className="d-flex flex-column p-0">
+          <ArrowDropDownIcon fontSize="small" />
+        </span>
+      ) : (
+        <></>
+      )}
+      {sortMode === 2 && sortKey === primaryKey ? (
+        <span className="d-flex flex-column p-0">
+          <ArrowDropUpIcon fontSize="small" />
+        </span>
+      ) : (
+        <></>
+      )}
+      {sortMode === 3 || sortKey !== primaryKey ? (
+        <span className="d-flex flex-column p-0">
+          <ArrowDropUpIcon fontSize="small" style={{ marginBottom: "-7px" }} />
+          <ArrowDropDownIcon fontSize="small" style={{ marginTop: "-7px" }} />
+        </span>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+}
+
 export default function InsightTable({
   stateName,
   title,
@@ -32,7 +67,7 @@ export default function InsightTable({
   starFill,
 }: InsightTableProps) {
   const [sortKey, setSortKey] = useState<SortKeys>(SortKeys.TEXT);
-  const [sortMode, setSortMode] = useState<number>(-1);
+  const [sortMode, setSortMode] = useState<number>(3);
   const [originalData, setOriginalData] = useState<InsightRowType[]>([]);
   const [sortedData, setSortedData] = useState<InsightRowType[]>([]);
 
@@ -62,45 +97,60 @@ export default function InsightTable({
     },
   };
 
-  const onSort = () => {
-    console.log("OnSOrt1")
-    if (sortMode === 0) return setSortedData(originalData);
-    
-    const result = originalData.sort((a: InsightRowType, b: InsightRowType) => {
-      if (sortMode === 1) {
-        console.log("SOrt Key Data 1", sortKey,typeof String(a[sortKey]).localeCompare(String(b[sortKey])));
-        return String(a[sortKey]).localeCompare(String(b[sortKey]));
-      }
-      if (sortMode === 2) {
-        console.log("SOrt Key Data 2", sortKey, String(b[sortKey]).localeCompare(String(a[sortKey])));
-        return String(b[sortKey]).localeCompare(String(a[sortKey]));
-      }
-      return 0;
-    });
+  const onSort = (sortMode: number, sortKey: SortKeys) => {
+    if (sortMode === 3) {
+      return setSortedData(data);
+    } else {
+      const result = originalData.sort(
+        (a: InsightRowType, b: InsightRowType) => {
+          if (sortMode === 1) {
+            console.log(
+              "SOrt Key Data 1",
+              sortKey,
+              a[sortKey],
+              b[sortKey],
+              String(a[sortKey]).localeCompare(String(b[sortKey]))
+            );
+            return String(a[sortKey]).localeCompare(String(b[sortKey]));
+          }
+          if (sortMode === 2) {
+            console.log(
+              "SOrt Key Data 2",
+              sortKey,
+              String(b[sortKey]).localeCompare(String(a[sortKey]))
+            );
+            return String(b[sortKey]).localeCompare(String(a[sortKey]));
+          }
+          return 0;
+        }
+      );
 
-    console.log("OnSOrt2")
+      console.log(
+        "OnSOrt2",
+        sortMode,
+        sortMode == 2 ? result.reverse() : result
+      );
 
-    setSortedData(result);
+      setSortedData(sortMode == 2 ? result.reverse() : result);
+    }
   };
-
-  useEffect(() => {
-    onSort();
-  }, [sortMode, sortKey]);
 
   const changeSortMode = (e: any, sortKey: SortKeys) => {
     setSortKey(sortKey);
     switch (sortMode) {
-      case 0:
+      case 3:
+        onSort(1, sortKey);
         setSortMode(1);
         break;
       case 1:
+        onSort(2, sortKey);
         setSortMode(2);
         break;
       case 2:
-        setSortMode(0);
+        onSort(3, sortKey);
+        setSortMode(3);
         break;
     }
-    console.log("SortKey", sortKey);
     e.stopPropagation();
   };
   return (
@@ -112,7 +162,12 @@ export default function InsightTable({
         >
           <div onClick={(e) => changeSortMode(e, SortKeys.TEXT)}>
             <StarBorderIcon className="hidden" />
-            <span>{title}</span>
+            <span>{title}</span>{" "}
+            <SortIcons
+              sortKey={sortKey}
+              sortMode={sortMode}
+              primaryKey={SortKeys.TEXT}
+            />
           </div>
           {stateName != "" || stateName ? (
             <>
@@ -120,7 +175,12 @@ export default function InsightTable({
                 onClick={(e) => changeSortMode(e, SortKeys.COUNT)}
                 className="border-type-2"
               >
-                {stateName}
+                {stateName}{" "}
+                <SortIcons
+                  sortKey={sortKey}
+                  sortMode={sortMode}
+                  primaryKey={SortKeys.COUNT}
+                />
               </div>
               <div
                 className="border-type-3"
@@ -139,15 +199,50 @@ export default function InsightTable({
                     <AiFillInfoCircle />
                   </span>
                 </Tooltip>
+                <SortIcons
+                  sortKey={sortKey}
+                  sortMode={sortMode}
+                  primaryKey={SortKeys.PERCENTAGE}
+                />
               </div>
-              <div className="border-type-2">India</div>
+              <div
+                className="border-type-2"
+                onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
+              >
+                India{" "}
+                <SortIcons
+                  sortKey={sortKey}
+                  sortMode={sortMode}
+                  primaryKey={SortKeys.INDIA_TOTAL}
+                />
+              </div>
             </>
           ) : (
             <>
-              <div className="border-type-2">Total</div>
+              <div
+                className="border-type-2"
+                onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
+              >
+                Total{SortKeys.INDIA_TOTAL}
+                <SortIcons
+                  sortKey={sortKey}
+                  sortMode={sortMode}
+                  primaryKey={SortKeys.INDIA_TOTAL}
+                />
+              </div>
             </>
           )}
-          <div className="border-type-3">Percentage</div>
+          <div
+            className="border-type-3"
+            onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
+          >
+            Percentage{SortKeys.INDIA_PERCENTAGE}
+            <SortIcons
+              sortKey={sortKey}
+              sortMode={sortMode}
+              primaryKey={SortKeys.INDIA_PERCENTAGE}
+            />
+          </div>
         </div>
         {sortedData.map((insight: InsightRowType) => (
           <div className="view-insight-body">

@@ -80,8 +80,20 @@ const TableContainer = (props: any) => {
   };
 
   useEffect(() => {
-    setOriginalData(bodyData);
-    setRenderedData(bodyData);
+    const removedEmptyData: any[] = [];
+    bodyData.forEach((item: any) => {
+      if (
+        item.state &&
+        item.state.length > 3 &&
+        item.name &&
+        item.name.length > 3 &&
+        item.text &&
+        item.text.length > 3
+      )
+        removedEmptyData.push(item);
+    });
+    setOriginalData(removedEmptyData);
+    setRenderedData(removedEmptyData);
     if (noOfItemsToRender) {
       setNoOfItemRender(noOfItemsToRender);
     }
@@ -140,7 +152,16 @@ const TableContainer = (props: any) => {
                           <ArrowDropUpIcon fontSize="small" />
                         )
                       ) : (
-                        ""
+                        <span className="d-flex flex-column p-0">
+                          <ArrowDropUpIcon
+                            fontSize="small"
+                            style={{ marginBottom: "-7px" }}
+                          />
+                          <ArrowDropDownIcon
+                            fontSize="small"
+                            style={{ marginTop: "-7px" }}
+                          />
+                        </span>
                       )}
                     </div>
                   </div>
@@ -155,7 +176,7 @@ const TableContainer = (props: any) => {
             borderRadius="4px"
             onChange={onSearch}
             value={searchQuery}
-            placeholder={'Search By State'}
+            placeholder={"Search By State"}
             placeholderClass={`search-bar-placeholder-data-table ${theme.dataTable.inputClass}`}
             inputClass={`${theme.dataTable.searchBorderClass} radius-5 me-3`}
           />

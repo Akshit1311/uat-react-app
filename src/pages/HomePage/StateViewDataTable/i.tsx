@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTable, useSortBy } from "react-table";
-import SearchBarComponent from "../../../components/DataTable/Search"
+import SearchBarComponent from "../../../components/DataTable/Search";
 // /DataTable/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -20,7 +20,7 @@ const TableContainer = (props: any) => {
   const [originalData, setOriginalData] = useState<any[]>([]);
   const [renderedData, setRenderedData] = useState<any>([]);
 
-  const [noOfItemsRender, setNoOfItemRender] = useState<number>(6);
+  const [noOfItemsRender, setNoOfItemRender] = useState<number>(100);
 
   const theme = useContext(ThemeContext);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -53,7 +53,7 @@ const TableContainer = (props: any) => {
   // };
 
   const memorisedValue = React.useMemo(() => {
-    return originalData
+    return originalData;
   }, [originalData]);
 
   const handleViewMore = () => {
@@ -70,8 +70,15 @@ const TableContainer = (props: any) => {
   };
 
   useEffect(() => {
+    const removedEmptyData: any[] = [];
+    bodyData.forEach((item: any) => {
+      if (item.district && item.district.length > 3)
+        removedEmptyData.push(item);
+    });
     setOriginalData(bodyData);
     setRenderedData(bodyData);
+
+    console.log("BodyData", bodyData);
     if (noOfItemsToRender) {
       setNoOfItemRender(noOfItemsToRender);
     }
@@ -86,7 +93,7 @@ const TableContainer = (props: any) => {
 
   return (
     <div className="data-table-overflow-scroll">
-      <table {...getTableProps()} className="w-100" >
+      <table {...getTableProps()} className="w-100">
         <thead className="w-100 py-5 ">
           {headerGroups.map((headerGroup) => (
             <TR
@@ -100,16 +107,17 @@ const TableContainer = (props: any) => {
                   {...column.getHeaderProps()}
                   borderWidth={index === 0 ? "0px" : "1px"}
                   fontWeight={true}
-                  borderColor="#e5e5e5" 
+                  borderColor="#e5e5e5"
                   borderHeight="48px"
                 >
                   <div
                     {...column.getSortByToggleProps()}
                     className="d-flex align-items-center w-100"
-                    
                   >
                     <div>
-                      {index === 0 || column.render('Header').toLowerCase() === 'seed fund startups'
+                      {index === 0 ||
+                      column.render("Header").toLowerCase() ===
+                        "seed fund startups"
                         ? column.render("Header")
                         : column
                             .render("Header")
@@ -124,17 +132,32 @@ const TableContainer = (props: any) => {
                           <ArrowDropUpIcon fontSize="small" />
                         )
                       ) : (
-                        ""
+                        <span className="d-flex flex-column p-0">
+                          <ArrowDropUpIcon
+                            fontSize="small"
+                            style={{ marginBottom: "-7px" }}
+                          />
+                          <ArrowDropDownIcon
+                            fontSize="small"
+                            style={{ marginTop: "-7px" }}
+                          />
+                        </span>
                       )}
                     </div>
                   </div>
                 </Cells>
               ))}
             </TR>
-          ))} 
+          ))}
         </thead>
 
-        <div className="mt-3 mb-2" style={{ maxWidth: "21rem", visibility: props.search ? "visible" : "hidden" }}>
+        <div
+          className="mt-3 mb-2"
+          style={{
+            maxWidth: "21rem",
+            visibility: props.search ? "visible" : "hidden",
+          }}
+        >
           <SearchBarComponent
             background={theme.dataTable.searchBg}
             borderRadius="4px"

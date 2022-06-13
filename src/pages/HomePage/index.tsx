@@ -474,10 +474,10 @@ const HomePage = (props: HomePageTypes) => {
                       border={`${!startupListActive && "0px"}`}
                       className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
                         startupListActive && "text-white background-color-theme"
-                      }`}
+                      }`} style={{ whiteSpace: "nowrap"}}
                       onClick={toggleStartUp}
                     >
-                      Startups List
+                      {activeCard} List
                     </Button>
                     <Button
                       colorTheme={primaryColorTheme}
