@@ -44,7 +44,7 @@ export default function MapViewChangeButtonGroup(props: any) {
   const districtView = () => setMapMode(MapVariables.DISTRICT);
   const cityView = () => {
     setMapMode(MapVariables.CITY);
-    circleView();
+    setIsCircleActive(true)
   };
 
   const theme = React.useContext(ThemeContext);
