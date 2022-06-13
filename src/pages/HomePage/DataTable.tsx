@@ -106,7 +106,7 @@ function DataTableComponent(props: any) {
         registrationFrom: undefined,
         registrationTo: undefined,
       });
-  }, [appliedFilters]);
+  }, [appliedFilters.stages, appliedFilters.industries, appliedFilters.sectors]);
   return (
     <div className="ms-3 mt-3">
       <TableContainer

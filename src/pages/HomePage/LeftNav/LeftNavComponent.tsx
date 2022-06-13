@@ -117,6 +117,7 @@ const LeftNavComponent = (props: any) => {
     selectedState,
     setSelectedState,
     handleToggle,
+    setStateViewMode
   } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>("");
@@ -367,6 +368,7 @@ const LeftNavComponent = (props: any) => {
       stages: [],
     }));
     history.push("/");
+    setStateViewMode(false);
   }
 
   const isResetFilterVisible =

@@ -55,7 +55,13 @@ interface IndiaMapTypes {
   startupType: StartupType;
 }
 
-function DistrictPath({ district, componentProps, theme }: any) {
+function DistrictPath({
+  getColorOpacity,
+  district,
+  componentProps,
+  theme,
+  colorTheme
+}: any) {
   const [isToolTipVisible, setToolTipVisible] = useState<boolean>(false);
   return (
     <MuiToolTip
@@ -69,8 +75,8 @@ function DistrictPath({ district, componentProps, theme }: any) {
         onMouseLeave={() => setToolTipVisible(false)}
         d={district.d}
         id={district.title}
-        // fillOpacity={getColorOpacity(district.title)}
-        fill={"white"}
+        fillOpacity={getColorOpacity(district.districtId)}
+        fill={ThemeColorIdentifier(colorTheme)}
         stroke={theme.map.mapBorder}
         strokeWidth={isToolTipVisible ? "3" : "0.5"}
       />
@@ -168,7 +174,13 @@ function IndiaMap({
   } = mapViewResource;
 
   const theme = useContext(ThemeContext);
-  const [allIndiaDistrictData, setAllIndiaDistrictData] = useState([]);
+  const [allIndiaDistrictData, setAllIndiaDistrictData] = useState<any>({
+    from: "",
+    to: "",
+    max: {},
+    data: [],
+  });
+  const [districtMappingByKey, setDistrictMappingByKey] = useState<any[]>([]);
 
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
     "https://api.startupindiaonline.com/startup/states"
@@ -365,7 +377,13 @@ function IndiaMap({
       const url: string =
         "data/v2/statistics/allDistricts/" + "2015-01-01/2022-01-01";
       const { data } = await axios.get(url);
-      setAllIndiaDistrictData(data.data);
+      setAllIndiaDistrictData(data);
+
+      const newArray: any[] = [];
+      data.data.forEach(
+        (dist: any) => (newArray[dist.districtId] = dist.statistics)
+      );
+      setDistrictMappingByKey(newArray);
     } catch (error) {
     } finally {
       // setLoading()
@@ -377,45 +395,27 @@ function IndiaMap({
     getAllIndiaDistrictData();
   }, []);
 
-  const findMaximumValue = () => {
-    let max = 0;
-    if (Array.isArray(allIndiaDistrictData)) {
-      allIndiaDistrictData.forEach((district: any) => {
-        const value = district.statistics["Startup"];
-        if (!value) {
-          const case1Value = district.statistics.Startup;
-          max = case1Value > max ? case1Value : max;
-        } else {
-          max = value > max ? value : max;
-        }
-      });
-    }
-    return max;
+  const getStatistics = (id: any) => {
+    return districtMappingByKey[id];
   };
 
-  const getStatistics = (districtName: string) => {
-    if (Array.isArray(allIndiaDistrictData)) {
-      return allIndiaDistrictData.find((district: StatisticsData) => {
-        if (!district.district || !districtName) return;
-        return district.district.toLowerCase() == districtName.toLowerCase();
-      });
-    }
+  const getColorOpacity = (id: string) => {
+    const maxValue = allIndiaDistrictData.max["Startup"];
 
-    return null;
-  };
-
-  const getColorOpacity = (districtName: string) => {
-    const maxValue = findMaximumValue();
-    const statistics: any = getStatistics(districtName);
+    const statistics: any = getStatistics(id);
+    console.log("STatistics", statistics);
     if (statistics && maxValue) {
       const startupTypeLocal: string = "Startup";
 
-      if (Number(statistics.statistics[startupTypeLocal])) {
-        return 0;
-      }
+      // if (Number(statistics.statistics[startupTypeLocal])) {
+      //   return 0;
+      // }
       const val = "Startup";
-      const colorLevel: number = Number(statistics.statistics[val]) / maxValue;
+      const colorLevel: number = Number(statistics[val]) / maxValue;
       // return 1
+      console.log('COlorLevel', colorLevel)
+      if(colorLevel < 0.1) return colorLevel + 0.1
+      else if(colorLevel < 0.2 && colorLevel > 0.1) return colorLevel + 0.2
       return colorLevel;
     }
     return 0;
@@ -552,6 +552,7 @@ function IndiaMap({
             districtsBoarder.map((district: any) => (
               <DistrictPath
                 theme={theme}
+                colorTheme={colorTheme}
                 key={district.districtId}
                 district={district}
                 componentProps={componentProps}

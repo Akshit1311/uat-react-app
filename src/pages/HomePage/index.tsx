@@ -294,6 +294,7 @@ const HomePage = (props: HomePageTypes) => {
     filterLoading,
     selectedState,
     setSelectedState,
+    setStateViewMode
   };
 
   const [startupListActive, setStartupListActive] = useState(true);

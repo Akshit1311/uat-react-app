@@ -220,6 +220,7 @@ function StartupsListComponent(props: any) {
     setQueryString(value);
   };
 
+  console.log("Tags State", tagsState);
   const handleApply = () => {
     const filteredList = tagsState.filter((item: any) =>
       item.name.toLowerCase().includes(queryString.toLowerCase())
