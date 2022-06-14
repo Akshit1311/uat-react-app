@@ -38,7 +38,7 @@ export default function MapViewChangeButtonGroup(props: any) {
 
   const circleText = (
     <div className=" px-3" style={{ paddingTop: "2px" }}>
-    <span>Circle</span>
+    <span>View</span>
   </div>
   )
   const defaultView = () => setMapMode(MapVariables.INDIA);
