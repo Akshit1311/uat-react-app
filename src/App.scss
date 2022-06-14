@@ -421,6 +421,37 @@ tbody {
     }
   }
 }
+@mixin viewInsightSectionsDark($fontSize, $fontWeight) {
+  @extend .d-flex;
+  @extend .p-2;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  justify-content: space-evenly;
+  border: 1px solid #444261;
+  border-radius: 4px;
+  margin: 0.5rem !important;
+  div {
+    flex: 1;
+    width: 3rem !important;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .p-2;
+    @extend .px-3;
+
+    .MuiSvgIcon-root {
+      font-size: 20px;
+      margin-bottom: 2px;
+      visibility: hidden;
+      &:not(.hidden) {
+        visibility: visible;
+      }
+    }
+    span {
+      @extend .ps-3;
+      font-weight: 600;
+    }
+  }
+}
 
 @mixin scrollArea {
   max-height: 40vh;
@@ -458,8 +489,14 @@ $primary: #0177fa;
   // &::-webkit-scrollbar {
   //   display: none;
   // }
-  .view-insight-header {
+  .view-insight-header-light {
     @include viewInsightSections(14px, 600);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .view-insight-header-dark {
+    @include viewInsightSectionsDark(14px, 600);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -474,8 +511,28 @@ $primary: #0177fa;
       @include scrollArea;
     }
   }
-  .view-insight-body {
+  .view-insight-body-light {
     @include viewInsightSections(12px, 500);
+    @extend .mt-2;
+    div:not(:first-child) {
+      justify-content: flex-end;
+    }
+    .icon-hover-selected {
+      color: $primary;
+      &:hover {
+        color: black;
+        transition: 0.3s ease-in;
+      }
+    }
+    .icon-hover-unselected {
+      &:hover {
+        color: $primary;
+        transition: 0.3s ease-in;
+      }
+    }
+  }
+  .view-insight-body-dark {
+    @include viewInsightSectionsDark(12px, 500);
     @extend .mt-2;
     div:not(:first-child) {
       justify-content: flex-end;

@@ -60,7 +60,7 @@ function DistrictPath({
   district,
   componentProps,
   theme,
-  colorTheme
+  colorTheme,
 }: any) {
   const [isToolTipVisible, setToolTipVisible] = useState<boolean>(false);
   return (
@@ -78,7 +78,7 @@ function DistrictPath({
         fillOpacity={getColorOpacity(district.districtId)}
         fill={ThemeColorIdentifier(colorTheme)}
         stroke={theme.map.mapBorder}
-        strokeWidth={isToolTipVisible ? "3" : "0.5"}
+        strokeWidth={isToolTipVisible ? "3" : "1"}
       />
     </MuiToolTip>
   );
@@ -400,22 +400,17 @@ function IndiaMap({
   };
 
   const getColorOpacity = (id: string) => {
-    const maxValue = allIndiaDistrictData.max["Startup"];
+    const maxValue =
+      allIndiaDistrictData.max[StartupTypesKeys[startupType.text]];
 
     const statistics: any = getStatistics(id);
-    console.log("STatistics", statistics);
     if (statistics && maxValue) {
-      const startupTypeLocal: string = "Startup";
+      const startupTypeLocal: string = StartupTypesKeys[startupType.text];
 
-      // if (Number(statistics.statistics[startupTypeLocal])) {
-      //   return 0;
-      // }
-      const val = "Startup";
+      const val = startupTypeLocal;
       const colorLevel: number = Number(statistics[val]) / maxValue;
-      // return 1
-      console.log('COlorLevel', colorLevel)
-      if(colorLevel < 0.1) return colorLevel + 0.1
-      else if(colorLevel < 0.2 && colorLevel > 0.1) return colorLevel + 0.2
+      if (colorLevel < 0.1) return colorLevel + 0.1;
+      else if (colorLevel < 0.2 && colorLevel > 0.1) return colorLevel + 0.2;
       return colorLevel;
     }
     return 0;
@@ -433,7 +428,7 @@ function IndiaMap({
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
-              ? "-160 130 1579 1283"
+              ? "-200 180 1579 1283"
               : getViewBoxArea()
           }
           className="mt-c-5-2"

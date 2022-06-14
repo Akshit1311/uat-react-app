@@ -157,7 +157,7 @@ export default function InsightTable({
     <div className="scroll-area-wrapper">
       <div className="scroll-area">
         <div
-          className="view-insight-header"
+          className={`view-insight-header-${theme.viewInsightClass}`}
           style={{ background: theme.accordionHeader }}
         >
           <div onClick={(e) => changeSortMode(e, SortKeys.TEXT)}>
@@ -207,13 +207,13 @@ export default function InsightTable({
               </div>
               <div
                 className="border-type-2"
-                onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
+                onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
               >
                 India{" "}
                 <SortIcons
                   sortKey={sortKey}
                   sortMode={sortMode}
-                  primaryKey={SortKeys.INDIA_TOTAL}
+                  primaryKey={SortKeys.INDIA_PERCENTAGE}
                 />
               </div>
             </>
@@ -221,13 +221,13 @@ export default function InsightTable({
             <>
               <div
                 className="border-type-2"
-                onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
+                onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
               >
-                Total{SortKeys.INDIA_TOTAL}
+                Total
                 <SortIcons
                   sortKey={sortKey}
                   sortMode={sortMode}
-                  primaryKey={SortKeys.INDIA_TOTAL}
+                  primaryKey={SortKeys.INDIA_PERCENTAGE}
                 />
               </div>
             </>
@@ -236,7 +236,7 @@ export default function InsightTable({
             className="border-type-3"
             onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
           >
-            Percentage{SortKeys.INDIA_PERCENTAGE}
+            Percentage
             <SortIcons
               sortKey={sortKey}
               sortMode={sortMode}
@@ -245,7 +245,7 @@ export default function InsightTable({
           </div>
         </div>
         {sortedData.map((insight: InsightRowType) => (
-          <div className="view-insight-body">
+          <div className={`view-insight-body-${theme.viewInsightClass}` }>
             <div>
               {starFill ? (
                 <StarIcon

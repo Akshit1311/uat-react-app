@@ -35,6 +35,12 @@ export default function MapViewChangeButtonGroup(props: any) {
       <span>City</span>
     </div>
   );
+
+  const circleText = (
+    <div className=" px-3" style={{ paddingTop: "2px" }}>
+    <span>Circle</span>
+  </div>
+  )
   const defaultView = () => setMapMode(MapVariables.INDIA);
 
   const circleView = () => {
@@ -44,7 +50,7 @@ export default function MapViewChangeButtonGroup(props: any) {
   const districtView = () => setMapMode(MapVariables.DISTRICT);
   const cityView = () => {
     setMapMode(MapVariables.CITY);
-    setIsCircleActive(true)
+    setIsCircleActive(true);
   };
 
   const theme = React.useContext(ThemeContext);
@@ -65,11 +71,11 @@ export default function MapViewChangeButtonGroup(props: any) {
       boxSizing: "border-box",
     },
   };
-  useEffect(()=>{
-    if(props.activeCard !== 'Startups'){
+  useEffect(() => {
+    if (props.activeCard !== "Startups") {
       defaultView();
     }
-  },[props.activeCard])
+  }, [props.activeCard]);
   return (
     <div className={`mx-1 col-12 mt-4 `}>
       <div className={`d-flex justify-content-between `}>
@@ -89,7 +95,10 @@ export default function MapViewChangeButtonGroup(props: any) {
           >
             <IconButton
               colorTheme={colorTheme}
-              onClick={()=> {defaultView(); setIsCircleActive(false);}}
+              onClick={() => {
+                defaultView();
+                setIsCircleActive(false);
+              }}
               active={mapMode.id === MapVariables.INDIA.id}
               className={`btn-outline btn-icon-handler ${
                 mapMode.id === MapVariables.INDIA.id ? "bg-active" : ""
@@ -144,7 +153,10 @@ export default function MapViewChangeButtonGroup(props: any) {
                 }}
               >
                 <IconButton
-                  onClick={()=> {districtView(); setIsCircleActive(false);}}
+                  onClick={() => {
+                    districtView();
+                    setIsCircleActive(false);
+                  }}
                   colorTheme={colorTheme}
                   active={mapMode.id === MapVariables.DISTRICT.id}
                   className={`btn btn-icon-handler  ${
@@ -163,20 +175,33 @@ export default function MapViewChangeButtonGroup(props: any) {
           )}
         </div>
         <div>
-
-          <IconButton
-            active={isCircleActive}
-            colorTheme={colorTheme}
-            onClick={circleView}
-            className={`btn btn-icon-handler shadow-small ${
-              isCircleActive ? "bg-active" : ""
-            } ${mapMode.id === MapVariables.DISTRICT.id ? 'd-none' : ''}` }
+          <MuiToolTip
+            placement="top"
+            title={circleText}
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: TOOLTIP_SX,
+              },
+              arrow: {
+                sx: ARROW_SX,
+              },
+            }}
           >
-            <RiDropFill
-              size={18}
-              // style={{ marginTop: "-5px", marginLeft: "1px" }}
-            />
-          </IconButton>
+            <IconButton
+              active={isCircleActive}
+              colorTheme={colorTheme}
+              onClick={circleView}
+              className={`btn btn-icon-handler shadow-small ${
+                isCircleActive ? "bg-active" : ""
+              } ${mapMode.id === MapVariables.DISTRICT.id ? "d-none" : ""}`}
+            >
+              <RiDropFill
+                size={18}
+                // style={{ marginTop: "-5px", marginLeft: "1px" }}
+              />
+            </IconButton>
+          </MuiToolTip>
         </div>
       </div>
     </div>

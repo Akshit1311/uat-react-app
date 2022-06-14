@@ -16,10 +16,11 @@ import _ from "lodash";
 const AccordionLocal = MaterialStyled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  border: `0px solid ${theme.palette.divider}`,
+  // border: `0px solid ${theme.palette.divider}`,
   background: theme.palette.mode === "dark" ? "rgba(37, 40, 58, 1)" : "white",
-  boxShadow: "0px 0px 10px rgba(193, 193, 193, 0.25)",
-
+  boxShadow: theme.palette.mode === 'dark' ? "none" : "0px 0px 10px rgba(193, 193, 193, 0.25)",
+  border: theme.palette.mode === 'dark' ? "1px solid #444261" :  `0px solid ${theme.palette.divider}`,
+  borderRadius: '5px',
   "&:before": {
     display: "none",
   },
