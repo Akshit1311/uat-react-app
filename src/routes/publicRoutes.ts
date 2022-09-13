@@ -9,5 +9,5 @@ export const publicRoutes: Array<RouteType> = [
   { path: "/accordion", component: Accordion },
   { path: "/", component: HomePage },
   { path: "/view-insight", component: ViewInsight },
-  { path: "/health-check", component: HealthCheckUrl },
+  { path: "/health", component: HealthCheckUrl },
 ];
