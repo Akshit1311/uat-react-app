@@ -1,6 +1,6 @@
 import { map } from "lodash";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import HeaderComponent from "../components/HeaderComponent";
 import { privateRoutes } from "./privateRoutes";
 import ProtectedRoute from "./ProtectedRoutes";
@@ -10,11 +10,15 @@ import { RouteType } from "./types";
 interface AppNavigatorTypes {}
 
 export default function AppNavigator(props: AppNavigatorTypes) {
+  const history = useHistory();
+  console.log("History", history.location.pathname);
   return (
     <>
-      <HeaderComponent></HeaderComponent>
+      {history.location.pathname === "/health-check" ? undefined : (
+        <HeaderComponent></HeaderComponent>
+      )}
       <Switch>
-        {map(publicRoutes, (publicRoute: RouteType, index:number) => (
+        {map(publicRoutes, (publicRoute: RouteType, index: number) => (
           <Route exact {...publicRoute} key={index} />
         ))}
         {map(privateRoutes, (privateRoute: RouteType, index: number) => (
