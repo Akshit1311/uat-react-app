@@ -47,6 +47,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
+    "start:prod": "pm2 start --name startupindia  npm -- start",
     "start": "react-scripts start start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -14,7 +14,7 @@ export default function AppNavigator(props: AppNavigatorTypes) {
   console.log("History", history.location.pathname);
   return (
     <>
-      {history.location.pathname === "/health-check" ? undefined : (
+      {history.location.pathname === "/health" ? undefined : (
         <HeaderComponent></HeaderComponent>
       )}
       <Switch>
