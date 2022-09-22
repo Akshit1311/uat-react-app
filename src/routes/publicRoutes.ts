@@ -6,8 +6,8 @@ import HealthCheckUrl from "./HealthCheckUrl";
 
 
 export const publicRoutes: Array<RouteType> = [
-  { path: "/accordion", component: Accordion },
-  { path: "/", component: HomePage },
-  { path: "/view-insight", component: ViewInsight },
-  { path: "/health", component: HealthCheckUrl },
+  { path: "/maps/accordion", component: Accordion },
+  { path: "/maps/", component: HomePage },
+  { path: "/maps/view-insight", component: ViewInsight },
+  { path: "/maps/health", component: HealthCheckUrl },
 ];
