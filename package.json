@@ -2,7 +2,7 @@
   "name": "invest-india",
   "version": "0.1.0",
   "private": true,
-  "baseUrl": "https://uat.startupindia.gov.in/startup-india-maps/",
+  "baseUrl": "https://uat.startupindia.gov.in/startup-india-maps",
   "dependencies": {
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.1.0",
