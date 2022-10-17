@@ -31,6 +31,8 @@ interface ViewChangerComponentsTypes {
   setStartupType: React.Dispatch<StartupType>;
 }
 
+const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+
 const DARK_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
 const LIGHT_THEME_DROPDOWN = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>")`;
 
@@ -49,8 +51,8 @@ const ViewMoreButton = styled.button<any>`
 const VIEW_MORE = "View more about ";
 const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
 
-const DATA_TABLE_API = "/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/";
-const DISTRICT_API = `/data/v2/statistics/state/`
+const DATA_TABLE_API = `${BASE_URL}/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/`;
+const DISTRICT_API = `${BASE_URL}/data/v2/statistics/state/`;
 
 function ViewChangerComponent({
   mapViewResources,
@@ -77,7 +79,6 @@ function ViewChangerComponent({
     appliedFilters,
     activeCard,
     fetchTableData,
-    
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
@@ -106,15 +107,15 @@ function ViewChangerComponent({
     getCounts(value);
     fetchCount(value);
     setSelectedDateRange(value);
-    if(appliedFilters.states[0]){
-      fetchDistrict( DISTRICT_API + appliedFilters.states[0] + '/' + value);
+    if (appliedFilters.states[0]) {
+      fetchDistrict(DISTRICT_API + appliedFilters.states[0] + "/" + value);
     }
   };
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
     setSelectedStartupType(value);
-    fetchStartUpCount("/startup/startupCount/" + value);
+    fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
     setSelectedStartupTypeIndex(value);
 
     setStartupType(startUpTypes[value]);
@@ -193,7 +194,13 @@ function ViewChangerComponent({
           >
             <option value={today}>All </option>
             {dateRangeState.map((item: any) => (
-              <option key={item.from +'/' + item.to} value={item.from + "/" + item.to}> {item.text} </option>
+              <option
+                key={item.from + "/" + item.to}
+                value={item.from + "/" + item.to}
+              >
+                {" "}
+                {item.text}{" "}
+              </option>
             ))}
           </SelectBox>
           <button
@@ -224,7 +231,9 @@ function ViewChangerComponent({
                 onChange={startTypeChange}
               >
                 {startUpTypes.map((item: any) => (
-                  <option key={item.index} value={item.index}>{item.text}</option>
+                  <option key={item.index} value={item.index}>
+                    {item.text}
+                  </option>
                 ))}
               </SelectBox>
             </div>

@@ -43,7 +43,8 @@ function StartUpCard({
   stages,
   form80IacStatus,
   tagsLoading,
-  logo, colorTheme,
+  logo,
+  colorTheme,
 }: any) {
   function htmlDecode(input: any) {
     var doc = new DOMParser().parseFromString(input, "text/html");
@@ -58,7 +59,11 @@ function StartUpCard({
 
   const tagsLoader = tagsLoading && (
     <div className="w-100 h-100 d-flex justify-content-center align-items-center">
-      <MoonLoader color={ThemeColorIdentifier(colorTheme)} loading={tagsLoading} size={"25px"} />
+      <MoonLoader
+        color={ThemeColorIdentifier(colorTheme)}
+        loading={tagsLoading}
+        size={"25px"}
+      />
     </div>
   );
 
@@ -200,14 +205,27 @@ function StartUpCard({
 function StartupsListComponent(props: any) {
   const theme = useContext(ThemeContext);
   const [windowWidth, windowHeight] = useWindowSize();
-  const [fetchTags, tagsState, tagsLoading] = useMutate("/startup/filter", []);
+  const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+
+  const [fetchTags, tagsState, tagsLoading] = useMutate(
+    `${BASE_URL}/startup/filter`,
+    []
+  );
+
+  console.log({ tagsState });
+
   const [renderedData, setRenderedData] = useState<any[]>([]);
 
   const [queryString, setQueryString] = useState<string>("");
 
   const startupList = React.useMemo(() => {
     return renderedData.map((startUp: any, index: number) => (
-      <StartUpCard {...startUp} index={index} tagsLoading={tagsLoading} colorTheme={props.colorTheme} />
+      <StartUpCard
+        {...startUp}
+        index={index}
+        tagsLoading={tagsLoading}
+        colorTheme={props.colorTheme}
+      />
     ));
   }, [renderedData]);
 
@@ -237,7 +255,7 @@ function StartupsListComponent(props: any) {
   }, [props.appliedFilters]);
 
   return (
-    <div className="mb-5 startup-list-styles d-flex mx-0 w-100 h-100" >
+    <div className="mb-5 startup-list-styles d-flex mx-0 w-100 h-100">
       <StartUpCardContainer
         className={`startup-list-card-container p-4 position-relative mx-0 ${
           renderedData.length !== tagsState.length ? "pb-0" : ""
@@ -285,7 +303,10 @@ function StartupsListComponent(props: any) {
         )}
       </StartUpCardContainer>
       <div className="ps-4 disabled-map">
-        <DisabledMap startupType={props.startupType} mapViewResource={props.mapViewResource} />
+        <DisabledMap
+          startupType={props.startupType}
+          mapViewResource={props.mapViewResource}
+        />
       </div>
     </div>
   );

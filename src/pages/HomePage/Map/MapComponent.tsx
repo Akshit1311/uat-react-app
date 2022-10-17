@@ -182,9 +182,16 @@ function IndiaMap({
   });
   const [districtMappingByKey, setDistrictMappingByKey] = useState<any[]>([]);
 
+  const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+
+  console.log({ BASE_URL });
+
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
-    "https://api.startupindiaonline.com/startup/states"
+    `${BASE_URL}/startup/states`
   );
+
+  console.log({ indiaMap });
+
   const [width, height] = useWindowSize();
   const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1006" : "-15 0 900 950";
   const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-30 0 800 800";

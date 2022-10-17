@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../scss/HomePageStyles/countBlockComponent.scss";
 import { IDType } from "./Map/variables";
-import { useQuery } from "../../hooks/useQuery";
 import HomePageApi from "../../config/homepageApis.json";
 import styled from "styled-components";
 import MoonLoader from "react-spinners/MoonLoader";
@@ -231,9 +230,11 @@ const CountsBlockComponent = ({
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
 
+  const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+
   const fetchCounts = async () => {
     try {
-      const { data } = await axios.post("startup/v2/filter", {
+      const { data } = await axios.post(`${BASE_URL}/startup/filter`, {
         ...appliedFilters,
         roles: [
           "Startup",
@@ -267,10 +268,8 @@ const CountsBlockComponent = ({
         ? getCountsById("Investor").value
         : 0;
       setStateCounts(count);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
-
 
   const filterStateCounts = () => {
     const state = tableState.data

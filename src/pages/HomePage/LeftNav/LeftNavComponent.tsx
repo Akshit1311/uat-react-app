@@ -20,18 +20,21 @@ import { useHistory } from "react-router-dom";
 import SearchBar from "../AllSearch";
 import ViewInsight from "../ViewInsight";
 
-const ResetButton = styled.button({
-  display: "flex",
-  justifyContent: "center",
-  height: "37px",
-  width: "100%",
-  alignItems: "center",
-  fontFamily: "Montserrat"
-},(props:any)=>{
-  return {
-    background: props.theme.resetButton,
+const ResetButton = styled.button(
+  {
+    display: "flex",
+    justifyContent: "center",
+    height: "37px",
+    width: "100%",
+    alignItems: "center",
+    fontFamily: "Montserrat",
+  },
+  (props: any) => {
+    return {
+      background: props.theme.resetButton,
+    };
   }
-});
+);
 
 const Accordion = MaterialStyled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -117,7 +120,7 @@ const LeftNavComponent = (props: any) => {
     selectedState,
     setSelectedState,
     handleToggle,
-    setStateViewMode
+    setStateViewMode,
   } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>("");
@@ -359,7 +362,7 @@ const LeftNavComponent = (props: any) => {
     appliedFilters,
   };
 
-  const onApplyResetFilter = () =>{
+  const onApplyResetFilter = () => {
     setAppliedFilters((prev: any) => ({
       ...prev,
       industries: [],
@@ -369,7 +372,7 @@ const LeftNavComponent = (props: any) => {
     }));
     history.push("/");
     setStateViewMode(false);
-  }
+  };
 
   const isResetFilterVisible =
     appliedFilters.states.length > 0 ||

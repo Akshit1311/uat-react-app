@@ -160,8 +160,10 @@ const HomePage = (props: HomePageTypes) => {
   //   return result;
   // },[statisticsData]);
 
+  const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+
   const [fetchFilterList, filterState, filterLoading] = useMutate(
-    "/startup/filter/v2/defaults",
+    `${BASE_URL}/startup/filter/defaults`,
     INITIAL_FILTER_STATE2
   );
 
@@ -294,7 +296,7 @@ const HomePage = (props: HomePageTypes) => {
     filterLoading,
     selectedState,
     setSelectedState,
-    setStateViewMode
+    setStateViewMode,
   };
 
   const [startupListActive, setStartupListActive] = useState(true);
@@ -474,7 +476,8 @@ const HomePage = (props: HomePageTypes) => {
                       border={`${!startupListActive && "0px"}`}
                       className={`font-500 font-family-Mont shadow-none border-0 px-3 ${
                         startupListActive && "text-white background-color-theme"
-                      }`} style={{ whiteSpace: "nowrap"}}
+                      }`}
+                      style={{ whiteSpace: "nowrap" }}
                       onClick={toggleStartUp}
                     >
                       {activeCard} List

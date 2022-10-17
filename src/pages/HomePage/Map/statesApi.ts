@@ -30,17 +30,22 @@ export async function statesDpiit(values: any): Promise<MapType[]> {
   //   (newArray);
   //   return newArray;
   // };
+
+  const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+
+  console.log({ BASE_URL_STATES_API: BASE_URL });
+
   return new Promise(async (resolve, rejects) => {
     try {
       const response = await axios({
-        url: "https://api.startupindiaonline.com/startup/dpiit/states",
+        url: `/startup/dpiit/states`,
         method: "GET",
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       });
 
       resolve(response.data);
     } catch (error) {
-      rejects([])
+      rejects([]);
     }
   });
 }
