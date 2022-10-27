@@ -431,7 +431,7 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      {loadingIndiaMap === false && tableLoading === false ? (
+      { true ? (
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
@@ -493,7 +493,7 @@ function IndiaMap({
                       fetchDistrict();
                     }}
                     fillOpacity={
-                      !isCircleActive
+                      !isCircleActive && loadingIndiaMap === false && tableLoading === false
                         ? tableState && tableState.data
                           ? getGradientColor(
                               state.id,
