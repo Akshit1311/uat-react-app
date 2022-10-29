@@ -234,7 +234,8 @@ const CountsBlockComponent = ({
 
   const fetchCounts = async () => {
     try {
-      const { data } = await axios.post(`${BASE_URL}/startup/filter`, {
+      console.log("BASE URL COUNT API", `${BASE_URL}/startup/v2/filter`)
+      const { data } = await axios.post(`${BASE_URL}/startup/v2/filter`, {
         ...appliedFilters,
         roles: [
           "Startup",
@@ -245,6 +246,7 @@ const CountsBlockComponent = ({
           "Accelerator",
         ],
       });
+      console.log("BASE COUNTS", data)
       const getCountsById = (id: string) =>
         data.counts.find((i: KeyValuePair) => i.id === id);
 
