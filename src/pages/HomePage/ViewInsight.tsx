@@ -11,8 +11,13 @@ interface ViewInsight {
 
 export default function ViewInsight(props: any) {
   const history = useHistory();
-  const url = props.selectedState && props.selectedState[0] ? props.viewInsightUrl : `view-insight?id=${'India'}&state=${'India'}`;
-  const navigate= (url:string) => history.push(props.viewInsightUrl)
+  const url =
+    props.selectedState && props.selectedState[0]
+      ? props.viewInsightUrl
+      : `${
+          process.env.REACT_APP_BASE_URL || ""
+        }view-insight?id=${"India"}&state=${"India"}`;
+  const navigate = (url: string) => history.push(props.viewInsightUrl);
   return (
     <div className="left-side-nav-styles">
       <Card className="left-nav-bottom-card row pt-3 pb-0">
@@ -24,9 +29,15 @@ export default function ViewInsight(props: any) {
           You can View Insights of India
         </span>
         <div className="btn-view-project mx-0 px-0">
-            <Button colorTheme={props.colorTheme} onClick={()=> navigate(url)} className="background-color-theme">View Insights</Button>
+          <Button
+            colorTheme={props.colorTheme}
+            onClick={() => navigate(url)}
+            className="background-color-theme"
+          >
+            View Insights
+          </Button>
         </div>
       </Card>
     </div>
-  )
+  );
 }
