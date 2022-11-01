@@ -37,5 +37,5 @@ export default function ViewInsight(props: any) {
         </div>
       </Card>
     </div>
-  )
+  );
 }
