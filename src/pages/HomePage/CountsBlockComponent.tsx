@@ -12,6 +12,9 @@ import { CountBlockModel } from ".";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useWebQuery } from "../../hooks/useWebQuery";
+
+const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
 const override = css`
   display: block;
@@ -231,6 +234,7 @@ const CountsBlockComponent = ({
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
 
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+  const query = useWebQuery();
 
   const fetchCounts = async () => {
     try {
@@ -323,7 +327,9 @@ const CountsBlockComponent = ({
     loading: countLoading,
     colorTheme,
   };
-  const stateSelected = selectedArea.stateName?.toLowerCase() !== "india";
+  
+  const id = query.get('state');
+  const stateSelected = id !== "india" || id ? id : null;
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
@@ -340,7 +346,7 @@ const CountsBlockComponent = ({
                 name: "",
               });
               setStateViewMap(false);
-              history.push("/");
+              history.push(baseRoute + "/maps/");
             }}
             className={`mb-3 ${stateSelected ? "text-theme" : ""}`}
           >

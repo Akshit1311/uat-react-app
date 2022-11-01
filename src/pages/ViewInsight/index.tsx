@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 
 export default function ControlledAccordions() {
   const query = useWebQuery();
+  console.log("Query", query)
   const theme = React.useContext(ThemeContext);
   const history = useHistory();
 
@@ -41,13 +42,21 @@ export default function ControlledAccordions() {
 
   React.useEffect(() => {
     const id = query.get('id');
-    if(typeof id === 'string' && id.length === 0){
-      fetchInsights(`/insight/country/india/2015-01-01/2022-06-24`);
+    console.log("ID", id)
+    if(!id || id == 'India'){
+      fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
     } else {
-      fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
-    }
-  }, [query.get("id")]);
+      // if(query.get("id") == 'India'){
+      //   fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
+      // } else {
+        fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
 
+      // }
+      console.log("Normal State Url", `/insight/state/${query.get("id")}/2021-01-01/2021-12-12`)
+    }
+    console.log("PAgeRender2")
+  }, [query.get("id")]);
+  console.log("PAgeRender1")
   const backUrl: string = `/?id=${query.get("id")}&state=${query.get("state")}`;
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
@@ -55,7 +64,7 @@ export default function ControlledAccordions() {
         <PageWrapper className="p-4 h-100">
           <div className="mb-4">
             <H5 className="text-uppercase font-Mont font-18px mb-0">
-              View Insights of {query.get("state")}
+              View Insights of {query.get("state") || "India"}
             </H5>
             <p className="font-Mont font-600 font-12px mt-1">
               <span
@@ -89,7 +98,7 @@ export default function ControlledAccordions() {
                 panelName="panel1"
                 handleChange={handleChange}
                 title="Industry"
-                stateName={query.get("state")}
+                stateName={query.get("state") === 'India' ? "" : query.get("state")}
                 data={insightState.industry || []}
                 selectedData={selectedIndustries || []}
               />
@@ -100,7 +109,7 @@ export default function ControlledAccordions() {
                 handleChange={handleChange}
                 title="Sector"
                 data={insightState.sector || []}
-                stateName={query.get("state")}
+                stateName={query.get("state") === 'India' ? "" : query.get("state")}
                 selectedData={selectedSectors || []}
               />
 
@@ -110,7 +119,7 @@ export default function ControlledAccordions() {
                 handleChange={handleChange}
                 title="Stage"
                 data={insightState.stage || []}
-                stateName={query.get("state")}
+                stateName={query.get("state") === 'India' ? "" : query.get("state")}
                 selectedData={selectedStages || []}
               />
 
