@@ -20,6 +20,9 @@ import { useHistory } from "react-router-dom";
 import SearchBar from "../AllSearch";
 import ViewInsight from "../ViewInsight";
 
+
+const baseRoute = process.env.REACT_APP_BASE_URL || "";
+
 const ResetButton = styled.button(
   {
     display: "flex",
@@ -171,7 +174,7 @@ const LeftNavComponent = (props: any) => {
     };
     setSelectedArea(area);
     setExpanded(false);
-    history.push(`/?id=${area.id}&state=${area.stateName}`);
+    history.push(`${baseRoute}/maps/?id=${area.id}&state=${area.stateName}`);
     closeModal();
   };
 
@@ -370,7 +373,7 @@ const LeftNavComponent = (props: any) => {
       states: [],
       stages: [],
     }));
-    history.push("/");
+    history.push(baseRoute + "/maps/");
     setStateViewMode(false);
   };
 

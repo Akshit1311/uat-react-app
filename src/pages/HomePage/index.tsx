@@ -33,6 +33,9 @@ import { setColorTheme } from "../../store/config";
 import moment from "moment";
 import StateViewDataTable from "./StateViewDataTable";
 
+const baseRoute = process.env.REACT_APP_BASE_URL || "";
+
+
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
   @media (max-width: 768px) {
@@ -299,13 +302,14 @@ const HomePage = (props: HomePageTypes) => {
     setStateViewMode,
   };
 
+  const query = useWebQuery();
+
   const [startupListActive, setStartupListActive] = useState(true);
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
 
-  const viewInsightUrl = `/view-insight?id=${
-    selectedState[0] ? selectedState[0].id : ""
-  }&state=${selectedState[0] ? selectedState[0].value : ""}`;
-  const query = useWebQuery();
+  const viewInsightUrl = `${baseRoute}/maps/view-insight?id=${
+    query.get('id')
+  }&state=${query.get('state')}`;
 
   useEffect(() => {
     const stateName = query.get("state");
