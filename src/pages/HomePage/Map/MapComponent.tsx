@@ -270,6 +270,24 @@ function IndiaMap({
     }
     return 0;
   };
+
+  const getStateCount = (stateId: string, accessor: string) => {
+    if (stateId && accessor) {
+      const findStateIndex = findCountTypeValue(stateId);
+      if (findStateIndex !== -1) {
+        console.log("Accessor", accessor);
+        let stateValue: any;
+        if (accessor[0] == "Startup") {
+          const key = StartupTypesKeys[startupType.text];
+          stateValue = tableState.data[findStateIndex].statistics[key];
+        } else {
+          stateValue = tableState.data[findStateIndex].statistics[accessor];
+        }
+        return stateValue;
+      }
+    }
+  };
+
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
     if (selected !== -1) return true;
@@ -433,7 +451,7 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      { true ? (
+      {true ? (
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
@@ -446,7 +464,7 @@ function IndiaMap({
           <g style={{ transform: "scale(1)" }}>
             <MuiToolTip
               placement="top"
-              title={"Lakshadweep"}
+              title={"Lakshadweep" +  `(${getStateCount('5f48ce592a9bb065cdf9fb2f', appliedFilters.roles) || "Loading..."})`}
               followCursor
               arrow
               componentsProps={componentProps}
@@ -477,7 +495,10 @@ function IndiaMap({
               return (
                 <MuiToolTip
                   placement="top"
-                  title={state.name}
+                  title={
+                    state.name +
+                    `(${getStateCount(state.id, appliedFilters.roles) || "Loading..."})`
+                  }
                   followCursor
                   arrow
                   componentsProps={componentProps}
@@ -495,7 +516,9 @@ function IndiaMap({
                       fetchDistrict();
                     }}
                     fillOpacity={
-                      !isCircleActive && loadingIndiaMap === false && tableLoading === false
+                      !isCircleActive &&
+                      loadingIndiaMap === false &&
+                      tableLoading === false
                         ? tableState && tableState.data
                           ? getGradientColor(
                               state.id,

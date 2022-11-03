@@ -176,6 +176,7 @@ const LeftNavComponent = (props: any) => {
     setExpanded(false);
     history.push(`${baseRoute}/maps/?id=${area.id}&state=${area.stateName}`);
     closeModal();
+    
   };
 
   const handleSectorClick = (sectorObj: any) => {
@@ -375,6 +376,11 @@ const LeftNavComponent = (props: any) => {
     }));
     history.push(baseRoute + "/maps/");
     setStateViewMode(false);
+    setSelectedState([])
+    setSelectedSector([]);
+    setSelectedIndustry([]);
+    setSelectedStages([]);
+    setSelectedStages([])
   };
 
   const isResetFilterVisible =

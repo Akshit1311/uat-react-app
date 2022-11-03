@@ -173,6 +173,7 @@ function ViewChangerComponent({
     setMapMode,
     setIsCircleActive,
     activeCard,
+    stateViewMode
   };
 
   return (
