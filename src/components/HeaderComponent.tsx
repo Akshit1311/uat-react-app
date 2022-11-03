@@ -33,7 +33,9 @@ function HeaderComponent(props: HeaderComponentProps) {
             <NavbarToggler onClick={toggleNav} className="toggler" />
             <div className="navbar-brand ms-md-1 mt-1">
               <img
-                src="/assets/images/main-logo-white.png"
+                src={`${
+                  process.env.REACT_APP_BASE_URL || ""
+                }/assets/images/main-logo-white.png`}
                 alt="main-logo"
                 width="143px"
                 height="30.62px"
