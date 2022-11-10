@@ -125,6 +125,7 @@ const HomePage = (props: HomePageTypes) => {
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
   const [startUpPolicyChart, setStartUpPolicyChart] = useState<boolean>(false);
+  const [dateRangeCount, setDateRangeCount] = useState<boolean>(true);
   const [selectedStateByMap, setSelectedStateByMap] = useState({
     id: "",
     name: "",
@@ -180,7 +181,6 @@ const HomePage = (props: HomePageTypes) => {
     );
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
-
   const [fetchPolicy, policyState, policyLoading] = useQuery("");
   const [selectedCountBlock, setSelectedCountBlock] = useState("Startup");
 
@@ -285,6 +285,8 @@ const HomePage = (props: HomePageTypes) => {
     fetchDistrict,
     activeCard,
     fetchTableData,
+    dateRangeCount,
+    setDateRangeCount
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -423,6 +425,7 @@ const HomePage = (props: HomePageTypes) => {
                           scaleBarVisible={true}
                           startupType={startupType}
                           mapViewResource={mapViewResources}
+                          countResource={countResource}
                         />
                       )}
                       {stateViewMode && (
@@ -518,6 +521,7 @@ const HomePage = (props: HomePageTypes) => {
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
                           mapViewResource={mapViewResources}
+                          countResource={countResource}
                         />
                       </div>
                     )}

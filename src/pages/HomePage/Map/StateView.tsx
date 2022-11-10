@@ -170,11 +170,13 @@ export default function StateView({
         viewBox="-50 0 550 550"
         onDoubleClick={() => setStateViewMode(false)}
       >
+        {console.log('data====',StatesDistrictView,selectedArea)}
         {StatesDistrictView.filter((state: any) => {
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
-          state.path.map((district: DistrictBorderType) => (
-            <MuiToolTip
+          state.path.map((district: DistrictBorderType) => {
+            console.log('data====',district);
+            return(<MuiToolTip
               placement="top"
               key={
                 district.name
@@ -193,8 +195,8 @@ export default function StateView({
                 fillOpacity={getColorOpacity(district.name)}
                 d={district.d}
               />
-            </MuiToolTip>
-          ))
+            </MuiToolTip>)
+})
         )}
       </svg>
     </MapWrapper>

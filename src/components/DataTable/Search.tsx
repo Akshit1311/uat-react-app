@@ -1,6 +1,6 @@
 import { GoSearch } from "react-icons/go";
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeContext } from "../../config/context";
 import { IconSpan, Input } from "./styled";
 import { SearchTypes } from "./types";
@@ -20,6 +20,21 @@ export default function Search({
   const [searchQuery, setSearchQuery] = useState<string>();
   const borderRadiusAll = borderRadius ? borderRadius : "0px";
   const backgroundAll = background ? background : "#f8f8f8";
+
+  // Debouncing functionality for making call of api on liited times
+  useEffect(() => {
+    let delayDebounceFn: any;
+    if (searchQuery !== "" && searchQuery !== undefined) {
+      delayDebounceFn = setTimeout(() => {
+        onChange(searchQuery);
+      }, 100);
+    } else {
+      clearTimeout(delayDebounceFn);
+      onChange('');
+    }
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
   return (
     <div className="mt-3 mb-2" style={{ maxWidth: "22rem" }}>
       <div className="row d-flex flex-row justify-content-center align-items-center search-bar-comman-component m-0">
@@ -45,13 +60,13 @@ export default function Search({
                 background: backgroundAll,
                 color: "black",
                 borderTopRightRadius: borderRadiusAll,
-                borderBottomRightRadius: borderRadiusAll,
+                borderBottomRightRadius: borderRadiusAll                
               }}
               onChange={(e: any) => setSearchQuery(e.target.value)}
               value={searchQuery}
             />
           </div>
-          <button
+          {/* <button
             onClick={() => onChange(searchQuery)}
             className="btn btn-primary btn-radius search-btn background-color-theme"
             style={{
@@ -61,7 +76,7 @@ export default function Search({
             }}
           >
             Search
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
