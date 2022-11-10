@@ -97,7 +97,8 @@ export default function StateView({
       data.data.forEach((district: any) => {
         const value = district.statistics[StartupTypesKeys[startupType.text]];
         if (!value) {
-          const case1Value = district.statistics[StartupTypesKeys[startupType.text]];
+          const case1Value =
+            district.statistics[StartupTypesKeys[startupType.text]];
           max = case1Value > max ? case1Value : max;
         } else {
           max = value > max ? value : max;
@@ -143,6 +144,23 @@ export default function StateView({
     return 0;
   };
 
+  const getCount = (districtName: string) => {
+    const statistics: any = getStatistics(districtName);
+    if (statistics) {
+      const startupTypeLocal: string = startupType.text;
+      if (
+        Number(statistics.statistics[StartupTypesKeys[startupTypeLocal]]) === 0
+      ) {
+        return 0;
+      }
+      const val = StartupTypesKeys[startupTypeLocal]
+        ? StartupTypesKeys[startupTypeLocal]
+        : "Startup";
+
+      console.log("Value Statistics",statistics.statistics[val]);
+      return statistics.statistics[val];
+    }
+  };
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
@@ -160,8 +178,12 @@ export default function StateView({
             console.log('data====',district);
             return(<MuiToolTip
               placement="top"
-              key={district.name}
-              title={district.name}
+              key={
+                district.name
+              }
+              title={
+                district.name + `(${getCount(district.name) || "Loading..."})`
+              }
               followCursor
               arrow
               componentsProps={componentProps}
