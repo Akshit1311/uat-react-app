@@ -31,24 +31,25 @@ interface SortIconsType {
 }
 
 function SortIcons({ sortMode, sortKey, primaryKey }: SortIconsType) {
+  const style = {cursor: "pointer"};
   return (
     <>
       {sortMode === 1 && sortKey === primaryKey ? (
-        <span className="d-flex flex-column p-0">
+        <span className="d-flex flex-column p-0" style={{...style}}>
           <ArrowDropDownIcon fontSize="small" />
         </span>
       ) : (
         <></>
       )}
       {sortMode === 2 && sortKey === primaryKey ? (
-        <span className="d-flex flex-column p-0">
+        <span className="d-flex flex-column p-0" style={{...style}}>
           <ArrowDropUpIcon fontSize="small" />
         </span>
       ) : (
         <></>
       )}
       {sortMode === 3 || sortKey !== primaryKey ? (
-        <span className="d-flex flex-column p-0">
+        <span className="d-flex flex-column p-0" style={{...style}}>
           <ArrowDropUpIcon fontSize="small" style={{ marginBottom: "-7px" }} />
           <ArrowDropDownIcon fontSize="small" style={{ marginTop: "-7px" }} />
         </span>

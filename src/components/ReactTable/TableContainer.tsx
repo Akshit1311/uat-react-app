@@ -57,11 +57,16 @@ const TableContainer = (props: any) => {
 
   const onSearch = (query: string) => {
     const value = query;
-    const list = memorisedValue.filter((item) =>
+    let list = memorisedValue.filter((item) =>
       item.text && typeof item.text === "string"
         ? item.text.toLowerCase().includes(value.toLowerCase())
         : false
     );
+   
+    // Remove last item from list if list having some other id object
+    if(list[(list.length - 1)]['name'] === 'Total'){
+       list.pop();      
+    }
     setSearchQuery(value);
     setRenderedData(list);
   };
@@ -213,11 +218,12 @@ const TableContainer = (props: any) => {
           })}
         </tbody>
       </table>
+    
       {
         <div
           style={{
             visibility:
-              renderedData.length !== memorisedValue.length
+            renderedData.length > 6 && renderedData.length !== memorisedValue.length
                 ? "visible"
                 : "hidden",
           }}

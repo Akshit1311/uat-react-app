@@ -79,6 +79,7 @@ function ViewChangerComponent({
     appliedFilters,
     activeCard,
     fetchTableData,
+    setDateRangeCount,
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
@@ -117,7 +118,6 @@ function ViewChangerComponent({
     setSelectedStartupType(value);
     fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
     setSelectedStartupTypeIndex(value);
-
     setStartupType(startUpTypes[value]);
 
     if (!appliedFilters.states[0]) {
@@ -140,6 +140,11 @@ function ViewChangerComponent({
     try {
       const { data } = await axios.get("/startup/startupCount/" + startupType);
       setNewCount(data);
+      if (data > 0) {
+        setDateRangeCount(true);
+      } else {
+        setDateRangeCount(false);
+      }
     } catch (error) {}
   };
 
@@ -150,16 +155,54 @@ function ViewChangerComponent({
       )}/${selectedStartTypeIndex}/${dateRange}`;
       const { data } = await axios.get(mainUrl);
       setNewCount(data);
+      if (data > 0) {
+        setDateRangeCount(true);
+      } else {
+        setDateRangeCount(false);
+      }
     } catch (error) {}
   };
+
+  // const fetchCountByBadges = async () => {
+  //   try {
+  //     const { data } = await axios.post(`${BASE_URL}/startup/v2/filter`, {
+  //       ...appliedFilters,
+  //       roles: [
+  //         "Startup",
+  //         "Mentor",
+  //         "Investor",
+  //         "GovernmentBody",
+  //         "Incubator",
+  //         "Accelerator",
+  //       ],
+  //     });
+     
+  //     if (data && data.counts.length == 0) {
+  //       setNewCount(data);
+  //       if (data > 0) {
+  //         setDateRangeCount(true);
+  //       } else {
+  //         setDateRangeCount(false);
+  //       }
+  //     }else{
+  //       fetchInitialCount(selectedStartTypeIndex);
+  //     }
+  //   } catch (error) {}
+  // };
 
   useEffect(() => {
     if (query.get("id")) {
       fetchCount(today);
-    } else {
+    }else {
       fetchInitialCount(selectedStartTypeIndex);
     }
-  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
+
+  
+  }, [
+    appliedFilters.states,
+    selectedStartTypeIndex,
+    query.get("id"),
+  ]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");

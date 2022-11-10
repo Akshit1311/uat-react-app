@@ -272,7 +272,7 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between h-100">
+        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between " style={{height:'50vh',overflowY:'scroll'}}>
           {!tagsLoading && !tagsState.length ? (
             <div className="d-flex justify-content-center w-100">
               <p
@@ -306,6 +306,7 @@ function StartupsListComponent(props: any) {
         <DisabledMap
           startupType={props.startupType}
           mapViewResource={props.mapViewResource}
+          countResource={props.countResource}
         />
       </div>
     </div>

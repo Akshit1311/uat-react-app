@@ -280,7 +280,7 @@ const LeftNavComponent = (props: any) => {
   };
 
   const handleBadgesClick = (badges: any) => {
-    const badgesIndex = findSelectedIndex(selectedBadges, badges);
+    const badgesIndex = findSelectedIndex(selectedBadges, badges);    
     if (badgesIndex !== -1) {
       return setSelectedBadges((prevState: any) => {
         const newsBadges = [...prevState];
@@ -373,6 +373,7 @@ const LeftNavComponent = (props: any) => {
       states: [],
       stages: [],
     }));
+    setSelectedArea(MapVariables.INDIA);
     history.push(baseRoute + "/maps/");
     setStateViewMode(false);
   };

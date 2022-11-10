@@ -11,6 +11,8 @@ import { useQuery } from "../../hooks/useQuery";
 import CountryMap from "./Map";
 import { useHistory } from "react-router-dom";
 
+const baseRoute = process.env.REACT_APP_BASE_URL || "";
+
 export default function ControlledAccordions() {
   const query = useWebQuery();
   console.log("Query", query)
@@ -57,7 +59,7 @@ export default function ControlledAccordions() {
     console.log("PAgeRender2")
   }, [query.get("id")]);
   console.log("PAgeRender1")
-  const backUrl: string = `/?id=${query.get("id")}&state=${query.get("state")}`;
+  const backUrl: string = `${baseRoute}/maps/?id=${query.get("id")}&state=${query.get("state")}`;
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
       <PageWrapperContainer className="h-100">
@@ -70,7 +72,7 @@ export default function ControlledAccordions() {
               <span
                 style={{ color: theme.viewInsightColor }}
                 className="cursor-pointer"
-                onClick={() => history.push("/")}
+                onClick={() => history.push(`${baseRoute}/maps`)}
               >
                 {"IndiaMap / "}
               </span>
