@@ -12,6 +12,7 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { States } from "./Map/states";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import axios from "axios";
 
 const StartUpCardContainer = styled.div`
   background: ${(props) => props.theme.bgCards};
@@ -206,16 +207,15 @@ function StartupsListComponent(props: any) {
   const theme = useContext(ThemeContext);
   const [windowWidth, windowHeight] = useWindowSize();
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
+  const [page, setPage] = useState<number>(0);
 
   const [fetchTags, tagsState, tagsLoading] = useMutate(
     `${BASE_URL}/startup/filter`,
     []
-  );
-
-  console.log({ tagsState });
+  );  
 
   const [renderedData, setRenderedData] = useState<any[]>([]);
-
+  const [isDataRemaining, setRemaining] = useState<boolean>(true);  
   const [queryString, setQueryString] = useState<string>("");
 
   const startupList = React.useMemo(() => {
@@ -229,16 +229,18 @@ function StartupsListComponent(props: any) {
     ));
   }, [renderedData]);
 
-  const handleViewMore = () => {
-    setRenderedData(tagsState);
+  const handleViewMore = async () => {
+    let num = page+1;
+    setPage(num);  
+    fetchTags({...props.appliedFilters, page});   
+    
   };
 
   const onSearch = (changeEvent: any) => {
     const value = changeEvent.target.value;
     setQueryString(value);
   };
-
-  console.log("Tags State", tagsState);
+ 
   const handleApply = () => {
     const filteredList = tagsState.filter((item: any) =>
       item.name.toLowerCase().includes(queryString.toLowerCase())
@@ -246,8 +248,13 @@ function StartupsListComponent(props: any) {
     setRenderedData(filteredList);
   };
 
-  useEffect(() => {
-    setRenderedData(tagsState.slice(0, 6));
+  useEffect(() => {    
+    if(tagsState.length > 0){
+      setRenderedData(tagsState.slice(0, 9)); 
+      setRemaining(true)     
+    } else{
+      setRemaining(false)
+    }  
   }, [tagsState]);
 
   useEffect(() => {
@@ -272,7 +279,7 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between h-100">
+        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between " style={{height:'50vh',overflowY:'scroll'}}>
           {!tagsLoading && !tagsState.length ? (
             <div className="d-flex justify-content-center w-100">
               <p
@@ -287,9 +294,10 @@ function StartupsListComponent(props: any) {
           )}
           {/* {startupList} */}
         </div>
+       
         <div
           style={{
-            display: renderedData.length !== tagsState.length ? "flex" : "none",
+            display: isDataRemaining ? "flex" : "none",
           }}
           className="my-4 data-table-view-more-button text-theme"
           onClick={handleViewMore}
@@ -306,6 +314,7 @@ function StartupsListComponent(props: any) {
         <DisabledMap
           startupType={props.startupType}
           mapViewResource={props.mapViewResource}
+          countResource={props.countResource}
         />
       </div>
     </div>

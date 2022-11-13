@@ -16,9 +16,9 @@ interface ViewInsight {
 export default function ViewInsight(props: any) {
   const query = useWebQuery()
   const history = useHistory();
-  const url = props.selectedState && props.selectedState[0] ? props.viewInsightUrl : `${baseRoute}/maps/view-insight?id=${query.get('id')}&state=${query.get('state')}`;
+  const url = props.selectedState && props.selectedState[0] ? props.viewInsightUrl : `${baseRoute}/maps/view-insight?id=${query.get('id') ? query.get('id') : 'India'}&state=${query.get('state') ? query.get('state') : 'India'}`;
   const navigate= (url:string) => history.push(url);
-  console.log("BSSSEROUTE", url)
+  
   return (
     <div className="left-side-nav-styles">
       <Card className="left-nav-bottom-card row pt-3 pb-0">

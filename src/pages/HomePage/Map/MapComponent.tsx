@@ -51,6 +51,7 @@ interface StatisticsData {
 }
 interface IndiaMapTypes {
   mapViewResource: any;
+  countResource: any;
   viewAreaMap?: string;
   scaleBarVisible: boolean;
   viewAreaCircle?: string;
@@ -157,6 +158,7 @@ const ID = "id";
 
 function IndiaMap({
   mapViewResource,
+  countResource,
   viewAreaMap,
   viewAreaCircle,
   scaleBarVisible,
@@ -173,7 +175,10 @@ function IndiaMap({
     tableLoading,
     setStateViewMode,
     fetchDistrict,
+    dateRangeCount    
   } = mapViewResource;
+
+ 
 
   const theme = useContext(ThemeContext);
   const [allIndiaDistrictData, setAllIndiaDistrictData] = useState<any>({
@@ -186,13 +191,13 @@ function IndiaMap({
 
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
 
-  console.log({ BASE_URL });
+ 
 
   const [fetchIndiaMap, indiaMap, loadingIndiaMap] = useQuery(
     `${BASE_URL}/startup/states`
   );
 
-  console.log({ indiaMap });
+  
 
   const [width, height] = useWindowSize();
   const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1006" : "-15 0 900 950";
@@ -223,7 +228,7 @@ function IndiaMap({
   const findMaxValue = (array: any[], accessor: string) => {
     const newList = [...array];
     const n: any[] = [];
-    console.log("Gradient Data", array);
+   
     if (accessor[0] == "Startup") {
       const key = StartupTypesKeys[startupType.text];
       newList.forEach((a: any) => n.push(a.statistics[key]));
@@ -246,7 +251,7 @@ function IndiaMap({
   ) => {
     const findStateIndex = findCountTypeValue(stateId);
     if (findStateIndex !== -1) {
-      console.log("Accessor", accessor);
+      
       let stateValue: any;
       if (accessor[0] == "Startup") {
         const key = StartupTypesKeys[startupType.text];
@@ -255,21 +260,43 @@ function IndiaMap({
         stateValue = tableState.data[findStateIndex].statistics[accessor];
       }
 
-      const opacity = (stateValue / maxValue) * 100;
+      const opacity = stateValue !== 0 && maxValue !== 0 ? (stateValue / maxValue) * 100 : 0;
+      
+      if(!dateRangeCount) {      
+        return 0;
+      }
       if (
         opacity === 0 &&
         accessor[0] !== ["Startup"][0] &&
         accessor[0] !== ["Incubator"][0]
-      ) {
+      ) {     
         return opacity;
-      } else if (opacity < 20 && opacity > 0) {
+      } else if (opacity < 20 && opacity > 0) {   
         return opacity + 5;
-      } else {
+      } else {      
         return opacity;
       }
     }
     return 0;
   };
+
+  const getStateCount = (stateId: string, accessor: string) => {
+    if (stateId && accessor) {
+      const findStateIndex = findCountTypeValue(stateId);
+      if (findStateIndex !== -1) {
+        console.log("Accessor", accessor);
+        let stateValue: any;
+        if (accessor[0] == "Startup") {
+          const key = StartupTypesKeys[startupType.text];
+          stateValue = tableState.data[findStateIndex].statistics[key];
+        } else {
+          stateValue = tableState.data[findStateIndex].statistics[accessor];
+        }
+        return stateValue;
+      }
+    }
+  };
+
   const fillClick = (stateId: string) => {
     const selected = stateValidator(activeStates, ID, stateId);
     if (selected !== -1) return true;
@@ -433,7 +460,7 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      { true ? (
+      {countResource && !countResource.countLoading ? (
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
@@ -446,7 +473,7 @@ function IndiaMap({
           <g style={{ transform: "scale(1)" }}>
             <MuiToolTip
               placement="top"
-              title={"Lakshadweep"}
+              title={"Lakshadweep" +  `(${getStateCount('5f48ce592a9bb065cdf9fb2f', appliedFilters.roles) || "Loading..."})`}
               followCursor
               arrow
               componentsProps={componentProps}
@@ -470,14 +497,17 @@ function IndiaMap({
               ></circle>
             </MuiToolTip>
           </g>
-
+          
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any) => {
               state.text = state.name;
               return (
                 <MuiToolTip
                   placement="top"
-                  title={state.name}
+                  title={
+                    state.name +
+                    `(${getStateCount(state.id, appliedFilters.roles) || "Loading..."})`
+                  }
                   followCursor
                   arrow
                   componentsProps={componentProps}
@@ -495,7 +525,9 @@ function IndiaMap({
                       fetchDistrict();
                     }}
                     fillOpacity={
-                      !isCircleActive && loadingIndiaMap === false && tableLoading === false
+                      !isCircleActive &&
+                      loadingIndiaMap === false &&
+                      tableLoading === false
                         ? tableState && tableState.data
                           ? getGradientColor(
                               state.id,
@@ -573,6 +605,9 @@ function IndiaMap({
           />
         </div>
       )}
+      
+     
+      
       {!loadingIndiaMap && isCircleActive && (
         <>
           <svg

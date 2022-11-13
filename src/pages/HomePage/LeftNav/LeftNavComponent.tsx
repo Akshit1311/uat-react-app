@@ -176,6 +176,7 @@ const LeftNavComponent = (props: any) => {
     setExpanded(false);
     history.push(`${baseRoute}/maps/?id=${area.id}&state=${area.stateName}`);
     closeModal();
+    
   };
 
   const handleSectorClick = (sectorObj: any) => {
@@ -280,7 +281,7 @@ const LeftNavComponent = (props: any) => {
   };
 
   const handleBadgesClick = (badges: any) => {
-    const badgesIndex = findSelectedIndex(selectedBadges, badges);
+    const badgesIndex = findSelectedIndex(selectedBadges, badges);    
     if (badgesIndex !== -1) {
       return setSelectedBadges((prevState: any) => {
         const newsBadges = [...prevState];
@@ -294,15 +295,15 @@ const LeftNavComponent = (props: any) => {
     });
   };
   const onApplyBadges = () => {
-    // const badgesIdsForApiRequest = new Array();
-    // selectedBadges.forEach((sector: any) =>
-    //   badgesIdsForApiRequest.push(sector.id)
-    // );
+    const badgesIdsForApiRequest = new Array();
+    selectedBadges.forEach((sector: any) =>
+      badgesIdsForApiRequest.push(sector.id)
+    );
 
-    // setAppliedFilters((prevState: any) => ({
-    //   ...prevState,
-    //   badges: badgesIdsForApiRequest,
-    // }));
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      badges: badgesIdsForApiRequest,
+    }));
     setExpanded(false);
     closeModal();
   };
@@ -373,8 +374,14 @@ const LeftNavComponent = (props: any) => {
       states: [],
       stages: [],
     }));
+    setSelectedArea(MapVariables.INDIA);
     history.push(baseRoute + "/maps/");
     setStateViewMode(false);
+    setSelectedState([])
+    setSelectedSector([]);
+    setSelectedIndustry([]);
+    setSelectedStages([]);
+    setSelectedStages([])
   };
 
   const isResetFilterVisible =

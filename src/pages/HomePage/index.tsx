@@ -125,6 +125,9 @@ const HomePage = (props: HomePageTypes) => {
 
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
   const [startUpPolicyChart, setStartUpPolicyChart] = useState<boolean>(false);
+  const [dateRangeCount, setDateRangeCount] = useState<boolean>(true);
+  const [startupCount, setStartupCount] = useState<number>(0);
+  
   const [selectedStateByMap, setSelectedStateByMap] = useState({
     id: "",
     name: "",
@@ -180,7 +183,6 @@ const HomePage = (props: HomePageTypes) => {
     );
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
-
   const [fetchPolicy, policyState, policyLoading] = useQuery("");
   const [selectedCountBlock, setSelectedCountBlock] = useState("Startup");
 
@@ -262,6 +264,7 @@ const HomePage = (props: HomePageTypes) => {
     setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
     appliedFilters,
+    setStartupCount
   };
 
   const mapViewResources = {
@@ -285,6 +288,9 @@ const HomePage = (props: HomePageTypes) => {
     fetchDistrict,
     activeCard,
     fetchTableData,
+    dateRangeCount,
+    setDateRangeCount,
+    startupCount
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -308,8 +314,8 @@ const HomePage = (props: HomePageTypes) => {
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
 
   const viewInsightUrl = `${baseRoute}/maps/view-insight?id=${
-    query.get('id')
-  }&state=${query.get('state')}`;
+    query.get('id') ? query.get('id') : 'India' 
+  }&state=${query.get('state') ? query.get('state') : 'India'}`;
 
   useEffect(() => {
     const stateName = query.get("state");
@@ -423,6 +429,7 @@ const HomePage = (props: HomePageTypes) => {
                           scaleBarVisible={true}
                           startupType={startupType}
                           mapViewResource={mapViewResources}
+                          countResource={countResource}
                         />
                       )}
                       {stateViewMode && (
@@ -518,6 +525,7 @@ const HomePage = (props: HomePageTypes) => {
                           appliedFilters={appliedFilters}
                           selectedCountBlock={selectedCountBlock}
                           mapViewResource={mapViewResources}
+                          countResource={countResource}
                         />
                       </div>
                     )}

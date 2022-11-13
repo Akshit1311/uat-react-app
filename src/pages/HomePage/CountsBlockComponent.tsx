@@ -230,6 +230,7 @@ const CountsBlockComponent = ({
     selectedStateByMap,
     setSelectedStateByMap,
     appliedFilters,
+    setStartupCount
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
 
@@ -237,8 +238,7 @@ const CountsBlockComponent = ({
   const query = useWebQuery();
 
   const fetchCounts = async () => {
-    try {
-      console.log("BASE URL COUNT API", `${BASE_URL}/startup/v2/filter`)
+    try {      
       const { data } = await axios.post(`${BASE_URL}/startup/v2/filter`, {
         ...appliedFilters,
         roles: [
@@ -250,30 +250,32 @@ const CountsBlockComponent = ({
           "Accelerator",
         ],
       });
-      console.log("BASE COUNTS", data)
+      
       const getCountsById = (id: string) =>
-        data.counts.find((i: KeyValuePair) => i.id === id);
+        data.find((i: any) =>  i._id.Role === id);
 
       const count = new CountBlockModel();
+      
       count.Incubator = getCountsById("Incubator")
-        ? getCountsById("Incubator").value
+        ? getCountsById("Incubator").count
         : 0;
       count.Mentor = getCountsById("Mentor")
-        ? getCountsById("Mentor").value
+        ? getCountsById("Mentor").count
         : 0;
       count.Accelerator = getCountsById("Accelerator")
-        ? getCountsById("Accelerator").value
+        ? getCountsById("Accelerator").count
         : 0;
       count.Startup = getCountsById("Startup")
-        ? getCountsById("Startup").value
+        ? getCountsById("Startup").count
         : 0;
       count.GovernmentBody = getCountsById("GovernmentBody")
-        ? getCountsById("GovernmentBody").value
+        ? getCountsById("GovernmentBody").count
         : 0;
       count.Investor = getCountsById("Investor")
-        ? getCountsById("Investor").value
+        ? getCountsById("Investor").count
         : 0;
       setStateCounts(count);
+      setStartupCount(count.Startup)
     } catch (error) {}
   };
 
@@ -330,6 +332,7 @@ const CountsBlockComponent = ({
   
   const id = query.get('state');
   const stateSelected = id !== "india" || id ? id : null;
+ 
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
@@ -352,7 +355,7 @@ const CountsBlockComponent = ({
           >
             India
           </H5>
-          {stateSelected ? (
+          {stateSelected && selectedArea.stateName != 'India' ? (
             <>
               <div className="d-flex ms-2 align-items-center">
                 <p style={{ color: theme.color }} className="m-0 p-0 font-12px">

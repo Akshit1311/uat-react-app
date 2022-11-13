@@ -79,13 +79,15 @@ function ViewChangerComponent({
     appliedFilters,
     activeCard,
     fetchTableData,
+    setDateRangeCount,
+    startupCount,
   } = mapViewResources;
 
   const theme = useContext(ThemeContext);
   const today = "2015-01-01" + "/" + moment(new Date()).format("YYYY-MM-DD");
   const query = useWebQuery();
 
-  const [newCount, setNewCount] = useState<number>(0);
+  const [newCount, setNewCount] = useState<number>(startupCount);
   const [selectedStartTypeIndex, setSelectedStartupTypeIndex] =
     useState<number>(0);
 
@@ -93,7 +95,7 @@ function ViewChangerComponent({
     "/static/startupTypes"
   );
   const [fetchStartUpCount, countState, countLoading] = useQuery("");
-
+// console.log('count++++22', newCount, startupCount)
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
 
@@ -102,7 +104,7 @@ function ViewChangerComponent({
     if (value === "none") {
       return getCounts();
     }
-
+console.log('value++++',value)
     fetchTableData(DATA_TABLE_API + value);
     getCounts(value);
     fetchCount(value);
@@ -117,7 +119,6 @@ function ViewChangerComponent({
     setSelectedStartupType(value);
     fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
     setSelectedStartupTypeIndex(value);
-
     setStartupType(startUpTypes[value]);
 
     if (!appliedFilters.states[0]) {
@@ -132,14 +133,19 @@ function ViewChangerComponent({
 
   useEffect(() => {
     fetchDateRange();
-    fetchStartUpTypes();
-    fetchInitialCount(0);
+    fetchStartUpTypes(); 
+    // fetchInitialCount(0);
   }, []);
 
   const fetchInitialCount = async (startupType: number) => {
     try {
-      const { data } = await axios.get("/startup/startupCount/" + startupType);
+      const { data } = await axios.get("/startup/startupCount/" + startupType);      
       setNewCount(data);
+      if (data > 0) {
+        setDateRangeCount(true);
+      } else {
+        setDateRangeCount(false);
+      }
     } catch (error) {}
   };
 
@@ -149,14 +155,49 @@ function ViewChangerComponent({
         "id"
       )}/${selectedStartTypeIndex}/${dateRange}`;
       const { data } = await axios.get(mainUrl);
+     
       setNewCount(data);
+      if (data > 0) {
+        setDateRangeCount(true);
+      } else {
+        setDateRangeCount(false);
+      }
     } catch (error) {}
   };
+
+  // const fetchCountByBadges = async () => {
+  //   try {
+  //     const { data } = await axios.post(`${BASE_URL}/startup/v2/filter`, {
+  //       ...appliedFilters,
+  //       roles: [
+  //         "Startup",
+  //         "Mentor",
+  //         "Investor",
+  //         "GovernmentBody",
+  //         "Incubator",
+  //         "Accelerator",
+  //       ],
+  //     });
+
+  //     if (data && data.counts.length == 0) {
+  //       setNewCount(data);
+  //       if (data > 0) {
+  //         setDateRangeCount(true);
+  //       } else {
+  //         setDateRangeCount(false);
+  //       }
+  //     }else{
+  //       fetchInitialCount(selectedStartTypeIndex);
+  //     }
+  //   } catch (error) {}
+  // };
+
+  useEffect(()=>{setNewCount(startupCount)},[startupCount])
 
   useEffect(() => {
     if (query.get("id")) {
       fetchCount(today);
-    } else {
+    }else {     
       fetchInitialCount(selectedStartTypeIndex);
     }
   }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
@@ -173,6 +214,7 @@ function ViewChangerComponent({
     setMapMode,
     setIsCircleActive,
     activeCard,
+    stateViewMode
   };
 
   return (
@@ -243,6 +285,7 @@ function ViewChangerComponent({
               style={{ height: "60px" }}
               border={true}
             >
+              {/* {  console.log("count+++", newCount, startupCount)} */}
               {newCount > 0 ? (
                 <h3 className="p-0 m-0 text-center">{newCount}</h3>
               ) : (
