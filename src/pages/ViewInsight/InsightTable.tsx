@@ -105,32 +105,16 @@ export default function InsightTable({
       const result = originalData.sort(
         (a: InsightRowType, b: InsightRowType) => {
           if (sortMode === 1) {
-            console.log(
-              "SOrt Key Data 1",
-              sortKey,
-              a[sortKey],
-              b[sortKey],
-              String(a[sortKey]).localeCompare(String(b[sortKey]))
-            );
+           
             return String(a[sortKey]).localeCompare(String(b[sortKey]));
           }
           if (sortMode === 2) {
-            console.log(
-              "SOrt Key Data 2",
-              sortKey,
-              String(b[sortKey]).localeCompare(String(a[sortKey]))
-            );
+            
             return String(b[sortKey]).localeCompare(String(a[sortKey]));
           }
           return 0;
         }
-      );
-
-      console.log(
-        "OnSOrt2",
-        sortMode,
-        sortMode == 2 ? result.reverse() : result
-      );
+      );    
 
       setSortedData(sortMode == 2 ? result.reverse() : result);
     }

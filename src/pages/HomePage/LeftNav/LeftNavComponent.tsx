@@ -295,15 +295,15 @@ const LeftNavComponent = (props: any) => {
     });
   };
   const onApplyBadges = () => {
-    // const badgesIdsForApiRequest = new Array();
-    // selectedBadges.forEach((sector: any) =>
-    //   badgesIdsForApiRequest.push(sector.id)
-    // );
+    const badgesIdsForApiRequest = new Array();
+    selectedBadges.forEach((sector: any) =>
+      badgesIdsForApiRequest.push(sector.id)
+    );
 
-    // setAppliedFilters((prevState: any) => ({
-    //   ...prevState,
-    //   badges: badgesIdsForApiRequest,
-    // }));
+    setAppliedFilters((prevState: any) => ({
+      ...prevState,
+      badges: badgesIdsForApiRequest,
+    }));
     setExpanded(false);
     closeModal();
   };

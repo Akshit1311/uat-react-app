@@ -15,7 +15,7 @@ const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
 export default function ControlledAccordions() {
   const query = useWebQuery();
-  console.log("Query", query)
+  
   const theme = React.useContext(ThemeContext);
   const history = useHistory();
 
@@ -44,7 +44,7 @@ export default function ControlledAccordions() {
 
   React.useEffect(() => {
     const id = query.get('id');
-    console.log("ID", id)
+    
     if(!id || id == 'India'){
       fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
     } else {
@@ -54,11 +54,11 @@ export default function ControlledAccordions() {
         fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
 
       // }
-      console.log("Normal State Url", `/insight/state/${query.get("id")}/2021-01-01/2021-12-12`)
+      
     }
-    console.log("PAgeRender2")
+    
   }, [query.get("id")]);
-  console.log("PAgeRender1")
+ 
   const backUrl: string = `${baseRoute}/maps/?id=${query.get("id")}&state=${query.get("state")}`;
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">

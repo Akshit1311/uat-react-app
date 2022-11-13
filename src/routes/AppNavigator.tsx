@@ -11,7 +11,6 @@ interface AppNavigatorTypes {}
 
 export default function AppNavigator(props: AppNavigatorTypes) {
   const history = useHistory();
-  console.log("History", history.location.pathname);
   return (
     <>
       {history.location.pathname === "/health" ? undefined : (

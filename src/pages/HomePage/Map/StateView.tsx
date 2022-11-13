@@ -93,7 +93,6 @@ export default function StateView({
   const findMaximumValue = () => {
     let max = 0;
     if (Array.isArray(data.data)) {
-      console.log(data.data);
       data.data.forEach((district: any) => {
         const value = district.statistics[StartupTypesKeys[startupType.text]];
         if (!value) {
@@ -126,7 +125,6 @@ export default function StateView({
 
   const getColorOpacity = (districtName: string) => {
     const maxValue = findMaximumValue();
-    console.log("MaxValue", startupType.text, maxValue);
     const statistics: any = getStatistics(districtName);
     if (statistics && maxValue) {
       const startupTypeLocal: string = startupType.text;
@@ -170,33 +168,29 @@ export default function StateView({
         viewBox="-50 0 550 550"
         onDoubleClick={() => setStateViewMode(false)}
       >
-        {console.log('data====',StatesDistrictView,selectedArea)}
         {StatesDistrictView.filter((state: any) => {
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => {
-            console.log('data====',district);
-            return(<MuiToolTip
-              placement="top"
-              key={
-                district.name
-              }
-              title={
-                district.name + `(${getCount(district.name) || "Loading..."})`
-              }
-              followCursor
-              arrow
-              componentsProps={componentProps}
-            >
-              <path
-                stroke="black"
-                fill={ThemeColorIdentifier(colorTheme)}
-                strokeWidth={"1"}
-                fillOpacity={getColorOpacity(district.name)}
-                d={district.d}
-              />
-            </MuiToolTip>)
-})
+            return (
+              <MuiToolTip
+                placement="top"
+                key={district.name}
+                title={district.name}
+                followCursor
+                arrow
+                componentsProps={componentProps}
+              >
+                <path
+                  stroke="black"
+                  fill={ThemeColorIdentifier(colorTheme)}
+                  strokeWidth={"1"}
+                  fillOpacity={getColorOpacity(district.name)}
+                  d={district.d}
+                />
+              </MuiToolTip>
+            );
+          })
         )}
       </svg>
     </MapWrapper>

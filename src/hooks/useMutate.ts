@@ -9,12 +9,14 @@ export function useMutate(apiUrl: string, initialState: any) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(ERROR_INITIAL_STATE);
 
-  const fetch = async (body: string) => {
+  const fetch = async (body: any) => {
     setLoading(true);
     try {
       const config = {
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       };
+      
+     
       const response = await axios.post(apiUrl, body);
       setState(response.data);
 

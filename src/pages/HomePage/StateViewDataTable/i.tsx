@@ -78,7 +78,6 @@ const TableContainer = (props: any) => {
     setOriginalData(bodyData);
     setRenderedData(bodyData);
 
-    console.log("BodyData", bodyData);
     if (noOfItemsToRender) {
       setNoOfItemRender(noOfItemsToRender);
     }
