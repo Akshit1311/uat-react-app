@@ -43,7 +43,7 @@ export default function StateViewDataTable(props: StateViewDataTableTypes) {
   useEffect(() => {
     splitData();
   }, [props.data]);
-  console.log("STartupType", props.startupType);
+
   return (
     <div className="ms-3">
       <div className="w-100 row">

@@ -126,6 +126,8 @@ const HomePage = (props: HomePageTypes) => {
   const [isCircleActive, setIsCircleActive] = useState<boolean>(false);
   const [startUpPolicyChart, setStartUpPolicyChart] = useState<boolean>(false);
   const [dateRangeCount, setDateRangeCount] = useState<boolean>(true);
+  const [startupCount, setStartupCount] = useState<number>(0);
+  
   const [selectedStateByMap, setSelectedStateByMap] = useState({
     id: "",
     name: "",
@@ -262,6 +264,7 @@ const HomePage = (props: HomePageTypes) => {
     setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
     appliedFilters,
+    setStartupCount
   };
 
   const mapViewResources = {
@@ -286,7 +289,8 @@ const HomePage = (props: HomePageTypes) => {
     activeCard,
     fetchTableData,
     dateRangeCount,
-    setDateRangeCount
+    setDateRangeCount,
+    startupCount
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);

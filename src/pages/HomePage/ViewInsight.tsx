@@ -18,7 +18,7 @@ export default function ViewInsight(props: any) {
   const history = useHistory();
   const url = props.selectedState && props.selectedState[0] ? props.viewInsightUrl : `${baseRoute}/maps/view-insight?id=${query.get('id')}&state=${query.get('state')}`;
   const navigate= (url:string) => history.push(url);
-  console.log("BSSSEROUTE", url)
+  
   return (
     <div className="left-side-nav-styles">
       <Card className="left-nav-bottom-card row pt-3 pb-0">

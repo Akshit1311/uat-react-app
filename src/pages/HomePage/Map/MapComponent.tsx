@@ -175,7 +175,7 @@ function IndiaMap({
     tableLoading,
     setStateViewMode,
     fetchDistrict,
-    dateRangeCount
+    dateRangeCount    
   } = mapViewResource;
 
  

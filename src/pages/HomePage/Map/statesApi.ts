@@ -32,8 +32,7 @@ export async function statesDpiit(values: any): Promise<MapType[]> {
   // };
 
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
-
-  console.log({ BASE_URL_STATES_API: BASE_URL });
+ 
 
   return new Promise(async (resolve, rejects) => {
     try {
