@@ -314,8 +314,8 @@ const HomePage = (props: HomePageTypes) => {
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
 
   const viewInsightUrl = `${baseRoute}/maps/view-insight?id=${
-    query.get('id')
-  }&state=${query.get('state')}`;
+    query.get('id') ? query.get('id') : 'India' 
+  }&state=${query.get('state') ? query.get('state') : 'India'}`;
 
   useEffect(() => {
     const stateName = query.get("state");

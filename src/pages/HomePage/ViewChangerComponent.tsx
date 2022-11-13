@@ -214,6 +214,7 @@ console.log('value++++',value)
     setMapMode,
     setIsCircleActive,
     activeCard,
+    stateViewMode
   };
 
   return (

@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface ConfigState {
     theme: string;
     colorTheme: string;
+    districtView: false,
+    cityView: false,
 }
 
 const initialState: ConfigState = {
     theme: 'light',
-    colorTheme: "theme-1"
+    colorTheme: "theme-1",
+    districtView: false,
+    cityView: false,
 }
 
 const configSlice = createSlice({
