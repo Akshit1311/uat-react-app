@@ -95,7 +95,7 @@ function ViewChangerComponent({
     "/static/startupTypes"
   );
   const [fetchStartUpCount, countState, countLoading] = useQuery("");
-// console.log('count++++22', newCount, startupCount)
+  // console.log('count++++22', newCount, startupCount)
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
 
@@ -104,7 +104,7 @@ function ViewChangerComponent({
     if (value === "none") {
       return getCounts();
     }
-console.log('value++++',value)
+
     fetchTableData(DATA_TABLE_API + value);
     getCounts(value);
     fetchCount(value);
@@ -133,13 +133,13 @@ console.log('value++++',value)
 
   useEffect(() => {
     fetchDateRange();
-    fetchStartUpTypes(); 
+    fetchStartUpTypes();
     // fetchInitialCount(0);
   }, []);
 
   const fetchInitialCount = async (startupType: number) => {
     try {
-      const { data } = await axios.get("/startup/startupCount/" + startupType);      
+      const { data } = await axios.get("/startup/startupCount/" + startupType);
       setNewCount(data);
       if (data > 0) {
         setDateRangeCount(true);
@@ -151,16 +151,18 @@ console.log('value++++',value)
 
   const fetchCount = async (dateRange: string) => {
     try {
-      const mainUrl = `/startup/startupCount/state/id/${query.get(
-        "id"
-      )}/${selectedStartTypeIndex}/${dateRange}`;
-      const { data } = await axios.get(mainUrl);
-     
-      setNewCount(data);
-      if (data > 0) {
-        setDateRangeCount(true);
-      } else {
-        setDateRangeCount(false);
+      if (query.get("id")) {
+        const mainUrl = `/startup/startupCount/state/id/${query.get(
+          "id"
+        )}/${selectedStartTypeIndex}/${dateRange}`;
+        const { data } = await axios.get(mainUrl);
+        console.log("value++++", data);
+        setNewCount(data);
+        if (data > 0) {
+          setDateRangeCount(true);
+        } else {
+          setDateRangeCount(false);
+        }
       }
     } catch (error) {}
   };
@@ -192,12 +194,14 @@ console.log('value++++',value)
   //   } catch (error) {}
   // };
 
-  useEffect(()=>{setNewCount(startupCount)},[startupCount])
+  useEffect(() => {
+    setNewCount(startupCount);
+  }, [startupCount]);
 
   useEffect(() => {
     if (query.get("id")) {
       fetchCount(today);
-    }else {     
+    } else {
       fetchInitialCount(selectedStartTypeIndex);
     }
   }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
@@ -214,7 +218,7 @@ console.log('value++++',value)
     setMapMode,
     setIsCircleActive,
     activeCard,
-    stateViewMode
+    stateViewMode,
   };
 
   return (
