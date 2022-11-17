@@ -54,6 +54,19 @@ const VIEW_STATE_STARTUP_POLICY = "View State Startup Policy";
 const DATA_TABLE_API = `${BASE_URL}/data/v2/statistics/country/5f02e38c6f3de87babe20cd2/`;
 const DISTRICT_API = `${BASE_URL}/data/v2/statistics/state/`;
 
+const startupTypeValues: any[] = [
+  "Startup",
+  "dpiitCertified",
+  "showcased",
+  "seedFunded",
+  "fundOfFunds",
+  "seedFunded",
+  "patented",
+  "womenOwned",
+  "leadingSector",
+  "declaredRewards",
+];
+
 function ViewChangerComponent({
   mapViewResources,
   setStartUpPolicyChart,
@@ -95,7 +108,7 @@ function ViewChangerComponent({
     "/static/startupTypes"
   );
   const [fetchStartUpCount, countState, countLoading] = useQuery("");
-// console.log('count++++22', newCount, startupCount)
+
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
 
@@ -104,10 +117,10 @@ function ViewChangerComponent({
     if (value === "none") {
       return getCounts();
     }
-console.log('value++++',value)
+
     fetchTableData(DATA_TABLE_API + value);
     getCounts(value);
-    fetchCount(value);
+    fetchInitialCount(selectedStartTypeIndex, value);
     setSelectedDateRange(value);
     if (appliedFilters.states[0]) {
       fetchDistrict(DISTRICT_API + appliedFilters.states[0] + "/" + value);
@@ -117,12 +130,12 @@ console.log('value++++',value)
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
     setSelectedStartupType(value);
-    fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
+    // fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
     setSelectedStartupTypeIndex(value);
     setStartupType(startUpTypes[value]);
 
     if (!appliedFilters.states[0]) {
-      fetchInitialCount(value);
+      fetchInitialCount(value, selectedDateRange);
     }
   };
 
@@ -133,15 +146,45 @@ console.log('value++++',value)
 
   useEffect(() => {
     fetchDateRange();
-    fetchStartUpTypes(); 
+    fetchStartUpTypes();
     // fetchInitialCount(0);
   }, []);
 
-  const fetchInitialCount = async (startupType: number) => {
+  // function for creating apiurl
+  const apiUrl = (dateRange: string) => {
+    let url = "home/startupCounts?";
+    if (query.get("id")) {
+      url += `stateId=${query.get("id")}&`;
+    }
+    if (dateRange) {
+      let dates: any = dateRange.split("/");
+      dates = `from=${dates[0]}&to=${dates[1]}`;
+      url += dates;
+    }
+
+    return url;
+  };
+
+  const fetchInitialCount = async (startupType: number, dateRange: string) => {
     try {
-      const { data } = await axios.get("/startup/startupCount/" + startupType);      
-      setNewCount(data);
-      if (data > 0) {
+      // create and get api url
+      let url = apiUrl(dateRange);
+
+      // get data from api call
+      const { data } = await axios.get(url);
+
+      // fetch data according to index key
+      let key = startupTypeValues[startupType];
+
+      //setting up data in state
+      if (data[key]) {
+        setNewCount(data[key]);
+      } else if (startupType == 0) {
+        // setNewCount(startupCount);
+      } else {
+        setNewCount(0);
+      }
+      if (data[key] && data[key] > 0) {
         setDateRangeCount(true);
       } else {
         setDateRangeCount(false);
@@ -149,21 +192,25 @@ console.log('value++++',value)
     } catch (error) {}
   };
 
-  const fetchCount = async (dateRange: string) => {
-    try {
-      const mainUrl = `/startup/startupCount/state/id/${query.get(
-        "id"
-      )}/${selectedStartTypeIndex}/${dateRange}`;
-      const { data } = await axios.get(mainUrl);
-     
-      setNewCount(data);
-      if (data > 0) {
-        setDateRangeCount(true);
-      } else {
-        setDateRangeCount(false);
-      }
-    } catch (error) {}
-  };
+  // const fetchCount = async (dateRange: string) => {
+  //   try {
+  //     // if (query.get("id")) {
+  //       console.log("value++++", dateRange.split('/'));
+  //       const mainUrl = `/startup/startupCount/state/id/${query.get(
+  //         "id"
+  //       )}/${selectedStartTypeIndex}/${dateRange}`;
+  //       const { data } = await axios.get(mainUrl);
+
+  //       // startupTypeKeywordMap
+  //       setNewCount(data);
+  //       if (data > 0) {
+  //         setDateRangeCount(true);
+  //       } else {
+  //         setDateRangeCount(false);
+  //       }
+  //     // }
+  //   } catch (error) {}
+  // };
 
   // const fetchCountByBadges = async () => {
   //   try {
@@ -192,14 +239,15 @@ console.log('value++++',value)
   //   } catch (error) {}
   // };
 
-  useEffect(()=>{setNewCount(startupCount)},[startupCount])
+  useEffect(() => {
+    setNewCount(startupCount);
+  }, [startupCount]);
 
   useEffect(() => {
-    if (query.get("id")) {
-      fetchCount(today);
-    }else {     
-      fetchInitialCount(selectedStartTypeIndex);
+    if (selectedStartTypeIndex == 0) {
+      setNewCount(startupCount);
     }
+    fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
   }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {
@@ -214,7 +262,7 @@ console.log('value++++',value)
     setMapMode,
     setIsCircleActive,
     activeCard,
-    stateViewMode
+    stateViewMode,
   };
 
   return (
@@ -285,7 +333,6 @@ console.log('value++++',value)
               style={{ height: "60px" }}
               border={true}
             >
-              {/* {  console.log("count+++", newCount, startupCount)} */}
               {newCount > 0 ? (
                 <h3 className="p-0 m-0 text-center">{newCount}</h3>
               ) : (
