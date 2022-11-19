@@ -250,6 +250,7 @@ function IndiaMap({
     maxValue: number
   ) => {
     const findStateIndex = findCountTypeValue(stateId);
+    
     if (findStateIndex !== -1) {
       
       let stateValue: any;
@@ -261,6 +262,7 @@ function IndiaMap({
       }
 
       const opacity = stateValue !== 0 && maxValue !== 0 ? (stateValue / maxValue) * 100 : 0;
+      
       
       if(!dateRangeCount) {      
         return 0;
@@ -460,6 +462,7 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
+      {console.log('asdff',mapMode.id,MapVariables.DISTRICT.id)}
       {countResource && !countResource.countLoading ? (
         <svg
           viewBox={
@@ -583,7 +586,7 @@ function IndiaMap({
                 </MuiToolTip>
               );
             })}
-
+{console.log('districtsBoarder-----', districtsBoarder)}
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any) => (
               <DistrictPath
