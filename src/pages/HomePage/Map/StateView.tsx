@@ -155,7 +155,7 @@ export default function StateView({
         ? StartupTypesKeys[startupTypeLocal]
         : "Startup";
 
-      console.log("Value Statistics",statistics.statistics[val]);
+      
       return statistics.statistics[val];
     }
   };

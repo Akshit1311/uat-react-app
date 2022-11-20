@@ -442,8 +442,7 @@ const HomePage = (props: HomePageTypes) => {
                         />
                       )}
                     </div>
-                    <div className="col-12 col-view-changer">
-                      {console.log('startupCounts 1', startupCount)}
+                    <div className="col-12 col-view-changer">                     
                       <ViewChangerComponent
                         mapViewResources={mapViewResources}
                         setStartUpPolicyChart={setStartUpPolicyChart}
