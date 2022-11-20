@@ -56,6 +56,7 @@ export interface InsightRowType {
   percentage: number;
   indiaTotal: number;
   indiaPercentage: number;
+  type: string
 }
 
 export interface AccordionTypes {
@@ -66,6 +67,7 @@ export interface AccordionTypes {
   stateName: string | null;
   data: InsightRowType[];
   selectedData: string[];
+  type: any
 }
 
 export default function Accordion({
@@ -76,6 +78,7 @@ export default function Accordion({
   stateName,
   data,
   selectedData,
+  type
 }: AccordionTypes) {
   const [queryString, setQueryString] = React.useState<string>("");
   const theme = useContext(ThemeContext);
@@ -172,6 +175,7 @@ export default function Accordion({
                 title={title}
                 starFill={true}
                 handleClickStar={onSelectedItemClick}
+                type={type}
               />
               <div className="mb-3" />
             </>
@@ -189,6 +193,7 @@ export default function Accordion({
             stateName={stateName}
             title={title}
             handleClickStar={onUnselectedItemClick}
+            type={type}
           />
           <div className="mb-2" />
         </AccordionDetails>
@@ -215,6 +220,7 @@ export default function Accordion({
                     title={title}
                     starFill={true}
                     handleClickStar={onSelectedItemClick}
+                    type={type}
                   />
                   {/* <div className="mb-3" /> */}
                 </>

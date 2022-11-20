@@ -286,7 +286,7 @@ function IndiaMap({
     if (stateId && accessor) {
       const findStateIndex = findCountTypeValue(stateId);
       if (findStateIndex !== -1) {
-        console.log("Accessor", accessor);
+        
         let stateValue: any;
         if (accessor[0] == "Startup") {
           const key = StartupTypesKeys[startupType.text];
@@ -462,7 +462,7 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
-      {console.log('asdff',mapMode.id,MapVariables.DISTRICT.id)}
+    
       {countResource && !countResource.countLoading ? (
         <svg
           viewBox={
@@ -586,7 +586,7 @@ function IndiaMap({
                 </MuiToolTip>
               );
             })}
-{console.log('districtsBoarder-----', districtsBoarder)}
+
           {mapMode.id === MapVariables.DISTRICT.id &&
             districtsBoarder.map((district: any) => (
               <DistrictPath
