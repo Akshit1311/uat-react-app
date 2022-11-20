@@ -432,7 +432,7 @@ const LeftNavComponent = (props: any) => {
                       className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
                       type="button"
                     >
-                      States
+                      States and UTs
                       {appliedFilters.states.length !== 0 && (
                         <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.states.length}
@@ -474,7 +474,7 @@ const LeftNavComponent = (props: any) => {
                       className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
                       type="button"
                     >
-                      Industry
+                      Industries
                       {appliedFilters.industries.length !== 0 && (
                         <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.industries.length}
@@ -514,7 +514,7 @@ const LeftNavComponent = (props: any) => {
                       className={`btn shadow-none d-flex w-100 mx-0 px-0 align-items-center mt-1 collapsed px-0 position-relative p-`}
                       type="button"
                     >
-                      Sector
+                      Sectors
                       {appliedFilters.sectors.length !== 0 && (
                         <RoundedBadge className="ms-auto me-3 background-color-theme">
                           {appliedFilters.sectors.length}

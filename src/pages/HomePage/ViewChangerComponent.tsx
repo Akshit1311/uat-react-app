@@ -184,9 +184,12 @@ function ViewChangerComponent({
       } else {
         setNewCount(0);
       }
-      if (data[key] && data[key] > 0) {
+      
+      if (data[key] && data[key] > 0 ) {
         setDateRangeCount(true);
-      } else {
+      }else if(startupType == 0 && startupCount > 0){
+        setDateRangeCount(true);
+      } else {        
         setDateRangeCount(false);
       }
     } catch (error) {}
@@ -239,16 +242,24 @@ function ViewChangerComponent({
   //   } catch (error) {}
   // };
 
-  useEffect(() => {
-    setNewCount(startupCount);
-  }, [startupCount]);
+  // useEffect(() => {
+  //   setNewCount(startupCount);   
+  // }, [startupCount]);
 
-  useEffect(() => {
+  useEffect(() => {   
     if (selectedStartTypeIndex == 0) {
       setNewCount(startupCount);
+      if(startupCount > 0){
+        setDateRangeCount(true);
+      }else{
+        setDateRangeCount(false);
+      }
+           
+    }else{
+      fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
     }
-    fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
-  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
+    
+  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id"), startupCount]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");

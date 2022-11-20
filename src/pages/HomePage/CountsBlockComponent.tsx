@@ -242,6 +242,8 @@ const CountsBlockComponent = ({
       const { data } = await axios.post(`${BASE_URL}/home/topNumbers`, {
         ...appliedFilters,
         stateId: appliedFilters.states[0],
+        from: appliedFilters.registrationFrom,
+        to: appliedFilters.registrationTo,
         roles: [
           "Startup",
           "Mentor",
