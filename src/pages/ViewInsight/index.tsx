@@ -15,11 +15,19 @@ const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
 export default function ControlledAccordions() {
   const query = useWebQuery();
-  
+
   const theme = React.useContext(ThemeContext);
   const history = useHistory();
 
-  const [fetchInsights, insightState] = useQuery("");
+  const [fetchIndustriess, industries] = useQuery(
+    "https://uat.startupindia.gov.in/maps/insight/industryInsights"
+  );
+  const [fetchSectors, sectors] = useQuery(
+    "https://uat.startupindia.gov.in/maps/insight/sectorInsights"
+  );
+  const [fetchStages, stages] = useQuery(
+    "https://uat.startupindia.gov.in/maps/insight/stageInsights"
+  );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
 
   const localSectors = localStorage.getItem("Sector");
@@ -43,23 +51,42 @@ export default function ControlledAccordions() {
     };
 
   React.useEffect(() => {
-    const id = query.get('id');
-    
-    if(!id || id == 'India'){
-      fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
-    } else {
-      // if(query.get("id") == 'India'){
-      //   fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
-      // } else {
-        fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
+    const id = query.get("id");
 
-      // }
-      
+    if (id && id != "India") {
+      fetchIndustriess(
+        `https://uat.startupindia.gov.in/maps/insight/industryInsights?stateId=${id}`
+      );
+      fetchSectors(
+        `https://uat.startupindia.gov.in/maps/insight/sectorInsights?stateId=${id}`
+      );
+      fetchStages(`https://uat.startupindia.gov.in/maps/insight/stageInsights?stateId=${id}`);
+    }else{
+      fetchIndustriess(
+        `https://uat.startupindia.gov.in/maps/insight/industryInsights`
+      );
+      fetchSectors(
+        `https://uat.startupindia.gov.in/maps/insight/sectorInsights`
+      );
+      fetchStages(`https://uat.startupindia.gov.in/maps/insight/stageInsights`);
     }
-    
+
+    // if(!id || id == 'India'){
+    //   fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
+    // } else {
+    //   // if(query.get("id") == 'India'){
+    //   //   fetchInsights(`/insight/country/dsaskjdsa/2015-01-01/2022-06-24`);
+    //   // } else {
+    //     fetchInsights(`/insight/state/${query.get("id")}/2021-01-01/2021-12-12`);
+
+    //   // }
+
+    // }
   }, [query.get("id")]);
- 
-  const backUrl: string = `${baseRoute}/maps/?id=${query.get("id")}&state=${query.get("state")}`;
+
+  const backUrl: string = `${baseRoute}/maps/?id=${query.get(
+    "id"
+  )}&state=${query.get("state")}`;
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
       <PageWrapperContainer className="h-100">
@@ -81,7 +108,9 @@ export default function ControlledAccordions() {
                 className="cursor-pointer"
                 onClick={() => history.push(backUrl)}
               >
-                {query.get("state")?.length === 0  ? "India" : query.get("state")}
+                {query.get("state")?.length === 0
+                  ? "India"
+                  : query.get("state")}
               </span>
               <span
                 style={{ color: theme.viewInsightColor }}
@@ -100,9 +129,12 @@ export default function ControlledAccordions() {
                 panelName="panel1"
                 handleChange={handleChange}
                 title="Industry"
-                stateName={query.get("state") === 'India' ? "" : query.get("state")}
-                data={insightState.industry || []}
+                stateName={
+                  query.get("state") === "India" ? "" : query.get("state")
+                }
+                data={industries || []}
                 selectedData={selectedIndustries || []}
+                type="industry"
               />
 
               <Accordion
@@ -110,9 +142,12 @@ export default function ControlledAccordions() {
                 panelName="panel2"
                 handleChange={handleChange}
                 title="Sector"
-                data={insightState.sector || []}
-                stateName={query.get("state") === 'India' ? "" : query.get("state")}
+                data={sectors || []}
+                stateName={
+                  query.get("state") === "India" ? "" : query.get("state")
+                }
                 selectedData={selectedSectors || []}
+                type="sector"
               />
 
               <Accordion
@@ -120,9 +155,12 @@ export default function ControlledAccordions() {
                 panelName="panel3"
                 handleChange={handleChange}
                 title="Stage"
-                data={insightState.stage || []}
-                stateName={query.get("state") === 'India' ? "" : query.get("state")}
+                data={stages || []}
+                stateName={
+                  query.get("state") === "India" ? "" : query.get("state")
+                }
                 selectedData={selectedStages || []}
+                type="stage"
               />
 
               {/* <Accordion

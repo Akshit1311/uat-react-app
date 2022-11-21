@@ -250,6 +250,7 @@ function IndiaMap({
     maxValue: number
   ) => {
     const findStateIndex = findCountTypeValue(stateId);
+    
     if (findStateIndex !== -1) {
       
       let stateValue: any;
@@ -261,6 +262,7 @@ function IndiaMap({
       }
 
       const opacity = stateValue !== 0 && maxValue !== 0 ? (stateValue / maxValue) * 100 : 0;
+      
       
       if(!dateRangeCount) {      
         return 0;
@@ -284,7 +286,7 @@ function IndiaMap({
     if (stateId && accessor) {
       const findStateIndex = findCountTypeValue(stateId);
       if (findStateIndex !== -1) {
-        console.log("Accessor", accessor);
+        
         let stateValue: any;
         if (accessor[0] == "Startup") {
           const key = StartupTypesKeys[startupType.text];
@@ -460,6 +462,7 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
+    
       {countResource && !countResource.countLoading ? (
         <svg
           viewBox={

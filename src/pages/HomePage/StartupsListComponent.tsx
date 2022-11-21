@@ -236,6 +236,13 @@ function StartupsListComponent(props: any) {
     
   };
 
+  const handleViewLess = async () => {
+    let num = page-1;
+    setPage(num);  
+    fetchTags({...props.appliedFilters, page});   
+    
+  };
+
   const onSearch = (changeEvent: any) => {
     const value = changeEvent.target.value;
     setQueryString(value);
@@ -294,6 +301,16 @@ function StartupsListComponent(props: any) {
           )}
           {/* {startupList} */}
         </div>
+        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between align-items-center">
+        <div
+          style={{
+            display: page > 0 ? "flex" : "none",
+          }}
+          className="my-4 data-table-view-more-button text-theme"
+          onClick={handleViewLess}
+        >
+          {"View Less"}
+        </div>
        
         <div
           style={{
@@ -303,6 +320,7 @@ function StartupsListComponent(props: any) {
           onClick={handleViewMore}
         >
           {queryString.length > 0 ? "View All" : "View More"}
+        </div>
         </div>
         {tagsLoading && (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center position-absolute">

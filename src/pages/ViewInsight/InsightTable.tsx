@@ -14,6 +14,7 @@ interface InsightTableProps {
   data: InsightRowType[];
   starFill?: boolean;
   handleClickStar: any;
+  type:string
 }
 
 enum SortKeys {
@@ -66,6 +67,7 @@ export default function InsightTable({
   data,
   handleClickStar,
   starFill,
+  type
 }: InsightTableProps) {
   const [sortKey, setSortKey] = useState<SortKeys>(SortKeys.TEXT);
   const [sortMode, setSortMode] = useState<number>(3);
@@ -229,7 +231,7 @@ export default function InsightTable({
             />
           </div>
         </div>
-        {sortedData.map((insight: InsightRowType) => (
+        {sortedData.map((insight: any) => (
           <div className={`view-insight-body-${theme.viewInsightClass}` }>
             <div>
               {starFill ? (
@@ -243,7 +245,7 @@ export default function InsightTable({
                   className="icon-hover-unselected"
                 />
               )}
-              <span>{insight.text}</span>
+              <span>{insight[type]}</span>
             </div>
             {typeof stateName === "string" && stateName.length > 0 ? (
               <>
