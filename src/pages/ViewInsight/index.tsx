@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import { ThemeContext, NAVBAR_HEIGHT } from "../../config/context";
 import {
   PageWrapper,
@@ -19,16 +20,22 @@ export default function ControlledAccordions() {
   const theme = React.useContext(ThemeContext);
   const history = useHistory();
 
-  const [fetchIndustriess, industries] = useQuery(
+  const [func, data] = useQuery(
     "https://uat.startupindia.gov.in/maps/insight/industryInsights"
   );
-  const [fetchSectors, sectors] = useQuery(
-    "https://uat.startupindia.gov.in/maps/insight/sectorInsights"
-  );
-  const [fetchStages, stages] = useQuery(
-    "https://uat.startupindia.gov.in/maps/insight/stageInsights"
-  );
+  // const [fetchSectors, sectors] = useQuery(
+  //   "https://uat.startupindia.gov.in/maps/insight/sectorInsights"
+  // );
+  // const [fetchStages, stages] = useQuery(
+  //   "https://uat.startupindia.gov.in/maps/insight/stageInsights"
+  // );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
+  const [industries, setIndustries] = React.useState([]);
+  const [sectors, setSectors] = React.useState([]);
+  const [stages, setStages] = React.useState([]);
+  const [totalIndustries, setTotalIndustries] = React.useState([]);
+  const [totalSectors, setTotalSectors] = React.useState([]);
+  const [totalStages, setTotalStages] = React.useState([]);
 
   const localSectors = localStorage.getItem("Sector");
   const selectedSectors: any[] = JSON.parse(
@@ -54,21 +61,58 @@ export default function ControlledAccordions() {
     const id = query.get("id");
 
     if (id && id != "India") {
-      fetchIndustriess(
+      axios(
         `https://uat.startupindia.gov.in/maps/insight/industryInsights?stateId=${id}`
-      );
-      fetchSectors(
+      ).then((data) => {
+        setIndustries(data.data);
+      });
+      axios(
         `https://uat.startupindia.gov.in/maps/insight/sectorInsights?stateId=${id}`
-      );
-      fetchStages(`https://uat.startupindia.gov.in/maps/insight/stageInsights?stateId=${id}`);
-    }else{
-      fetchIndustriess(
+      ).then((data) => {
+        setSectors(data.data);
+      });
+
+      axios(
+        `https://uat.startupindia.gov.in/maps/insight/stageInsights?stateId=${id}`
+      ).then((data) => {
+        setStages(data.data);
+      });
+
+      axios(
         `https://uat.startupindia.gov.in/maps/insight/industryInsights`
+      ).then((data) => {
+        setTotalIndustries(data.data);
+      });
+
+      axios(`https://uat.startupindia.gov.in/maps/insight/sectorInsights`).then(
+        (data) => {
+          setTotalSectors(data.data);
+        }
       );
-      fetchSectors(
-        `https://uat.startupindia.gov.in/maps/insight/sectorInsights`
+
+      axios(`https://uat.startupindia.gov.in/maps/insight/stageInsights`).then(
+        (data) => {
+          setTotalStages(data.data);
+        }
       );
-      fetchStages(`https://uat.startupindia.gov.in/maps/insight/stageInsights`);
+    } else {
+      axios(
+        `https://uat.startupindia.gov.in/maps/insight/industryInsights`
+      ).then((data) => {
+        setIndustries(data.data);
+      });
+
+      axios(`https://uat.startupindia.gov.in/maps/insight/sectorInsights`).then(
+        (data) => {
+          setSectors(data.data);
+        }
+      );
+
+      axios(`https://uat.startupindia.gov.in/maps/insight/stageInsights`).then(
+        (data) => {
+          setStages(data.data);
+        }
+      );
     }
 
     // if(!id || id == 'India'){
@@ -83,6 +127,37 @@ export default function ControlledAccordions() {
 
     // }
   }, [query.get("id")]);
+
+  const dataMargeUp = (arr1: any, arr2: any) => {
+    const mergeArr: any = [];
+    for (let i = 0; i < arr1.length; i++) {
+      for (let j = 0; j < arr2.length; j++) {
+        if (arr1[i]["industry"] == arr2[j]["industry"]) {
+          let arr = { ...arr1[i] };
+          arr["indiaTotal"] = arr2[j].count;
+          arr["indiaPercentage"] = arr2[j].percentage;
+          mergeArr.push(arr);
+          break;
+        }
+      }
+    }
+    return mergeArr;
+  };
+
+  React.useEffect(() => {   
+    if (industries.length > 0 && totalIndustries.length > 0) {
+      let data = dataMargeUp(industries, totalIndustries);
+      setIndustries(data);
+    }
+    if (sectors.length > 0 && totalSectors.length > 0) {
+      let data = dataMargeUp(sectors, totalSectors);
+      setSectors(data)
+    }
+    if (stages.length > 0 && totalStages.length > 0) {
+      let data = dataMargeUp(stages, totalStages);
+      setStages(data)
+    }
+  }, [totalIndustries, totalSectors, totalStages]);
 
   const backUrl: string = `${baseRoute}/maps/?id=${query.get(
     "id"

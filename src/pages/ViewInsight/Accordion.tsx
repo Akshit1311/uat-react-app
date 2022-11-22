@@ -86,7 +86,7 @@ export default function Accordion({
   const [type1State, setType1State] = React.useState<any[]>([]);
   const [type2State, setType2State] = React.useState<any[]>([]);
 
-  const findId = (item: any) => selectedData.find((i: any) => item.id === i.id);
+  const findId = (item: any) => selectedData.find((i: any) => item[type] === i[type]);
 
   const getMargin = (expand: boolean): string => {
     if (expand && panelName === "panel1") return "mb-4";

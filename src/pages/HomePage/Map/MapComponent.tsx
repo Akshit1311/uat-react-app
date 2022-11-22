@@ -504,12 +504,20 @@ function IndiaMap({
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any) => {
               state.text = state.name;
+              let countStatus : any = "Loading..."
+              const stateCounts : number = getStateCount(state.id, appliedFilters.roles);
+              if(stateCounts == 0){
+                countStatus = 0
+              }else{
+                countStatus = stateCounts;
+              }
+
               return (
                 <MuiToolTip
                   placement="top"
                   title={
                     state.name +
-                    `(${getStateCount(state.id, appliedFilters.roles) || "Loading..."})`
+                    `(${ countStatus})`
                   }
                   followCursor
                   arrow
