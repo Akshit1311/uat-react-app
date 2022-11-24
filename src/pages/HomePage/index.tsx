@@ -403,6 +403,7 @@ const HomePage = (props: HomePageTypes) => {
                       applyRoles={applyRoles}
                       setStateViewMap={setStateViewMode}
                       activeCard={activeCard}
+                      startupType={startupType}
                       setActiveCard={setActiveCard}
                     />
                   </div>
@@ -450,7 +451,7 @@ const HomePage = (props: HomePageTypes) => {
                         setStateViewMode={setStateViewMode}
                         stateViewMode={stateViewMode}
                         fetchDistrict={fetchDistrict}
-                        setStartupType={setStartupType}
+                        setStartupType={setStartupType}                        
                       />
                     </div>
                   </div>

@@ -37,6 +37,10 @@ export default function ControlledAccordions() {
   const [totalSectors, setTotalSectors] = React.useState([]);
   const [totalStages, setTotalStages] = React.useState([]);
 
+  const [industriesLoading, setIndustriesLoading] = React.useState(true);
+  const [sectorsLoading, setSectorsLoading] = React.useState(true);
+  const [stagesLoading, setStagesLoading] = React.useState(true);
+
   const localSectors = localStorage.getItem("Sector");
   const selectedSectors: any[] = JSON.parse(
     localSectors ? localSectors.toString() : "0"
@@ -113,6 +117,10 @@ export default function ControlledAccordions() {
           setStages(data.data);
         }
       );
+
+      setIndustriesLoading(false);
+      setSectorsLoading(false);
+      setStagesLoading(false);
     }
 
     // if(!id || id == 'India'){
@@ -144,19 +152,25 @@ export default function ControlledAccordions() {
     return mergeArr;
   };
 
-  React.useEffect(() => {   
+  React.useEffect(() => {
     if (industries.length > 0 && totalIndustries.length > 0) {
       let data = dataMargeUp(industries, totalIndustries);
       setIndustries(data);
+      setIndustriesLoading(false);
     }
     if (sectors.length > 0 && totalSectors.length > 0) {
       let data = dataMargeUp(sectors, totalSectors);
-      setSectors(data)
+      setSectors(data);
+      setSectorsLoading(false);
     }
     if (stages.length > 0 && totalStages.length > 0) {
       let data = dataMargeUp(stages, totalStages);
-      setStages(data)
+      setStages(data);
+      setStagesLoading(false);
     }
+    
+    
+    
   }, [totalIndustries, totalSectors, totalStages]);
 
   const backUrl: string = `${baseRoute}/maps/?id=${query.get(
@@ -210,7 +224,8 @@ export default function ControlledAccordions() {
                 data={industries || []}
                 selectedData={selectedIndustries || []}
                 type="industry"
-              />
+                loading = {industriesLoading}
+              />              
 
               <Accordion
                 expanded={expanded}
@@ -223,6 +238,7 @@ export default function ControlledAccordions() {
                 }
                 selectedData={selectedSectors || []}
                 type="sector"
+                loading = {sectorsLoading}
               />
 
               <Accordion
@@ -236,6 +252,7 @@ export default function ControlledAccordions() {
                 }
                 selectedData={selectedStages || []}
                 type="stage"
+                loading = {stagesLoading}
               />
 
               {/* <Accordion

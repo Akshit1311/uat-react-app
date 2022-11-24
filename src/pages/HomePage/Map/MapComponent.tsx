@@ -255,7 +255,7 @@ function IndiaMap({
       
       let stateValue: any;
       if (accessor[0] == "Startup") {
-        const key = StartupTypesKeys[startupType.text];
+        const key = StartupTypesKeys[startupType.text];        
         stateValue = tableState.data[findStateIndex].statistics[key];
       } else {
         stateValue = tableState.data[findStateIndex].statistics[accessor];
@@ -462,13 +462,15 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
+      
     
       {countResource && !countResource.countLoading ? (
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
               ? "-200 180 1579 1283"
-              : getViewBoxArea()
+              : 
+              getViewBoxArea()
           }
           className="mt-c-5-2"
           aria-label="Map of India"
@@ -621,7 +623,7 @@ function IndiaMap({
       
       {!loadingIndiaMap && isCircleActive && (
         <>
-          <svg
+          {/* <svg
             style={{ position: "absolute", left: 0 }}
             className="mt-c-5-2"
             viewBox={viewAreaCircle ? viewAreaCircle : MAP_AREA_BUBBLE}
@@ -743,7 +745,7 @@ function IndiaMap({
                 </circle>
               </g>
             )}
-          </svg>
+          </svg> */}
           {/* {scaleBarVisible ? (
             <div style={{ position: "absolute" }}>
               <p
