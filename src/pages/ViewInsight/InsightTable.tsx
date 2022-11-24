@@ -1,5 +1,7 @@
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import MoonLoader from "react-spinners/MoonLoader";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { Tooltip } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
@@ -14,7 +16,8 @@ interface InsightTableProps {
   data: InsightRowType[];
   starFill?: boolean;
   handleClickStar: any;
-  type:string
+  type: string;
+  loading: boolean;
 }
 
 enum SortKeys {
@@ -32,25 +35,25 @@ interface SortIconsType {
 }
 
 function SortIcons({ sortMode, sortKey, primaryKey }: SortIconsType) {
-  const style = {cursor: "pointer"};
+  const style = { cursor: "pointer" };
   return (
     <>
       {sortMode === 1 && sortKey === primaryKey ? (
-        <span className="d-flex flex-column p-0" style={{...style}}>
+        <span className="d-flex flex-column p-0" style={{ ...style }}>
           <ArrowDropDownIcon fontSize="small" />
         </span>
       ) : (
         <></>
       )}
       {sortMode === 2 && sortKey === primaryKey ? (
-        <span className="d-flex flex-column p-0" style={{...style}}>
+        <span className="d-flex flex-column p-0" style={{ ...style }}>
           <ArrowDropUpIcon fontSize="small" />
         </span>
       ) : (
         <></>
       )}
       {sortMode === 3 || sortKey !== primaryKey ? (
-        <span className="d-flex flex-column p-0" style={{...style}}>
+        <span className="d-flex flex-column p-0" style={{ ...style }}>
           <ArrowDropUpIcon fontSize="small" style={{ marginBottom: "-7px" }} />
           <ArrowDropDownIcon fontSize="small" style={{ marginTop: "-7px" }} />
         </span>
@@ -67,7 +70,8 @@ export default function InsightTable({
   data,
   handleClickStar,
   starFill,
-  type
+  type,
+  loading,
 }: InsightTableProps) {
   const [sortKey, setSortKey] = useState<SortKeys>(SortKeys.TEXT);
   const [sortMode, setSortMode] = useState<number>(3);
@@ -107,16 +111,14 @@ export default function InsightTable({
       const result = originalData.sort(
         (a: InsightRowType, b: InsightRowType) => {
           if (sortMode === 1) {
-           
             return String(a[sortKey]).localeCompare(String(b[sortKey]));
           }
           if (sortMode === 2) {
-            
             return String(b[sortKey]).localeCompare(String(a[sortKey]));
           }
           return 0;
         }
-      );    
+      );
 
       setSortedData(sortMode == 2 ? result.reverse() : result);
     }
@@ -231,58 +233,70 @@ export default function InsightTable({
             />
           </div>
         </div>
-        {sortedData.map((insight: any) => (
-          <div className={`view-insight-body-${theme.viewInsightClass}` }>
-            <div>
-              {starFill ? (
-                <StarIcon
-                  className="icon-hover-selected"
-                  onClick={() => handleClickStar(insight)}
-                />
-              ) : (
-                <StarBorderIcon
-                  onClick={() => handleClickStar(insight)}
-                  className="icon-hover-unselected"
-                />
-              )}
-              <span>{insight[type]}</span>
-            </div>
-            {typeof stateName === "string" && stateName.length > 0 ? (
-              <>
-                <div className="border-type-2 font-500 text-right">
-                  {insight.count}
-                </div>
-                <div
-                  onClick={(e) => changeSortMode(e, SortKeys.PERCENTAGE)}
-                  className="border-type-3 font-500 text-right"
-                >
-                  {insight.percentage} %
-                </div>
-                <div
-                  onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
-                  className="border-type-2 font-500 text-right"
-                >
-                  {insight.indiaTotal}
-                </div>
-                <div
-                  onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
-                  className="border-type-3 font-500 text-right"
-                >
-                  {insight.indiaPercentage} %
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="border-type-2 font-500 text-right">
-                  {insight.count}
-                </div>
-                <div className="border-type-3 font-500 text-right">
-                  {insight.percentage} %
-                </div>
-              </>
-            )}
+        {loading ? (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">           
+            <MoonLoader
+              color={ThemeColorIdentifier(theme.color)}
+              loading={true}
+              size={"25px"}
+            />
           </div>
-        ))}
+        ) : (
+          sortedData.map((insight: any) => (
+            <div className={`view-insight-body-${theme.viewInsightClass}`}>
+              <div>
+                {starFill ? (
+                  <StarIcon
+                    className="icon-hover-selected"
+                    onClick={() => handleClickStar(insight)}
+                  />
+                ) : (
+                  <StarBorderIcon
+                    onClick={() => handleClickStar(insight)}
+                    className="icon-hover-unselected"
+                  />
+                )}
+                <span>{insight[type]}</span>
+              </div>
+              {typeof stateName === "string" && stateName.length > 0 ? (
+                <>
+                  <div className="border-type-2 font-500 text-right">
+                    {insight.count}
+                  </div>
+                  <div
+                    onClick={(e) => changeSortMode(e, SortKeys.PERCENTAGE)}
+                    className="border-type-3 font-500 text-right"
+                  >
+                    {insight.percentage} %
+                  </div>
+                  <div
+                    onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
+                    className="border-type-2 font-500 text-right"
+                  >
+                    {insight.indiaTotal}
+                  </div>
+                  <div
+                    onClick={(e) =>
+                      changeSortMode(e, SortKeys.INDIA_PERCENTAGE)
+                    }
+                    className="border-type-3 font-500 text-right"
+                  >
+                    {insight.indiaPercentage} %
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="border-type-2 font-500 text-right">
+                    {insight.count}
+                  </div>
+                  <div className="border-type-3 font-500 text-right">
+                    {insight.percentage} %
+                  </div>
+                </>
+              )}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

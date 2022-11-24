@@ -242,9 +242,11 @@ function ViewChangerComponent({
   //   } catch (error) {}
   // };
 
-  // useEffect(() => {
-  //   setNewCount(startupCount);   
-  // }, [startupCount]);
+  useEffect(() => {
+    if(activeCard !== "Startups"){
+      setNewCount(startupCount);
+    }
+  }, [activeCard]);
 
   useEffect(() => {   
     if (selectedStartTypeIndex == 0) {
@@ -331,8 +333,9 @@ function ViewChangerComponent({
                 marginBottom="20px"
                 onChange={startTypeChange}
               >
-                {startUpTypes.map((item: any) => (
-                  <option key={item.index} value={item.index}>
+                
+                {startUpTypes.map((item: any, index:number) => (
+                  <option key={item.index} value={item.index} selected={activeCard !== "Startups" && index === 0 ? true : false }>
                     {item.text}
                   </option>
                 ))}

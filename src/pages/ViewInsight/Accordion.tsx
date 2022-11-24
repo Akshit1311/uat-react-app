@@ -68,6 +68,7 @@ export interface AccordionTypes {
   data: InsightRowType[];
   selectedData: string[];
   type: any
+  loading: boolean
 }
 
 export default function Accordion({
@@ -78,7 +79,8 @@ export default function Accordion({
   stateName,
   data,
   selectedData,
-  type
+  type,
+  loading
 }: AccordionTypes) {
   const [queryString, setQueryString] = React.useState<string>("");
   const theme = useContext(ThemeContext);
@@ -105,8 +107,8 @@ export default function Accordion({
 
   const onSearch = (event: any) => setQueryString(event.target.value);
 
-  const findIndex = (item: any, array: any[]) =>
-    array.findIndex((i) => i.id === item.id);
+  // const findIndex = (item: any, array: any[]) =>
+  //   array.findIndex((i) => i.id === item.id);
 
   const onUnselectedItemClick = (insight: InsightRowType) => {
     const clone = _.cloneDeep(type1State);
@@ -114,9 +116,8 @@ export default function Accordion({
     const clone2 = _.cloneDeep(type2State);
 
     clone.push({ ...insight });
-    setType1State(clone);
-
-    clone2.splice(findIndex(insight, type2State), 1);
+    setType1State(clone);    
+    clone2.splice( _.findIndex(type2State, insight), 1);
     setType2State(clone2);
     localStorage.setItem(title.toString(), JSON.stringify(clone));
   };
@@ -126,7 +127,7 @@ export default function Accordion({
 
     const clone2 = _.cloneDeep(type2State);
 
-    clone.splice(findIndex(insight, type1State), 1);
+    clone.splice(_.findIndex(type1State, insight), 1);
     setType1State(clone);
 
     const newList = [{ ...insight }, ...clone2];
@@ -176,6 +177,7 @@ export default function Accordion({
                 starFill={true}
                 handleClickStar={onSelectedItemClick}
                 type={type}
+                loading= {loading}
               />
               <div className="mb-3" />
             </>
@@ -194,6 +196,7 @@ export default function Accordion({
             title={title}
             handleClickStar={onUnselectedItemClick}
             type={type}
+            loading= {loading}
           />
           <div className="mb-2" />
         </AccordionDetails>
@@ -221,6 +224,7 @@ export default function Accordion({
                     starFill={true}
                     handleClickStar={onSelectedItemClick}
                     type={type}
+                    loading= {loading}
                   />
                   {/* <div className="mb-3" /> */}
                 </>
