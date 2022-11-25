@@ -3,9 +3,9 @@ import axios from "axios";
 
 const ERROR_INITIAL_STATE = { error: false, errorMessage: "" };
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-export function useQuery(apiUrl: string) {
+export function useQuery(apiUrl: string, type: any = "get") {
   const [state, setState] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>(ERROR_INITIAL_STATE);
@@ -13,20 +13,30 @@ export function useQuery(apiUrl: string) {
   const fetch = async (url: string) => {
     setLoading(true);
     try {
-      const response = await axios({
-        url: url ? url : apiUrl,
-      });
-      if (response.data) {
-        setState(response.data);
+      if (type === "post") {
+        let apiURL = url ? url : apiUrl;
+        const response = await axios.post(apiURL);
+        if (response.data) {         
+          setState(response.data);
+        } else {
+          setState([]);
+        }
       } else {
-        setState([])
+        const response = await axios({
+          url: url ? url : apiUrl,
+        });
+        if (response.data) {        
+          setState(response.data);
+        } else {
+          setState([]);
+        }
       }
     } catch (error) {
-      setState([])
+      setState([]);
       setError({ error: true, errorMessage: error });
     } finally {
       setLoading(false);
     }
-  }; 
-  return [fetch, state, loading, error, ];
+  };
+  return [fetch, state, loading, error];
 }

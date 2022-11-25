@@ -179,7 +179,7 @@ const HomePage = (props: HomePageTypes) => {
   });
   const [fetchDistrict, districtStatistics, districtStatisticsLoading] =
     useQuery(
-      `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`
+      `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`,"post"
     );
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
@@ -539,6 +539,7 @@ const HomePage = (props: HomePageTypes) => {
                           }}
                           className="mx-0 ms-sm-2 ms-0"
                         >
+                          
                           {stateViewMode ? (
                             <StateViewDataTable
                               selectedArea={appliedFilters.states[0]}

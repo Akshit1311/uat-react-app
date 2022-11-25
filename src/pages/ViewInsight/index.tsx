@@ -176,6 +176,7 @@ export default function ControlledAccordions() {
   const backUrl: string = `${baseRoute}/maps/?id=${query.get(
     "id"
   )}&state=${query.get("state")}`;
+ 
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
       <PageWrapperContainer className="h-100">
