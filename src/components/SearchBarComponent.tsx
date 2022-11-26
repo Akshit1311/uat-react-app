@@ -36,6 +36,8 @@ const SearchBarComponent = ({
   value,
   handleApply
 }: SearchTypes) => {
+
+  console.log('background', background)
   const borderRadiusAll = borderRadius ? borderRadius : "0px";
   const backgroundAll = background ? background : "#f8f8f8";
   return (
