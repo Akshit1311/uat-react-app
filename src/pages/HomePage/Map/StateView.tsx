@@ -94,7 +94,7 @@ export default function StateView({
     let max = 0;
     if (Array.isArray(data.data)) {
       data.data.forEach((district: any) => {
-        const value = district.statistics[StartupTypesKeys[startupType.text]];
+        const value = district.statistics[StartupTypesKeys[startupType.text]];        
         if (!value) {
           const case1Value =
             district.statistics[StartupTypesKeys[startupType.text]];
@@ -108,8 +108,9 @@ export default function StateView({
   };
 
   const getStatistics = (districtName: string) => {
+    
     if (Array.isArray(data.data)) {
-      return data.data.find((district: StatisticsData) => {
+      return data.data.find((district: StatisticsData) => {        
         if (!district.district || !districtName) return;
         return district.district.toLowerCase() == districtName.toLowerCase();
       });
@@ -125,7 +126,7 @@ export default function StateView({
 
   const getColorOpacity = (districtName: string) => {
     const maxValue = findMaximumValue();
-    const statistics: any = getStatistics(districtName);
+    const statistics: any = getStatistics(districtName);    
     if (statistics && maxValue) {
       const startupTypeLocal: string = startupType.text;
       if (
@@ -136,9 +137,12 @@ export default function StateView({
       const val = StartupTypesKeys[startupTypeLocal]
         ? StartupTypesKeys[startupTypeLocal]
         : "Startup";
+
+        
       const colorLevel: number = Number(statistics.statistics[val]) / maxValue;
       return roundOff(colorLevel);
     }
+   
     return 0;
   };
 
@@ -172,15 +176,17 @@ export default function StateView({
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => {
+            
             return (
               <MuiToolTip
                 placement="top"
                 key={district.name}
-                title={district.name}
+                title={district.name + `(${getCount(district.name)})`}
                 followCursor
                 arrow
                 componentsProps={componentProps}
               >
+                
                 <path
                   stroke="black"
                   fill={ThemeColorIdentifier(colorTheme)}
