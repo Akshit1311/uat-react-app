@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThemeColorIdentifier } from "../../../helper-function/themeColor";
 import { ThemeContext } from "../../../config/context";
@@ -94,7 +94,7 @@ export default function StateView({
     let max = 0;
     if (Array.isArray(data.data)) {
       data.data.forEach((district: any) => {
-        const value = district.statistics[StartupTypesKeys[startupType.text]];
+        const value = district.statistics[StartupTypesKeys[startupType.text]];        
         if (!value) {
           const case1Value =
             district.statistics[StartupTypesKeys[startupType.text]];
@@ -108,8 +108,9 @@ export default function StateView({
   };
 
   const getStatistics = (districtName: string) => {
+    
     if (Array.isArray(data.data)) {
-      return data.data.find((district: StatisticsData) => {
+      return data.data.find((district: StatisticsData) => {        
         if (!district.district || !districtName) return;
         return district.district.toLowerCase() == districtName.toLowerCase();
       });
@@ -125,7 +126,7 @@ export default function StateView({
 
   const getColorOpacity = (districtName: string) => {
     const maxValue = findMaximumValue();
-    const statistics: any = getStatistics(districtName);
+    const statistics: any = getStatistics(districtName);    
     if (statistics && maxValue) {
       const startupTypeLocal: string = startupType.text;
       if (
@@ -136,9 +137,12 @@ export default function StateView({
       const val = StartupTypesKeys[startupTypeLocal]
         ? StartupTypesKeys[startupTypeLocal]
         : "Startup";
+
+        
       const colorLevel: number = Number(statistics.statistics[val]) / maxValue;
       return roundOff(colorLevel);
     }
+   
     return 0;
   };
 
@@ -159,11 +163,76 @@ export default function StateView({
       return statistics.statistics[val];
     }
   };
+
+  const GradientBar = ({ maxCountValue }: any) => {
+    const [currentCount, setCurrentCount] = useState<any>(0);
+    useEffect(() => {
+      const count = maxCountValue;
+  
+      if (count && count > currentCount) {
+        let interval: any;
+        if (currentCount < count) {
+          interval = setInterval(() => {
+            setCurrentCount((prevState: any) => {
+              if (prevState === Number(count) || prevState > Number(count)) {
+                return count;
+              }
+              if (count > 1000) {
+                return prevState + 500;
+              }
+              if (count < 1000 && count > 500) {
+                return prevState + 10;
+              }
+              return prevState + 1;
+            });
+          }, 1);
+        } else if (currentCount === count) {
+          clearInterval(interval);
+        } else {
+        }
+        return () => clearInterval(interval);
+      } else if (count && count < currentCount) {
+        let interval: any;
+        if (currentCount > count) {
+          interval = setInterval(() => {
+            setCurrentCount((prevState: any) => {
+              if (prevState === Number(count) || prevState < Number(count)) {
+                return count;
+              }
+              if (currentCount - count > 10000) {
+                return prevState - 500;
+              }
+              if (currentCount - count > 5000) {
+                return prevState - 200;
+              }
+              if (currentCount - count > 1000) {
+                return prevState - 100;
+              }
+              return prevState - 1;
+            });
+          }, 1);
+        } else if (currentCount === count) {
+          clearInterval(interval);
+        } else {
+        }
+        return () => clearInterval(interval);
+      }
+    }, [maxCountValue]);
+    return (
+      <div className="gradient-bar-map d-flex justify-content-between">
+        <p className="min-gradient-bar">0</p>
+        <p className="max-gradient-bar">{currentCount}</p>
+      </div>
+    );
+  };
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative" }}
     >
+
+        <GradientBar maxCountValue={findMaximumValue()} />
+    
       <svg
         viewBox="-50 0 550 550"
         onDoubleClick={() => setStateViewMode(false)}
@@ -172,15 +241,17 @@ export default function StateView({
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => {
+            
             return (
               <MuiToolTip
                 placement="top"
                 key={district.name}
-                title={district.name}
+                title={district.name + `(${getCount(district.name)})`}
                 followCursor
                 arrow
                 componentsProps={componentProps}
               >
+                
                 <path
                   stroke="black"
                   fill={ThemeColorIdentifier(colorTheme)}
