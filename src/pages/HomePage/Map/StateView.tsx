@@ -160,7 +160,7 @@ export default function StateView({
         : "Startup";
 
       
-      return statistics.statistics[val];
+      return statistics.statistics[val] ? statistics.statistics[val] : 0;
     }
   };
 
@@ -241,12 +241,12 @@ export default function StateView({
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => {
-            
+            let counts: number = getCount(district.name);
             return (
               <MuiToolTip
                 placement="top"
                 key={district.name}
-                title={district.name + `(${getCount(district.name)})`}
+                title={district.name + `(${counts ? counts : 0})`}
                 followCursor
                 arrow
                 componentsProps={componentProps}
