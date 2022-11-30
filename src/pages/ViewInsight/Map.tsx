@@ -118,6 +118,7 @@ export default function Map({ stateId }: MapProps) {
         style={{ transform: "scale(1.15)" }}
         viewBox="-100 0 1030 906"
         aria-label="Map of India"
+        className="safari-svg"
       >
         {StateBorders.map((state: any, index: number) => {
           state.text = state.name;

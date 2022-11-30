@@ -798,3 +798,9 @@ html {
 .unselected-list-card-light {
   background: #f8f8f8 !important;
 }
+
+@media not all and (min-resolution:.001dpcm){
+ .safari-svg{
+  height: 450px
+ }
+}
