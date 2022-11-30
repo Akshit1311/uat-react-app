@@ -236,6 +236,7 @@ export default function StateView({
       <svg
         viewBox="-50 0 550 550"
         onDoubleClick={() => setStateViewMode(false)}
+        className="safari-svg"
       >
         {StatesDistrictView.filter((state: any) => {
           return state.id === selectedArea;

@@ -263,7 +263,7 @@ function IndiaMap({
 
       const opacity = stateValue !== 0 && maxValue !== 0 ? (stateValue / maxValue) * 100 : 0;
       
-      
+      console.log("data======", stateValue, maxValue, opacity)
       if(!dateRangeCount) {      
         return 0;
       }
@@ -472,7 +472,7 @@ function IndiaMap({
               : 
               getViewBoxArea()
           }
-          className="mt-c-5-2"
+          className="mt-c-5-2 safari-svg"
           aria-label="Map of India"
         >
           <g style={{ transform: "scale(1)" }}>
@@ -623,7 +623,7 @@ function IndiaMap({
       
       {!loadingIndiaMap && isCircleActive && (
         <>
-          {/* <svg
+          <svg
             style={{ position: "absolute", left: 0 }}
             className="mt-c-5-2"
             viewBox={viewAreaCircle ? viewAreaCircle : MAP_AREA_BUBBLE}
@@ -745,7 +745,7 @@ function IndiaMap({
                 </circle>
               </g>
             )}
-          </svg> */}
+          </svg>
           {/* {scaleBarVisible ? (
             <div style={{ position: "absolute" }}>
               <p
