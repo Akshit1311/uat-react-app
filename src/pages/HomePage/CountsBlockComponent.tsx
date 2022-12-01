@@ -334,7 +334,7 @@ const CountsBlockComponent = ({
     if (value === "government") return "theme-7";
   };
 
-  const handleCardClick = (name: string, accessor: string) => {
+  const handleCardClick = (name: string, accessor: string) => {   
     applyRoles(accessor, name);
     setActiveCard(name);
     setPrimaryColorTheme(getThemeName(name));
