@@ -29,6 +29,7 @@ interface CountBlockTypes {
   setStateViewMap: React.Dispatch<boolean>;
   activeCard: string;
   setActiveCard: any;
+  startupType: any
 }
 
 interface CountCardTypes {
@@ -215,6 +216,7 @@ const CountsBlockComponent = ({
   setStateViewMap,
   activeCard,
   setActiveCard,
+  startupType
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const history = useHistory();
@@ -316,6 +318,12 @@ const CountsBlockComponent = ({
     fetchCounts();
   }, [appliedFilters]);
 
+  useEffect(() => {
+    if(startupType?.index !== 0 && activeCard !== "Startups"){
+      handleCardClick("Startups", "Startup");
+    }
+  }, [startupType]);
+
   const getThemeName = (name: string) => {
     const value = name.toLowerCase();
     if (value === "startups") return "theme-1";
@@ -331,7 +339,7 @@ const CountsBlockComponent = ({
     setActiveCard(name);
     setPrimaryColorTheme(getThemeName(name));
   };
-
+  
   const resources = {
     activeCard,
     handleCardClick,

@@ -255,7 +255,7 @@ function IndiaMap({
       
       let stateValue: any;
       if (accessor[0] == "Startup") {
-        const key = StartupTypesKeys[startupType.text];
+        const key = StartupTypesKeys[startupType.text];        
         stateValue = tableState.data[findStateIndex].statistics[key];
       } else {
         stateValue = tableState.data[findStateIndex].statistics[accessor];
@@ -263,7 +263,7 @@ function IndiaMap({
 
       const opacity = stateValue !== 0 && maxValue !== 0 ? (stateValue / maxValue) * 100 : 0;
       
-      
+      console.log("data======", stateValue, maxValue, opacity)
       if(!dateRangeCount) {      
         return 0;
       }
@@ -462,15 +462,17 @@ function IndiaMap({
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
+      
     
       {countResource && !countResource.countLoading ? (
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
               ? "-200 180 1579 1283"
-              : getViewBoxArea()
+              : 
+              getViewBoxArea()
           }
-          className="mt-c-5-2"
+          className="mt-c-5-2 safari-svg"
           aria-label="Map of India"
         >
           <g style={{ transform: "scale(1)" }}>
@@ -504,12 +506,20 @@ function IndiaMap({
           {mapMode.id === MapVariables.INDIA.id &&
             StateBorders.map((state: any) => {
               state.text = state.name;
+              let countStatus : any = "Loading..."
+              const stateCounts : number = getStateCount(state.id, appliedFilters.roles);
+              if(stateCounts == 0){
+                countStatus = 0
+              }else{
+                countStatus = stateCounts;
+              }
+
               return (
                 <MuiToolTip
                   placement="top"
                   title={
                     state.name +
-                    `(${getStateCount(state.id, appliedFilters.roles) || "Loading..."})`
+                    `(${ countStatus})`
                   }
                   followCursor
                   arrow

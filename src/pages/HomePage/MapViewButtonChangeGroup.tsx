@@ -76,7 +76,7 @@ export default function MapViewChangeButtonGroup(props: any) {
       defaultView();
     }
   }, [props.activeCard]);
-  console.log('props.stateViewMode',)
+ 
   return (
     <div className={`mx-1 col-12 mt-4 `}>
       <div className={`d-flex justify-content-between `}>
