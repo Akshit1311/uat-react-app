@@ -129,10 +129,10 @@ function ViewChangerComponent({
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
+    const obj = startUpTypes.filter((item: any) => item.index == value);
     setSelectedStartupType(value);
-    // fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
     setSelectedStartupTypeIndex(value);
-    setStartupType(startUpTypes[value]);
+    setStartupType(obj[0]);
 
     if (!appliedFilters.states[0]) {
       fetchInitialCount(value, selectedDateRange);
@@ -184,12 +184,12 @@ function ViewChangerComponent({
       } else {
         setNewCount(0);
       }
-      
-      if (data[key] && data[key] > 0 ) {
+
+      if (data[key] && data[key] > 0) {
         setDateRangeCount(true);
-      }else if(startupType == 0 && startupCount > 0){
+      } else if (startupType == 0 && startupCount > 0) {
         setDateRangeCount(true);
-      } else {        
+      } else {
         setDateRangeCount(false);
       }
     } catch (error) {}
@@ -243,25 +243,34 @@ function ViewChangerComponent({
   // };
 
   useEffect(() => {
-    if(activeCard !== "Startups"){
+    if (activeCard !== "Startups") {
       setNewCount(startupCount);
+      setDateRangeCount(true);
+    } else {
+      setStartupType({
+        index: "0",
+        text: "All Startups",
+      });
     }
   }, [activeCard]);
 
-  useEffect(() => {   
+  useEffect(() => {
     if (selectedStartTypeIndex == 0) {
       setNewCount(startupCount);
-      if(startupCount > 0){
+      if (startupCount > 0) {
         setDateRangeCount(true);
-      }else{
+      } else {
         setDateRangeCount(false);
       }
-           
-    }else{
+    } else {
       fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
     }
-    
-  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id"), startupCount]);
+  }, [
+    appliedFilters.states,
+    selectedStartTypeIndex,
+    query.get("id"),
+    startupCount,
+  ]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
@@ -333,9 +342,14 @@ function ViewChangerComponent({
                 marginBottom="20px"
                 onChange={startTypeChange}
               >
-                
-                {startUpTypes.map((item: any, index:number) => (
-                  <option key={item.index} value={item.index} selected={activeCard !== "Startups" && index === 0 ? true : false }>
+                {startUpTypes.map((item: any, index: number) => (
+                  <option
+                    key={item.index}
+                    value={item.index}
+                    selected={
+                      activeCard !== "Startups" && index === 0 ? true : false
+                    }
+                  >
                     {item.text}
                   </option>
                 ))}
