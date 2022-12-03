@@ -172,7 +172,7 @@ function ViewChangerComponent({
       let data;
       let key;
       // get data from api call
-      if(startupType != 6){
+      if(startupType != 8){
         const { data: response } = await axios.get(url);
         data = response;
         key = startupTypeValues[startupType];
