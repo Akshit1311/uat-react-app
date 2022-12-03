@@ -169,12 +169,22 @@ function ViewChangerComponent({
     try {
       // create and get api url
       let url = apiUrl(dateRange);
-
+      let data;
+      let key;
       // get data from api call
-      const { data } = await axios.get(url);
-
+      if(startupType != 6){
+        const { data: response } = await axios.get(url);
+        data = response;
+        key = startupTypeValues[startupType];
+      }else{
+        const { data: response } = await axios.get('home/leadingsector');
+        data = response;
+        key = "count";
+      }
+      
+console.log("data=====", data, key)
       // fetch data according to index key
-      let key = startupTypeValues[startupType];
+     
 
       //setting up data in state
       if (data[key]) {

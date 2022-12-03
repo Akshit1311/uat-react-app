@@ -64,13 +64,13 @@ function DistrictPath({
   componentProps,
   theme,
   colorTheme,
-  stateCounts
+  stateCounts,
 }: any) {
   const [isToolTipVisible, setToolTipVisible] = useState<boolean>(false);
   return (
     <MuiToolTip
       placement="top"
-      title={district.title+`(${stateCounts})`}
+      title={district.title + `(${stateCounts})`}
       arrow
       componentsProps={componentProps}
     >
@@ -144,8 +144,8 @@ const GradientBar = ({ maxCountValue }: any) => {
       } else {
       }
       return () => clearInterval(interval);
-    }else{
-      setCurrentCount(maxCountValue)
+    } else {
+      setCurrentCount(maxCountValue);
     }
   }, [maxCountValue]);
   return (
@@ -180,8 +180,6 @@ function IndiaMap({
     fetchDistrict,
     dateRangeCount,
   } = mapViewResource;
-
-  
 
   const theme = useContext(ThemeContext);
   const [allIndiaDistrictData, setAllIndiaDistrictData] = useState<any>({
@@ -227,21 +225,26 @@ function IndiaMap({
   const findMaxValue = (array: any[], accessor: string) => {
     const newList = [...array];
     const n: any[] = [];
-    console.log('startupType', startupType)   
     if (accessor[0] == "Startup") {
       const key = StartupTypesKeys[startupType?.text];
       newList.forEach((a: any) => n.push(a.statistics[key]));
     } else {
       newList.forEach((a: any) => n.push(a.statistics[accessor]));
     }
-  
-    const max = Math.max(...n);    
+
+    const max = Math.max(...n);
     if (newList.length > 0) return max;
     else return 0;
   };
 
-  const findCountTypeValue = (stateId: string) => {
-    return tableState.data.findIndex((item: any) => item.id === stateId);
+  const findCountTypeValue = (stateId: string, type: string = "state") => {
+    if (type === "state") {
+      return tableState.data.findIndex((item: any) => item.id === stateId);
+    } else {
+      return allIndiaDistrictData.data.findIndex(
+        (item: any) => item.districtId === stateId
+      );
+    }
   };
 
   const getGradientColor = (
@@ -263,34 +266,40 @@ function IndiaMap({
       const opacity =
         stateValue !== 0 && maxValue !== 0 ? (stateValue / maxValue) * 100 : 0;
 
-      if (!dateRangeCount) {        
+      if (!dateRangeCount) {
         return 0;
       }
       if (
         opacity === 0 &&
         accessor[0] !== ["Startup"][0] &&
         accessor[0] !== ["Incubator"][0]
-      ) {        
+      ) {
         return opacity;
-      } else if (opacity < 20 && opacity > 0) {        
+      } else if (opacity < 20 && opacity > 0) {
         return opacity + 5;
-      } else {       
+      } else {
         return opacity;
       }
     }
     return 0;
   };
 
-  const getStateCount = (stateId: string, accessor: string) => {
+  const getStateCount = (
+    stateId: string,
+    accessor: string,
+    type: string = "state"
+  ) => {
     if (stateId && accessor) {
-      const findStateIndex = findCountTypeValue(stateId);
+      const findStateIndex = findCountTypeValue(stateId, type);
+      const dataArray =
+        type === "state" ? tableState.data : allIndiaDistrictData.data;
       if (findStateIndex !== -1) {
         let stateValue: any;
         if (accessor[0] == "Startup") {
           const key = StartupTypesKeys[startupType.text];
-          stateValue = tableState.data[findStateIndex].statistics[key];
+          stateValue = dataArray[findStateIndex].statistics[key];
         } else {
-          stateValue = tableState.data[findStateIndex].statistics[accessor];
+          stateValue = dataArray[findStateIndex].statistics[accessor];
         }
         return stateValue;
       }
@@ -374,10 +383,10 @@ function IndiaMap({
     populateDistrictsBoarders();
   }, [mapMode, theme]);
 
-  const maxCountValue = findMaxValue(
-    tableState.data || [],
-    appliedFilters.roles
-  );
+  const maxCountValue =
+    mapMode.id === MapVariables.DISTRICT.id
+      ? findMaxValue(allIndiaDistrictData.data || [], appliedFilters.roles)
+      : findMaxValue(tableState.data || [], appliedFilters.roles);
 
   const bubbleRadiusWraper = (percent: number) => {
     const radius = (percent / 100) * 75;
@@ -414,7 +423,7 @@ function IndiaMap({
         "data/v2/statistics/allDistricts/" + "2015-01-01/2022-01-01";
       const { data } = await axios.get(url);
       setAllIndiaDistrictData(data);
-       const newArray: any[] = [];
+      const newArray: any[] = [];
       data.data.forEach(
         (dist: any) => (newArray[dist.districtId] = dist.statistics)
       );
@@ -427,7 +436,7 @@ function IndiaMap({
   };
 
   useEffect(() => {
-    getAllIndiaDistrictData();    
+    getAllIndiaDistrictData();
   }, []);
 
   const getStatistics = (id: any) => {
@@ -439,7 +448,7 @@ function IndiaMap({
       allIndiaDistrictData.max[StartupTypesKeys[startupType.text]];
 
     const statistics: any = getStatistics(id);
-    
+
     if (statistics && maxValue) {
       const startupTypeLocal: string = StartupTypesKeys[startupType.text];
 
@@ -457,7 +466,6 @@ function IndiaMap({
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
       style={{ position: "relative", maxWidth: "99vw", overflow: "hidden" }}
     >
-    
       {!isCircleActive && scaleBarVisible && (
         <GradientBar maxCountValue={maxCountValue} />
       )}
@@ -555,7 +563,6 @@ function IndiaMap({
                           : "1"
                         : "0"
                     }
-                   
                     fill={ThemeColorIdentifier(colorTheme)}
                     stroke={fillStrokeColor(state.id)}
                     strokeWidth={fillStroke(state.id)}
@@ -609,7 +616,8 @@ function IndiaMap({
               let countStatus: any = "Loading...";
               const stateCounts: number = getStateCount(
                 district.districtId,
-                appliedFilters.roles
+                appliedFilters.roles,
+                "district"
               );
               if (stateCounts == 0) {
                 countStatus = 0;
