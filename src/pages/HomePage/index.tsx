@@ -1,40 +1,41 @@
-import React, { useState, useContext, useEffect, useMemo } from "react";
-import CountsBlockComponent from "./CountsBlockComponent";
-import LeftNavComponent from "./LeftNav/LeftNavComponent";
-import MapComponent from "./Map/MapComponent";
-import StartupsListComponent from "./StartupsListComponent";
-import ViewChangerComponent from "./ViewChangerComponent";
-import "../../scss/HomePageStyles/homePage.scss";
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
+import { BiFilter } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import * as MapVariables from "./Map/variables";
-import { Button } from "../../styles-components/Button";
+import { NAVBAR_HEIGHT, ThemeContext } from "../../config/context";
+import { useMutate } from "../../hooks/useMutate";
 import { useQuery } from "../../hooks/useQuery";
-import HomePageApi from "../../config/homepageApis.json";
-import { NAVBAR_HEIGHT } from "../../config/context";
-import { ThemeContext } from "../../config/context";
-import DataTable from "./DataTable";
+import { useWebQuery } from "../../hooks/useWebQuery";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import "../../scss/HomePageStyles/homePage.scss";
+import { setColorTheme } from "../../store/config";
+import {
+  Button,
+  ThemeButton as FilterButton,
+} from "../../styles-components/Button";
 import {
   PageWrapper,
   PageWrapperContainer,
 } from "../../styles-components/PageWrapper";
-import { useMutate } from "../../hooks/useMutate";
-import StateView from "./Map/StateView";
-import { ThemeButton as FilterButton } from "../../styles-components/Button";
-import { BiFilter } from "react-icons/bi";
-import MobileFilter from "./LeftNav/MobileFilter";
-import SearchBar from "./AllSearch";
-import MapViewChangeButtonGroup from "./MapViewButtonChangeGroup";
-import ViewInsight from "./ViewInsight";
-import { useWindowSize } from "../../hooks/useWindowSize";
-import { useWebQuery } from "../../hooks/useWebQuery";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setColorTheme } from "../../store/config";
-import moment from "moment";
-import StateViewDataTable from "./StateViewDataTable";
+import * as MapVariables from "./Map/variables";
+const CountsBlockComponent = React.lazy(() => import("./CountsBlockComponent"));
+const DataTable = React.lazy(() => import("./DataTable"));
+const LeftNavComponent = React.lazy(() => import("./LeftNav/LeftNavComponent"));
+const MobileFilter = React.lazy(() => import("./LeftNav/MobileFilter"));
+const MapComponent = React.lazy(() => import("./Map/MapComponent"));
+const StateView = React.lazy(() => import("./Map/StateView"));
+const MapViewChangeButtonGroup = React.lazy(
+  () => import("./MapViewButtonChangeGroup")
+);
+const StartupsListComponent = React.lazy(
+  () => import("./StartupsListComponent")
+);
+const StateViewDataTable = React.lazy(() => import("./StateViewDataTable"));
+const ViewChangerComponent = React.lazy(() => import("./ViewChangerComponent"));
+const ViewInsight = React.lazy(() => import("./ViewInsight"));
 
 const baseRoute = process.env.REACT_APP_BASE_URL || "";
-
 
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
@@ -127,7 +128,7 @@ const HomePage = (props: HomePageTypes) => {
   const [startUpPolicyChart, setStartUpPolicyChart] = useState<boolean>(false);
   const [dateRangeCount, setDateRangeCount] = useState<boolean>(true);
   const [startupCount, setStartupCount] = useState<number>(0);
-  
+
   const [selectedStateByMap, setSelectedStateByMap] = useState({
     id: "",
     name: "",
@@ -179,7 +180,8 @@ const HomePage = (props: HomePageTypes) => {
   });
   const [fetchDistrict, districtStatistics, districtStatisticsLoading] =
     useQuery(
-      `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`,"post"
+      `/data/v2/statistics/state/${appliedFilters.states[0]}/2015-01-10/2022-01-01`,
+      "post"
     );
 
   const [stateViewMode, setStateViewMode] = useState<boolean>(false);
@@ -264,7 +266,7 @@ const HomePage = (props: HomePageTypes) => {
     setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
     appliedFilters,
-    setStartupCount
+    setStartupCount,
   };
 
   const mapViewResources = {
@@ -290,7 +292,7 @@ const HomePage = (props: HomePageTypes) => {
     fetchTableData,
     dateRangeCount,
     setDateRangeCount,
-    startupCount
+    startupCount,
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -314,8 +316,8 @@ const HomePage = (props: HomePageTypes) => {
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
 
   const viewInsightUrl = `${baseRoute}/maps/view-insight?id=${
-    query.get('id') ? query.get('id') : 'India' 
-  }&state=${query.get('state') ? query.get('state') : 'India'}`;
+    query.get("id") ? query.get("id") : "India"
+  }&state=${query.get("state") ? query.get("state") : "India"}`;
 
   useEffect(() => {
     const stateName = query.get("state");
@@ -335,7 +337,7 @@ const HomePage = (props: HomePageTypes) => {
     //   setSelectedCountBlock(queryCountBlock)
     // } else setSelectedCountBlock('Startup')
   }, [query.get("state"), query.get("id")]);
-
+  console.log("stateViewMode", stateViewMode);
   return (
     <>
       <div
@@ -443,7 +445,7 @@ const HomePage = (props: HomePageTypes) => {
                         />
                       )}
                     </div>
-                    <div className="col-12 col-view-changer">                     
+                    <div className="col-12 col-view-changer">
                       <ViewChangerComponent
                         mapViewResources={mapViewResources}
                         setStartUpPolicyChart={setStartUpPolicyChart}
@@ -451,7 +453,7 @@ const HomePage = (props: HomePageTypes) => {
                         setStateViewMode={setStateViewMode}
                         stateViewMode={stateViewMode}
                         fetchDistrict={fetchDistrict}
-                        setStartupType={setStartupType}                        
+                        setStartupType={setStartupType}
                       />
                     </div>
                   </div>
@@ -539,7 +541,6 @@ const HomePage = (props: HomePageTypes) => {
                           }}
                           className="mx-0 ms-sm-2 ms-0"
                         >
-                          
                           {stateViewMode ? (
                             <StateViewDataTable
                               selectedArea={appliedFilters.states[0]}

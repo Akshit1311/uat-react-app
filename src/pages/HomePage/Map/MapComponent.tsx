@@ -437,6 +437,7 @@ function IndiaMap({
 
   useEffect(() => {
     getAllIndiaDistrictData();
+    console.log("stateViewMode  apicall");
   }, []);
 
   const getStatistics = (id: any) => {
@@ -460,7 +461,13 @@ function IndiaMap({
     }
     return 0;
   };
-
+  console.log(
+    "stateViewMode  render",
+    scaleBarVisible,
+    startupType,
+    mapViewResource,
+    countResource
+  );
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
