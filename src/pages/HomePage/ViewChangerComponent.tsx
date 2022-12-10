@@ -1,25 +1,19 @@
-import { Input } from "reactstrap";
-import React, { useContext, useEffect, useState } from "react";
-import { IoMapSharp } from "react-icons/io5";
-import { RiDropFill } from "react-icons/ri";
-import { MdOutlineLocationCity } from "react-icons/md";
-import "rc-tooltip/assets/bootstrap_white.css";
-import * as MapVariables from "./Map/variables";
+import axios from "axios";
 import moment from "moment";
-import HomeApis from "../../config/homepageApis.json";
+import "rc-tooltip/assets/bootstrap_white.css";
+import React, { useContext, useEffect, useState } from "react";
+import { MdOutlineLocationCity } from "react-icons/md";
+import styled from "styled-components";
+import { ThemeContext } from "../../config/context";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import { useQuery } from "../../hooks/useQuery";
+import { useWebQuery } from "../../hooks/useWebQuery";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import { Card } from "../../styles-components/Cards";
 import { SelectBox, SelectBoxLabel } from "../../styles-components/SelectBox";
-import styled from "styled-components";
-import { IconButton } from "../../styles-components/Button";
-import { ThemeContext } from "../../config/context";
-import { useQuery } from "../../hooks/useQuery";
-import { ThemeColorIdentifier } from "../../helper-function/themeColor";
-import MapViewButtonChangeGroup from "./MapViewButtonChangeGroup";
-import { useWindowSize } from "../../hooks/useWindowSize";
-import axios from "axios";
-import { useWebQuery } from "../../hooks/useWebQuery";
 import { StartupType } from "./index";
+import MapViewButtonChangeGroup from "./MapViewButtonChangeGroup";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;
@@ -129,10 +123,10 @@ function ViewChangerComponent({
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
+    const obj = startUpTypes.filter((item: any) => item.index == value);
     setSelectedStartupType(value);
-    // fetchStartUpCount(`${BASE_URL}/startup/startupCount/` + value);
     setSelectedStartupTypeIndex(value);
-    setStartupType(startUpTypes[value]);
+    setStartupType(obj[0]);
 
     if (!appliedFilters.states[0]) {
       fetchInitialCount(value, selectedDateRange);
@@ -169,12 +163,22 @@ function ViewChangerComponent({
     try {
       // create and get api url
       let url = apiUrl(dateRange);
-
+      let data;
+      let key;
       // get data from api call
-      const { data } = await axios.get(url);
-
+      if(startupType != 8){
+        const { data: response } = await axios.get(url);
+        data = response;
+        key = startupTypeValues[startupType];
+      }else{
+        const { data: response } = await axios.get('home/leadingsector');
+        data = response;
+        key = "count";
+      }
+      
+console.log("data=====", data, key)
       // fetch data according to index key
-      let key = startupTypeValues[startupType];
+     
 
       //setting up data in state
       if (data[key]) {
@@ -184,12 +188,12 @@ function ViewChangerComponent({
       } else {
         setNewCount(0);
       }
-      
-      if (data[key] && data[key] > 0 ) {
+
+      if (data[key] && data[key] > 0) {
         setDateRangeCount(true);
-      }else if(startupType == 0 && startupCount > 0){
+      } else if (startupType == 0 && startupCount > 0) {
         setDateRangeCount(true);
-      } else {        
+      } else {
         setDateRangeCount(false);
       }
     } catch (error) {}
@@ -243,25 +247,34 @@ function ViewChangerComponent({
   // };
 
   useEffect(() => {
-    if(activeCard !== "Startups"){
+    if (activeCard !== "Startups") {
       setNewCount(startupCount);
+      setDateRangeCount(true);
+    } else {
+      setStartupType({
+        index: "0",
+        text: "All Startups",
+      });
     }
   }, [activeCard]);
 
-  useEffect(() => {   
+  useEffect(() => {
     if (selectedStartTypeIndex == 0) {
       setNewCount(startupCount);
-      if(startupCount > 0){
+      if (startupCount > 0) {
         setDateRangeCount(true);
-      }else{
+      } else {
         setDateRangeCount(false);
       }
-           
-    }else{
+    } else {
       fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
     }
-    
-  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id"), startupCount]);
+  }, [
+    appliedFilters.states,
+    selectedStartTypeIndex,
+    query.get("id"),
+    startupCount,
+  ]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
@@ -333,9 +346,14 @@ function ViewChangerComponent({
                 marginBottom="20px"
                 onChange={startTypeChange}
               >
-                
-                {startUpTypes.map((item: any, index:number) => (
-                  <option key={item.index} value={item.index} selected={activeCard !== "Startups" && index === 0 ? true : false }>
+                {startUpTypes.map((item: any, index: number) => (
+                  <option
+                    key={item.index}
+                    value={item.index}
+                    selected={
+                      activeCard !== "Startups" && index === 0 ? true : false
+                    }
+                  >
                     {item.text}
                   </option>
                 ))}

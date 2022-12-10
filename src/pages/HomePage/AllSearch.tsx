@@ -1,15 +1,12 @@
 import * as React from "react";
-import {
-  SearchBarWrapper,
-  SpanIcon,
-  SearchBarInput,
-} from "../../styles-components/SearchBar";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 import styled, { ThemeContext } from "styled-components";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
-import { Actions, current } from "@reduxjs/toolkit";
-import { useHistory } from "react-router-dom";
-import { arrayBuffer } from "stream/consumers";
+import {
+  SearchBarInput, SearchBarWrapper,
+  SpanIcon
+} from "../../styles-components/SearchBar";
 const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
 export interface SearchBarTypes {

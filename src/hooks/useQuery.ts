@@ -13,23 +13,13 @@ export function useQuery(apiUrl: string, type: any = "get") {
   const fetch = async (url: string) => {
     setLoading(true);
     try {
-      if (type === "post") {
-        let apiURL = url ? url : apiUrl;
-        const response = await axios.post(apiURL);
-        if (response.data) {         
-          setState(response.data);
-        } else {
-          setState([]);
-        }
+      const response = await axios({
+        url: url ? url : apiUrl,
+      });
+      if (response.data) {
+        setState(response.data);
       } else {
-        const response = await axios({
-          url: url ? url : apiUrl,
-        });
-        if (response.data) {        
-          setState(response.data);
-        } else {
-          setState([]);
-        }
+        setState([]);
       }
     } catch (error) {
       setState([]);
