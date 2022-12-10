@@ -78,12 +78,6 @@ const INITIAL_FILTER_STATE = {
   registrationTo: "",
 };
 
-const INITIAL_DISTRICT_STATISTICS = {
-  from: "2015-01-10",
-  to: "2022-01-01",
-  data: [],
-};
-
 export interface StartupType {
   index: string;
   text: string;
@@ -146,26 +140,7 @@ const HomePage = (props: HomePageTypes) => {
     }
   );
 
-  const addIdNameText = (data: any) => {
-    data = data.data.map((i: any) => {
-      i.name = i.state ? i.state : "";
-      i.text = i.state ? i.state : "";
-      i.id = i.stateId ? i.stateId : "";
-      return i;
-    });
-    return data;
-  };
-  // const tableState = addIdNameText(statisticsData);
-
-  // const tableState = useMemo(()=>{
-  //   const result = statisticsData.data.map((i: any) => {
-  //     i.name = i.state ? i.state : "";
-  //     i.text = i.state ? i.state : "";
-  //     i.id = i.stateId ? i.stateId : "";
-  //     return i;
-  //   });
-  //   return result;
-  // },[statisticsData]);
+  
 
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
 
@@ -197,37 +172,10 @@ const HomePage = (props: HomePageTypes) => {
 
   const theme = useContext(ThemeContext);
 
-  // const [getCounts, countState, countLoading] = useQuery(
-  //   HomePageApi.countBlockEndPoint
-  // );
   const [fetchDateRange, dateRangeState, dateRangeLoading] = useQuery(
     "/static/searchDateRanges"
   );
-
-  const countWrrapper = (data: any[]) => {
-    const obj = new CountBlockModel();
-    const findIndex = (countType: string) =>
-      data.findIndex((item) => item.id === countType);
-    obj.Investor = data[findIndex("Investor")]
-      ? data[findIndex("Investor")].value
-      : 0;
-    obj.Startup = data[findIndex("Startup")]
-      ? data[findIndex("Startup")].value
-      : 0;
-    obj.Incubator = data[findIndex("Incubator")]
-      ? data[findIndex("Incubator")].value
-      : 0;
-    obj.Mentor = data[findIndex("Mentor")]
-      ? data[findIndex("Mentor")].value
-      : 0;
-    obj.Accelerator = data[findIndex("Accelerator")]
-      ? data[findIndex("Accelerator")].value
-      : 0;
-    obj.GovernmentBody = data[findIndex("GovernmentBody")]
-      ? data[findIndex("GovernmentBody")].value
-      : 0;
-    return obj;
-  };
+ 
 
   const fetchDefaultFilterValues = (value: string) => {
     let split = ["", ""];
@@ -242,9 +190,6 @@ const HomePage = (props: HomePageTypes) => {
     fetchFilterList(body);
   };
 
-  // useEffect(() => {
-  //   fetchCounts();
-  // }, [appliedFilters])
   const dispatch = useDispatch();
   const changeTheme = (themeInfo: string) => {
     setPrimaryColorTheme(themeInfo);

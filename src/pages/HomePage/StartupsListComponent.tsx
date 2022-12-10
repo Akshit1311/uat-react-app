@@ -1,18 +1,17 @@
-import { FaMapMarkerAlt } from "react-icons/fa";
 import React, { useContext, useEffect, useState } from "react";
-import SearchBarComponent from "../../components/SearchBarComponent";
-import { Badge } from "../../styles-components/Badge";
-import "../../scss/HomePageStyles/startupsListComponent.scss";
-import DisabledMap from "./Map/DisabledMap";
-import styled from "styled-components";
-import { ThemeContext } from "../../config/context";
-import { useMutate } from "../../hooks/useMutate";
-import UserDefault from "../../assets/unknown.png";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import MoonLoader from "react-spinners/MoonLoader";
-import { States } from "./Map/states";
-import { useWindowSize } from "../../hooks/useWindowSize";
+import styled from "styled-components";
+import UserDefault from "../../assets/unknown.png";
+import SearchBarComponent from "../../components/SearchBarComponent";
+import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
-import axios from "axios";
+import { useMutate } from "../../hooks/useMutate";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import "../../scss/HomePageStyles/startupsListComponent.scss";
+import { Badge } from "../../styles-components/Badge";
+import DisabledMap from "./Map/DisabledMap";
+import { States } from "./Map/states";
 
 const StartUpCardContainer = styled.div`
   background: ${(props) => props.theme.bgCards};
@@ -328,7 +327,7 @@ function StartupsListComponent(props: any) {
           </div>
         )}
       </StartUpCardContainer>
-      <div className="ps-4 disabled-map">
+      <div className="ps-4 disabled-map" style={{height:'64vh'}}>
         <DisabledMap
           startupType={props.startupType}
           mapViewResource={props.mapViewResource}

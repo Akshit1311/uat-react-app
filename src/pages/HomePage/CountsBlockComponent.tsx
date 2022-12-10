@@ -165,7 +165,7 @@ const CountCard = ({
       {!loading && (
         <div
           className=" d-flex flex-column h-100 justify-content-between"
-          style={{ padding: "0.83rem", paddingRight: 0 }}
+          style={{ padding: "0.83rem", alignItems: "start" }}
         >
           <h4
             className="m-0 p-0 count-number"
@@ -237,8 +237,15 @@ const CountsBlockComponent = ({
 
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
   const query = useWebQuery();
-
+  let cancelToken: any;
   const fetchCounts = async () => {
+       //Check if there are any previous pending requests
+       if (typeof cancelToken != typeof undefined) {
+        cancelToken.cancel("Operation canceled due to new request.")
+      }
+  
+      //Save the cancel token for the current request
+      cancelToken = axios.CancelToken.source()
     try {
       const { data } = await axios.post(`${BASE_URL}/home/topNumbers`, {
         ...appliedFilters,
@@ -253,63 +260,24 @@ const CountsBlockComponent = ({
           "Incubator",
           "Accelerator",
         ],
-      });
-
-      // const getCountsById = (id: string) =>
-      //   data.find((i: any) =>  i._id.Role === id);
+      }, { cancelToken: cancelToken.token });
 
       const count: any = new CountBlockModel();
-
-      // count = {}
 
       Object.keys(data).forEach((item: string) => {
         count[item] = data[item];
       });
-
-      // count.Incubator = getCountsById("Incubator")
-      //   ? getCountsById("Incubator").count
-      //   : 0;
-      // count.Mentor = getCountsById("Mentor")
-      //   ? getCountsById("Mentor").count
-      //   : 0;
-      // count.Accelerator = getCountsById("Accelerator")
-      //   ? getCountsById("Accelerator").count
-      //   : 0;
-      // count.Startup = getCountsById("Startup")
-      //   ? getCountsById("Startup").count
-      //   : 0;
-      // count.GovernmentBody = getCountsById("GovernmentBody")
-      //   ? getCountsById("GovernmentBody").count
-      //   : 0;
-      // count.Investor = getCountsById("Investor")
-      //   ? getCountsById("Investor").count
-      //   : 0;
       setStateCounts(count);
       setStartupCount(count.Startup);
     } catch (error) {}
   };
 
-  const filterStateCounts = () => {
-    const state = tableState.data
-      ? tableState.data.find(
-          (item: any) =>
-            item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
-        )
-      : undefined;
-    if (state) {
-      const count = new CountBlockModel();
-      count.Incubator = state.statistics.Incubator;
-      count.Mentor = state.statistics.Mentor;
-      count.Accelerator = state.statistics.Accelerator;
-      count.Startup = state.statistics.Startup;
-      count.GovernmentBody = state.statistics.GovernmentBody;
-      count.Investor = state.statistics.Investor;
-      setStateCounts(count);
-    }
-  };
-
   useEffect(() => {
-    fetchCounts();
+    const delayDebounceFn = setTimeout(() => {
+    fetchCounts(); }, 1000);
+    return () => {
+      clearTimeout(delayDebounceFn);
+    };
   }, [appliedFilters]);
 
   useEffect(() => {

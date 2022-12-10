@@ -1,25 +1,19 @@
-import { Input } from "reactstrap";
-import React, { useContext, useEffect, useState } from "react";
-import { IoMapSharp } from "react-icons/io5";
-import { RiDropFill } from "react-icons/ri";
-import { MdOutlineLocationCity } from "react-icons/md";
-import "rc-tooltip/assets/bootstrap_white.css";
-import * as MapVariables from "./Map/variables";
+import axios from "axios";
 import moment from "moment";
-import HomeApis from "../../config/homepageApis.json";
+import "rc-tooltip/assets/bootstrap_white.css";
+import React, { useContext, useEffect, useState } from "react";
+import { MdOutlineLocationCity } from "react-icons/md";
+import styled from "styled-components";
+import { ThemeContext } from "../../config/context";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import { useQuery } from "../../hooks/useQuery";
+import { useWebQuery } from "../../hooks/useWebQuery";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import { Card } from "../../styles-components/Cards";
 import { SelectBox, SelectBoxLabel } from "../../styles-components/SelectBox";
-import styled from "styled-components";
-import { IconButton } from "../../styles-components/Button";
-import { ThemeContext } from "../../config/context";
-import { useQuery } from "../../hooks/useQuery";
-import { ThemeColorIdentifier } from "../../helper-function/themeColor";
-import MapViewButtonChangeGroup from "./MapViewButtonChangeGroup";
-import { useWindowSize } from "../../hooks/useWindowSize";
-import axios from "axios";
-import { useWebQuery } from "../../hooks/useWebQuery";
 import { StartupType } from "./index";
+import MapViewButtonChangeGroup from "./MapViewButtonChangeGroup";
 
 interface ViewChangerComponentsTypes {
   mapViewResources: any;

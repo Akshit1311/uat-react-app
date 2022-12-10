@@ -51,7 +51,7 @@ function App() {
     require("./scss/theme/lightTheme.scss");
   }, []);
   return (
-    <div data-theme={themeName} style={{ height: "100vh" }}>
+    <div data-theme={themeName} >
       <ReduxProvider store={store}>
         <MaterialUiThemeProvider theme={myTheme}>
           <ThemeProvider theme={theme}>

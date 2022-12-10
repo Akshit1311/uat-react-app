@@ -1,12 +1,12 @@
 import moment from "moment";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { StartupTypesKeys } from "../../config/Constants";
 import { ThemeContext } from "../../config/context";
 import { StateBorders } from "../../config/countryMap";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import { useMutate } from "../../hooks/useMutate";
 import { ConfigState } from "../../store/config";
-import { StartupTypesKeys } from "../../config/Constants";
 
 interface MapProps {
   stateId: string | null;
