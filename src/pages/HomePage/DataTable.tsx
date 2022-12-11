@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useMemo } from "react";
-import SearchBarComponent from "../../components/SearchDataTable";
-import styled from "styled-components";
-import { ThemeContext } from "../../config/context";
-import DataTable from "../../components/DataTable";
-import { useQuery } from "../../hooks/useQuery";
 import TableContainer from "../../components/ReactTable/TableContainer";
+import { ThemeContext } from "../../config/context";
 
 const startupLoops: any[] = [
   "Startup",

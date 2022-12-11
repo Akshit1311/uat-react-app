@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import "../../scss/HomePageStyles/countBlockComponent.scss";
-import { IDType } from "./Map/variables";
-import HomePageApi from "../../config/homepageApis.json";
-import styled from "styled-components";
-import MoonLoader from "react-spinners/MoonLoader";
 import { css } from "@emotion/react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import MoonLoader from "react-spinners/MoonLoader";
+import styled from "styled-components";
+import { CountBlockModel } from ".";
 import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
-import { H5 } from "../../styles-components/Heading";
-import { CountBlockModel } from ".";
-import { useWindowSize } from "../../hooks/useWindowSize";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
 import { useWebQuery } from "../../hooks/useWebQuery";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import "../../scss/HomePageStyles/countBlockComponent.scss";
+import { H5 } from "../../styles-components/Heading";
+import { IDType } from "./Map/variables";
 
 const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
@@ -29,7 +28,7 @@ interface CountBlockTypes {
   setStateViewMap: React.Dispatch<boolean>;
   activeCard: string;
   setActiveCard: any;
-  startupType: any
+  startupType: any;
 }
 
 interface CountCardTypes {
@@ -166,7 +165,7 @@ const CountCard = ({
       {!loading && (
         <div
           className=" d-flex flex-column h-100 justify-content-between"
-          style={{ padding: "0.83rem", paddingRight: 0 }}
+          style={{ padding: "0.83rem", alignItems: "start" }}
         >
           <h4
             className="m-0 p-0 count-number"
@@ -216,7 +215,7 @@ const CountsBlockComponent = ({
   setStateViewMap,
   activeCard,
   setActiveCard,
-  startupType
+  startupType,
 }: CountBlockTypes) => {
   const theme = useContext(ThemeContext);
   const history = useHistory();
@@ -238,8 +237,15 @@ const CountsBlockComponent = ({
 
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
   const query = useWebQuery();
-
+  let cancelToken: any;
   const fetchCounts = async () => {
+       //Check if there are any previous pending requests
+       if (typeof cancelToken != typeof undefined) {
+        cancelToken.cancel("Operation canceled due to new request.")
+      }
+  
+      //Save the cancel token for the current request
+      cancelToken = axios.CancelToken.source()
     try {
       const { data } = await axios.post(`${BASE_URL}/home/topNumbers`, {
         ...appliedFilters,
@@ -254,72 +260,28 @@ const CountsBlockComponent = ({
           "Incubator",
           "Accelerator",
         ],
-      });
-
-    
-      // const getCountsById = (id: string) =>
-      //   data.find((i: any) =>  i._id.Role === id);
+      }, { cancelToken: cancelToken.token });
 
       const count: any = new CountBlockModel();
-
-      // count = {}
 
       Object.keys(data).forEach((item: string) => {
         count[item] = data[item];
       });
-
-      // count.Incubator = getCountsById("Incubator")
-      //   ? getCountsById("Incubator").count
-      //   : 0;
-      // count.Mentor = getCountsById("Mentor")
-      //   ? getCountsById("Mentor").count
-      //   : 0;
-      // count.Accelerator = getCountsById("Accelerator")
-      //   ? getCountsById("Accelerator").count
-      //   : 0;
-      // count.Startup = getCountsById("Startup")
-      //   ? getCountsById("Startup").count
-      //   : 0;
-      // count.GovernmentBody = getCountsById("GovernmentBody")
-      //   ? getCountsById("GovernmentBody").count
-      //   : 0;
-      // count.Investor = getCountsById("Investor")
-      //   ? getCountsById("Investor").count
-      //   : 0;
       setStateCounts(count);
       setStartupCount(count.Startup);
     } catch (error) {}
   };
 
-  const filterStateCounts = () => {
-    const state = tableState.data
-      ? tableState.data.find(
-          (item: any) =>
-            item.text.toLowerCase() === selectedStateByMap.name.toLowerCase()
-        )
-      : undefined;
-    if (state) {
-      const count = new CountBlockModel();
-      count.Incubator = state.statistics.Incubator;
-      count.Mentor = state.statistics.Mentor;
-      count.Accelerator = state.statistics.Accelerator;
-      count.Startup = state.statistics.Startup;
-      count.GovernmentBody = state.statistics.GovernmentBody;
-      count.Investor = state.statistics.Investor;
-      setStateCounts(count);
-    }
-  };
-
-  // useEffect(() => {
-  //   filterStateCounts();
-  // }, [selectedStateByMap, tableState]);
-
   useEffect(() => {
-    fetchCounts();
+    const delayDebounceFn = setTimeout(() => {
+    fetchCounts(); }, 1000);
+    return () => {
+      clearTimeout(delayDebounceFn);
+    };
   }, [appliedFilters]);
 
   useEffect(() => {
-    if(startupType?.index !== 0 && activeCard !== "Startups"){
+    if (startupType?.index !== 0 && activeCard !== "Startups") {
       handleCardClick("Startups", "Startup");
     }
   }, [startupType]);
@@ -334,12 +296,12 @@ const CountsBlockComponent = ({
     if (value === "government") return "theme-7";
   };
 
-  const handleCardClick = (name: string, accessor: string) => {   
+  const handleCardClick = (name: string, accessor: string) => {
     applyRoles(accessor, name);
     setActiveCard(name);
     setPrimaryColorTheme(getThemeName(name));
   };
-  
+
   const resources = {
     activeCard,
     handleCardClick,
