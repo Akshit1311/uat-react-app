@@ -436,18 +436,8 @@ function IndiaMap({
   };
 
   useEffect(() => {
-    if (
-      mapMode.id === MapVariables.DISTRICT.id &&
-      allIndiaDistrictData?.from === ""
-    ) {
-      const delayDebounceFn1 = setTimeout(() => {
-        getAllIndiaDistrictData();
-      }, 1000);
-      return () => {
-        clearTimeout(delayDebounceFn1);
-      };
-    }
-  }, [mapMode.id]);
+    getAllIndiaDistrictData();
+  }, []);
 
   const getStatistics = (id: any) => {
     return districtMappingByKey[id];
