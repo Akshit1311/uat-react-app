@@ -282,7 +282,7 @@ const HomePage = (props: HomePageTypes) => {
     //   setSelectedCountBlock(queryCountBlock)
     // } else setSelectedCountBlock('Startup')
   }, [query.get("state"), query.get("id")]);
-  console.log("stateViewMode", stateViewMode);
+ 
   return (
     <>
       <div
@@ -387,6 +387,8 @@ const HomePage = (props: HomePageTypes) => {
                           colorTheme={primaryColorTheme}
                           startupType={startupType}
                           data={districtStatistics}
+                          role={appliedFilters.roles[0]}
+                          dateRangeCount={dateRangeCount}
                         />
                       )}
                     </div>

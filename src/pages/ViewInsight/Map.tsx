@@ -31,8 +31,6 @@ export default function Map({ stateId }: MapProps) {
 
   const [type, setType] = useState("Startups");
 
-  console.log('tableState',tableState)
-
   useEffect(() => {
     const value: any = ThemeColorToType(config.colorTheme);
     setType(value);
@@ -88,8 +86,7 @@ export default function Map({ stateId }: MapProps) {
       let stateValue: any;
       // if (accessor == "Startup") {
       //   const key = StartupTypesKeys[type];
-        stateValue = tableState.data[findStateIndex].statistics[type];
-        console.log('tableState 2', tableState.data[findStateIndex].statistics[type], type)
+        stateValue = tableState.data[findStateIndex].statistics[type];       
       // } else {
       //   stateValue = tableState.data[findStateIndex].statistics[accessor];
       //   console.log('tableState 3', tableState.data[findStateIndex])

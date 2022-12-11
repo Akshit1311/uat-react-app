@@ -92,6 +92,7 @@ const CountCard = ({
     if (count === 0) {
       setCurrentCount(0);
     }
+    
     if (count && count > currentCount) {
       let interval: any;
       if (currentCount < count) {
@@ -101,10 +102,10 @@ const CountCard = ({
               return count;
             }
             if (count > 1000) {
-              return prevState + 500;
+              return prevState + 1000;
             }
             if (count < 1000 && count > 500) {
-              return prevState + 10;
+              return prevState + 200;
             }
             return prevState + 1;
           });
