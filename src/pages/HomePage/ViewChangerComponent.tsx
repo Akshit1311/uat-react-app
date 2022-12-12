@@ -174,9 +174,7 @@ function ViewChangerComponent({
         const { data: response } = await axios.get('home/leadingsector');
         data = response;
         key = "count";
-      }
-      
-console.log("data=====", data, key)
+      }      
       // fetch data according to index key
      
 
@@ -198,53 +196,6 @@ console.log("data=====", data, key)
       }
     } catch (error) {}
   };
-
-  // const fetchCount = async (dateRange: string) => {
-  //   try {
-  //     // if (query.get("id")) {
-  //       console.log("value++++", dateRange.split('/'));
-  //       const mainUrl = `/startup/startupCount/state/id/${query.get(
-  //         "id"
-  //       )}/${selectedStartTypeIndex}/${dateRange}`;
-  //       const { data } = await axios.get(mainUrl);
-
-  //       // startupTypeKeywordMap
-  //       setNewCount(data);
-  //       if (data > 0) {
-  //         setDateRangeCount(true);
-  //       } else {
-  //         setDateRangeCount(false);
-  //       }
-  //     // }
-  //   } catch (error) {}
-  // };
-
-  // const fetchCountByBadges = async () => {
-  //   try {
-  //     const { data } = await axios.post(`${BASE_URL}/startup/v2/filter`, {
-  //       ...appliedFilters,
-  //       roles: [
-  //         "Startup",
-  //         "Mentor",
-  //         "Investor",
-  //         "GovernmentBody",
-  //         "Incubator",
-  //         "Accelerator",
-  //       ],
-  //     });
-
-  //     if (data && data.counts.length == 0) {
-  //       setNewCount(data);
-  //       if (data > 0) {
-  //         setDateRangeCount(true);
-  //       } else {
-  //         setDateRangeCount(false);
-  //       }
-  //     }else{
-  //       fetchInitialCount(selectedStartTypeIndex);
-  //     }
-  //   } catch (error) {}
-  // };
 
   useEffect(() => {
     if (activeCard !== "Startups") {

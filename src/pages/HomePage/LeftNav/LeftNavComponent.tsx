@@ -168,14 +168,21 @@ const LeftNavComponent = (props: any) => {
       ...prevState,
       states: stateIdsForAPiRequest,
     }));
-    const area = {
-      id: selectedState[0].id,
-      stateName: selectedState[0].value,
-    };
-    setSelectedArea(area);
-    setExpanded(false);
-    history.push(`${baseRoute}/maps/?id=${area.id}&state=${area.stateName}`);
-    closeModal();
+
+    if(selectedState.length > 0){
+      const area = {
+        id: selectedState[0].id,
+        stateName: selectedState[0].value,
+      };
+      setSelectedArea(area);
+      setExpanded(false);
+      history.push(`${baseRoute}/maps/?id=${area.id}&state=${area.stateName}`);
+      closeModal();
+    }else{
+      setExpanded(false);
+      history.push(`${baseRoute}/maps/`);
+    }
+    
     
   };
 
