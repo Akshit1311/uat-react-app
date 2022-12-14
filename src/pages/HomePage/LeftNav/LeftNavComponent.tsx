@@ -20,7 +20,6 @@ import { useHistory } from "react-router-dom";
 import SearchBar from "../AllSearch";
 import ViewInsight from "../ViewInsight";
 
-
 const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
 const ResetButton = styled.button(
@@ -169,7 +168,7 @@ const LeftNavComponent = (props: any) => {
       states: stateIdsForAPiRequest,
     }));
 
-    if(selectedState.length > 0){
+    if (selectedState.length > 0) {
       const area = {
         id: selectedState[0].id,
         stateName: selectedState[0].value,
@@ -178,12 +177,10 @@ const LeftNavComponent = (props: any) => {
       setExpanded(false);
       history.push(`${baseRoute}/maps/?id=${area.id}&state=${area.stateName}`);
       closeModal();
-    }else{
+    } else {
       setExpanded(false);
       history.push(`${baseRoute}/maps/`);
     }
-    
-    
   };
 
   const handleSectorClick = (sectorObj: any) => {
@@ -288,7 +285,7 @@ const LeftNavComponent = (props: any) => {
   };
 
   const handleBadgesClick = (badges: any) => {
-    const badgesIndex = findSelectedIndex(selectedBadges, badges);    
+    const badgesIndex = findSelectedIndex(selectedBadges, badges);
     if (badgesIndex !== -1) {
       return setSelectedBadges((prevState: any) => {
         const newsBadges = [...prevState];
@@ -384,11 +381,11 @@ const LeftNavComponent = (props: any) => {
     setSelectedArea(MapVariables.INDIA);
     history.push(baseRoute + "/maps/");
     setStateViewMode(false);
-    setSelectedState([])
+    setSelectedState([]);
     setSelectedSector([]);
     setSelectedIndustry([]);
     setSelectedStages([]);
-    setSelectedStages([])
+    setSelectedStages([]);
   };
 
   const isResetFilterVisible =
@@ -679,6 +676,7 @@ const LeftNavComponent = (props: any) => {
             <ViewInsight
               colorTheme={colorTheme}
               viewInsightUrl={viewInsightUrl}
+              selectedState={selectedState}
             />
           )}
         </div>

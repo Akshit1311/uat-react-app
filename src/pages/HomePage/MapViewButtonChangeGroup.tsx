@@ -113,7 +113,7 @@ export default function MapViewChangeButtonGroup(props: any) {
           </MuiToolTip>
           {!props.stateViewMode ? ( //props.activeCard === "Startups" && 
             <>
-              <MuiToolTip
+              {/* <MuiToolTip
                 placement="top"
                 title={cityText}
                 arrow
@@ -139,7 +139,7 @@ export default function MapViewChangeButtonGroup(props: any) {
                     size={18}
                   />
                 </IconButton>
-              </MuiToolTip>
+              </MuiToolTip> */}
               <MuiToolTip
                 placement="top"
                 title={districtText}
@@ -175,7 +175,7 @@ export default function MapViewChangeButtonGroup(props: any) {
             <></>
           )}
         </div>
-        {!props.stateViewMode ? (
+        {/* {!props.stateViewMode ? (
           <div>
             <MuiToolTip
               placement="top"
@@ -207,7 +207,7 @@ export default function MapViewChangeButtonGroup(props: any) {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </div>
     </div>
   );
