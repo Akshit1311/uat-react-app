@@ -317,8 +317,8 @@ function StartupsListComponent(props: any) {
           }}
           className="my-4 data-table-view-more-button text-theme"
           onClick={handleViewMore}
-        >
-          {queryString.length > 0 ? "View All" : "View More"}
+        >         
+          {queryString.length > 0 ? "View All" : tagsState.length < 9 ? "" :"View More"}
         </div>
         </div>
         {tagsLoading && (

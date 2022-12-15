@@ -52,6 +52,8 @@ export interface StateViewProps {
   startupType: any;
   data: StatisticsDataMainObj;
   setStateViewMode: any;
+  role: string;
+  dateRangeCount: boolean
 }
 
 const MapWrapper = styled.div`
@@ -64,6 +66,8 @@ export default function StateView({
   startupType,
   data,
   setStateViewMode,
+  role,
+  dateRangeCount
 }: StateViewProps) {
   const theme = useContext(ThemeContext);
   const componentProps = {
@@ -92,12 +96,18 @@ export default function StateView({
 
   const findMaximumValue = () => {
     let max = 0;
+    let key:any = '';
+    if(role !== 'Startup'){
+      key = role
+    }else{
+      key = StartupTypesKeys[startupType.text]
+    }
     if (Array.isArray(data.data)) {
       data.data.forEach((district: any) => {
-        const value = district.statistics[StartupTypesKeys[startupType.text]];        
+        const value = district.statistics[key];        
         if (!value) {
           const case1Value =
-            district.statistics[StartupTypesKeys[startupType.text]];
+            district.statistics[key];
           max = case1Value > max ? case1Value : max;
         } else {
           max = value > max ? value : max;
@@ -123,19 +133,26 @@ export default function StateView({
     if (value < 0.9) return value + 0.1;
     else return value;
   };
+ 
 
-  const getColorOpacity = (districtName: string) => {
+  const getColorOpacity = (districtName: string, accessor: string) => {
     const maxValue = findMaximumValue();
-    const statistics: any = getStatistics(districtName);    
-    if (statistics && maxValue) {
-      const startupTypeLocal: string = startupType.text;
+    const statistics: any = getStatistics(districtName); 
+    let key:any = '';
+    if(accessor !== 'Startup'){
+      key = accessor
+    }else{
+      key = StartupTypesKeys[startupType.text]
+    }
+     
+    if (statistics && maxValue) {      
       if (
-        Number(statistics.statistics[StartupTypesKeys[startupTypeLocal]]) === 0
+        Number(statistics.statistics[key]) === 0
       ) {
         return 0;
       }
-      const val = StartupTypesKeys[startupTypeLocal]
-        ? StartupTypesKeys[startupTypeLocal]
+      const val = key
+        ? key
         : "Startup";
 
         
@@ -146,17 +163,22 @@ export default function StateView({
     return 0;
   };
 
-  const getCount = (districtName: string) => {
+  const getCount = (districtName: string, accessor: string) => {
     const statistics: any = getStatistics(districtName);
     if (statistics) {
-      const startupTypeLocal: string = startupType.text;
+      let key:any = '';
+      if(accessor !== 'Startup'){
+        key = accessor
+      }else{
+        key = StartupTypesKeys[startupType.text]
+      }
       if (
-        Number(statistics.statistics[StartupTypesKeys[startupTypeLocal]]) === 0
+        Number(statistics.statistics[key]) === 0
       ) {
         return 0;
       }
-      const val = StartupTypesKeys[startupTypeLocal]
-        ? StartupTypesKeys[startupTypeLocal]
+      const val = key
+        ? key
         : "Startup";
 
       
@@ -242,7 +264,7 @@ export default function StateView({
           return state.id === selectedArea;
         }).map((state: any, index: number) =>
           state.path.map((district: DistrictBorderType) => {
-            let counts: number = getCount(district.name);
+            let counts: number = getCount(district.name, role);
             return (
               <MuiToolTip
                 placement="top"
@@ -257,7 +279,7 @@ export default function StateView({
                   stroke="black"
                   fill={ThemeColorIdentifier(colorTheme)}
                   strokeWidth={"1"}
-                  fillOpacity={getColorOpacity(district.name)}
+                  fillOpacity={getColorOpacity(district.name,role)}
                   d={district.d}
                 />
               </MuiToolTip>

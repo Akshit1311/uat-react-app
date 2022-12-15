@@ -87,6 +87,7 @@ function ViewChangerComponent({
     activeCard,
     fetchTableData,
     setDateRangeCount,
+    setStartupCount,
     startupCount,
   } = mapViewResources;
 
@@ -96,12 +97,13 @@ function ViewChangerComponent({
 
   const [newCount, setNewCount] = useState<number>(startupCount);
   const [selectedStartTypeIndex, setSelectedStartupTypeIndex] =
-    useState<number>(0);
+    useState<number>(1);
 
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
   );
-  const [fetchStartUpCount, countState, countLoading] = useQuery("");
+  const [fetchStartUpCount, countState, countLoading] =
+    useQuery("home/startupCounts");
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
@@ -127,7 +129,6 @@ function ViewChangerComponent({
     setSelectedStartupType(value);
     setSelectedStartupTypeIndex(value);
     setStartupType(obj[0]);
-
     if (!appliedFilters.states[0]) {
       fetchInitialCount(value, selectedDateRange);
     }
@@ -139,8 +140,15 @@ function ViewChangerComponent({
   };
 
   useEffect(() => {
+    if (countState["dpiitCertified"]) {
+      setNewCount(countState["dpiitCertified"]);
+    }
+  }, [countState]);
+
+  useEffect(() => {
     fetchDateRange();
     fetchStartUpTypes();
+    fetchStartUpCount();    
     // fetchInitialCount(0);
   }, []);
 
@@ -166,27 +174,24 @@ function ViewChangerComponent({
       let data;
       let key;
       // get data from api call
-      if(startupType != 8){
+      if (startupType != 8) {
         const { data: response } = await axios.get(url);
         data = response;
         key = startupTypeValues[startupType];
-      }else{
-        const { data: response } = await axios.get('home/leadingsector');
+      } else {
+        const { data: response } = await axios.get("home/leadingsector");
         data = response;
         key = "count";
       }
-      
-console.log("data=====", data, key)
       // fetch data according to index key
-     
 
       //setting up data in state
       if (data[key]) {
-        setNewCount(data[key]);
+        setNewCount(data[key]);       
       } else if (startupType == 0) {
         // setNewCount(startupCount);
       } else {
-        setNewCount(0);
+        setNewCount(0);        
       }
 
       if (data[key] && data[key] > 0) {
@@ -199,68 +204,29 @@ console.log("data=====", data, key)
     } catch (error) {}
   };
 
-  // const fetchCount = async (dateRange: string) => {
-  //   try {
-  //     // if (query.get("id")) {
-  //       console.log("value++++", dateRange.split('/'));
-  //       const mainUrl = `/startup/startupCount/state/id/${query.get(
-  //         "id"
-  //       )}/${selectedStartTypeIndex}/${dateRange}`;
-  //       const { data } = await axios.get(mainUrl);
-
-  //       // startupTypeKeywordMap
-  //       setNewCount(data);
-  //       if (data > 0) {
-  //         setDateRangeCount(true);
-  //       } else {
-  //         setDateRangeCount(false);
-  //       }
-  //     // }
-  //   } catch (error) {}
-  // };
-
-  // const fetchCountByBadges = async () => {
-  //   try {
-  //     const { data } = await axios.post(`${BASE_URL}/startup/v2/filter`, {
-  //       ...appliedFilters,
-  //       roles: [
-  //         "Startup",
-  //         "Mentor",
-  //         "Investor",
-  //         "GovernmentBody",
-  //         "Incubator",
-  //         "Accelerator",
-  //       ],
-  //     });
-
-  //     if (data && data.counts.length == 0) {
-  //       setNewCount(data);
-  //       if (data > 0) {
-  //         setDateRangeCount(true);
-  //       } else {
-  //         setDateRangeCount(false);
-  //       }
-  //     }else{
-  //       fetchInitialCount(selectedStartTypeIndex);
-  //     }
-  //   } catch (error) {}
-  // };
-
+  useEffect(()=>{    
+    if(selectedStartTypeIndex != 0){      
+      setStartupCount(newCount);
+    }    
+  },[newCount])
+  
   useEffect(() => {
     if (activeCard !== "Startups") {
       setNewCount(startupCount);
-      setDateRangeCount(true);
+      setDateRangeCount(true);   
+      setSelectedStartupTypeIndex(1)   
     } else {
       setStartupType({
-        index: "0",
-        text: "All Startups",
+        index: "1",
+        text: "DPIIT recognised startups",
       });
-    }
+      
+    }   
   }, [activeCard]);
 
   useEffect(() => {
     if (selectedStartTypeIndex == 0) {
-      setNewCount(startupCount);
+      setNewCount(startupCount);      
       if (startupCount > 0) {
         setDateRangeCount(true);
       } else {
@@ -276,6 +242,8 @@ console.log("data=====", data, key)
     startupCount,
   ]);
 
+  
+
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
     window.location.href = `https://www.startupindia.gov.in/content/sih/en/state-startup-policies/${stateToRedirect}-state-policy.html`;
@@ -290,6 +258,8 @@ console.log("data=====", data, key)
     activeCard,
     stateViewMode,
   };
+
+ 
 
   return (
     <div
@@ -337,23 +307,22 @@ console.log("data=====", data, key)
               {selectedArea.stateName.toUpperCase()} STARTUPS
             </h5>
             <div>
-              <SelectBoxLabel>Select Type</SelectBoxLabel>
+              <SelectBoxLabel>Select Startup Type</SelectBoxLabel>
               <SelectBox
                 colorTheme={colorTheme}
                 style={{
                   backgroundImage: getThemeDropDownImage(),
                 }}
                 marginBottom="20px"
+                value={selectedStartTypeIndex}
                 onChange={startTypeChange}
               >
+               
                 {startUpTypes.map((item: any, index: number) => (
                   <option
                     key={item.index}
-                    value={item.index}
-                    selected={
-                      activeCard !== "Startups" && index === 0 ? true : false
-                    }
-                  >
+                    value={item.index}                  
+                  >                  
                     {item.text}
                   </option>
                 ))}

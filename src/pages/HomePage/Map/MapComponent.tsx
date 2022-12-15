@@ -198,7 +198,7 @@ function IndiaMap({
 
   const [width, height] = useWindowSize();
   const MAP_AREA_INDIA = width > 768 ? "-200 0 1230 1006" : "-15 0 900 950";
-  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 1000" : "-30 0 800 800";
+  const MAP_AREA_BUBBLE = width > 768 ? "-200 0 1100 900" : "-30 0 800 800";
 
   const [activeStates, setActiveStates] = useState<any[]>([]);
   const [hoverStates, setHoverStates] = useState<MapType[]>([]);
@@ -252,7 +252,7 @@ function IndiaMap({
     accessor: string,
     maxValue: number
   ) => {
-    const findStateIndex = findCountTypeValue(stateId);
+    const findStateIndex = findCountTypeValue(stateId);   
 
     if (findStateIndex !== -1) {
       let stateValue: any;
@@ -460,13 +460,7 @@ function IndiaMap({
     }
     return 0;
   };
-  console.log(
-    "stateViewMode  render",
-    scaleBarVisible,
-    startupType,
-    mapViewResource,
-    countResource
-  );
+  
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
@@ -480,8 +474,9 @@ function IndiaMap({
         <svg
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
-              ? "-200 180 1579 1283"
-              : getViewBoxArea()
+              ? "-200 200 1350 1150"
+              : 
+              getViewBoxArea()
           }
           className="mt-c-5-2 safari-svg"
           aria-label="Map of India"
@@ -625,10 +620,11 @@ function IndiaMap({
                 appliedFilters.roles,
                 "district"
               );
-              if (stateCounts == 0) {
-                countStatus = 0;
-              } else {
+          
+              if (stateCounts && stateCounts > 0 ) {
                 countStatus = stateCounts;
+              } else {
+                countStatus = 0;
               }
               return (
                 <DistrictPath

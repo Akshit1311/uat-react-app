@@ -36,7 +36,7 @@ function DataTableComponent(props: any) {
         accessor: "statistics.Startup",
       },
       {
-        Header: "FFS",
+        Header: "Fund of Funds Scheme",
         accessor: "statistics.FFS",
       },
       {
