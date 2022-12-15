@@ -150,8 +150,8 @@ const HomePage = (props: HomePageTypes) => {
   );
 
   const [startupType, setStartupType] = useState<StartupType>({
-    index: "0",
-    text: "All Startups",
+    index: "1",
+    text: "DPIIT recognised startups",
   });
   const [fetchDistrict, districtStatistics, districtStatisticsLoading] =
     useQuery(
@@ -211,7 +211,7 @@ const HomePage = (props: HomePageTypes) => {
     setPrimaryColorTheme: changeTheme,
     colorTheme: primaryColorTheme,
     appliedFilters,
-    setStartupCount,
+    startupCount,
   };
 
   const mapViewResources = {
@@ -237,7 +237,8 @@ const HomePage = (props: HomePageTypes) => {
     fetchTableData,
     dateRangeCount,
     setDateRangeCount,
-    startupCount,
+    setStartupCount,
+    startupCount
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);

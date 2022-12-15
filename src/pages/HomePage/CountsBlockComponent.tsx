@@ -92,7 +92,7 @@ const CountCard = ({
     if (count === 0) {
       setCurrentCount(0);
     }
-    
+
     if (count && count > currentCount) {
       let interval: any;
       if (currentCount < count) {
@@ -175,7 +175,7 @@ const CountCard = ({
               visibility: windowWidth > 768 || active ? "visible" : "hidden",
             }}
           >
-            {currentCount}
+            {currentCount === 0 ? "-" : currentCount}
           </h4>
           <div>
             <h6
@@ -233,6 +233,7 @@ const CountsBlockComponent = ({
     setSelectedStateByMap,
     appliedFilters,
     setStartupCount,
+    startupCount,
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
 
@@ -240,52 +241,67 @@ const CountsBlockComponent = ({
   const query = useWebQuery();
   let cancelToken: any;
   const fetchCounts = async () => {
-       //Check if there are any previous pending requests
-       if (typeof cancelToken != typeof undefined) {
-        cancelToken.cancel("Operation canceled due to new request.")
-      }
-  
-      //Save the cancel token for the current request
-      cancelToken = axios.CancelToken.source()
+    //Check if there are any previous pending requests
+    if (typeof cancelToken != typeof undefined) {
+      cancelToken.cancel("Operation canceled due to new request.");
+    }
+
+    //Save the cancel token for the current request
+    cancelToken = axios.CancelToken.source();
     try {
-      const { data } = await axios.post(`${BASE_URL}/home/topNumbers`, {
-        ...appliedFilters,
-        stateId: appliedFilters.states[0],
-        from: appliedFilters.registrationFrom,
-        to: appliedFilters.registrationTo,
-        roles: [
-          "Startup",
-          "Mentor",
-          "Investor",
-          "GovernmentBody",
-          "Incubator",
-          "Accelerator",
-        ],
-      }, { cancelToken: cancelToken.token });
+      const { data } = await axios.post(
+        `${BASE_URL}/home/topNumbers`,
+        {
+          ...appliedFilters,
+          stateId: appliedFilters.states[0],
+          from: appliedFilters.registrationFrom,
+          to: appliedFilters.registrationTo,
+          roles: [
+            "Startup",
+            "Mentor",
+            "Investor",
+            "GovernmentBody",
+            "Incubator",
+            "Accelerator",
+          ],
+        },
+        { cancelToken: cancelToken.token }
+      );
 
-      const count: any = new CountBlockModel();
-
+      const count: any = new CountBlockModel();      
+     
       Object.keys(data).forEach((item: string) => {
-        count[item] = data[item];
-      });
+         if (startupType?.index !== '0' && item === "Startup") {          
+          count[item] = startupCount;
+        } else {         
+          count[item] = data[item];
+        }
+        
+      });     
       setStateCounts(count);
-      setStartupCount(count.Startup);
+      
     } catch (error) {}
   };
 
-  useEffect(() => {
+  useEffect(() => {    
+    if (startupType?.index !== '1' && activeCard !== "Startups") {
+      handleCardClick("Startups", "Startup");
+    }
     const delayDebounceFn = setTimeout(() => {
-    fetchCounts(); }, 1000);
+      fetchCounts();
+    }, 100);
     return () => {
       clearTimeout(delayDebounceFn);
     };
-  }, [appliedFilters]);
+  }, [appliedFilters, startupType]);
 
   useEffect(() => {
-    if (startupType?.index !== 0 && activeCard !== "Startups") {
-      handleCardClick("Startups", "Startup");
-    }
-  }, [startupType]);
+    const counts = { ...stateCounts };
+    counts["Startup"] = startupCount;
+    setStateCounts(counts);
+  }, [startupCount]);
+
+ 
 
   const getThemeName = (name: string) => {
     const value = name.toLowerCase();
@@ -313,7 +329,7 @@ const CountsBlockComponent = ({
 
   const id = query.get("state");
   const stateSelected = id !== "india" || id ? id : null;
-
+ 
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">
