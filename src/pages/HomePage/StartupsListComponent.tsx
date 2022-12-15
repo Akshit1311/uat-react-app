@@ -285,7 +285,7 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between " style={{height:'50vh',overflowY:'scroll'}}>
+        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between " style={{height:'50vh',overflowY:'scroll', alignItems: 'start'}}>
           {!tagsLoading && !tagsState.length ? (
             <div className="d-flex justify-content-center w-100">
               <p
