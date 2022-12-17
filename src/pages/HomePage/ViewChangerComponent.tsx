@@ -49,7 +49,7 @@ const DATA_TABLE_API = `${BASE_URL}/data/v2/statistics/country/5f02e38c6f3de87ba
 const DISTRICT_API = `${BASE_URL}/data/v2/statistics/state/`;
 
 const startupTypeValues: any[] = [
-  "Startup",
+  "allStartups",
   "dpiitCertified",
   "showcased",
   "seedFunded",
@@ -125,11 +125,12 @@ function ViewChangerComponent({
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
-    const obj = startUpTypes.filter((item: any) => item.index == value);
+    const obj = startUpTypes.filter((item: any) => item.index == value);    
     setSelectedStartupType(value);
     setSelectedStartupTypeIndex(value);
     setStartupType(obj[0]);
-    if (!appliedFilters.states[0]) {
+    
+    if (!appliedFilters.states[0]) {      
       fetchInitialCount(value, selectedDateRange);
     }
   };
@@ -184,7 +185,7 @@ function ViewChangerComponent({
         key = "count";
       }
       // fetch data according to index key
-
+      
       //setting up data in state
       if (data[key]) {
         setNewCount(data[key]);       
@@ -225,16 +226,16 @@ function ViewChangerComponent({
   }, [activeCard]);
 
   useEffect(() => {
-    if (selectedStartTypeIndex == 0) {
-      setNewCount(startupCount);      
-      if (startupCount > 0) {
-        setDateRangeCount(true);
-      } else {
-        setDateRangeCount(false);
-      }
-    } else {
+    // if (selectedStartTypeIndex == 0) {
+    //   setNewCount(startupCount);      
+    //   if (startupCount > 0) {
+    //     setDateRangeCount(true);
+    //   } else {
+    //     setDateRangeCount(false);
+    //   }
+    // } else {
       fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
-    }
+    // }
   }, [
     appliedFilters.states,
     selectedStartTypeIndex,
