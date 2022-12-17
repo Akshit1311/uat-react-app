@@ -56,7 +56,8 @@ export interface InsightRowType {
   percentage: number;
   indiaTotal: number;
   indiaPercentage: number;
-  type: string
+  type: string;
+  key: string;
 }
 
 export interface AccordionTypes {
