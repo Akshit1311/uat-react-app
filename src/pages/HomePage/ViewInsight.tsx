@@ -25,7 +25,6 @@ export default function ViewInsight(props: any) {
         : `${baseRoute}/maps/view-insight?id=${
             query.get("id") ? query.get("id") : "India"
           }&state=${query.get("state") ? query.get("state") : "India"}`;
-    console.log("props", url);
     history.push(url);
   };
 

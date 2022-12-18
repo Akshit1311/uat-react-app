@@ -125,12 +125,12 @@ function ViewChangerComponent({
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
-    const obj = startUpTypes.filter((item: any) => item.index == value);    
+    const obj = startUpTypes.filter((item: any) => item.index == value);
     setSelectedStartupType(value);
     setSelectedStartupTypeIndex(value);
     setStartupType(obj[0]);
-    
-    if (!appliedFilters.states[0]) {      
+
+    if (!appliedFilters.states[0]) {
       fetchInitialCount(value, selectedDateRange);
     }
   };
@@ -149,7 +149,7 @@ function ViewChangerComponent({
   useEffect(() => {
     fetchDateRange();
     fetchStartUpTypes();
-    fetchStartUpCount();    
+    fetchStartUpCount();
     // fetchInitialCount(0);
   }, []);
 
@@ -184,20 +184,15 @@ function ViewChangerComponent({
         data = response;
         key = "count";
       }
-      // fetch data according to index key
-      
+
       //setting up data in state
       if (data[key]) {
-        setNewCount(data[key]);       
-      } else if (startupType == 0) {
-        // setNewCount(startupCount);
+        setNewCount(data[key]);
       } else {
-        setNewCount(0);        
+        setNewCount(0);
       }
 
       if (data[key] && data[key] > 0) {
-        setDateRangeCount(true);
-      } else if (startupType == 0 && startupCount > 0) {
         setDateRangeCount(true);
       } else {
         setDateRangeCount(false);
@@ -205,45 +200,35 @@ function ViewChangerComponent({
     } catch (error) {}
   };
 
-  useEffect(()=>{    
-    if(selectedStartTypeIndex != 0){      
-      setStartupCount(newCount);
-    }    
-  },[newCount])
-  
+  useEffect(() => {
+    setStartupCount(newCount);
+  }, [newCount]);
+
   useEffect(() => {
     if (activeCard !== "Startups") {
       setNewCount(startupCount);
-      setDateRangeCount(true);   
-      setSelectedStartupTypeIndex(1)   
+      setDateRangeCount(true);
+      setSelectedStartupTypeIndex(1);
     } else {
       setStartupType({
         index: "1",
         text: "DPIIT recognised startups",
       });
-      
-    }   
+    }
   }, [activeCard]);
 
   useEffect(() => {
     // if (selectedStartTypeIndex == 0) {
-    //   setNewCount(startupCount);      
+    //   setNewCount(startupCount);
     //   if (startupCount > 0) {
     //     setDateRangeCount(true);
     //   } else {
     //     setDateRangeCount(false);
     //   }
     // } else {
-      fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
+    fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
     // }
-  }, [
-    appliedFilters.states,
-    selectedStartTypeIndex,
-    query.get("id"),
-    startupCount,
-  ]);
-
-  
+  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
@@ -259,8 +244,6 @@ function ViewChangerComponent({
     activeCard,
     stateViewMode,
   };
-
- 
 
   return (
     <div
@@ -318,12 +301,8 @@ function ViewChangerComponent({
                 value={selectedStartTypeIndex}
                 onChange={startTypeChange}
               >
-               
                 {startUpTypes.map((item: any, index: number) => (
-                  <option
-                    key={item.index}
-                    value={item.index}                  
-                  >                  
+                  <option key={item.index} value={item.index}>
                     {item.text}
                   </option>
                 ))}

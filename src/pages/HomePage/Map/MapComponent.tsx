@@ -225,6 +225,9 @@ function IndiaMap({
   const findMaxValue = (array: any[], accessor: string) => {
     const newList = [...array];
     const n: any[] = [];
+    if (!dateRangeCount) {
+      return 0;
+    }
     if (accessor[0] == "Startup") {
       const key = StartupTypesKeys[startupType?.text];
       newList.forEach((a: any) => n.push(a.statistics[key]));
@@ -252,7 +255,7 @@ function IndiaMap({
     accessor: string,
     maxValue: number
   ) => {
-    const findStateIndex = findCountTypeValue(stateId);   
+    const findStateIndex = findCountTypeValue(stateId);
 
     if (findStateIndex !== -1) {
       let stateValue: any;
@@ -289,6 +292,9 @@ function IndiaMap({
     accessor: string,
     type: string = "state"
   ) => {
+    if (!dateRangeCount) {
+      return 0;
+    }
     if (stateId && accessor) {
       const findStateIndex = findCountTypeValue(stateId, type);
       const dataArray =
@@ -460,7 +466,7 @@ function IndiaMap({
     }
     return 0;
   };
-  
+
   return (
     <MapWrapper
       className="m-2 mt-0 pt-0 d-flex justify-content-center"
@@ -475,8 +481,7 @@ function IndiaMap({
           viewBox={
             mapMode.id === MapVariables.DISTRICT.id
               ? "-200 200 1350 1150"
-              : 
-              getViewBoxArea()
+              : getViewBoxArea()
           }
           className="mt-c-5-2 safari-svg"
           aria-label="Map of India"
@@ -620,8 +625,8 @@ function IndiaMap({
                 appliedFilters.roles,
                 "district"
               );
-          
-              if (stateCounts && stateCounts > 0 ) {
+
+              if (stateCounts && stateCounts > 0) {
                 countStatus = stateCounts;
               } else {
                 countStatus = 0;
