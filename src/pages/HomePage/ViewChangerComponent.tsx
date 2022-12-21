@@ -6,6 +6,7 @@ import { MdOutlineLocationCity } from "react-icons/md";
 import styled from "styled-components";
 import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import { useMutate } from "../../hooks/useMutate";
 import { useQuery } from "../../hooks/useQuery";
 import { useWebQuery } from "../../hooks/useWebQuery";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -102,8 +103,14 @@ function ViewChangerComponent({
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
   );
-  const [fetchStartUpCount, countState, countLoading] =
-    useQuery("home/startupCounts");
+  const [fetchStartUpCount, countState, countLoading] = useMutate(
+    "home/startupCounts/all",
+    {
+      ...appliedFilters,
+      from: appliedFilters.registrationFrom,
+      to: appliedFilters.registrationTo,
+    }
+  );
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
@@ -125,12 +132,12 @@ function ViewChangerComponent({
 
   const startTypeChange = (changeEvent: any) => {
     const value = changeEvent.target.value;
-    const obj = startUpTypes.filter((item: any) => item.index == value);    
+    const obj = startUpTypes.filter((item: any) => item.index == value);
     setSelectedStartupType(value);
     setSelectedStartupTypeIndex(value);
     setStartupType(obj[0]);
-    
-    if (!appliedFilters.states[0]) {      
+
+    if (!appliedFilters.states[0]) {
       fetchInitialCount(value, selectedDateRange);
     }
   };
@@ -149,13 +156,13 @@ function ViewChangerComponent({
   useEffect(() => {
     fetchDateRange();
     fetchStartUpTypes();
-    fetchStartUpCount();    
+    fetchStartUpCount();
     // fetchInitialCount(0);
   }, []);
 
   // function for creating apiurl
-  const apiUrl = (dateRange: string) => {
-    let url = "home/startupCounts?";
+  const apiUrl = (dateRange: string, type: string) => {
+    let url = `home/startupCounts/${type}?`;
     if (query.get("id")) {
       url += `stateId=${query.get("id")}&`;
     }
@@ -171,33 +178,37 @@ function ViewChangerComponent({
   const fetchInitialCount = async (startupType: number, dateRange: string) => {
     try {
       // create and get api url
-      let url = apiUrl(dateRange);
+      const type = startupTypeValues[startupType];
+      let url = apiUrl(dateRange, type);
       let data;
       let key;
       // get data from api call
       if (startupType != 8) {
-        const { data: response } = await axios.get(url);
+        const { data: response } = await axios.post(url, {
+          ...appliedFilters,
+          from: appliedFilters.registrationFrom,
+          to: appliedFilters.registrationTo,
+        });
         data = response;
         key = startupTypeValues[startupType];
       } else {
-        const { data: response } = await axios.get("home/leadingsector");
+        const { data: response } = await axios.post("home/leadingsector", {
+          ...appliedFilters,
+          from: appliedFilters.registrationFrom,
+          to: appliedFilters.registrationTo,
+        });
         data = response;
         key = "count";
       }
-      // fetch data according to index key
-      
+
       //setting up data in state
       if (data[key]) {
-        setNewCount(data[key]);       
-      } else if (startupType == 0) {
-        // setNewCount(startupCount);
+        setNewCount(data[key]);
       } else {
-        setNewCount(0);        
+        setNewCount(0);
       }
 
       if (data[key] && data[key] > 0) {
-        setDateRangeCount(true);
-      } else if (startupType == 0 && startupCount > 0) {
         setDateRangeCount(true);
       } else {
         setDateRangeCount(false);
@@ -205,45 +216,35 @@ function ViewChangerComponent({
     } catch (error) {}
   };
 
-  useEffect(()=>{    
-    if(selectedStartTypeIndex != 0){      
-      setStartupCount(newCount);
-    }    
-  },[newCount])
-  
+  useEffect(() => {
+    setStartupCount(newCount);
+  }, [newCount]);
+
   useEffect(() => {
     if (activeCard !== "Startups") {
       setNewCount(startupCount);
-      setDateRangeCount(true);   
-      setSelectedStartupTypeIndex(1)   
+      setDateRangeCount(true);
+      setSelectedStartupTypeIndex(1);
     } else {
       setStartupType({
         index: "1",
         text: "DPIIT recognised startups",
       });
-      
-    }   
+    }
   }, [activeCard]);
 
   useEffect(() => {
     // if (selectedStartTypeIndex == 0) {
-    //   setNewCount(startupCount);      
+    //   setNewCount(startupCount);
     //   if (startupCount > 0) {
     //     setDateRangeCount(true);
     //   } else {
     //     setDateRangeCount(false);
     //   }
     // } else {
-      fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
+    fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
     // }
-  }, [
-    appliedFilters.states,
-    selectedStartTypeIndex,
-    query.get("id"),
-    startupCount,
-  ]);
-
-  
+  }, [appliedFilters, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");
@@ -259,8 +260,6 @@ function ViewChangerComponent({
     activeCard,
     stateViewMode,
   };
-
- 
 
   return (
     <div
@@ -318,12 +317,8 @@ function ViewChangerComponent({
                 value={selectedStartTypeIndex}
                 onChange={startTypeChange}
               >
-               
                 {startUpTypes.map((item: any, index: number) => (
-                  <option
-                    key={item.index}
-                    value={item.index}                  
-                  >                  
+                  <option key={item.index} value={item.index}>
                     {item.text}
                   </option>
                 ))}

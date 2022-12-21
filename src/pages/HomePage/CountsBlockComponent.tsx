@@ -86,7 +86,6 @@ const CountCard = ({
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
   const theme = useContext(ThemeContext);
-
   useEffect(() => {
     const count = state[accessor ? accessor : name.slice(0, -1)];
     if (count === 0) {
@@ -141,7 +140,7 @@ const CountCard = ({
       }
       return () => clearInterval(interval);
     }
-  }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
+  }, [state, loading]);
 
   return (
     <CountCardWrapper
@@ -175,9 +174,7 @@ const CountCard = ({
               visibility: windowWidth > 768 || active ? "visible" : "hidden",
             }}
           >
-            {currentCount === 0 && name === "Startups"
-              ? "-"
-              : currentCount}
+            {currentCount === 0 ? "-" : currentCount}
           </h4>
           <div>
             <h6
@@ -234,7 +231,6 @@ const CountsBlockComponent = ({
     selectedStateByMap,
     setSelectedStateByMap,
     appliedFilters,
-    setStartupCount,
     startupCount,
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
@@ -284,16 +280,19 @@ const CountsBlockComponent = ({
   };
 
   useEffect(() => {
-    if (startupType?.index !== "1" && activeCard !== "Startups") {
-      handleCardClick("Startups", "Startup");
-    }
     const delayDebounceFn = setTimeout(() => {
       fetchCounts();
     }, 100);
     return () => {
       clearTimeout(delayDebounceFn);
     };
-  }, [appliedFilters, startupType]);
+  }, [appliedFilters, startupCount]);
+
+  useEffect(() => {
+    if (startupType?.index !== "1" && activeCard !== "Startups") {
+      handleCardClick("Startups", "Startup");
+    }
+  }, [startupType]);
 
   useEffect(() => {
     const counts = { ...stateCounts };
