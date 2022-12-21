@@ -1,15 +1,13 @@
+import { Tooltip as MuiToolTip } from "@mui/material";
 import "rc-tooltip/assets/bootstrap_white.css";
 import React, { useEffect } from "react";
 import { GiPeru } from "react-icons/gi";
 import { IoMapSharp } from "react-icons/io5";
-import { MdOutlineLocationCity } from "react-icons/md";
-import { RiDropFill } from "react-icons/ri";
+import { ThemeContext } from "../../config/context";
+import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import "../../scss/HomePageStyles/viewChangerComponent.scss";
 import { IconButton } from "../../styles-components/Button";
 import * as MapVariables from "./Map/variables";
-import { Tooltip as MuiToolTip } from "@mui/material";
-import { ThemeContext } from "../../config/context";
-import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 
 export default function MapViewChangeButtonGroup(props: any) {
   const {

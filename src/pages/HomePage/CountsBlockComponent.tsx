@@ -86,7 +86,6 @@ const CountCard = ({
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
   const theme = useContext(ThemeContext);
-
   useEffect(() => {
     const count = state[accessor ? accessor : name.slice(0, -1)];
     if (count === 0) {
@@ -141,7 +140,7 @@ const CountCard = ({
       }
       return () => clearInterval(interval);
     }
-  }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
+  }, [state, loading]);
 
   return (
     <CountCardWrapper
@@ -188,7 +187,7 @@ const CountCard = ({
               }}
               className="mx-0 mb-0 p-0"
             >
-              {name}
+              {name === "Government" ? "Government to institiutions" : name}
             </h6>
             <div
               className={`count-underline d-block d-sm-none`}
@@ -232,7 +231,6 @@ const CountsBlockComponent = ({
     selectedStateByMap,
     setSelectedStateByMap,
     appliedFilters,
-    setStartupCount,
     startupCount,
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
@@ -268,40 +266,39 @@ const CountsBlockComponent = ({
         { cancelToken: cancelToken.token }
       );
 
-      const count: any = new CountBlockModel();      
-     
+      const count: any = new CountBlockModel();
+
       Object.keys(data).forEach((item: string) => {
-         if (startupType?.index !== '0' && item === "Startup") {          
+        if (startupType?.index !== "0" && item === "Startup") {
           count[item] = startupCount;
-        } else {         
+        } else {
           count[item] = data[item];
         }
-        
-      });     
+      });
       setStateCounts(count);
-      
     } catch (error) {}
   };
 
-  useEffect(() => {    
-    if (startupType?.index !== '1' && activeCard !== "Startups") {
-      handleCardClick("Startups", "Startup");
-    }
+  useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       fetchCounts();
     }, 100);
     return () => {
       clearTimeout(delayDebounceFn);
     };
-  }, [appliedFilters, startupType]);
+  }, [appliedFilters, startupCount]);
+
+  useEffect(() => {
+    if (startupType?.index !== "1" && activeCard !== "Startups") {
+      handleCardClick("Startups", "Startup");
+    }
+  }, [startupType]);
 
   useEffect(() => {
     const counts = { ...stateCounts };
     counts["Startup"] = startupCount;
     setStateCounts(counts);
   }, [startupCount]);
-
- 
 
   const getThemeName = (name: string) => {
     const value = name.toLowerCase();
@@ -329,7 +326,7 @@ const CountsBlockComponent = ({
 
   const id = query.get("state");
   const stateSelected = id !== "india" || id ? id : null;
- 
+
   return (
     <div className="container-fluid count-block-styles px-0 mx-0">
       <div className="row mx-0 px-0">

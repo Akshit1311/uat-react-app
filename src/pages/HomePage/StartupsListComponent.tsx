@@ -34,7 +34,7 @@ const StartUpCardWrapper = styled.div`
 `;
 
 function StartUpCard({
-  _id,
+  id,
   index,
   sectors,
   name: company,
@@ -52,10 +52,24 @@ function StartUpCard({
   }
 
   const [capitalizeText, setCapitalizeText] = useState<string>("");
-  const redirect = () => {
-    // window.location.href =
-    //   "https://www.startupindia.gov.in/content/sih/en/profile.Startup.61c03e7ae4b041b4edd317ce.html";
+  const [address, setAddress] = useState<string>("");
+  const redirect = (id: string) => {
+    window.open(
+      `https://www.startupindia.gov.in/content/sih/en/profile.Startup.${id}.html`,
+      "_blank"
+    );
   };
+
+  useEffect(() => {
+    let addr = "";
+    if (city) {
+      addr += city + ", ";
+    }
+    if (state) {
+      addr += state;
+    }
+    setAddress(addr);
+  }, [city, state]);
 
   const tagsLoader = tagsLoading && (
     <div className="w-100 h-100 d-flex justify-content-center align-items-center">
@@ -151,10 +165,12 @@ function StartUpCard({
   return (
     <>
       <StartUpCardWrapper
-        onClick={redirect}
-        key={_id}
+        onClick={() => {
+          redirect(id);
+        }}
+        key={id}
         className="mb-0 d-flex flex-row start-up-card flex-column"
-        style={{ marginTop: "1.3rem" }}
+        style={{ marginTop: "1.3rem", cursor: "pointer" }}
       >
         <div className="d-flex align-items-center">
           <img
@@ -192,7 +208,7 @@ function StartUpCard({
             <div className={`m-1 d-flex flex-row align-items-center mt-6`}>
               <FaMapMarkerAlt size={13} style={{ marginTop: "-1.5px" }} />
               <h6 className="ms-1 my-0 py-0  start-up-location w-100">
-                {city + ", " + state}
+                {address}
               </h6>
             </div>
           </div>
@@ -211,10 +227,10 @@ function StartupsListComponent(props: any) {
   const [fetchTags, tagsState, tagsLoading] = useMutate(
     `${BASE_URL}/startup/filter`,
     []
-  );  
+  );
 
   const [renderedData, setRenderedData] = useState<any[]>([]);
-  const [isDataRemaining, setRemaining] = useState<boolean>(true);  
+  const [isDataRemaining, setRemaining] = useState<boolean>(true);
   const [queryString, setQueryString] = useState<string>("");
 
   const startupList = React.useMemo(() => {
@@ -229,24 +245,22 @@ function StartupsListComponent(props: any) {
   }, [renderedData]);
 
   const handleViewMore = async () => {
-    let num = page+1;
-    setPage(num);  
-    fetchTags({...props.appliedFilters, page});   
-    
+    let num = page + 1;
+    setPage(num);
+    fetchTags({ ...props.appliedFilters, page });
   };
 
   const handleViewLess = async () => {
-    let num = page-1;
-    setPage(num);  
-    fetchTags({...props.appliedFilters, page});   
-    
+    let num = page - 1;
+    setPage(num);
+    fetchTags({ ...props.appliedFilters, page });
   };
 
   const onSearch = (changeEvent: any) => {
     const value = changeEvent.target.value;
     setQueryString(value);
   };
- 
+
   const handleApply = () => {
     const filteredList = tagsState.filter((item: any) =>
       item.name.toLowerCase().includes(queryString.toLowerCase())
@@ -254,13 +268,13 @@ function StartupsListComponent(props: any) {
     setRenderedData(filteredList);
   };
 
-  useEffect(() => {    
-    if(tagsState.length > 0){
-      setRenderedData(tagsState.slice(0, 9)); 
-      setRemaining(true)     
-    } else{
-      setRemaining(false)
-    }  
+  useEffect(() => {
+    if (tagsState.length > 0) {
+      setRenderedData(tagsState.slice(0, 9));
+      setRemaining(true);
+    } else {
+      setRemaining(false);
+    }
   }, [tagsState]);
 
   useEffect(() => {
@@ -285,7 +299,10 @@ function StartupsListComponent(props: any) {
             onChange={onSearch}
           />
         </div>
-        <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between " style={{height:'50vh',overflowY:'scroll'}}>
+        <div
+          className="d-flex flex-wrap flex-column flex-sm-row justify-content-between "
+          style={{ height: "50vh", overflowY: "scroll", alignItems: "start" }}
+        >
           {!tagsLoading && !tagsState.length ? (
             <div className="d-flex justify-content-center w-100">
               <p
@@ -301,25 +318,29 @@ function StartupsListComponent(props: any) {
           {/* {startupList} */}
         </div>
         <div className="d-flex flex-wrap flex-column flex-sm-row justify-content-between align-items-center">
-        <div
-          style={{
-            display: page > 0 ? "flex" : "none",
-          }}
-          className="my-4 data-table-view-more-button text-theme"
-          onClick={handleViewLess}
-        >
-          {"View Less"}
-        </div>
-       
-        <div
-          style={{
-            display: isDataRemaining ? "flex" : "none",
-          }}
-          className="my-4 data-table-view-more-button text-theme"
-          onClick={handleViewMore}
-        >         
-          {queryString.length > 0 ? "View All" : tagsState.length < 9 ? "" :"View More"}
-        </div>
+          <div
+            style={{
+              display: page > 0 ? "flex" : "none",
+            }}
+            className="my-4 data-table-view-more-button text-theme"
+            onClick={handleViewLess}
+          >
+            {"View Less"}
+          </div>
+
+          <div
+            style={{
+              display: isDataRemaining ? "flex" : "none",
+            }}
+            className="my-4 data-table-view-more-button text-theme"
+            onClick={handleViewMore}
+          >
+            {queryString.length > 0
+              ? "View All"
+              : tagsState.length < 9
+              ? ""
+              : "View More"}
+          </div>
         </div>
         {tagsLoading && (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center position-absolute">
@@ -327,7 +348,7 @@ function StartupsListComponent(props: any) {
           </div>
         )}
       </StartUpCardContainer>
-      <div className="ps-4 disabled-map" style={{height:'64vh'}}>
+      <div className="ps-4 disabled-map" style={{ height: "64vh" }}>
         <DisabledMap
           startupType={props.startupType}
           mapViewResource={props.mapViewResource}

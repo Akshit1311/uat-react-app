@@ -11,6 +11,7 @@ import Accordion from "./Accordion";
 import { useQuery } from "../../hooks/useQuery";
 import CountryMap from "./Map";
 import { useHistory } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
@@ -62,6 +63,7 @@ export default function ControlledAccordions() {
     };
 
   React.useEffect(() => {
+    window.scroll(0, 0);
     const id = query.get("id");
 
     if (id && id != "India") {
@@ -168,20 +170,27 @@ export default function ControlledAccordions() {
       setStages(data);
       setStagesLoading(false);
     }
-    
-    
-    
   }, [totalIndustries, totalSectors, totalStages]);
 
-  const backUrl: string = `${baseRoute}/maps/?id=${query.get(
-    "id"
-  )}&state=${query.get("state")}`;
- 
+  const backUrl: string = `${baseRoute}/maps/${
+    query.get("id") === "India"
+      ? ""
+      : "?id=" + query.get("id") + "&state=" + query.get("state")
+  }`;
+
   return (
     <div style={{ marginTop: NAVBAR_HEIGHT }} className="h-100">
       <PageWrapperContainer className="h-100">
         <PageWrapper className="p-4 h-100">
           <div className="mb-4">
+            <a
+              className="font-Mont font-600 font-12px mt-1"
+              style={{ color: theme.color }}
+              href={backUrl}
+            >
+              <ArrowBackIcon style={{ fontSize: "15px", marginRight: "5px" }} />
+              Back
+            </a>
             <H5 className="text-uppercase font-Mont font-18px mb-0">
               View Insights of {query.get("state") || "India"}
             </H5>
@@ -225,8 +234,8 @@ export default function ControlledAccordions() {
                 data={industries || []}
                 selectedData={selectedIndustries || []}
                 type="industry"
-                loading = {industriesLoading}
-              />              
+                loading={industriesLoading}
+              />
 
               <Accordion
                 expanded={expanded}
@@ -239,7 +248,7 @@ export default function ControlledAccordions() {
                 }
                 selectedData={selectedSectors || []}
                 type="sector"
-                loading = {sectorsLoading}
+                loading={sectorsLoading}
               />
 
               <Accordion
@@ -253,7 +262,7 @@ export default function ControlledAccordions() {
                 }
                 selectedData={selectedStages || []}
                 type="stage"
-                loading = {stagesLoading}
+                loading={stagesLoading}
               />
 
               {/* <Accordion

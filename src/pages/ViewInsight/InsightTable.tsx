@@ -10,6 +10,7 @@ import { InsightRowType } from "./Accordion";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
+
 interface InsightTableProps {
   stateName: string | null;
   title: string;
@@ -24,6 +25,7 @@ enum SortKeys {
   TEXT = "text",
   COUNT = "count",
   PERCENTAGE = "percentage",
+  TOTAL = "count",
   INDIA_TOTAL = "indiaTotal",
   INDIA_PERCENTAGE = "indiaPercentage",
 }
@@ -104,23 +106,35 @@ export default function InsightTable({
     },
   };
 
-  const onSort = (sortMode: number, sortKey: SortKeys) => {
+  const onSort = (sortMode: number, sortKey: string) => {
     if (sortMode === 3) {
       return setSortedData(data);
     } else {
       const result = originalData.sort(
-        (a: InsightRowType, b: InsightRowType) => {
+        (a: any, b: any) => {
+          let key:string = sortKey === "text" ? type : sortKey;
           if (sortMode === 1) {
-            return String(a[sortKey]).localeCompare(String(b[sortKey]));
+            if (key === "count" || key === "indiaTotal") {
+              return Number(a[key]) - Number(b[key]);
+            } else {
+              return String(a[key]) > String(b[key]) ? -1 : 1;
+            }
           }
-          if (sortMode === 2) {
-            return String(b[sortKey]).localeCompare(String(a[sortKey]));
+
+          if (sortMode === 2 && key === "count") {
+            if (key === "count" || key === "indiaTotal") {
+              return Number(b[key]) - Number(a[key]);
+            } else {
+              return String(b[key]) < String(a[key]) ? -1 : 1;
+            }
           }
           return 0;
         }
       );
 
-      setSortedData(sortMode == 2 ? result.reverse() : result);
+      setSortedData(
+        sortMode == 2 && sortKey !== "count" ? result.reverse() : result
+      );
     }
   };
 
@@ -196,13 +210,13 @@ export default function InsightTable({
               </div>
               <div
                 className="border-type-2"
-                onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
+                onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
               >
                 India{" "}
                 <SortIcons
                   sortKey={sortKey}
                   sortMode={sortMode}
-                  primaryKey={SortKeys.INDIA_PERCENTAGE}
+                  primaryKey={SortKeys.INDIA_TOTAL}
                 />
               </div>
             </>
@@ -210,20 +224,20 @@ export default function InsightTable({
             <>
               <div
                 className="border-type-2"
-                onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
+                onClick={(e) => changeSortMode(e, stateName != "" ? SortKeys.INDIA_TOTAL : SortKeys.TOTAL)}
               >
                 Total
                 <SortIcons
                   sortKey={sortKey}
                   sortMode={sortMode}
-                  primaryKey={SortKeys.INDIA_PERCENTAGE}
+                  primaryKey={SortKeys.INDIA_TOTAL}
                 />
               </div>
             </>
           )}
           <div
             className="border-type-3"
-            onClick={(e) => changeSortMode(e, SortKeys.INDIA_PERCENTAGE)}
+            onClick={(e) => changeSortMode(e, stateName != "" ? SortKeys.INDIA_PERCENTAGE : SortKeys.PERCENTAGE)}
           >
             Percentage
             <SortIcons
@@ -233,8 +247,8 @@ export default function InsightTable({
             />
           </div>
         </div>
-        {loading ? (
-          <div className="w-100 h-100 d-flex justify-content-center align-items-center">           
+        {sortedData && sortedData.length == 0 ? (
+          <div className="w-100 h-100 d-flex justify-content-center align-items-center">
             <MoonLoader
               color={ThemeColorIdentifier(theme.color)}
               loading={true}

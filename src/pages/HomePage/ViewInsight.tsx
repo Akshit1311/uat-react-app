@@ -17,13 +17,16 @@ export default function ViewInsight(props: any) {
   const query = useWebQuery();
   const history = useHistory();
   const [state, setState] = React.useState<any>({ id: "", value: "" });
-  const url =
-    props.selectedState && props.selectedState[0]
-      ? props.viewInsightUrl
-      : `${baseRoute}/maps/view-insight?id=${
-          query.get("id") ? query.get("id") : "India"
-        }&state=${query.get("state") ? query.get("state") : "India"}`;
-  const navigate = (url: string) => history.push(url);
+
+  const navigate = () => {
+    const url =
+      props.selectedState && props.selectedState[0]
+        ? `${baseRoute}/maps` + props.viewInsightUrl
+        : `${baseRoute}/maps/view-insight?id=${
+            query.get("id") ? query.get("id") : "India"
+          }&state=${query.get("state") ? query.get("state") : "India"}`;
+    history.push(url);
+  };
 
   React.useEffect(() => {
     if (props.selectedState && props.selectedState.length > 0) {
@@ -54,7 +57,7 @@ export default function ViewInsight(props: any) {
           </Link> */}
           <Button
             colorTheme={props.colorTheme}
-            onClick={() => navigate(url)}
+            onClick={() => navigate()}
             className="background-color-theme"
           >
             View Insights
