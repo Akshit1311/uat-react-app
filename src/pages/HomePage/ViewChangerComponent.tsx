@@ -6,6 +6,7 @@ import { MdOutlineLocationCity } from "react-icons/md";
 import styled from "styled-components";
 import { ThemeContext } from "../../config/context";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
+import { useMutate } from "../../hooks/useMutate";
 import { useQuery } from "../../hooks/useQuery";
 import { useWebQuery } from "../../hooks/useWebQuery";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -102,8 +103,14 @@ function ViewChangerComponent({
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
   );
-  const [fetchStartUpCount, countState, countLoading] =
-    useQuery("home/startupCounts");
+  const [fetchStartUpCount, countState, countLoading] = useMutate(
+    "home/startupCounts/all",
+    {
+      ...appliedFilters,
+      from: appliedFilters.registrationFrom,
+      to: appliedFilters.registrationTo,
+    }
+  );
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
@@ -154,8 +161,8 @@ function ViewChangerComponent({
   }, []);
 
   // function for creating apiurl
-  const apiUrl = (dateRange: string) => {
-    let url = "home/startupCounts?";
+  const apiUrl = (dateRange: string, type: string) => {
+    let url = `home/startupCounts/${type}?`;
     if (query.get("id")) {
       url += `stateId=${query.get("id")}&`;
     }
@@ -171,16 +178,25 @@ function ViewChangerComponent({
   const fetchInitialCount = async (startupType: number, dateRange: string) => {
     try {
       // create and get api url
-      let url = apiUrl(dateRange);
+      const type = startupTypeValues[startupType];
+      let url = apiUrl(dateRange, type);
       let data;
       let key;
       // get data from api call
       if (startupType != 8) {
-        const { data: response } = await axios.get(url);
+        const { data: response } = await axios.post(url, {
+          ...appliedFilters,
+          from: appliedFilters.registrationFrom,
+          to: appliedFilters.registrationTo,
+        });
         data = response;
         key = startupTypeValues[startupType];
       } else {
-        const { data: response } = await axios.get("home/leadingsector");
+        const { data: response } = await axios.post("home/leadingsector", {
+          ...appliedFilters,
+          from: appliedFilters.registrationFrom,
+          to: appliedFilters.registrationTo,
+        });
         data = response;
         key = "count";
       }
@@ -228,7 +244,7 @@ function ViewChangerComponent({
     // } else {
     fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
     // }
-  }, [appliedFilters.states, selectedStartTypeIndex, query.get("id")]);
+  }, [appliedFilters, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {
     const stateToRedirect = selectedArea.stateName.replaceAll(" ", "-");

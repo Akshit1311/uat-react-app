@@ -86,7 +86,6 @@ const CountCard = ({
   const [currentCount, setCurrentCount] = useState<number>(0);
   const active = name === activeCard;
   const theme = useContext(ThemeContext);
-
   useEffect(() => {
     const count = state[accessor ? accessor : name.slice(0, -1)];
     if (count === 0) {
@@ -141,7 +140,7 @@ const CountCard = ({
       }
       return () => clearInterval(interval);
     }
-  }, [state[accessor ? accessor : name.slice(0, -1)], loading]);
+  }, [state, loading]);
 
   return (
     <CountCardWrapper
@@ -235,7 +234,7 @@ const CountsBlockComponent = ({
     startupCount,
   } = countResource;
   const [stateCounts, setStateCounts] = useState<any>(new CountBlockModel());
-  console.log("i am here 3", startupCount);
+
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
   const query = useWebQuery();
   let cancelToken: any;
@@ -287,7 +286,7 @@ const CountsBlockComponent = ({
     return () => {
       clearTimeout(delayDebounceFn);
     };
-  }, [appliedFilters]);
+  }, [appliedFilters, startupCount]);
 
   useEffect(() => {
     if (startupType?.index !== "1" && activeCard !== "Startups") {
