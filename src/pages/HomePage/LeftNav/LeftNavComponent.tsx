@@ -347,7 +347,16 @@ const LeftNavComponent = (props: any) => {
       setAppliedFilters((prevState: any) => ({ ...prevState, states: [] }));
     }
   }, [selectedArea]);
-
+  useEffect(() => {
+    if (
+      appliedFilters &&
+      appliedFilters.sectors &&
+      appliedFilters.sectors.length > 0
+    ) {
+      let sectors = [...appliedFilters.sectors];
+      setSelectedSector(sectors);
+    }
+  }, [appliedFilters.sectors]);
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);

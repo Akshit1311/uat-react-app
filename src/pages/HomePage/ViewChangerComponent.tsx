@@ -85,6 +85,7 @@ function ViewChangerComponent({
     dateRangeState,
     dateRangeLoading,
     appliedFilters,
+    setAppliedFilters,
     activeCard,
     fetchTableData,
     setDateRangeCount,
@@ -103,17 +104,18 @@ function ViewChangerComponent({
   const [fetchStartUpTypes, startUpTypes, startTypesLoading] = useQuery(
     "/static/startupTypes"
   );
-  const [fetchStartUpCount, countState, countLoading] = useMutate(
-    "home/startupCounts/all",
-    {
-      ...appliedFilters,
-      from: appliedFilters.registrationFrom,
-      to: appliedFilters.registrationTo,
-    }
-  );
+  // const [fetchStartUpCount, countState, countLoading] = useMutate(
+  //   "home/startupCounts/all",
+  //   {
+  //     ...appliedFilters,
+  //     from: appliedFilters.registrationFrom,
+  //     to: appliedFilters.registrationTo,
+  //   }
+  // );
 
   const [selectedStartUpType, setSelectedStartupType] = useState<any>(0);
   const [selectedDateRange, setSelectedDateRange] = useState<string>("");
+  const [leadingSector, setLeadingSector] = useState<any>(0);
 
   const dateRangeChange = async (changeEvent: any) => {
     const value = changeEvent.target.value;
@@ -147,16 +149,16 @@ function ViewChangerComponent({
     if (theme.dropDownColorCode === 0) return DARK_THEME_DROPDOWN;
   };
 
-  useEffect(() => {
-    if (countState["dpiitCertified"]) {
-      setNewCount(countState["dpiitCertified"]);
-    }
-  }, [countState]);
+  // useEffect(() => {
+  //   if (countState["dpiitCertified"]) {
+  //     setNewCount(countState["dpiitCertified"]);
+  //   }
+  // }, [countState]);
 
   useEffect(() => {
     fetchDateRange();
     fetchStartUpTypes();
-    fetchStartUpCount();
+    // fetchStartUpCount();
     // fetchInitialCount(0);
   }, []);
 
@@ -191,6 +193,7 @@ function ViewChangerComponent({
         });
         data = response;
         key = startupTypeValues[startupType];
+        setLeadingSector(0);
       } else {
         const { data: response } = await axios.post("home/leadingsector", {
           ...appliedFilters,
@@ -199,6 +202,7 @@ function ViewChangerComponent({
         });
         data = response;
         key = "count";
+        setLeadingSector(response);
       }
 
       //setting up data in state
@@ -219,6 +223,17 @@ function ViewChangerComponent({
   useEffect(() => {
     setStartupCount(newCount);
   }, [newCount]);
+
+  useEffect(() => {
+    if (
+      leadingSector &&
+      appliedFilters.sectors.indexOf(leadingSector?._id.sectorId) === -1
+    ) {
+      let filters = { ...appliedFilters };
+      filters.sectors = [...filters.sectors, leadingSector?._id.sectorId];
+      setAppliedFilters(filters);
+    }
+  }, [leadingSector]);
 
   useEffect(() => {
     if (activeCard !== "Startups") {
@@ -331,7 +346,11 @@ function ViewChangerComponent({
               border={true}
             >
               {newCount > 0 ? (
-                <h3 className="p-0 m-0 text-center">{newCount}</h3>
+                <h4 className="p-0 m-0 text-center">
+                  {leadingSector
+                    ? `(${leadingSector._id.name}) ${newCount}`
+                    : newCount}
+                </h4>
               ) : (
                 <p className="text-muted m-0 p-0 font-500">
                   {"Data Not Available."}
