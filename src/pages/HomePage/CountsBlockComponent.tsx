@@ -187,7 +187,7 @@ const CountCard = ({
               }}
               className="mx-0 mb-0 p-0"
             >
-              {name === "Government" ? "Government to institiutions" : name}
+              {name}
             </h6>
             <div
               className={`count-underline d-block d-sm-none`}
@@ -307,7 +307,7 @@ const CountsBlockComponent = ({
     if (value === "incubators") return "theme-4";
     if (value === "investors") return "theme-5";
     if (value === "accelerators") return "theme-6";
-    if (value === "government") return "theme-7";
+    if (value === "institutions") return "theme-7";
   };
 
   const handleCardClick = (name: string, accessor: string) => {
@@ -406,7 +406,7 @@ const CountsBlockComponent = ({
           borderColor="#00AD11"
           accessor="GovernmentBody"
           acc="GovernmentBody"
-          name="Government"
+          name="Institutions"
         />
       </div>
     </div>

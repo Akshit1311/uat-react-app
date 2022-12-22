@@ -140,8 +140,6 @@ const HomePage = (props: HomePageTypes) => {
     }
   );
 
-  
-
   const BASE_URL = process.env.REACT_APP_BACKEND_ENDPOINT;
 
   const [fetchFilterList, filterState, filterLoading] = useMutate(
@@ -175,7 +173,6 @@ const HomePage = (props: HomePageTypes) => {
   const [fetchDateRange, dateRangeState, dateRangeLoading] = useQuery(
     "/static/searchDateRanges"
   );
- 
 
   const fetchDefaultFilterValues = (value: string) => {
     let split = ["", ""];
@@ -225,6 +222,7 @@ const HomePage = (props: HomePageTypes) => {
     countState,
     tableState,
     appliedFilters,
+    setAppliedFilters,
     setSelectedStateByMap,
     colorTheme: primaryColorTheme,
     tableLoading,
@@ -238,7 +236,7 @@ const HomePage = (props: HomePageTypes) => {
     dateRangeCount,
     setDateRangeCount,
     setStartupCount,
-    startupCount
+    startupCount,
   };
 
   const [selectedState, setSelectedState] = useState<any[]>([]);
@@ -283,7 +281,7 @@ const HomePage = (props: HomePageTypes) => {
     //   setSelectedCountBlock(queryCountBlock)
     // } else setSelectedCountBlock('Startup')
   }, [query.get("state"), query.get("id")]);
- 
+
   return (
     <>
       <div
