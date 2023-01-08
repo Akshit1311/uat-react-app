@@ -45,6 +45,7 @@ function StartUpCard({
   tagsLoading,
   logo,
   colorTheme,
+  role,
 }: any) {
   function htmlDecode(input: any) {
     var doc = new DOMParser().parseFromString(input, "text/html");
@@ -54,8 +55,8 @@ function StartUpCard({
   const [capitalizeText, setCapitalizeText] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const redirect = (id: string) => {
-    window.open(
-      `https://www.startupindia.gov.in/content/sih/en/profile.Startup.${id}.html`,
+    let type = window.open(
+      `https://www.startupindia.gov.in/content/sih/en/profile.${role}.${id}.html`,
       "_blank"
     );
   };
@@ -240,6 +241,7 @@ function StartupsListComponent(props: any) {
         index={index}
         tagsLoading={tagsLoading}
         colorTheme={props.colorTheme}
+        role={props.appliedFilters.roles[0]}
       />
     ));
   }, [renderedData]);
