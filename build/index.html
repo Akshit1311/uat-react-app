@@ -2,8 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/startup-india-maps/favicon.ico" />
-
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -11,70 +10,1868 @@
       content="Web site created using create-react-app"
     />
     <title>Startup India</title>
-    <link href="./static/css/2.576f2aab.chunk.css" rel="stylesheet" />
-    <link href="./static/css/main.b57f9750.chunk.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="./static/css/main.2ea0f3fe.chunk.css" rel="stylesheet" />
   </head>
   <body id="viewport">
-    <div id="root"></div>
+    <div class="onload">
+      <div class="banner-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="main-header">
+              <header class="nav-down">
+                <div class="iparys_inherited">
+                  <div id="mobile-header">
+                    <div class="mobile-top-header mega-menu-wrapper">
+                      <div class="mobile-row mob-d-flex mob-align-cntr">
+                        <div class="mobile-col-50">
+                          <div class="mob-d-flex mob-align-cntr">
+                            <div class="menu-icon mobile">
+                              <img src="/assets/image/menu-bar.png" />
+                            </div>
+                            <div class="mega-menu-logo-section">
+                              <a
+                                href="#!"
+                                class="logo nonsticky"
+                                data-page="homepage"
+                                ><img
+                                  src="/assets/image/Logo1.png"
+                                  alt="alt"
+                                /> </a
+                              ><a
+                                href="#!"
+                                class="logo sticky"
+                                data-page="homepage"
+                                ><img
+                                  src="/assets/image/fixed-Logo1.html"
+                                  alt="alt"
+                              /></a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mobile-col-50">
+                          <div
+                            class="d-flex align-items-center justify-content-end"
+                          >
+                            <div class="login-ragition-list">
+                              <ul>
+                                <li>
+                                  <a href="#!#!"
+                                    ><img
+                                      src="/assets/image/call-icon.png"
+                                      alt=""
+                                  /></a>
+                                </li>
+                                <li class="dropdown login-img">
+                                  <a
+                                    style="padding-right: 0"
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    href="#"
+                                    ><img
+                                      src="/assets/image/login-icon.png"
+                                      alt=""
+                                  /></a>
+                                  <ul class="dropdown-menu">
+                                    <li>
+                                      <a
+                                        href="#!"
+                                        data-toggle="modal"
+                                        data-target="#loginModal"
+                                        class="sign-in login"
+                                        >Login</a
+                                      >
+                                    </li>
+                                    <li>
+                                      <a
+                                        href="#"
+                                        class="register login"
+                                        onclick='window.location.href="#!"'
+                                        >Register</a
+                                      >
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                            <div
+                              class="dashboard-btn dash-4-show-hide dashboardLink"
+                            >
+                              <a href="#" title="Dashboard">Dashboard</a>
+                            </div>
+                            <div class="user-profile-outer loggedin">
+                              <div class="user-profile clearfix">
+                                <div
+                                  class="circle-profile-pic"
+                                  style="
+                                    background-image: url(../image/user_default_pic.jpg);
+                                  "
+                                  onclick='$(".loggedin-dropdown").toggle()'
+                                ></div>
+                              </div>
+                              <div
+                                class="user-dropdown-popup-outer loggedin-dropdown"
+                              >
+                                <div class="user-dropdown-popup">
+                                  <div class="user-link-outer">
+                                    <p class="user-name" id="user-name"></p>
+                                    <ul class="user-top-links">
+                                      <li
+                                        class="dash-4-show-hide mob-dashboard dashboardLink"
+                                      >
+                                        <a
+                                          class="dashboard"
+                                          href="#!"
+                                          title="Dashboard"
+                                          >Dashboard</a
+                                        >
+                                      </li>
+                                      <li class="view-profile">
+                                        <a href="#!">View Profile</a>
+                                      </li>
+                                      <li class="edit-profile">
+                                        <a href="#!">Edit Profile</a>
+                                      </li>
+                                    </ul>
+                                    <ul class="user-bottom-links">
+                                      <li class="connections non-dashboard">
+                                        <a href="#!"
+                                          >class="connections">My Connections</a
+                                        >
+                                      </li>
+                                      <li class="notification">
+                                        <a href="#!"
+                                          >title="Notifications"> Notifications
+                                          <div id="notification-link"></div
+                                        ></a>
+                                      </li>
+                                      <li class="showActSetting">
+                                        <a class="collapse">Settings</a>
+                                        <ul class="acc-setting-list">
+                                          <li
+                                            class="settings"
+                                            data-toggle="modal"
+                                            data-target=".settings-modal"
+                                            onclick="getSettings(this)"
+                                          >
+                                            <a>Privacy Settings</a>
+                                          </li>
+                                          <li
+                                            class="changeEmailOption chngtoggle"
+                                            data-toggle="modal"
+                                            onclick="showChangeUserNameOption(this)"
+                                          >
+                                            <a>Change Email ID</a>
+                                          </li>
+                                          <li
+                                            class="changePwdOption chngtoggle"
+                                            onclick="showChangePasswordOption(this)"
+                                          >
+                                            <a>Change Password</a>
+                                          </li>
+                                          <li
+                                            class="createPwdOptn chngtoggle"
+                                            onclick="showCreatePasswordOption(this)"
+                                          >
+                                            <a>Create Password</a>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                      <li
+                                        class="switch-user fa-2x fa-copy display-n"
+                                        onclick="switchToStartup()"
+                                      >
+                                        <a>Switch to Startup</a>
+                                      </li>
+                                      <li
+                                        class="user-logout"
+                                        onclick="showLogoutModal()"
+                                      >
+                                        <a>Logout</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mobile-row mob-d-flex mob-align-cntr">
+                        <div class="mobile-col-100">
+                          <form
+                            class="header-search-wrap search_field clearfix"
+                            action="javascript:searchResult();"
+                          >
+                            <div class="m-inputWithIcon">
+                              <input
+                                id="search-here"
+                                class="global-search"
+                                name="search"
+                                placeholder="Search here"
+                              />
+                              <span id="search-listing" class="search-submit"
+                                ><i class="fa fa-search" aria-hidden="true"></i
+                              ></span>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="header-top-section">
+                    <div class="my-container">
+                      <div class="row d-flex">
+                        <div class="col-md-6 header-top-col-5">
+                          <div class="tobar-left">
+                            <ul>
+                              <li class="logo-1">
+                                <a href="#" target="_blank"
+                                  ><img
+                                    src="/assets/image/Gov of IND.png"
+                                    alt="Government Of India Logo"
+                                /></a>
+                              </li>
+                              <li class="logo-2">
+                                <a href="#" target="_blank"
+                                  ><img
+                                    src="/assets/image/MOCAI.png"
+                                    alt="Commerce And Industry Minsitry"
+                                /></a>
+                              </li>
+                              <li>
+                                <a href="#" id="followid"
+                                  >Follow Us
+                                  <i
+                                    class="fa fa-caret-right"
+                                    aria-hidden="true"
+                                  ></i
+                                ></a>
+                                <div class="follow-wrapp">
+                                  <a
+                                    href="https://www.facebook.com/StartupIndia/"
+                                    target="_blanck"
+                                    class="fb"
+                                    ><i
+                                      class="fa fa-facebook"
+                                      aria-hidden="true"
+                                    ></i> </a
+                                  ><a
+                                    href="https://twitter.com/startupindia?lang=en"
+                                    target="_blanck"
+                                    class="twitters"
+                                    ><i
+                                      class="fa fa-twitter itwitter"
+                                      aria-hidden="true"
+                                    ></i> </a
+                                  ><a
+                                    href="https://in.linkedin.com/company/startup-india"
+                                    class="linkdeen"
+                                    ><i
+                                      class="fa fa-linkedin"
+                                      aria-hidden="true"
+                                    ></i
+                                  ></a>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <script>
+                            $("#followid").click(function () {
+                              $(".follow-wrapp").toggleClass("dflex");
+                            }),
+                              $(".searchtoggle").click(function () {
+                                $(".search_box").toggleClass("show");
+                              });
+                          </script>
+                        </div>
+                        <div class="col-md-6 header-top-col-7">
+                          <div class="tobar-right">
+                            <ul>
+                              <li>
+                                <a href="mailto:dipp-startups@nic.in"
+                                  ><img
+                                    src="/assets/image/mail-icon.png"
+                                    alt=""
+                                  />
+                                  dipp-startups@nic.in</a
+                                >
+                              </li>
+                              <li>
+                                <p class="desktop">
+                                  <strong>Our Toll Free Number : </strong
+                                  ><a href="javascript:void(0);">1800 115 565</a
+                                  ><span>(10:00 AM to 05:30 PM)</span>
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main-header-row1">
+                    <div
+                      class="mid-header-wrap mega-menu-wrapper middle-header desktop-menu2"
+                    >
+                      <div class="my-container clearfix">
+                        <div class="row d-flex">
+                          <div class="col-md-6 middle-header-col-md-7">
+                            <div class="mega-menu-logo-section">
+                              <a
+                                href="#"
+                                class="logo nonsticky"
+                                data-page="home-page"
+                                ><img
+                                  src="/assets/image/Logo1.png"
+                                  alt="alt"
+                                /> </a
+                              ><a
+                                href="#"
+                                class="logo sticky"
+                                data-page="home-page"
+                                ><img
+                                  src="/assets/image/fixed-Logo1.html"
+                                  alt="alt"
+                                /> </a
+                              ><a
+                                href="#"
+                                class="logo nonsticky"
+                                data-page="home-page"
+                                ><img src="/assets/image/DPIIT.svg" /> </a
+                              ><a
+                                href="#"
+                                class="logo sticky"
+                                data-page="home-page"
+                                ><img src="/assets/image/fixed-DPIIT.svg" /> </a
+                              ><a
+                                href="#"
+                                class="logo nonsticky"
+                                data-page="home-page"
+                                ><img src="/assets/image/logo3.png" /> </a
+                              ><a
+                                href="#"
+                                class="logo sticky"
+                                data-page="home-page"
+                                ><img
+                                  src="../../dam/invest-india/newhomepage/fixed-logo3.html"
+                              /></a>
+                            </div>
+                          </div>
+                          <div class="col-md-6 middle-header-col-md-4{">
+                            <div
+                              class="d-flex align-items-center justify-content-end"
+                            >
+                              <div class="search_box">
+                                <form
+                                  class="header-search-wrap search_field clearfix"
+                                  action="javascript:searchResult();"
+                                  novalidate="true"
+                                >
+                                  <input
+                                    id="search-here"
+                                    class="global-search"
+                                    name="search"
+                                    placeholder="Search here"
+                                  />
+                                  <span
+                                    id="search-listing"
+                                    class="search-submit"
+                                    ><i
+                                      class="fa fa-search"
+                                      aria-hidden="true"
+                                    ></i
+                                  ></span>
+                                </form>
+                              </div>
+                              <div class="login-ragition-list">
+                                <ul>
+                                  <li>
+                                    <a
+                                      href="#"
+                                      data-toggle="modal"
+                                      data-target="#loginModal"
+                                      class="sign-in login"
+                                      >Login</a
+                                    >
+                                  </li>
+                                  <li>
+                                    <a
+                                      href="#"
+                                      class="register login"
+                                      onclick='window.location.href="#!"'
+                                      >Register</a
+                                    >
+                                  </li>
+                                  <li class="noti-dis-none">
+                                    <a href="#"
+                                      ><i
+                                        class="fa fa-bell"
+                                        aria-hidden="true"
+                                      ></i>
+                                      <span>10</span></a
+                                    >
+                                  </li>
+                                </ul>
+                              </div>
+                              <div
+                                class="dashboard-btn dash-4-show-hide dashboardLink hidden"
+                              >
+                                <a href="#" title="Dashboard">Dashboard</a>
+                              </div>
+                              <div class="user-profile-outer not-loggedin">
+                                <div class="user-profile clearfix"></div>
+                                <div
+                                  class="user-dropdown-popup-outer loggedin-dropdown"
+                                >
+                                  <div class="user-dropdown-popup">
+                                    <div class="user-link-outer">
+                                      <p class="user-name" id="user-name"></p>
+                                      <ul class="user-top-links">
+                                        <li
+                                          class="dash-4-show-hide mob-dashboard dashboardLink hidden"
+                                        >
+                                          <a
+                                            class="dashboard"
+                                            href="#!"
+                                            title="Dashboard"
+                                            >Dashboard</a
+                                          >
+                                        </li>
+                                        <li class="view-profile">
+                                          <a href="#!">View Profile</a>
+                                        </li>
+                                        <li class="edit-profile">
+                                          <a href="#">Edit Profile</a>
+                                        </li>
+                                      </ul>
+                                      <ul class="user-bottom-links">
+                                        <li class="connections non-dashboard">
+                                          <a href="#" class="connections"
+                                            >My Connections</a
+                                          >
+                                        </li>
+                                        <li class="notification">
+                                          <a href="#" title="Notifications"
+                                            >Notifications
+                                            <div id="notification-link"></div
+                                          ></a>
+                                        </li>
+                                        <li class="showActSetting">
+                                          <a class="collapse">Settings</a>
+                                          <ul class="acc-setting-list">
+                                            <li
+                                              class="settings"
+                                              data-toggle="modal"
+                                              data-target=".settings-modal"
+                                              onclick="getSettings(this)"
+                                            >
+                                              <a>Privacy Settings</a>
+                                            </li>
+                                            <li
+                                              class="changeEmailOption chngtoggle"
+                                              data-toggle="modal"
+                                              onclick="showChangeUserNameOption(this)"
+                                            >
+                                              <a>Change Email ID</a>
+                                            </li>
+                                            <li
+                                              class="changePwdOption chngtoggle"
+                                              onclick="showChangePasswordOption(this)"
+                                            >
+                                              <a>Change Password</a>
+                                            </li>
+                                            <li
+                                              class="createPwdOptn chngtoggle"
+                                              onclick="showCreatePasswordOption(this)"
+                                            >
+                                              <a>Create Password</a>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li
+                                          class="user-logout"
+                                          onclick="showLogoutModal()"
+                                        >
+                                          <a>Logout</a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mid-header-wrap mega-menu-wrapper menu-nav">
+                      <div class="my-container clearfix animation-nav">
+                        <div class="mega-menu-right-side-content">
+                          <div class="menu-icon desktop">
+                            <span class="menu-icon-inr"></span>
+                            <span class="menu-icon-inr"></span>
+                            <span class="menu-icon-inr"></span>
+                          </div>
+                          <div class="mega-menu-top-nav-container">
+                            <div class="mobile-nav-head clearfix">
+                              <i class="back"></i>
+                              <h3>Menu</h3>
+                              <i class="nav-close"></i>
+                            </div>
+                            <div class="top-nav-wrapper clearfix">
+                              <div class="top-navbar">
+                                <div class="menu">
+                                  <ul class="header-menu">
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);">About</a>
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="https://www.startupindia.gov.in/content/dam/invest-india/Templates/public/Action__Plan.pdf"
+                                                      >Startup India Action
+                                                      Plan</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup India Hub</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Contact Us</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Newsletter</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >FAQ</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="https://www.startupindia.gov.in/content/dam/invest-india/Templates/public/5_years_Achievement_report _ final (1).pdf"
+                                                      >Evolution of Startup
+                                                      India | 5-Year Report</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="https://www.startupindia.gov.in/content/dam/invest-india/Templates/public/Startup_India-Way_Ahead.pdf"
+                                                      >Startup India | Way
+                                                      Ahead</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="https://www.startupindia.gov.in/content/dam/invest-india/Templates/public/Startup India_Logo Application Guidelines.pdf"
+                                                      >Startup India Logo Usage
+                                                      Guidelines</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Apply for Startup India
+                                                      Logo</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);"
+                                        >Recognition</a
+                                      >
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >DPIIT Recognition &amp;
+                                                      Benefits</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Apply for DPIIT
+                                                      Recognition</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Apply for Tax
+                                                      Exemptions</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Verify/Download
+                                                      Certificate</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="https://www.startupindia.gov.in/content/dam/invest-india/Templates/public/Revised Guidelines for recognition of Startups 21.06.2021.pdf"
+                                                      >DPIIT Recognition
+                                                      Guidelines</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Income Tax Exemption
+                                                      Notifications</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown network-container">
+                                      <a href="javascript:void(0);">Funding</a>
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup India Seed Fund
+                                                      Scheme</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Funding Guide</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Central Govt Schemes
+                                                      &amp; Policies</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      >Credit Guarantee
+                                                      Scheme</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);"
+                                        >Regulatory Support</a
+                                      >
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup India Regulatory
+                                                      Support</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Central Govt Schemes
+                                                      &amp; Policies</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Women Entrepreneurship</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Know your State/UT
+                                                      Startup Policies</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);"
+                                        >Market Access</a
+                                      >
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Explore Startup Programs
+                                                      &amp; Challenges</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >India Go-to-Market
+                                                      Guide</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Partner With Us</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >International Engagement
+                                                      &amp; Bridges</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Procurement by
+                                                      Government</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);"
+                                        >Marquee Initiatives</a
+                                      >
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >States&#39; Ranking
+                                                      Framework</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >National Startup
+                                                      Awards</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Shanghai Cooperation
+                                                      Organization (SCO) Startup
+                                                      Forum</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup Yatra – Stratup
+                                                      India Reach Program</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup India Seed Fund
+                                                      Scheme</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >MAARG Mentorship
+                                                      Platform</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);"
+                                        >Resources</a
+                                      >
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="https://www.startupindia.gov.in/content/dam/invest-india/Templates/public/startup_kit (2).pdf"
+                                                      >Startup India Kit</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Online Learning</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Partnered Services for
+                                                      Registered Startups</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Market Research
+                                                      Reports</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >List of Patent
+                                                      Facilitators</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >List of Trademark
+                                                      Facilitators</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup Idea Bank</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startup India Blogs</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);"
+                                        >Get Featured</a
+                                      >
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Showcase</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      >Startup Champions on
+                                                      Doordarshan</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Explore Startup Programs
+                                                      &amp; Challenges</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >National Startup
+                                                      Awards</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="dropdown">
+                                      <a href="javascript:void(0);">Network</a>
+                                      <div
+                                        class="dropdown-content-outer dropdown-small"
+                                      >
+                                        <div class="dropdown-content">
+                                          <div class="mega-menu-inner clearfix">
+                                            <div class="mega-menu-sub-block">
+                                              <div class="mega-menu-full">
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >MAARG Mentorship
+                                                      Platform</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Startups</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Mentors</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Incubators</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Investors</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Corporate/Accelerators</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Government Bodies</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                                <div class="mega-cta-outer">
+                                                  <div class="mega-cta-inner">
+                                                    <a
+                                                      class="explore-more"
+                                                      target="_blank"
+                                                      href="#!"
+                                                      >Discussion Forum</a
+                                                    >
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mobile-lang-select"></div>
+                        </div>
+                        <div
+                          class="menu user-profile-controls notification-container"
+                          profile-detail-url="/api/noauth/oauth2/details?code="
+                          create-profile=""
+                          update-profile=""
+                          recognition-page=""
+                          create-int-profile=""
+                          dashboard=""
+                          email-verification=""
+                          home-page=""
+                          login-page=""
+                          site-domain=""
+                          main-domain=""
+                          sih-logo1-url=""
+                          sih-logo2-url=""
+                          sih-logo3-url=""
+                          error-page="/content/sih/en/error-page"
+                          search-page=""
+                          registration-page=""
+                          admin-service-base-url=""
+                          style="display: none"
+                        >
+                          <ul class="pull-right header-menu user-settings">
+                            <li class="dropdown"></li>
+                          </ul>
+                        </div>
+                        <div class="no-profile persona-creation aaa display-n">
+                          <div class="pull-left user-details">
+                            <div class="user-name"></div>
+                            <span class="status">New User</span>
+                          </div>
+                          <div
+                            class="circle-profile-pic"
+                            style="
+                              background-image: url(../../../etc/designs/invest-india/investindialibs/images/user-default-pic-new.png);
+                            "
+                          ></div>
+                          <ul class="dropdown-content notification-info">
+                            <li onclick="showLogoutModal()">
+                              <a
+                                ><span
+                                  class="fa fa-sign-out padding-r10"
+                                ></span>
+                                Logout</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="user-signup">
+                          <div class="logout-user">
+                            <ul class="header-menu user-settings">
+                              <li
+                                class="dropdown non-dashboard non-profile search search-notification"
+                              ></li>
+                            </ul>
+                            <span class="logout-user-icon"
+                              ><img
+                                src="../../../etc/designs/invest-india/investindialibs/images/login-user-icon.png"
+                                class="sticky"
+                                alt="0"
+                                border="0"
+                              />
+                              <img
+                                src="../../../etc/designs/invest-india/investindialibs/images/login-user-icon-mobile.png"
+                                alt="0"
+                                border="0"
+                              />
+                              <small class="logout-user-arw"></small>
+                              <ul class="logout-user-list">
+                                <li>
+                                  <button
+                                    data-toggle="modal"
+                                    data-target="#loginModal"
+                                    onclick='openTab("login-tab-1")'
+                                    class="btn btn-default btn-type1 sign-in"
+                                  >
+                                    Login
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    data-toggle="modal"
+                                    data-target="#loginModal"
+                                    class="btn btn-default btn-type2 register"
+                                    onclick='openTab("login-tab-2")'
+                                  >
+                                    <span
+                                      class="fa fa-lock margin-r5 icon-signup"
+                                    ></span
+                                    >Register
+                                  </button>
+                                </li>
+                              </ul></span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <script
+                  id="notification-count-template"
+                  type="text/x-handlebars-template"
+                >
+                  <span class="numbers">{{data}}</span>
+                </script>
+              </header>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="root" style="min-height: 100vh"></div>
+    <div class="onload">
+      <footer class="new-footer-wrappers">
+        <div class="container clearfix">
+          <div>
+            <div class="iparys_inherited">
+              <div class="embed-link text-center">
+                <footer id="m-footer">
+                  <div class="row m-0">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="m-footer-logo">
+                        <img src="/assets/image/footer-logo.png" alt="" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row m-0">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="m-subscribe">
+                        <input
+                          placeholder="Enter your email"
+                          type="email"
+                          id="subscribeEmailMobile"
+                        />
+                        <button
+                          onclick='subscribe_email_mailmodo("mobile")'
+                          class="button-subscrip"
+                        >
+                          Subscribe
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row m-0">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="m-toll-free">
+                        <ul>
+                          <li>Toll Free Number: 1800 115 565</li>
+                          <li>Working Hrs: 10:00 am - 5:30 pm</li>
+                          <li>Email: dipp-startups@nic.in</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row m-0">
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                      <div class="m-useoflink">
+                        <ul>
+                          <li>
+                            <a href="#!" target="_blanck">Terms of Use</a>
+                          </li>
+                          <li>
+                            <a href="#!" target="_blanck"
+                              >Use Startup India Logo</a
+                            >
+                          </li>
+                          <li><a href="#">Request For Proposal</a></li>
+                          <li><a href="#">Blogs</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                      <div class="m-useoflink">
+                        <ul>
+                          <li><a href="#!" target="_blanck">Disclaimer</a></li>
+                          <li>
+                            <a href="#!" target="_blanck">Privacy Policy</a>
+                          </li>
+                          <li><a href="#!" target="_blanck">Contact Us</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row m-0 border-top-solid">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="m-visited-user">
+                        <p class="m-0"><span>15567</span></p>
+                        <p>
+                          users were visited our site since end of the October
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="m-footer-btm">
+                    <div class="row m-0">
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <div class="m-footer-btm-left">
+                          <a href="#!" target="_blanck"
+                            ><img src="/assets/image/DPIIT-footer.svg" alt=""
+                          /></a>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6">
+                        <div class="m-footer-btm-left">
+                          <a href="#!" target="_blanck"
+                            ><img
+                              src="/assets/image/investindia-logo.png"
+                              alt=""
+                          /></a>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="m-copy-right">
+                          <p>© 2022 Startup India. All Rights Reserved.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </footer>
+                <footer id="footer">
+                  <div class="my-container">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="footer-logo">
+                          <img src="/assets/image/footer-logo.png" alt="" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="subscribe">
+                          <input
+                            placeholder="Enter your email"
+                            type="email"
+                            id="subscribeEmailWeb"
+                          />
+                          <button
+                            onclick='subscribe_email_mailmodo("web")'
+                            class="button-subscrip"
+                          >
+                            Subscribe
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="last-updated">
+                          <h5>Last Updated:</h5>
+                          <h6>20-JUL-2022 | 12:29 PM</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-5">
+                      <div class="col-md-5">
+                        <div class="footer-addres">
+                          <ul>
+                            <li><p>Toll Free Number: 1800 115 565</p></li>
+                            <li><p>Working Hrs: 10:00 am - 5:30 pm</p></li>
+                            <li><p>Email: dipp-startups@nic.in</p></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="useoflink">
+                          <ul>
+                            <li>
+                              <a href="#!" target="_blanck">Terms of Use</a>
+                            </li>
+                            <li>
+                              <a href="#!" target="_blanck"
+                                >Use Startup India Logo</a
+                              >
+                            </li>
+                            <li><a href="#">Request For Proposal</a></li>
+                            <li><a href="#">Blogs</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="useoflink">
+                          <ul>
+                            <li>
+                              <a href="#!" target="_blanck">Disclaimer</a>
+                            </li>
+                            <li>
+                              <a href="#!" target="_blanck">Privacy Policy</a>
+                            </li>
+                            <li>
+                              <a href="#!" target="_blanck">Contact Us</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="section-visitors">
+                    <div class="my-container">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="visitors">
+                            <p>
+                              15567 users were visited our site since end of the
+                              October
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="footer-btm-section">
+                    <div class="my-container">
+                      <div class="row row-flix align-items-center">
+                        <div class="col-md-4">
+                          <div class="footer-btm-left">
+                            <a href="#!" target="_blanck"
+                              ><img src="/assets/image/DPIIT-footer.svg" alt=""
+                            /></a>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="footer-btm-center">
+                            <a
+                              href="https://www.investindia.gov.in/"
+                              target="_blanck"
+                              ><img
+                                src="/assets/image/investindia-logo.png"
+                                alt=""
+                            /></a>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="footer-btm-copy-right">
+                            <p>© 2022 Startup India. All Rights Reserved.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </footer>
+                <div id="subcriptionEmailpopup1" class="modal-email">
+                  <div class="modal-content-email">
+                    <div class="modal-header-email">
+                      <span
+                        id="subcriptionEmailpopupclosebtn"
+                        class="close-email"
+                        >&times;</span
+                      >
+                    </div>
+                    <div class="modal-body-email">
+                      <div class="success-container">
+                        <div class="modalbox success">
+                          <div class="icon">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                          </div>
+                          <h1>Thank you for subscribing to Startup India</h1>
+                          <p>
+                            <a href="#!">Click here</a> if not yet registered
+                            with the same email address
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="subcriptionEmailpopup1Error" class="modal-email">
+                  <div class="modal-content-email">
+                    <div class="modal-header-email modal-header-email-error">
+                      <span
+                        id="subcriptionEmailErrorpopupclosebtn"
+                        class="close-email"
+                        >&times;</span
+                      >
+                    </div>
+                    <div class="modal-body-email">
+                      <div class="success-container">
+                        <div class="modalbox success myerror">
+                          <div class="icon">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                          </div>
+                          <br />
+                          <h6 id="si-error-text"></h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a id="pagedown"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="new-footer-side-bg"></div>
+      </footer>
+    </div>
+    <script type="text/jsx" src="/assets/js/custom.js"></script>
+    <script type="text/javascript">
+      $(window).scroll(function () {
+        $(window).scrollTop() >= 150
+          ? $(".menu-nav").addClass("header-sticky")
+          : $(".menu-nav").removeClass("header-sticky");
+      });
+    </script>
+    <script>
+      let topBtn = document.querySelector("#pagedown");
+      (topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" })),
+        (window.onscroll = () =>
+          window.scrollY > 500
+            ? (topBtn.style.opacity = 1)
+            : (topBtn.style.opacity = 0));
+    </script>
     <script>
       !(function (e) {
         function t(t) {
           for (
-            var n, i, l = t[0], a = t[1], f = t[2], c = 0, s = [];
-            c < l.length;
-            c++
+            var n, o, u = t[0], i = t[1], f = t[2], l = 0, d = [];
+            l < u.length;
+            l++
           )
-            (i = l[c]),
-              Object.prototype.hasOwnProperty.call(o, i) &&
-                o[i] &&
-                s.push(o[i][0]),
-              (o[i] = 0);
-          for (n in a)
-            Object.prototype.hasOwnProperty.call(a, n) && (e[n] = a[n]);
-          for (p && p(t); s.length; ) s.shift()();
-          return u.push.apply(u, f || []), r();
+            (o = u[l]),
+              Object.prototype.hasOwnProperty.call(a, o) &&
+                a[o] &&
+                d.push(a[o][0]),
+              (a[o] = 0);
+          for (n in i)
+            Object.prototype.hasOwnProperty.call(i, n) && (e[n] = i[n]);
+          for (s && s(t); d.length; ) d.shift()();
+          return c.push.apply(c, f || []), r();
         }
         function r() {
-          for (var e, t = 0; t < u.length; t++) {
-            for (var r = u[t], n = !0, l = 1; l < r.length; l++) {
-              var a = r[l];
-              0 !== o[a] && (n = !1);
+          for (var e, t = 0; t < c.length; t++) {
+            for (var r = c[t], n = !0, o = 1; o < r.length; o++) {
+              var i = r[o];
+              0 !== a[i] && (n = !1);
             }
-            n && (u.splice(t--, 1), (e = i((i.s = r[0]))));
+            n && (c.splice(t--, 1), (e = u((u.s = r[0]))));
           }
           return e;
         }
         var n = {},
-          o = { 1: 0 },
-          u = [];
-        function i(t) {
+          o = { 5: 0 },
+          a = { 5: 0 },
+          c = [];
+        function u(t) {
           if (n[t]) return n[t].exports;
           var r = (n[t] = { i: t, l: !1, exports: {} });
-          return e[t].call(r.exports, r, r.exports, i), (r.l = !0), r.exports;
+          return e[t].call(r.exports, r, r.exports, u), (r.l = !0), r.exports;
         }
-        (i.m = e),
-          (i.c = n),
-          (i.d = function (e, t, r) {
-            i.o(e, t) ||
+        (u.e = function (e) {
+          var t = [];
+          o[e]
+            ? t.push(o[e])
+            : 0 !== o[e] &&
+              { 0: 1, 1: 1, 8: 1, 11: 1, 12: 1, 13: 1, 14: 1 }[e] &&
+              t.push(
+                (o[e] = new Promise(function (t, r) {
+                  for (
+                    var n =
+                        "static/css/" +
+                        ({}[e] || e) +
+                        "." +
+                        {
+                          0: "19270a16",
+                          1: "576f2aab",
+                          2: "31d6cfe0",
+                          3: "31d6cfe0",
+                          7: "31d6cfe0",
+                          8: "baa37008",
+                          9: "31d6cfe0",
+                          10: "31d6cfe0",
+                          11: "989b9553",
+                          12: "8027f6f7",
+                          13: "4586c376",
+                          14: "baa37008",
+                          15: "31d6cfe0",
+                          16: "31d6cfe0",
+                          17: "31d6cfe0",
+                        }[e] +
+                        ".chunk.css",
+                      a = u.p + n,
+                      c = document.getElementsByTagName("link"),
+                      i = 0;
+                    i < c.length;
+                    i++
+                  ) {
+                    var f =
+                      (s = c[i]).getAttribute("data-href") ||
+                      s.getAttribute("href");
+                    if ("stylesheet" === s.rel && (f === n || f === a))
+                      return t();
+                  }
+                  var l = document.getElementsByTagName("style");
+                  for (i = 0; i < l.length; i++) {
+                    var s;
+                    if (
+                      (f = (s = l[i]).getAttribute("data-href")) === n ||
+                      f === a
+                    )
+                      return t();
+                  }
+                  var d = document.createElement("link");
+                  (d.rel = "stylesheet"),
+                    (d.type = "text/css"),
+                    (d.onload = t),
+                    (d.onerror = function (t) {
+                      var n = (t && t.target && t.target.src) || a,
+                        c = new Error(
+                          "Loading CSS chunk " + e + " failed.\n(" + n + ")"
+                        );
+                      (c.code = "CSS_CHUNK_LOAD_FAILED"),
+                        (c.request = n),
+                        delete o[e],
+                        d.parentNode.removeChild(d),
+                        r(c);
+                    }),
+                    (d.href = a),
+                    document.getElementsByTagName("head")[0].appendChild(d);
+                }).then(function () {
+                  o[e] = 0;
+                }))
+              );
+          var r = a[e];
+          if (0 !== r)
+            if (r) t.push(r[2]);
+            else {
+              var n = new Promise(function (t, n) {
+                r = a[e] = [t, n];
+              });
+              t.push((r[2] = n));
+              var c,
+                i = document.createElement("script");
+              (i.charset = "utf-8"),
+                (i.timeout = 120),
+                u.nc && i.setAttribute("nonce", u.nc),
+                (i.src = (function (e) {
+                  return (
+                    u.p +
+                    "static/js/" +
+                    ({}[e] || e) +
+                    "." +
+                    {
+                      0: "8f8a7cf7",
+                      1: "a9ae789a",
+                      2: "f3ff0be0",
+                      3: "c9b97f89",
+                      7: "d7588c99",
+                      8: "11f9cc2f",
+                      9: "54481246",
+                      10: "903fd96b",
+                      11: "e9104b37",
+                      12: "2e5e7622",
+                      13: "2817d703",
+                      14: "2a9452a5",
+                      15: "34842613",
+                      16: "60e68381",
+                      17: "541d73ab",
+                    }[e] +
+                    ".chunk.js"
+                  );
+                })(e));
+              var f = new Error();
+              c = function (t) {
+                (i.onerror = i.onload = null), clearTimeout(l);
+                var r = a[e];
+                if (0 !== r) {
+                  if (r) {
+                    var n = t && ("load" === t.type ? "missing" : t.type),
+                      o = t && t.target && t.target.src;
+                    (f.message =
+                      "Loading chunk " +
+                      e +
+                      " failed.\n(" +
+                      n +
+                      ": " +
+                      o +
+                      ")"),
+                      (f.name = "ChunkLoadError"),
+                      (f.type = n),
+                      (f.request = o),
+                      r[1](f);
+                  }
+                  a[e] = void 0;
+                }
+              };
+              var l = setTimeout(function () {
+                c({ type: "timeout", target: i });
+              }, 12e4);
+              (i.onerror = i.onload = c), document.head.appendChild(i);
+            }
+          return Promise.all(t);
+        }),
+          (u.m = e),
+          (u.c = n),
+          (u.d = function (e, t, r) {
+            u.o(e, t) ||
               Object.defineProperty(e, t, { enumerable: !0, get: r });
           }),
-          (i.r = function (e) {
+          (u.r = function (e) {
             "undefined" != typeof Symbol &&
               Symbol.toStringTag &&
               Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
               Object.defineProperty(e, "__esModule", { value: !0 });
           }),
-          (i.t = function (e, t) {
-            if ((1 & t && (e = i(e)), 8 & t)) return e;
+          (u.t = function (e, t) {
+            if ((1 & t && (e = u(e)), 8 & t)) return e;
             if (4 & t && "object" == typeof e && e && e.__esModule) return e;
             var r = Object.create(null);
             if (
-              (i.r(r),
+              (u.r(r),
               Object.defineProperty(r, "default", { enumerable: !0, value: e }),
               2 & t && "string" != typeof e)
             )
               for (var n in e)
-                i.d(
+                u.d(
                   r,
                   n,
                   function (t) {
@@ -83,7 +1880,7 @@
                 );
             return r;
           }),
-          (i.n = function (e) {
+          (u.n = function (e) {
             var t =
               e && e.__esModule
                 ? function () {
@@ -92,22 +1889,25 @@
                 : function () {
                     return e;
                   };
-            return i.d(t, "a", t), t;
+            return u.d(t, "a", t), t;
           }),
-          (i.o = function (e, t) {
+          (u.o = function (e, t) {
             return Object.prototype.hasOwnProperty.call(e, t);
           }),
-          (i.p = "/");
-        var l = (this["webpackJsonpinvest-india"] =
+          (u.p = "/"),
+          (u.oe = function (e) {
+            throw (console.error(e), e);
+          });
+        var i = (this["webpackJsonpinvest-india"] =
             this["webpackJsonpinvest-india"] || []),
-          a = l.push.bind(l);
-        (l.push = t), (l = l.slice());
-        for (var f = 0; f < l.length; f++) t(l[f]);
-        var p = a;
+          f = i.push.bind(i);
+        (i.push = t), (i = i.slice());
+        for (var l = 0; l < i.length; l++) t(i[l]);
+        var s = f;
         r();
       })([]);
     </script>
-    <script src="./static/js/2.83b3ef82.chunk.js"></script>
-    <script src="./static/js/main.da553279.chunk.js"></script>
+    <script src="./static/js/6.fb56aca9.chunk.js"></script>
+    <script src="./static/js/main.7f1656ae.chunk.js"></script>
   </body>
 </html>
