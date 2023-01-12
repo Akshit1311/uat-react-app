@@ -178,12 +178,14 @@ function ViewChangerComponent({
   };
 
   const fetchInitialCount = async (startupType: number, dateRange: string) => {
+    let delayDebounceFn: any;
     try {
       // create and get api url
       const type = startupTypeValues[startupType];
       let url = apiUrl(dateRange, type);
-      let data;
+      let data = null;
       let key;
+
       // get data from api call
       if (startupType != 8) {
         const { data: response } = await axios.post(url, {
@@ -249,16 +251,11 @@ function ViewChangerComponent({
   }, [activeCard]);
 
   useEffect(() => {
-    // if (selectedStartTypeIndex == 0) {
-    //   setNewCount(startupCount);
-    //   if (startupCount > 0) {
-    //     setDateRangeCount(true);
-    //   } else {
-    //     setDateRangeCount(false);
-    //   }
-    // } else {
-    fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
-    // }
+    let delayDebounceFn: any;
+    delayDebounceFn = setTimeout(() => {
+      fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
+    }, 100);
+    return () => clearTimeout(delayDebounceFn);
   }, [appliedFilters, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {
