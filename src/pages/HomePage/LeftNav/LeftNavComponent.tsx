@@ -355,6 +355,8 @@ const LeftNavComponent = (props: any) => {
     ) {
       let sectors = [...appliedFilters.sectors];
       setSelectedSector(sectors);
+    } else {
+      setSelectedSector([]);
     }
   }, [appliedFilters.sectors]);
   const handleChange =
@@ -388,13 +390,14 @@ const LeftNavComponent = (props: any) => {
       stages: [],
     }));
     setSelectedArea(MapVariables.INDIA);
-    history.push(baseRoute + "/maps/");
+
     setStateViewMode(false);
     setSelectedState([]);
     setSelectedSector([]);
     setSelectedIndustry([]);
     setSelectedStages([]);
     setSelectedStages([]);
+    history.push(baseRoute + "/maps/");
   };
 
   const isResetFilterVisible =

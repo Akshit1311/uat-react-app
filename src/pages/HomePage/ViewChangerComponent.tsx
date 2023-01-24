@@ -195,6 +195,7 @@ function ViewChangerComponent({
         });
         data = response;
         key = startupTypeValues[startupType];
+
         setLeadingSector(0);
       } else {
         const { data: response } = await axios.post("home/leadingsector", {
@@ -233,6 +234,7 @@ function ViewChangerComponent({
     ) {
       let filters = { ...appliedFilters };
       filters.sectors = [...filters.sectors, leadingSector?._id.sectorId];
+      setSelectedStartupTypeIndex(8);
       setAppliedFilters(filters);
     }
   }, [leadingSector]);
@@ -251,6 +253,13 @@ function ViewChangerComponent({
   }, [activeCard]);
 
   useEffect(() => {
+    if (
+      appliedFilters &&
+      appliedFilters.sectors &&
+      appliedFilters.sectors.length == 0
+    ) {
+      setSelectedStartupTypeIndex(1);
+    }
     let delayDebounceFn: any;
     delayDebounceFn = setTimeout(() => {
       fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
