@@ -178,12 +178,14 @@ function ViewChangerComponent({
   };
 
   const fetchInitialCount = async (startupType: number, dateRange: string) => {
+    let delayDebounceFn: any;
     try {
       // create and get api url
       const type = startupTypeValues[startupType];
       let url = apiUrl(dateRange, type);
-      let data;
+      let data = null;
       let key;
+
       // get data from api call
       if (startupType != 8) {
         const { data: response } = await axios.post(url, {
@@ -193,6 +195,7 @@ function ViewChangerComponent({
         });
         data = response;
         key = startupTypeValues[startupType];
+
         setLeadingSector(0);
       } else {
         const { data: response } = await axios.post("home/leadingsector", {
@@ -231,6 +234,7 @@ function ViewChangerComponent({
     ) {
       let filters = { ...appliedFilters };
       filters.sectors = [...filters.sectors, leadingSector?._id.sectorId];
+      setSelectedStartupTypeIndex(8);
       setAppliedFilters(filters);
     }
   }, [leadingSector]);
@@ -249,16 +253,18 @@ function ViewChangerComponent({
   }, [activeCard]);
 
   useEffect(() => {
-    // if (selectedStartTypeIndex == 0) {
-    //   setNewCount(startupCount);
-    //   if (startupCount > 0) {
-    //     setDateRangeCount(true);
-    //   } else {
-    //     setDateRangeCount(false);
-    //   }
-    // } else {
-    fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
-    // }
+    if (
+      appliedFilters &&
+      appliedFilters.sectors &&
+      appliedFilters.sectors.length == 0
+    ) {
+      setSelectedStartupTypeIndex(1);
+    }
+    let delayDebounceFn: any;
+    delayDebounceFn = setTimeout(() => {
+      fetchInitialCount(selectedStartTypeIndex, selectedDateRange);
+    }, 100);
+    return () => clearTimeout(delayDebounceFn);
   }, [appliedFilters, selectedStartTypeIndex, query.get("id")]);
 
   const redirectToStatePolicy = () => {

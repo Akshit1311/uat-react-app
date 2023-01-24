@@ -171,7 +171,7 @@ function StartUpCard({
         }}
         key={id}
         className="mb-0 d-flex flex-row start-up-card flex-column"
-        style={{ marginTop: "1.3rem", cursor: "pointer" }}
+        style={{ marginTop: "1.3rem", cursor: "pointer", minHeight: "189px" }}
       >
         <div className="d-flex align-items-center">
           <img

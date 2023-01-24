@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const baseRoute = process.env.REACT_APP_BASE_URL || "";
+const apiUrl = process.env.REACT_APP_BACKEND_ENDPOINT_PROD || ";";
 
 export default function ControlledAccordions() {
   const query = useWebQuery();
@@ -21,14 +22,12 @@ export default function ControlledAccordions() {
   const theme = React.useContext(ThemeContext);
   const history = useHistory();
 
-  const [func, data] = useQuery(
-    "https://uat.startupindia.gov.in/maps/insight/industryInsights"
-  );
+  const [func, data] = useQuery(`${apiUrl}/insight/industryInsights`);
   // const [fetchSectors, sectors] = useQuery(
-  //   "https://uat.startupindia.gov.in/maps/insight/sectorInsights"
+  //   "${apiUrl}/insight/sectorInsights"
   // );
   // const [fetchStages, stages] = useQuery(
-  //   "https://uat.startupindia.gov.in/maps/insight/stageInsights"
+  //   "${apiUrl}/insight/stageInsights"
   // );
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const [industries, setIndustries] = React.useState([]);
@@ -67,58 +66,40 @@ export default function ControlledAccordions() {
     const id = query.get("id");
 
     if (id && id != "India") {
-      axios(
-        `https://uat.startupindia.gov.in/maps/insight/industryInsights?stateId=${id}`
-      ).then((data) => {
+      axios(`${apiUrl}/insight/industryInsights?stateId=${id}`).then((data) => {
         setIndustries(data.data);
       });
-      axios(
-        `https://uat.startupindia.gov.in/maps/insight/sectorInsights?stateId=${id}`
-      ).then((data) => {
+      axios(`${apiUrl}/insight/sectorInsights?stateId=${id}`).then((data) => {
         setSectors(data.data);
       });
 
-      axios(
-        `https://uat.startupindia.gov.in/maps/insight/stageInsights?stateId=${id}`
-      ).then((data) => {
+      axios(`${apiUrl}/insight/stageInsights?stateId=${id}`).then((data) => {
         setStages(data.data);
       });
 
-      axios(
-        `https://uat.startupindia.gov.in/maps/insight/industryInsights`
-      ).then((data) => {
+      axios(`${apiUrl}/insight/industryInsights`).then((data) => {
         setTotalIndustries(data.data);
       });
 
-      axios(`https://uat.startupindia.gov.in/maps/insight/sectorInsights`).then(
-        (data) => {
-          setTotalSectors(data.data);
-        }
-      );
+      axios(`${apiUrl}/insight/sectorInsights`).then((data) => {
+        setTotalSectors(data.data);
+      });
 
-      axios(`https://uat.startupindia.gov.in/maps/insight/stageInsights`).then(
-        (data) => {
-          setTotalStages(data.data);
-        }
-      );
+      axios(`${apiUrl}/insight/stageInsights`).then((data) => {
+        setTotalStages(data.data);
+      });
     } else {
-      axios(
-        `https://uat.startupindia.gov.in/maps/insight/industryInsights`
-      ).then((data) => {
+      axios(`${apiUrl}/insight/industryInsights`).then((data) => {
         setIndustries(data.data);
       });
 
-      axios(`https://uat.startupindia.gov.in/maps/insight/sectorInsights`).then(
-        (data) => {
-          setSectors(data.data);
-        }
-      );
+      axios(`${apiUrl}/insight/sectorInsights`).then((data) => {
+        setSectors(data.data);
+      });
 
-      axios(`https://uat.startupindia.gov.in/maps/insight/stageInsights`).then(
-        (data) => {
-          setStages(data.data);
-        }
-      );
+      axios(`${apiUrl}/insight/stageInsights`).then((data) => {
+        setStages(data.data);
+      });
 
       setIndustriesLoading(false);
       setSectorsLoading(false);
