@@ -17,8 +17,6 @@ import axios from "axios";
 import { StartupType } from "..";
 import { StartupTypesKeys } from "../../../config/Constants";
 
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
-
 interface StatisticsDataCount {
   Exploring: number;
   Incubator: number;
@@ -347,7 +345,7 @@ function IndiaMap({
     setSelectedArea({ id: state.id, stateName: state.text });
     setActiveStates([state]);
     setSelectedStateByMap(state);
-    history.push(`${baseRoute}/maps/?id=${state.id}&state=${state.name}`);
+    history.push(`/maps/?id=${state.id}&state=${state.name}`);
   };
 
   const populateDistrictsBoarders = () => {

@@ -4,20 +4,18 @@ import Accordion from "../components/Accordiontest";
 import ViewInsight from "../pages/ViewInsight";
 import HealthCheckUrl from "./HealthCheckUrl";
 
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
-
 export const publicRoutes: Array<RouteType> = [
   {
-    path: `${baseRoute}/maps/accordion`,
+    path: `/maps/accordion`,
     component: Accordion,
   },
-  { path: `${baseRoute}/maps/`, component: HomePage },
+  { path: `/maps/`, component: HomePage },
   {
-    path: `${baseRoute}/maps/view-insight`,
+    path: `/maps/view-insight`,
     component: ViewInsight,
   },
   {
-    path: `${baseRoute}/maps/health`,
+    path: `/maps/health`,
     component: HealthCheckUrl,
   },
 ];

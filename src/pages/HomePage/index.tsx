@@ -35,8 +35,6 @@ const StateViewDataTable = React.lazy(() => import("./StateViewDataTable"));
 const ViewChangerComponent = React.lazy(() => import("./ViewChangerComponent"));
 const ViewInsight = React.lazy(() => import("./ViewInsight"));
 
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
-
 const ButtonGroup = styled.div`
   border: ${(props) => props.theme.togglerButton.border};
   @media (max-width: 768px) {
@@ -259,7 +257,7 @@ const HomePage = (props: HomePageTypes) => {
   const [startupListActive, setStartupListActive] = useState(true);
   const toggleStartUp = () => setStartupListActive((prevState) => !prevState);
 
-  const viewInsightUrl = `${baseRoute}/maps/view-insight?id=${
+  const viewInsightUrl = `/maps/view-insight?id=${
     query.get("id") ? query.get("id") : "India"
   }&state=${query.get("state") ? query.get("state") : "India"}`;
 

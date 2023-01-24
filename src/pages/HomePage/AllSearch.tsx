@@ -4,10 +4,10 @@ import { useHistory } from "react-router-dom";
 import styled, { ThemeContext } from "styled-components";
 import { ThemeColorIdentifier } from "../../helper-function/themeColor";
 import {
-  SearchBarInput, SearchBarWrapper,
-  SpanIcon
+  SearchBarInput,
+  SearchBarWrapper,
+  SpanIcon,
 } from "../../styles-components/SearchBar";
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
 
 export interface SearchBarTypes {
   filterState: any;
@@ -154,7 +154,7 @@ export default function SearchBar({
   const [allTypeDisplayLimit, setAllTypeDisplayLimit] = React.useState(3);
 
   const applyState = (state: any) =>
-    history.push(`${baseRoute}/maps/?id=${state.id}&state=${state.value}`);
+    history.push(`/maps/?id=${state.id}&state=${state.value}`);
 
   const applyStages = (stage: any) =>
     setAppliedFilters((prev: any) => {
@@ -339,7 +339,9 @@ export default function SearchBar({
               />
             ))}
           </div>
-          {states.length > allTypeDisplayLimit || sectors.length > allTypeDisplayLimit || industries.length > allTypeDisplayLimit ? (
+          {states.length > allTypeDisplayLimit ||
+          sectors.length > allTypeDisplayLimit ||
+          industries.length > allTypeDisplayLimit ? (
             <p
               className="text-primary cursor-pointer text-center font-600 font-12px font-Mont"
               onClick={showMoreData}

@@ -3,7 +3,7 @@ import { RouteType } from "./types";
 
 export const privateRoutes: Array<RouteType> = [
   {
-    path: `${process.env.REACT_APP_BASE_URL}/profile`,
+    path: `/profile`,
     component: ProfilePage,
   },
 ];

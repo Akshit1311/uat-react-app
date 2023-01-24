@@ -13,7 +13,6 @@ import CountryMap from "./Map";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
 const apiUrl = process.env.REACT_APP_BACKEND_ENDPOINT_PROD || ";";
 
 export default function ControlledAccordions() {
@@ -153,7 +152,7 @@ export default function ControlledAccordions() {
     }
   }, [totalIndustries, totalSectors, totalStages]);
 
-  const backUrl: string = `${baseRoute}/maps/${
+  const backUrl: string = `/maps/${
     query.get("id") === "India"
       ? ""
       : "?id=" + query.get("id") + "&state=" + query.get("state")
@@ -179,7 +178,7 @@ export default function ControlledAccordions() {
               <span
                 style={{ color: theme.viewInsightColor }}
                 className="cursor-pointer"
-                onClick={() => history.push(`${baseRoute}/maps`)}
+                onClick={() => history.push(`/maps`)}
               >
                 {"IndiaMap / "}
               </span>

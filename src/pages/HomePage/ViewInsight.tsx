@@ -11,8 +11,6 @@ interface ViewInsight {
   colorTheme: string;
 }
 
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
-
 export default function ViewInsight(props: any) {
   const query = useWebQuery();
   const history = useHistory();
@@ -21,8 +19,8 @@ export default function ViewInsight(props: any) {
   const navigate = () => {
     const url =
       props.selectedState && props.selectedState[0]
-        ? `${baseRoute}/maps` + props.viewInsightUrl
-        : `${baseRoute}/maps/view-insight?id=${
+        ? `/maps` + props.viewInsightUrl
+        : `/maps/view-insight?id=${
             query.get("id") ? query.get("id") : "India"
           }&state=${query.get("state") ? query.get("state") : "India"}`;
     history.push(url);

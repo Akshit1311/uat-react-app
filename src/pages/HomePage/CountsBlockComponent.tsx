@@ -13,8 +13,6 @@ import "../../scss/HomePageStyles/countBlockComponent.scss";
 import { H5 } from "../../styles-components/Heading";
 import { IDType } from "./Map/variables";
 
-const baseRoute = process.env.REACT_APP_BASE_URL || "";
-
 const override = css`
   display: block;
   margin: 0 auto;
@@ -343,7 +341,7 @@ const CountsBlockComponent = ({
                 name: "",
               });
               setStateViewMap(false);
-              history.push(baseRoute + "/maps/");
+              history.push("/maps/");
             }}
             className={`mb-3 ${stateSelected ? "text-theme" : ""}`}
           >
