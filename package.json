@@ -2,7 +2,7 @@
   "name": "invest-india",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://uat.startupindia.gov.in/digital-map",
+  "homepage": "https://www.startupindia.gov.in/digital-map",
   "dependencies": {
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.1.0",

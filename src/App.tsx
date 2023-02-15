@@ -10,14 +10,13 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import useLocalStorage from "use-local-storage";
 import "./App.scss";
-import axiosConfig from "./config/axiosConfig.json";
 import { DARK_THEME, PRIMARY_THEME, ThemeContext } from "./config/context";
 import AppNavigator from "./routes/AppNavigator";
 import "./scss/componentStyles.scss";
 import { store } from "./store/store";
 import { ThemeButton } from "./styles-components/Button";
 
-axios.defaults.baseURL = axiosConfig.baseURL;
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_ENDPOINT;
 
 function App() {
   const [theme, setTheme] = useState<any>(PRIMARY_THEME);
