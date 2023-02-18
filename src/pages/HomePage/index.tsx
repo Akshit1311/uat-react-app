@@ -88,7 +88,7 @@ export class CountBlockModel {
   SIH_Admin: number = 0;
   Mentor: number = 0;
   Academia: number = 0;
-  GovernmentBody: number = 0;
+  // GovernmentBody: number = 0;
   ConnectToPotentialPartner: number = 0;
   IndiaMarketEntry: number = 0;
   Individual: number = 0;

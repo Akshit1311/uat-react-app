@@ -256,7 +256,7 @@ const CountsBlockComponent = ({
             "Startup",
             "Mentor",
             "Investor",
-            "GovernmentBody",
+            // "GovernmentBody",
             "Incubator",
             "Accelerator",
           ],
@@ -399,13 +399,13 @@ const CountsBlockComponent = ({
           name="Accelerators"
           acc="Accelerator"
         />
-        <CountCard
+        {/* <CountCard
           {...resources}
           borderColor="#00AD11"
           accessor="GovernmentBody"
           acc="GovernmentBody"
           name="Institutions"
-        />
+        /> */}
       </div>
     </div>
   );

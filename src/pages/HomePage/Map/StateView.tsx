@@ -17,7 +17,7 @@ interface StatisticsDataCount {
   SIH_Admin: number;
   Mentor: number;
   Academia: number;
-  GovernmentBody: number;
+  // GovernmentBody: number;
   ConnectToPotentialPartner: number;
   IndiaMarketEntry: number;
   Individual: number;

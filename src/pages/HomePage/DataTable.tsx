@@ -17,7 +17,7 @@ const mentorsLoop: any[] = [
   "Incubator",
   "Investor",
   "Accelerator",
-  "GovernmentBody",
+  // "GovernmentBody",
 ];
 
 function DataTableComponent(props: any) {
@@ -84,10 +84,10 @@ function DataTableComponent(props: any) {
         Header: "Accelerator",
         accessor: "statistics.Accelerator",
       },
-      {
-        Header: "Government",
-        accessor: "statistics.GovernmentBody",
-      },
+      // {
+      //   Header: "Government",
+      //   accessor: "statistics.GovernmentBody",
+      // },
     ],
     []
   );
