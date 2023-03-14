@@ -24,10 +24,9 @@ interface InsightTableProps {
 enum SortKeys {
   TEXT = "text",
   COUNT = "count",
-  PERCENTAGE = "percentage",
   TOTAL = "count",
   INDIA_TOTAL = "indiaTotal",
-  INDIA_PERCENTAGE = "indiaPercentage",
+
 }
 
 interface SortIconsType {
@@ -186,29 +185,6 @@ export default function InsightTable({
                 />
               </div>
               <div
-                className="border-type-3"
-                onClick={(e) => changeSortMode(e, SortKeys.PERCENTAGE)}
-              >
-                Percentage
-                <Tooltip
-                  title={
-                    "Percentage is calculated \n based on the total number"
-                  }
-                  placement={"top"}
-                  arrow
-                  componentsProps={componentProps}
-                >
-                  <span className="text-secondary">
-                    <AiFillInfoCircle />
-                  </span>
-                </Tooltip>
-                <SortIcons
-                  sortKey={sortKey}
-                  sortMode={sortMode}
-                  primaryKey={SortKeys.PERCENTAGE}
-                />
-              </div>
-              <div
                 className="border-type-2"
                 onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
               >
@@ -235,17 +211,7 @@ export default function InsightTable({
               </div>
             </>
           )}
-          <div
-            className="border-type-3"
-            onClick={(e) => changeSortMode(e, stateName != "" ? SortKeys.INDIA_PERCENTAGE : SortKeys.PERCENTAGE)}
-          >
-            Percentage
-            <SortIcons
-              sortKey={sortKey}
-              sortMode={sortMode}
-              primaryKey={SortKeys.INDIA_PERCENTAGE}
-            />
-          </div>
+          
         </div>
         {sortedData && sortedData.length == 0 ? (
           <div className="w-100 h-100 d-flex justify-content-center align-items-center">
@@ -277,35 +243,21 @@ export default function InsightTable({
                   <div className="border-type-2 font-500 text-right">
                     {insight.count}
                   </div>
-                  <div
-                    onClick={(e) => changeSortMode(e, SortKeys.PERCENTAGE)}
-                    className="border-type-3 font-500 text-right"
-                  >
-                    {insight.percentage} %
-                  </div>
+                  
                   <div
                     onClick={(e) => changeSortMode(e, SortKeys.INDIA_TOTAL)}
                     className="border-type-2 font-500 text-right"
                   >
                     {insight.indiaTotal}
                   </div>
-                  <div
-                    onClick={(e) =>
-                      changeSortMode(e, SortKeys.INDIA_PERCENTAGE)
-                    }
-                    className="border-type-3 font-500 text-right"
-                  >
-                    {insight.indiaPercentage} %
-                  </div>
+                  
                 </>
               ) : (
                 <>
                   <div className="border-type-2 font-500 text-right">
                     {insight.count}
                   </div>
-                  <div className="border-type-3 font-500 text-right">
-                    {insight.percentage} %
-                  </div>
+                  
                 </>
               )}
             </div>
