@@ -28,6 +28,7 @@ interface StatisticsDataCount {
   DpiitCertified: number;
   TaxExempted: number;
   WomenLed: number;
+  FFS: number;
   PatentStartup: number;
   SeedFundStartup: number;
   ShowcasedStartups: number;
@@ -268,7 +269,7 @@ export default function StateView({
               <MuiToolTip
                 placement="top"
                 key={district.name}
-                title={district.name + `(${counts ? counts : ''})`}
+                title={district.name + `(${counts ? counts : 0})`}
                 followCursor
                 arrow
                 componentsProps={componentProps}

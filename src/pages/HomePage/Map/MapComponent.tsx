@@ -34,7 +34,8 @@ interface StatisticsDataCount {
   Accelerator: number;
   DpiitCertified: number;
   TaxExempted: number;
-  WomenLed: number
+  WomenLed: number;
+  FFS: number;
   PatentStartup: number;
   SeedFundStartup: number;
   ShowcasedStartups: number;
@@ -63,15 +64,11 @@ function DistrictPath({
   colorTheme,
   stateCounts,
 }: any) {
-  let dispStateCounts='';
-  if (stateCounts!=0){
-    dispStateCounts=stateCounts;
-  }
   const [isToolTipVisible, setToolTipVisible] = useState<boolean>(false);
   return (
     <MuiToolTip
       placement="top"
-      title={district.title + `(${dispStateCounts})`}
+      title={district.title + `(${stateCounts})`}
       arrow
       componentsProps={componentProps}
     >

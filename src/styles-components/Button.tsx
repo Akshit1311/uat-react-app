@@ -83,8 +83,7 @@ export const ThemeButton = styled.button<any>`
   border-radius: 100px;
   font-size: ${(props:any)=> props.fontSize || '15px' };
   position: fixed;
-  top: 270px;
-  // bottom: ${(props:any)=> props.bottom};
+  bottom: ${(props:any)=> props.bottom};
   right: 30px;
   background: ${(props) => props.theme.bgCards};
   color: ${(props) => props.theme.color};

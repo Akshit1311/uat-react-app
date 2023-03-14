@@ -327,7 +327,7 @@ function StartupsListComponent(props: any) {
             className="my-4 data-table-view-more-button text-theme"
             onClick={handleViewLess}
           >
-            {"<< View Less"}
+            {"View Less"}
           </div>
 
           <div
@@ -341,7 +341,7 @@ function StartupsListComponent(props: any) {
               ? "View All"
               : tagsState.length < 9
               ? ""
-              : "View More>>"}
+              : "View More"}
           </div>
         </div>
         {tagsLoading && (

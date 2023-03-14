@@ -125,7 +125,7 @@ export default function ControlledAccordions() {
         if (arr1[i]["industry"] == arr2[j]["industry"]) {
           let arr = { ...arr1[i] };
           arr["indiaTotal"] = arr2[j].count;
-          // arr["indiaPercentage"] = arr2[j].percentage;
+          arr["indiaPercentage"] = arr2[j].percentage;
           mergeArr.push(arr);
           break;
         }

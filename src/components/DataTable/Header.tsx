@@ -37,7 +37,10 @@ export default function Header({ headerConfig }:HeaderTypes){
                   Startups
                 </Cells>
                 <Cells fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
-                  Patent Startups
+                  FFS
+                </Cells>
+                <Cells fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
+                  Patient Startups
                 </Cells>
                 <Cells fontWeight={true} borderStyle={"dashed"} borderColor={theme.dataTable.dashedBorder}>
                   Seed Fund Startups
