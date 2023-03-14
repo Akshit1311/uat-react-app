@@ -79,6 +79,7 @@ export default function MapViewChangeButtonGroup(props: any) {
     <div className={`mx-1 col-12 mt-4 `}>
       <div className={`d-flex justify-content-between `}>
         <div className="d-flex">
+        {!props.stateViewMode ? (
           <MuiToolTip
             placement="top"
             title={stateText}
@@ -109,6 +110,9 @@ export default function MapViewChangeButtonGroup(props: any) {
               />
             </IconButton>
           </MuiToolTip>
+          ) : (
+            <></>
+          )}
           {!props.stateViewMode ? ( //props.activeCard === "Startups" && 
             <>
               {/* <MuiToolTip
