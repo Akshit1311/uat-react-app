@@ -54,12 +54,9 @@ const startupTypeValues: any[] = [
   "dpiitCertified",
   "showcased",
   "seedFunded",
-  "fundOfFunds",
-  "seedFunded",
   "patented",
   "womenOwned",
   "leadingSector",
-  "declaredRewards",
 ];
 
 function ViewChangerComponent({

@@ -4,7 +4,6 @@ import { ThemeContext } from "../../config/context";
 
 const startupLoops: any[] = [
   "Startup",
-  "FFS",
   "PatentStartup",
   "SeedFundStartup",
   "ShowcasedStartups",
@@ -34,10 +33,6 @@ function DataTableComponent(props: any) {
       {
         Header: "Total Startups",
         accessor: "statistics.Startup",
-      },
-      {
-        Header: "Fund of Funds Scheme",
-        accessor: "statistics.FFS",
       },
       {
         Header: "Patent Startup",

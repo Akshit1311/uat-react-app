@@ -53,9 +53,9 @@ export interface InsightRowType {
   id: string;
   text: string;
   count: number;
-  percentage: number;
+  // percentage: number;
   indiaTotal: number;
-  indiaPercentage: number;
+  // indiaPercentage: number;
   type: string;
   key: string;
 }
