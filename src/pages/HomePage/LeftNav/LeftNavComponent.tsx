@@ -592,7 +592,7 @@ const LeftNavComponent = (props: any) => {
                     />
                   </AccordionDetails>
                 </Accordion>
-                <Accordion
+                {/* <Accordion
                   expanded={expanded === "panel5"}
                   onChange={handleChange("panel5")}
                   className="border-0"
@@ -631,7 +631,7 @@ const LeftNavComponent = (props: any) => {
                       }}
                     />
                   </AccordionDetails>
-                </Accordion>
+                </Accordion> */}
                 {dateRange && (
                   <Accordion
                     expanded={expanded === "panel6"}

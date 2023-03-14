@@ -88,15 +88,13 @@ body {
   border-radius: 5px !important;
   overflow: hidden;
 }
-.font-700{
+.font-700 {
   font-weight: 700;
 }
 
-.transition{
+.transition {
   transition: all 0.3s;
 }
-
-
 
 .horizontal-scroll {
   overflow-x: auto;
@@ -383,8 +381,8 @@ tbody {
   border-left: 1px dashed rgb(229, 229, 229);
 }
 
-.text-hover{
-  &:hover{
+.text-hover {
+  &:hover {
     font-weight: 600 !important;
     transition: all 0.3s;
   }
@@ -607,32 +605,32 @@ $primary: #0177fa;
   .rc-tooltip-arrow {
     border-top-color: $color !important;
   }
-  .selected-list-card{
+  .selected-list-card {
     background: $color;
     color: white;
   }
-  .border-color-theme{
+  .border-color-theme {
     border: 2px solid $color !important;
   }
-  .list-card-color{
-    background: $color !important; 
+  .list-card-color {
+    background: $color !important;
     color: white;
     transition: all 0.3s;
   }
 }
 
-.border-radius-4px{
+.border-radius-4px {
   border-radius: 4px !important;
 }
 
 .always-visible-view-insight {
   position: relative;
   top: -10px;
-  .css-a2qymh-MuiPaper-root-MuiAccordion-root{
+  .css-a2qymh-MuiPaper-root-MuiAccordion-root {
   }
 }
 
-.opacity-5{
+.opacity-5 {
   opacity: 0.5;
 }
 
@@ -680,12 +678,12 @@ $primary: #0177fa;
   // margin-top: 6.5rem;
 }
 
-.sticky-disabled-map{
+.sticky-disabled-map {
   position: sticky;
   top: 110px;
 }
 
-.h-40{
+.h-40 {
   height: 10vh !important;
 }
 
@@ -696,13 +694,13 @@ $primary: #0177fa;
   padding-right: 16px !important;
   margin-right: 0px !important;
 }
-.clickable-text{
+.clickable-text {
   cursor: pointer;
   text-decoration: underline;
   color: $primary;
   text-underline-offset: 2px;
 }
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -789,7 +787,6 @@ html {
   font-size: 14px !important;
 }
 
-
 .unselected-list-card-dark {
   background: rgba(31, 30, 44, 1) !important;
   border: 1px solid #444261;
@@ -799,8 +796,8 @@ html {
   background: #f8f8f8 !important;
 }
 
-@media not all and (min-resolution:.001dpcm){
- .safari-svg{
-  height: 450px
- }
+@media not all and (min-resolution: 0.001dpcm) {
+  .safari-svg {
+    height: 450px;
+  }
 }

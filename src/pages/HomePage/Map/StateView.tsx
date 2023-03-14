@@ -17,7 +17,7 @@ interface StatisticsDataCount {
   SIH_Admin: number;
   Mentor: number;
   Academia: number;
-  GovernmentBody: number;
+  // GovernmentBody: number;
   ConnectToPotentialPartner: number;
   IndiaMarketEntry: number;
   Individual: number;
@@ -28,7 +28,6 @@ interface StatisticsDataCount {
   DpiitCertified: number;
   TaxExempted: number;
   WomenLed: number;
-  FFS: number;
   PatentStartup: number;
   SeedFundStartup: number;
   ShowcasedStartups: number;
@@ -269,7 +268,7 @@ export default function StateView({
               <MuiToolTip
                 placement="top"
                 key={district.name}
-                title={district.name + `(${counts ? counts : 0})`}
+                title={district.name + `(${counts ? counts : ''})`}
                 followCursor
                 arrow
                 componentsProps={componentProps}

@@ -49,7 +49,7 @@ export default function Map({ stateId }: MapProps) {
     if (value === "theme-4") return "Incubator";
     if (value === "theme-5") return "Investor";
     if (value === "theme-6") return "Accelerator";
-    if (value === "theme-7") return "GovernmentBody";
+    // if (value === "theme-7") return "GovernmentBody";
   };
 
   const findMaxValue = (array: any[], accessor: string) => {
