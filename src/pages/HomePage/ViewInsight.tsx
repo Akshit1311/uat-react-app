@@ -31,6 +31,9 @@ export default function ViewInsight(props: any) {
       let { selectedState } = props;
       setState(selectedState[0]);
     }
+    else {
+      setState({ id: "", value: "" });
+    }
   }, [props.selectedState]);
   let ran = Math.random();
 

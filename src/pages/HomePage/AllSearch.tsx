@@ -346,7 +346,7 @@ export default function SearchBar({
               className="text-primary cursor-pointer text-center font-600 font-12px font-Mont"
               onClick={showMoreData}
             >
-              View More
+              View More&gt;&gt;
             </p>
           ) : (
             <></>

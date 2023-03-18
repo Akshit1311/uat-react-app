@@ -28,7 +28,6 @@ interface StatisticsDataCount {
   DpiitCertified: number;
   TaxExempted: number;
   WomenLed: number;
-  FFS: number;
   PatentStartup: number;
   SeedFundStartup: number;
   ShowcasedStartups: number;

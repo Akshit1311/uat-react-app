@@ -1,3 +1,4 @@
+import { paginationItemClasses } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import MoonLoader from "react-spinners/MoonLoader";
@@ -249,13 +250,13 @@ function StartupsListComponent(props: any) {
   const handleViewMore = async () => {
     let num = page + 1;
     setPage(num);
-    fetchTags({ ...props.appliedFilters, page });
+    fetchTags({ ...props.appliedFilters, page:num });
   };
 
   const handleViewLess = async () => {
     let num = page - 1;
     setPage(num);
-    fetchTags({ ...props.appliedFilters, page });
+    fetchTags({ ...props.appliedFilters, page:num });
   };
 
   const onSearch = (changeEvent: any) => {
@@ -280,7 +281,7 @@ function StartupsListComponent(props: any) {
   }, [tagsState]);
 
   useEffect(() => {
-    fetchTags(props.appliedFilters);
+    fetchTags(props.appliedFilters,page);
   }, [props.appliedFilters]);
 
   return (
@@ -327,7 +328,7 @@ function StartupsListComponent(props: any) {
             className="my-4 data-table-view-more-button text-theme"
             onClick={handleViewLess}
           >
-            {"View Less"}
+            {"<<View Less"}
           </div>
 
           <div
@@ -341,7 +342,7 @@ function StartupsListComponent(props: any) {
               ? "View All"
               : tagsState.length < 9
               ? ""
-              : "View More"}
+              : "View More>>"}
           </div>
         </div>
         {tagsLoading && (

@@ -102,7 +102,7 @@ export default function DataTable(props: any) {
             className="my-4 data-table-view-more-button text-theme"
             onClick={handleViewMore}
           >
-            View More
+            View More&gt;&gt;
           </div>
         }
       </div>

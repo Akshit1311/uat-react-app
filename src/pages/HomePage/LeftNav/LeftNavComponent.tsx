@@ -388,11 +388,11 @@ const LeftNavComponent = (props: any) => {
     setSelectedArea(MapVariables.INDIA);
     history.push("/maps/");
     setStateViewMode(false);
-    setSelectedState([]);
-    setSelectedSector([]);
+    setSelectedState([""]);
     setSelectedIndustry([]);
+    setSelectedSector([]);
     setSelectedStages([]);
-    setSelectedStages([]);
+    
   };
 
   const isResetFilterVisible =
