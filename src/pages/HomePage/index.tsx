@@ -76,7 +76,7 @@ const INITIAL_FILTER_STATE = {
   registrationTo: "",
 };
 
-export interface StartupType {                                                                                                                                                   {
+export interface StartupType {
   index: string;
   text: string;
 }
