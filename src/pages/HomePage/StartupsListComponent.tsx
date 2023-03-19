@@ -283,7 +283,7 @@ function StartupsListComponent(props: any) {
   useEffect(() => {
     fetchTags(props.appliedFilters,page);
   }, [props.appliedFilters]);
-
+                                                                                                                                                                                  
   return (
     <div className="mb-5 startup-list-styles d-flex mx-0 w-100 h-100">
       <StartUpCardContainer

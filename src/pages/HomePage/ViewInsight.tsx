@@ -33,7 +33,7 @@ export default function ViewInsight(props: any) {
     }
     else {
       setState({ id: "", value: "" });
-    }
+    }                                                                                                 
   }, [props.selectedState]);
   let ran = Math.random();
 

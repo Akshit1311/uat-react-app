@@ -2,8 +2,8 @@ export const StartupTypesKeys: any = {
   "All Startups": "Startup",
   "DPIIT recognised startups": "DpiitCertified",
   "Showcased Startups": "ShowcasedStartups",
-  "Seed funded Startups": "SeedFundStartup",
+  "Seed fund scheme": "SeedFundStartup",
   "Patented Startups": "PatentStartup",
   "Startups with women director": "WomenLed",
-  "Current leading Sector": "Startup",
+  "Current leading Sector": "Startup",                                                                                                                                                                                                                                            
 };

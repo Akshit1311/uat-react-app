@@ -54,12 +54,9 @@ const startupTypeValues: any[] = [
   "dpiitCertified",
   "showcased",
   "seedFunded",
-  "fundOfFunds",
-  "seedFunded",
   "patented",
   "womenOwned",
   "leadingSector",
-  "declaredRewards",
 ];
 
 function ViewChangerComponent({
@@ -185,7 +182,7 @@ function ViewChangerComponent({
       let data;
       let key;
       // get data from api call
-      if (startupType != 8) {
+      if (startupType != 6) { //if not Current Leading Sector
         const { data: response } = await axios.post(url, {
           ...appliedFilters,
           from: appliedFilters.registrationFrom,
@@ -194,7 +191,7 @@ function ViewChangerComponent({
         data = response;
         key = startupTypeValues[startupType];
         setLeadingSector(0);
-      } else {
+      } else { //in case of Current Le                                                                                                                                                                                                                                                                                                                                                                                                                                                  ading sector
         const { data: response } = await axios.post("home/leadingsector", {
           ...appliedFilters,
           from: appliedFilters.registrationFrom,
