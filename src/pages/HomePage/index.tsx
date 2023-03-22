@@ -410,7 +410,7 @@ const HomePage = (props: HomePageTypes) => {
                     {windowWidth > 768 ? "" : <div className="mb-2"></div>}
                     The information is based on self declaration by community
                     members. Startup India dosen't moderate the information
-                    collected.
+                    collected. The data is updated weekly and may vary from current count.
                   </span>
                 </Strip>
                 <div className="d-block d-sm-none">

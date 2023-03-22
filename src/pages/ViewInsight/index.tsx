@@ -118,11 +118,11 @@ export default function ControlledAccordions() {
     // }
   }, [query.get("id")]);
 
-  const dataMargeUp = (arr1: any, arr2: any) => {
+  const dataMargeUp = (arr1: any, arr2: any, key:string) => {
     const mergeArr: any = [];
     for (let i = 0; i < arr1.length; i++) {
       for (let j = 0; j < arr2.length; j++) {
-        if (arr1[i]["industry"] == arr2[j]["industry"]) {
+        if (arr1[i][key] == arr2[j][key]) {
           let arr = { ...arr1[i] };
           arr["indiaTotal"] = arr2[j].count;
           mergeArr.push(arr);
@@ -135,17 +135,17 @@ export default function ControlledAccordions() {
 
   React.useEffect(() => {
     if (industries.length > 0 && totalIndustries.length > 0) {
-      let data = dataMargeUp(industries, totalIndustries);
+      let data = dataMargeUp(industries, totalIndustries,"industry");
       setIndustries(data);
       setIndustriesLoading(false);
     }
     if (sectors.length > 0 && totalSectors.length > 0) {
-      let data = dataMargeUp(sectors, totalSectors);
+      let data = dataMargeUp(sectors, totalSectors,"sector");
       setSectors(data);
       setSectorsLoading(false);
     }
     if (stages.length > 0 && totalStages.length > 0) {
-      let data = dataMargeUp(stages, totalStages);
+      let data = dataMargeUp(stages, totalStages,"stage");
       setStages(data);
       setStagesLoading(false);
     }

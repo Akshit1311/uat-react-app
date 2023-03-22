@@ -311,7 +311,7 @@ function ViewChangerComponent({
             />
           </button>
         </div>
-        {windowWidth > 768 ? <MapViewButtonChangeGroup {...resourse} /> : <></>}
+        {/* {windowWidth > 768 ? <MapViewButtonChangeGroup {...resourse} /> : <></>} */}
         <div className="mx-1 col-12 mt-4 pt-0 view-changer-startup-card">
           <Card>
             {/* <div className="select-type-card"> */}
