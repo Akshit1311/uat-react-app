@@ -67,7 +67,7 @@ function App() {
                 <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
                   <AppNavigator />
                 </BrowserRouter>
-                <ThemeButton bottom={"345px"} onClick={themeHandler}>
+                <ThemeButton top={"140px"} onClick={themeHandler}>
                   <MdDarkMode
                     style={{ marginBottom: "4px", marginLeft: "3px" }}
                   />

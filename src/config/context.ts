@@ -1,6 +1,6 @@
 import React from "react";
 
-export const NAVBAR_HEIGHT = "0.5rem";
+export const NAVBAR_HEIGHT = "0rem";
 
 export const PRIMARY_THEME = {
   theme: "light",
